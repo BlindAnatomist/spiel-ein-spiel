@@ -4,7 +4,7 @@ export const names = ['You', 'West', 'Val', 'East'] as const;
 export function cardName(card: Card, trump: PlayerView['trump'] = null): string {
   const ranks = { '9': 'Nine', '10': 'Ten', J: 'Jack', Q: 'Queen', K: 'King', A: 'Ace' };
   const bower = trump && rankOf(card) === 'J' && effectiveSuit(card, trump) === trump
-    ? `, ${suitOf(card) === trump ? 'right' : 'left'} bower` : '';
+    ? suitOf(card) === trump ? ', right bower' : `, left bower, counts as ${trump}` : '';
   return `${ranks[rankOf(card)]} of ${suitOf(card)}${bower}`;
 }
 export function actionName(action: Action): string {
@@ -30,7 +30,10 @@ export function events(before: PlayerView, after: PlayerView, actor: Seat, actio
     else if (action.type === 'discard') messages.push(`${names[actor]} discards a card.`);
     else if (action.type === 'pass' || action.type === 'order-up' || action.type === 'call') messages.push(`${names[actor]} ${action.type === 'pass' ? 'passes' : action.type === 'order-up' ? `orders up ${after.trump}${action.alone ? ' and goes alone' : ''}` : `calls ${action.suit}${action.alone ? ' and goes alone' : ''}`}.`);
   }
-  if (after.completedTricks.length > before.completedTricks.length) messages.push(`${names[after.completedTricks.at(-1)!.winner]} takes the trick.`);
+  if (after.completedTricks.length > before.completedTricks.length) {
+    const winner = after.completedTricks.at(-1)!.winner;
+    messages.push(`${names[winner]} ${winner === 0 ? 'take' : 'takes'} the trick.`);
+  }
   // Results are spoken through focus, never duplicated in the live region.
   return messages;
 }

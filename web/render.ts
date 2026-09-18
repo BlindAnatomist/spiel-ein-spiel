@@ -1,10 +1,11 @@
+import { teamOf } from '../src/index.ts';
 import type { Action, Card, PlayerView } from '../src/index.ts';
 import { actionName, cardName, names, resultText } from './presentation.ts';
 export interface Handlers { act(action: Action): void; next(): void }
 /** No host/referee imports or capabilities. Receives only a seat-zero view. */
 export function createTable(root: HTMLElement, handlers: Handlers) {
   const d = root.ownerDocument;
-  root.innerHTML = `<p id="score"></p><div class="table"><p class="partner">Val · your partner</p><p class="west">West</p><p class="east">East</p><div class="center"><h2>Table</h2><p id="facts"></p><p id="trump"></p><p id="upcard"></p><p id="tricks"></p><ul id="trick"></ul></div></div><h2 id="turn" tabindex="-1">Game actions</h2><div id="bids" class="actions"></div><div id="result" tabindex="-1"></div><button id="next" type="button" hidden>Deal next hand</button><h2>Your hand</h2><div id="hand" class="hand"></div>`;
+  root.innerHTML = `<p id="score"></p><div class="table"><p class="partner">Val · your partner</p><p class="west">West</p><p class="east">East</p><div class="center"><h2>Table</h2><p id="facts"></p><p id="trump"></p><p id="upcard"></p><h2>Current trick</h2><ul id="trick"></ul><p id="tricks"></p></div></div><h2 id="turn" tabindex="-1">Game actions</h2><div id="bids" class="actions"></div><div id="result" tabindex="-1"></div><button id="next" type="button" hidden>Deal next hand</button><h2>Your hand</h2><div id="hand" class="hand"></div>`;
   const get = (id: string) => root.querySelector<HTMLElement>(`#${id}`)!;
   const hand = get('hand');
   const cards = new Map<Card, HTMLButtonElement>();
@@ -18,10 +19,11 @@ export function createTable(root: HTMLElement, handlers: Handlers) {
     current = v; ready = interactive;
     get('score').textContent = `You & Val ${v.score[0]} — Opponents ${v.score[1]} · First to 10`;
     get('facts').textContent = `Hand ${v.handNumber}. Dealer: ${names[v.dealer]}.`;
-    get('trump').textContent = `Trump: ${v.trump ?? 'not yet called'}.${v.caller !== null ? ` Caller: ${names[v.caller]}.${v.alone ? ' Going alone.' : ''}` : ''}`;
+    get('trump').textContent = `Called suit: ${v.trump ?? 'not yet called'}.${v.caller !== null ? ` Caller: ${names[v.caller]}.${v.alone ? ' Going alone.' : ''}` : ''}`;
     get('upcard').textContent = `Up-card: ${cardName(v.upCard)} (${v.upCardStatus}).`;
-    get('tricks').textContent = `Completed tricks: ${v.completedTricks.length} of 5.${v.sittingOut !== null ? ` ${names[v.sittingOut]} sits out this hand.` : ''}`;
-    const plays = v.trick.length ? v.trick : v.completedTricks.at(-1)?.plays ?? [];
+    const ourTricks = v.completedTricks.filter(trick => teamOf(trick.winner) === 0).length;
+    get('tricks').textContent = `Tricks: You and Val ${ourTricks}, opponents ${v.completedTricks.length - ourTricks}. ${v.completedTricks.length} of 5 complete.${v.sittingOut !== null ? ` ${names[v.sittingOut]} sits out this hand.` : ''}`;
+    const plays = v.trick;
     get('trick').replaceChildren(...plays.map(p => { const li = d.createElement('li'); li.textContent = `${names[p.seat]}: ${cardName(p.card, v.trump)}`; return li; }));
     get('turn').textContent = v.result ? 'Hand complete' : v.turn === 0 ? v.phase === 'bidding' ? `Your bid — round ${v.biddingRound}` : v.phase === 'discarding' ? 'Discard one card' : 'Your turn to play' : `${names[v.turn!]}${v.phase === 'bidding' ? ` bids — round ${v.biddingRound}` : v.phase === 'discarding' ? ' must discard' : ' to play'}`;
     const bids = get('bids'); bids.replaceChildren();

@@ -62,8 +62,8 @@ are emitted once in sequence, with at least 1.6 seconds between messages (longer
 messages receive 300 ms per word). Another 350 ms separates bot decisions.
 Focus waits until that sequence ends. Hand results are spoken via focus, not
 also copied into the live region. Static table/hand changes are not live regions.
-The last completed trick stays visible until the next lead; the count makes its
-completion reviewable. Bowers retain actual card identity plus the bower label.
+The Current trick list contains only the active trick. Completed plays are cleared;
+public winners supply both teams’ trick totals. Bowers retain actual card identity plus the bower label.
 
 These delays are a pragmatic speech budget, not a speech-completion API. Safari
 cannot tell the app when VoiceOver has finished. Real-device testing may require
@@ -127,7 +127,7 @@ that causes focus loss or duplicate speech. Real-device acceptance remains pendi
 
 ## Tests and review passes
 
-`npm run check`: strict TypeScript and 77 passing tests, including all 62 existing
+`npm run check`: strict TypeScript and 82 passing tests, including all 62 existing
 engine/player tests. `npm run build`: passes. CI additionally builds the static
 site after its existing check command.
 
@@ -176,3 +176,52 @@ short iPhone VoiceOver acceptance pass, and address concrete findings before
 merging. Then adapt/publish in GPT Sites using these same engine/policy modules
 and seat-zero interface boundary; replace only the hosting shell if necessary.
 Do not rewrite game logic or add new features as part of that adaptation.
+
+
+## Real-iPhone remediation, September 18
+
+Remediation base: `ebb174a6fe50348fa91c8fe3c6d51a49971dd97e`. Exact remediation
+commit and deployment evidence are recorded in PR #3. This section supersedes
+initial checkpoint deployment/acceptance limitations above where applicable:
+the owner has now played the HTTPS build with iPhone VoiceOver and supplied
+specific findings. A second device pass is still required for these repairs.
+
+Changes are confined to presentation, controller announcement cleanup, tests and
+this record. Human trick winners say “You take the trick”; other seats use “takes”.
+The one live region is cleared after each existing speech budget: max(1600 ms,
+300 ms per word). The serial loop waits before clearing. Cancelled old-game loops
+cannot clear a new game's message. No new region or timing preference was added.
+Speech completion itself cannot be observed, so verify clearing at your actual
+VoiceOver rate. This does not change human focus targets or focus timing.
+
+Current trick now contains only `PlayerView.trick`, never completed-trick fallback
+cards. Its visible heading is “Current trick”, followed by the two public team
+trick totals and completed count. The displayed term is “Called suit”; internal
+trump concepts are unchanged. Left-bower names retain the printed identity and
+append “left bower, counts as [suit]”. Right-bower names stay concise.
+
+Static West/East/Val position labels are simple paragraphs, without repeating
+labelled-container semantics. They and the visual layout remain unchanged.
+Unavailable-card semantics also remain unchanged pending actual evidence of
+redundant iOS state speech. The focus function is unchanged: legal actions from
+the engine preserve hand order; no policy influences the target.
+
+Five new regression tests cover all four winner phrases, announcement lifecycle
+and cancellation, active-only trick cards and public team totals, all four bower
+suit pairs, and strategy-independent first-legal focus. Existing naming assertions
+are updated for the requested wording. All 77 prior tests remain, including
+private-card DOM checks and complete games through ten; all 82 tests pass.
+`npm ci --ignore-scripts`, `npm run check`, and `npm run build` succeed.
+
+The badge is Netlify platform injection, not our source. Netlify documents a
+per-project “Powered by Netlify badge” switch with no plan change or redeploy:
+https://docs.netlify.com/manage/projects/powered-by-netlify-badge/
+The connected Netlify tool does not expose that switch, and the cloud dashboard
+requires a separate login. It was left unchanged, rather than adding brittle CSS
+or changing unrelated settings. No other site was accessed or modified.
+
+Next device pass: confirm “You take”, that old speech is no longer encountered
+while navigating, an empty new Current trick, both teams’ trick totals, left-bower
+“counts as” wording, and unchanged first-legal focus/full-hand review. Listen for
+truncation at the end of the announcement budget; do not treat DOM checks as
+VoiceOver acceptance. No engine, policy, rules, layout/CSS or coaching change.

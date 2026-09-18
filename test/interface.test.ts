@@ -58,7 +58,7 @@ test('all cards keep order; unavailable cards are focusable and inert; focus sel
   table.focus(); assert.equal(dom.window.document.activeElement,buttons[1]);
   buttons[0]!.focus(); table.focus(); assert.equal(dom.window.document.activeElement,buttons[0]);
   buttons[1]!.click(); assert.deepEqual(actions,[{type:'play',card:'diamonds:J'}]);
-  assert.match(buttons[1]!.textContent!,/Jack of diamonds, left bower, playable/);
+  assert.match(buttons[1]!.textContent!,/Jack of diamonds, left bower, counts as hearts, playable/);
   assert.equal(effectiveSuit('diamonds:J','hearts'),'hearts');
 });
 test('bidding controls exactly reflect engine legal actions, including stuck dealer', () => {
@@ -93,7 +93,7 @@ test('public score, trump and actual left-bower identity remain reviewable', () 
   assert.match(root.querySelector('#score')!.textContent!,/Val 4.*Opponents 3/);
   assert.match(root.querySelector('#trump')!.textContent!,/hearts/);
   assert.equal(cardName('hearts:J','hearts'),'Jack of hearts, right bower');
-  assert.equal(cardName('diamonds:J','hearts'),'Jack of diamonds, left bower');
+  assert.equal(cardName('diamonds:J','hearts'),'Jack of diamonds, left bower, counts as hearts');
 });
 test('policy routing fixes Val at seat two and applies selected level to both opponents', () => {
   for (const level of ['casual','strong','expert'] as const) assert.deepEqual(policyLevels(level),[null,level,'val',level]);
@@ -205,4 +205,55 @@ test('focus follows a new human turn without resetting during exploration; rapid
     const other=root.querySelector<HTMLButtonElement>('#hand button');
     other!.focus(); table.focus(); assert.equal(dom.window.document.activeElement,other);
   }
+});
+test('trick winner uses subject-aware grammar for every seat exactly once', () => {
+  for (const winner of [0,1,2,3] as const) {
+    const before=humanView();
+    const after={...before,completedTricks:[{plays:[],winner}]};
+    assert.deepEqual(events(before,after,0,{type:'play',card:'clubs:9'}),[`${['You take','West takes','Val takes','East takes'][winner]} the trick.`]);
+    assert.deepEqual(events(after,after,0,{type:'play',card:'clubs:9'}),[]);
+  }
+});
+test('current trick never falls back to completed plays; public winners determine team trick totals', () => {
+  const completedTricks=([0,2,1,3] as const).map(winner=>({winner,plays:[{seat:winner,card:'clubs:9' as const}]}));
+  const v=humanView({completedTricks,trick:[]}); const {root,table}=fixture(v);
+  assert.equal(root.querySelector('#trick')!.children.length,0);
+  assert.ok([...root.querySelectorAll('h2')].some(h=>h.textContent==='Current trick'));
+  assert.equal(root.querySelector('#tricks')!.textContent,'Tricks: You and Val 2, opponents 2. 4 of 5 complete.');
+  assert.match(root.querySelector('#trump')!.textContent!,/^Called suit: hearts/);
+  assert.doesNotMatch(root.textContent!,/Trump:/);
+  table.render({...v,trick:[{seat:2,card:'hearts:A'}]});
+  assert.deepEqual([...root.querySelectorAll('#trick li')].map(li=>li.textContent),['Val: Ace of hearts']);
+  table.render(v); assert.equal(root.querySelector('#trick')!.children.length,0);
+});
+test('left bowers explain effective suit consistently; right bowers and ordinary cards stay concise', () => {
+  for(const [trump,left] of [['clubs','spades'],['spades','clubs'],['hearts','diamonds'],['diamonds','hearts']] as const) {
+    assert.equal(cardName(`${left}:J`,trump),`Jack of ${left}, left bower, counts as ${trump}`);
+    assert.equal(cardName(`${trump}:J`,trump),`Jack of ${trump}, right bower`);
+    assert.equal(cardName(`${left}:A`,trump),`Ace of ${left}`);
+  }
+});
+test('announcement lifecycle retains text for its speech budget, then clears before focus; cancellation cannot clear newer speech', async () => {
+  const v=humanView(); const {table}=fixture(v);
+  const messages:string[]=[]; let release=()=>{}; const delays:number[]=[];
+  const session={view:()=>v,human:()=>({view:v,messages:['You take the trick.','Val takes the trick.']}),bot:()=>null,nextHand:()=>v};
+  const controller=createController(session,table,t=>messages.push(t),ms=>{delays.push(ms);return new Promise<void>(resolve=>{release=resolve;});});
+  const pending=controller.act({type:'play',card:'diamonds:J'});
+  assert.deepEqual(messages,['You take the trick.']); assert.equal(delays[0],1600);
+  release(); await Promise.resolve();
+  assert.deepEqual(messages,['You take the trick.','','Val takes the trick.']);
+  release(); await pending; assert.deepEqual(messages,['You take the trick.','','Val takes the trick.','']);
+  const old=createController(session,table,t=>messages.push(t),()=>new Promise<void>(resolve=>{release=resolve;}));
+  const oldPending=old.act({type:'play',card:'diamonds:J'}); old.stop(); messages.push('New game event'); release(); await oldPending;
+  assert.equal(messages.at(-1),'New game event');
+});
+test('human focus target is the same first legal hand card for all policy configurations', () => {
+  for(const level of ['casual','strong','expert'] as const) {
+    const v=humanView({...createSession(61,level).view(),turn:0,phase:'playing',hand:['clubs:9','hearts:9','hearts:A'],trump:'hearts',legalActions:[{type:'play',card:'hearts:9'},{type:'play',card:'hearts:A'}]});
+    const {root,dom,table}=fixture(v); table.focus();
+    assert.equal(dom.window.document.activeElement,root.querySelectorAll('#hand button')[1]);
+    assert.deepEqual([...root.querySelectorAll('#hand button')].map(b=>b.textContent?.split(',')[0]),v.hand.map(c=>cardName(c)));
+  }
+  const source=readFileSync('web/render.ts','utf8');
+  assert.doesNotMatch(source,/createBot|DecisionPolicy|strong|expert|\.sort\(/);
 });

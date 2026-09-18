@@ -14,6 +14,9 @@ export function createController(session: Session, table: ReturnType<typeof crea
           if (stopped) return;
           announce(message);
           await wait(Math.max(1600, message.split(' ').length * 300));
+          // Clear only this loop's message; a cancelled loop must not erase a new game's speech.
+          if (stopped) return;
+          announce('');
         }
         if (stopped) return;
         const view = session.view();

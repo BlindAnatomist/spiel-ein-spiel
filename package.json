@@ -18,10 +18,15 @@
     "check": "npm run typecheck && npm test",
     "simulate": "node src/simulation/cli.ts",
     "evaluate": "node src/simulation/evaluate-cli.ts",
-    "benchmark": "node src/simulation/benchmark-cli.ts"
+    "benchmark": "node src/simulation/benchmark-cli.ts",
+    "build": "node scripts/build.ts",
+    "dev": "npm run build && node scripts/serve.ts"
   },
   "devDependencies": {
+    "@types/jsdom": "^30.0.0",
     "@types/node": "^24.0.0",
+    "esbuild": "^0.28.2",
+    "jsdom": "^30.1.0",
     "typescript": "^5.9.0"
   }
 }

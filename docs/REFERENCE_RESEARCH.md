@@ -83,3 +83,22 @@ These have not yet been adopted into the implementation.
 Use Parlour as a technical reference and possible MIT-licensed donor for narrowly selected rule-engine pieces, not as the base application.
 
 The first implementation should remain small enough that we understand every rule boundary, every hidden-information boundary, and every VoiceOver transition.
+
+## Checkpoint 1 implementation provenance
+
+Reference inspected at Parlour commit
+`a5f64d92dcfb87790b9707e563e6e7ffa5076d8a`:
+
+- `packages/game-euchre/src/state.ts`
+- `packages/game-euchre/src/deck.ts`
+- `packages/game-euchre/src/rules.ts`
+- `packages/game-euchre/src/score.ts`
+- `packages/game-euchre/src/veil.test.ts`
+- root `LICENSE` (MIT, Copyright (c) 2026 Braedon Saunders)
+
+No source file or substantial source fragment was copied or adapted into Spiel
+ein Spiel. The implementation is independent and uses the architectural ideas
+listed above. No Parlour dependency, UI effects, shared platform engine,
+cryptographic veiling, bot strategies, or networking were imported. Consequently
+there is no incorporated Parlour code requiring an MIT notice in this checkpoint.
+Future reuse still requires the four-part record specified above.

@@ -54,3 +54,18 @@ The first goal is not a general game platform. It is one trustworthy, playable E
 8. Later experiments with adaptive or evolving strategy.
 
 See `docs/EUCHRE_FOUNDATION.md` and `docs/REFERENCE_RESEARCH.md`.
+
+## Implemented: engine checkpoint 1
+
+The presentation-independent TypeScript engine now implements the initial rules,
+seeded deals, and restricted player capabilities. There is no interface or bot
+strategy yet. Node.js 24 or newer runs the TypeScript source directly.
+
+```sh
+npm ci --ignore-scripts
+npm run check
+```
+
+`npm run check` runs strict type checking and the complete automated test suite.
+See `docs/ENGINE_CHECKPOINT_1.md` for API usage, trust boundaries, reproducibility,
+regression coverage, review findings, and continuation instructions.

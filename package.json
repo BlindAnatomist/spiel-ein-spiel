@@ -3,8 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "engines": { "node": ">=24" },
-  "exports": { ".": "./src/index.ts", "./referee": "./src/referee.ts" },
-  "scripts": { "test": "node --test test/*.test.ts", "typecheck": "tsc --noEmit", "check": "npm run typecheck && npm test" },
-  "devDependencies": { "@types/node": "^24.0.0", "typescript": "^5.9.0" }
+  "engines": {
+    "node": ">=24"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./referee": "./src/referee.ts",
+    "./bots": "./src/bots/index.ts",
+    "./simulation": "./src/simulation/index.ts"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm test",
+    "simulate": "node src/simulation/cli.ts",
+    "evaluate": "node src/simulation/evaluate-cli.ts",
+    "benchmark": "node src/simulation/benchmark-cli.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  }
 }

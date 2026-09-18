@@ -102,3 +102,22 @@ listed above. No Parlour dependency, UI effects, shared platform engine,
 cryptographic veiling, bot strategies, or networking were imported. Consequently
 there is no incorporated Parlour code requiring an MIT notice in this checkpoint.
 Future reuse still requires the four-part record specified above.
+
+## Checkpoint 2 implementation provenance
+
+The same reference revision, `a5f64d92dcfb87790b9707e563e6e7ffa5076d8a`,
+was consulted for these additional files:
+
+- `packages/game-euchre/src/bots/bid.ts`
+- `packages/game-euchre/src/bots/evaluate.ts`
+- `packages/game-euchre/src/bots/play.ts`
+- `packages/game-euchre/src/cli/sim.ts`
+- `packages/game-euchre/src/sim/gates.ts`
+
+The reference informed separation of bidding/play parameters, public trick
+reasoning and seat-balanced measurement. No source files or substantial source
+fragments were reused. Our parameters, policy-only PlayerView API, constrained
+hypothesis search and matched-pair statistical reports are independent
+implementations. No Parlour package or runtime dependency was introduced, and no
+incorporated-source MIT attribution is required. The original MIT provenance
+and future reuse requirements above still apply.

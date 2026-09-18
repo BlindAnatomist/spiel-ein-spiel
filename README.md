@@ -58,8 +58,8 @@ See `docs/EUCHRE_FOUNDATION.md` and `docs/REFERENCE_RESEARCH.md`.
 ## Implemented: engine checkpoint 1
 
 The presentation-independent TypeScript engine now implements the initial rules,
-seeded deals, and restricted player capabilities. There is no interface or bot
-strategy yet. Node.js 24 or newer runs the TypeScript source directly.
+seeded deals, and restricted player capabilities. Player policies and headless evaluation are implemented in Checkpoint 2; there is
+no interface yet. Node.js 24 or newer runs the TypeScript source directly.
 
 ```sh
 npm ci --ignore-scripts
@@ -69,3 +69,25 @@ npm run check
 `npm run check` runs strict type checking and the complete automated test suite.
 See `docs/ENGINE_CHECKPOINT_1.md` for API usage, trust boundaries, reproducibility,
 regression coverage, review findings, and continuation instructions.
+
+## Implemented: players and headless evaluation (checkpoint 2)
+
+Casual, Strong, Expert and Val policies choose from the engine's legal actions
+using only their own `PlayerView`. Expert samples hypothetical unseen cards from
+public constraints; it never receives the referee's hidden state or deal seed.
+The rules engine and its information boundary are unchanged.
+
+```sh
+npm run simulate -- --games 100 --seed 20260918 --seats strong,casual,val,casual
+npm run evaluate -- --a expert --b strong --pairs 800 --seed 2026091805
+npm run benchmark -- --games 30 --seed 1002
+```
+
+Simulation/evaluation output is JSON. Each evaluation pair uses the same deal seed
+and initial dealer twice, with the strategy teams exchanged. The default example
+uses a Strong proxy for the future human at seat 0 and Val at seat 2.
+
+See `docs/PLAYERS_CHECKPOINT_2.md` for the policy API, strategy parameters, testing,
+review passes and limitations; `docs/evaluation/RESULTS.md` records the measured
+difficulty comparisons and commands. The next proposed checkpoint is the
+VoiceOver-first interface, subject to acceptance of this engine and player work.

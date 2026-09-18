@@ -1,0 +1,93 @@
+{
+  "games": 30,
+  "seed": 1002,
+  "runtime": "v24.19.0",
+  "platform": "linux",
+  "arch": "x64",
+  "rows": [
+    {
+      "policyPhase": "strong:bidding",
+      "decisions": 336,
+      "meanMs": 0.02794277083332705,
+      "p95Ms": 0.09530399999994188,
+      "maxMs": 0.3038799999999924
+    },
+    {
+      "policyPhase": "val:bidding",
+      "decisions": 355,
+      "meanMs": 0.025142969014078215,
+      "p95Ms": 0.06806300000016563,
+      "maxMs": 0.2922320000000127
+    },
+    {
+      "policyPhase": "casual:bidding",
+      "decisions": 364,
+      "meanMs": 0.017293813186802582,
+      "p95Ms": 0.038248000000066895,
+      "maxMs": 0.22793499999988853
+    },
+    {
+      "policyPhase": "expert:bidding",
+      "decisions": 337,
+      "meanMs": 0.02572783976261739,
+      "p95Ms": 0.06961499999999887,
+      "maxMs": 0.20222600000002444
+    },
+    {
+      "policyPhase": "strong:playing",
+      "decisions": 1545,
+      "meanMs": 0.02097165631067889,
+      "p95Ms": 0.04916400000001886,
+      "maxMs": 0.739799000000005
+    },
+    {
+      "policyPhase": "val:playing",
+      "decisions": 1520,
+      "meanMs": 0.02248622039473608,
+      "p95Ms": 0.04441700000000992,
+      "maxMs": 4.314928000000009
+    },
+    {
+      "policyPhase": "casual:playing",
+      "decisions": 1540,
+      "meanMs": 0.005247006493504404,
+      "p95Ms": 0.011306999999987966,
+      "maxMs": 0.2028770000000577
+    },
+    {
+      "policyPhase": "expert:playing",
+      "decisions": 1510,
+      "meanMs": 1.102009600000004,
+      "p95Ms": 7.272402000000056,
+      "maxMs": 26.398965000000004
+    },
+    {
+      "policyPhase": "strong:discarding",
+      "decisions": 34,
+      "meanMs": 0.03790435294119982,
+      "p95Ms": 0.1098859999999604,
+      "maxMs": 0.15569499999998015
+    },
+    {
+      "policyPhase": "expert:discarding",
+      "decisions": 53,
+      "meanMs": 0.035662132075456286,
+      "p95Ms": 0.07005600000002232,
+      "maxMs": 0.08591000000001259
+    },
+    {
+      "policyPhase": "casual:discarding",
+      "decisions": 36,
+      "meanMs": 0.007199833333340659,
+      "p95Ms": 0.02365599999995993,
+      "maxMs": 0.043685999999979686
+    },
+    {
+      "policyPhase": "val:discarding",
+      "decisions": 44,
+      "meanMs": 0.04198186363635417,
+      "p95Ms": 0.07854799999995521,
+      "maxMs": 0.2551459999999679
+    }
+  ]
+}

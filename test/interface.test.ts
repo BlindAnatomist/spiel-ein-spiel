@@ -257,3 +257,30 @@ test('human focus target is the same first legal hand card for all policy config
   const source=readFileSync('web/render.ts','utf8');
   assert.doesNotMatch(source,/createBot|DecisionPolicy|strong|expert|\.sort\(/);
 });
+test('visual card faces preserve exact spoken names and hide all decorative rank/suit markup', () => {
+  const v=humanView(); const {root,table,dom}=fixture(v);
+  const buttons=[...root.querySelectorAll<HTMLButtonElement>('#hand button')];
+  for(const [index,button] of buttons.entries()) {
+    const card=v.hand[index]!;
+    const legal=v.legalActions.some(a=>'card' in a&&a.card===card);
+    assert.equal(button.textContent,`${cardName(card,v.trump)}, ${legal?'playable':'not playable'}`);
+    assert.equal(button.querySelector('.spoken-text')!.getAttribute('aria-hidden'),null);
+    const face=button.querySelector('.card-face')!;
+    assert.equal(face.getAttribute('aria-hidden'),'true');
+    assert.equal(face.querySelectorAll('[data-rank]').length,3);
+    assert.equal(face.textContent,'');
+    assert.doesNotMatch(face.outerHTML,/bower|counts as/);
+    assert.equal(button.querySelectorAll('button,a,[tabindex]').length,0);
+  }
+  table.focus(); assert.equal(dom.window.document.activeElement,buttons[1]);
+  table.render(v); assert.equal(root.querySelectorAll('#hand button')[1],buttons[1]);
+  assert.equal(dom.window.document.activeElement,buttons[1]);
+});
+test('public trick cards retain play order and names while CSS positions their seats', () => {
+  const v=humanView({trick:[{seat:3,card:'hearts:9'},{seat:0,card:'diamonds:J'},{seat:1,card:'hearts:A'}]});
+  const {root}=fixture(v); const plays=[...root.querySelectorAll('#trick li')];
+  assert.deepEqual(plays.map(p=>p.textContent),['East: Nine of hearts','You: Jack of diamonds, left bower, counts as hearts','West: Ace of hearts']);
+  assert.deepEqual(plays.map(p=>p.className),['trick-seat seat-3','trick-seat seat-0','trick-seat seat-1']);
+  assert.ok(plays.every(p=>p.querySelector('.card-face')!.getAttribute('aria-hidden')==='true'));
+  assert.ok(plays.every(p=>p.querySelectorAll('button,[tabindex]').length===0));
+});

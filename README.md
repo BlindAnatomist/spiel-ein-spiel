@@ -58,8 +58,7 @@ See `docs/EUCHRE_FOUNDATION.md` and `docs/REFERENCE_RESEARCH.md`.
 ## Implemented: engine checkpoint 1
 
 The presentation-independent TypeScript engine now implements the initial rules,
-seeded deals, and restricted player capabilities. Player policies and headless evaluation are implemented in Checkpoint 2; there is
-no interface yet. Node.js 24 or newer runs the TypeScript source directly.
+seeded deals, and restricted player capabilities. Player policies and headless evaluation are implemented in Checkpoint 2; the browser interface is implemented in Checkpoint 3. Node.js 24 or newer runs the TypeScript source directly.
 
 ```sh
 npm ci --ignore-scripts
@@ -89,5 +88,26 @@ uses a Strong proxy for the future human at seat 0 and Val at seat 2.
 
 See `docs/PLAYERS_CHECKPOINT_2.md` for the policy API, strategy parameters, testing,
 review passes and limitations; `docs/evaluation/RESULTS.md` records the measured
-difficulty comparisons and commands. The next proposed checkpoint is the
-VoiceOver-first interface, subject to acceptance of this engine and player work.
+difficulty comparisons and commands. The browser checkpoint below builds on the accepted engine and players.
+
+
+## Browser interface (checkpoint 3)
+
+Native HTML controls and a small TypeScript bundle provide a complete local game:
+human seat 0, Val at seat 2, and the selected opponent level at seats 1 and 3.
+
+```sh
+npm ci --ignore-scripts
+npm run check
+npm run dev
+```
+
+Open `http://localhost:4173`. On an iPhone on the same Wi-Fi, open
+`http://YOUR-COMPUTER-LAN-IP:4173` in Safari. Allow port 4173 on the computer's
+local firewall if prompted. The server listens on the local network; no account,
+backend, or cloud database is needed. `npm run build` produces the portable
+static `dist/` directory for any HTTPS static host.
+
+See `docs/INTERFACE_CHECKPOINT_3.md` for architecture, tests, review findings,
+and the short real-device VoiceOver acceptance procedure. Automated DOM tests do
+not establish iPhone VoiceOver acceptance; that device check remains outstanding.

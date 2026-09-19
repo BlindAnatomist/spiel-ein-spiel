@@ -1,17 +1,42 @@
 import { deck, nextSeat } from '../cards.ts';
 import type { Card, Seat } from '../types.ts';
 import type { State } from './state.ts';
-/** Fixed 32-bit LCG. Integer rejection sampling avoids modulo bias. Not cryptographic. */
-function drawBelow(rng: number, bound: number): { rng: number; value: number } {
+
+export type RandomWord = () => number;
+
+function assertWord(value: number): void {
+  if (!Number.isInteger(value) || value < 0 || value > 0xffffffff) {
+    throw new RangeError('Random word must be an unsigned 32-bit integer');
+  }
+}
+
+/** Fixed 32-bit LCG for deterministic tests/simulations. */
+function nextDeterministicWord(rng: number): number {
+  return (Math.imul(rng, 1664525) + 1013904223) >>> 0;
+}
+
+/** Integer rejection sampling avoids modulo bias for both deterministic and live random sources. */
+function drawBelow(rng: number, bound: number, randomWord?: RandomWord): { rng: number; value: number } {
   const bucket = Math.floor(0x100000000 / bound);
   const limit = bucket * bound;
-  do { rng = (Math.imul(rng, 1664525) + 1013904223) >>> 0; } while (rng >= limit);
-  return { rng, value: Math.floor(rng / bucket) };
+  let word: number;
+  do {
+    if (randomWord) {
+      word = randomWord();
+      assertWord(word);
+    } else {
+      rng = nextDeterministicWord(rng);
+      word = rng;
+    }
+  } while (word >= limit);
+  return { rng, value: Math.floor(word / bucket) };
 }
-export function deal(rng: number, dealer: Seat, score: [number, number], handNumber: number): State {
+
+export function deal(rng: number, dealer: Seat, score: [number, number], handNumber: number,
+  randomWord?: RandomWord): State {
   const cards = deck();
   for (let i = cards.length - 1; i > 0; i--) {
-    const draw = drawBelow(rng, i + 1);
+    const draw = drawBelow(rng, i + 1, randomWord);
     rng = draw.rng;
     [cards[i], cards[draw.value]] = [cards[draw.value]!, cards[i]!];
   }
@@ -26,9 +51,9 @@ export function deal(rng: number, dealer: Seat, score: [number, number], handNum
     result: null, winner: null,
   };
 }
-export function initialState(seed: number, dealer: Seat = 0): State {
+export function initialState(seed: number, dealer: Seat = 0, randomWord?: RandomWord): State {
   if (!Number.isInteger(seed) || seed < 0 || seed > 0xffffffff) {
     throw new RangeError('Seed must be an unsigned 32-bit integer');
   }
-  return deal(seed, dealer, [0, 0], 1);
+  return deal(seed, dealer, [0, 0], 1, randomWord);
 }

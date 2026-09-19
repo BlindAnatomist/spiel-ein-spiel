@@ -1,16 +1,25 @@
 import type { Action } from '../src/index.ts';
+import { dealerAnnouncement } from './presentation.ts';
 import type { Session, Update } from './session.ts';
 import type { createTable } from './render.ts';
 export function createController(session: Session, table: ReturnType<typeof createTable>, announce: (text: string) => void,
   wait: (ms: number) => Promise<void> = ms => new Promise(resolve => setTimeout(resolve, ms))) {
   let busy = false;
   let stopped = false;
+  let announcedHand = 0;
   async function settle(update?: Update) {
     busy = true;
     try {
       while (!stopped) {
-        table.render(session.view(), false);
-        for (const message of update?.messages ?? []) {
+        const current = session.view();
+        table.render(current, false);
+        const messages: string[] = [];
+        if (current.handNumber !== announcedHand) {
+          announcedHand = current.handNumber;
+          messages.push(dealerAnnouncement(current.dealer));
+        }
+        messages.push(...(update?.messages ?? []));
+        for (const message of messages) {
           if (stopped) return;
           announce(message);
           await wait(Math.max(1600, message.split(' ').length * 300));

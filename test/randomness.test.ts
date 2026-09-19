@@ -69,7 +69,7 @@ test('controller announces dealer once at each hand start and not on ordinary re
     bot: () => null,
     nextHand: () => {
       view = { ...view, handNumber: view.handNumber + 1, dealer: 1, turn: 0, phase: 'bidding',
-        biddingRound: 1, passes: 0, bids: [], trump: null, caller: null, result: null };
+        biddingRound: 1, bids: [], trump: null, caller: null, result: null };
       return view;
     },
   };

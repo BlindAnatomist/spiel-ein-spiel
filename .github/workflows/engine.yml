@@ -14,3 +14,10 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run check
       - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: preview-source
+          path: |
+            .
+            !node_modules
+            !.git

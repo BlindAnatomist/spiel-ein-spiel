@@ -4,7 +4,7 @@ import type { ActionResult, PlayerPort, Seat } from './types.ts';
 import { initialState, type RandomWord } from './internal/deal.ts';
 import { nextHand, transition } from './internal/reducer.ts';
 import { frozenCopy, playerView } from './internal/view.ts';
-export function createReferee(options: { seed: number; dealer?: Seat; randomWord?: RandomWord }) {
+export function createReferee(options: { seed: number; dealer?: Seat | undefined; randomWord?: RandomWord | undefined }) {
   const dealer = options.dealer ?? 0;
   assertSeat(dealer);
   let state = initialState(options.seed, dealer, options.randomWord);

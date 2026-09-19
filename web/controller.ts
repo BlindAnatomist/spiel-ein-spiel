@@ -7,14 +7,14 @@ export function createController(session: Session, table: ReturnType<typeof crea
   let busy = false;
   let stopped = false;
   let announcedHand = 0;
-  async function settle(update?: Update) {
+  async function settle(update?: Update, handStart = false) {
     busy = true;
     try {
       while (!stopped) {
         const current = session.view();
         table.render(current, false);
         const messages: string[] = [];
-        if (current.handNumber !== announcedHand) {
+        if (handStart && current.handNumber !== announcedHand) {
           announcedHand = current.handNumber;
           messages.push(dealerAnnouncement(current.dealer));
         }
@@ -35,12 +35,13 @@ export function createController(session: Session, table: ReturnType<typeof crea
         await wait(350);
         if (stopped) return;
         update = session.bot() ?? undefined;
+        handStart = false;
         if (!update) throw new Error('Bot could not advance');
       }
     } finally { busy = false; }
   }
   return {
-    start: () => settle(),
+    start: () => settle(undefined, true),
     act: async (action: Action) => {
       if (busy || stopped) return;
       const update = session.human(action);
@@ -49,7 +50,7 @@ export function createController(session: Session, table: ReturnType<typeof crea
     },
     next: async () => {
       if (busy || stopped || session.view().phase !== 'hand-over') return;
-      table.park(); session.nextHand(); await settle();
+      table.park(); session.nextHand(); await settle(undefined, true);
     },
     stop: () => { stopped = true; },
   };

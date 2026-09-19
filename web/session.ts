@@ -12,8 +12,13 @@ export interface Session {
   bot(): Update | null;
   nextHand(): PlayerView;
 }
-export function createSession(seed: number, level: Difficulty): Session {
-  const referee = createReferee({ seed });
+export interface SessionOptions {
+  dealer?: Seat;
+  /** Live browser games supply cryptographic 32-bit words; tests omit this for deterministic replay. */
+  randomWord?: () => number;
+}
+export function createSession(seed: number, level: Difficulty, options: SessionOptions = {}): Session {
+  const referee = createReferee({ seed, dealer: options.dealer, randomWord: options.randomWord });
   const ports = ([0, 1, 2, 3] as const).map(seat => referee.player(seat));
   const policies = policyLevels(level).map(kind => kind === null ? null : createBot(kind));
   const view = () => ports[0]!.view();

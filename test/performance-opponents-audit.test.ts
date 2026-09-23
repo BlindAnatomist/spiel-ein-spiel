@@ -37,7 +37,7 @@ test('mixed opponents always use two different difficulty levels and replay from
 
 test('public completion tracking records one complete game without exposing hidden state', () => {
   const storage = new MemoryStorage();
-  const recorder = createPerformanceRecorder(storage, { profileId: 'EUC-test-profile-1234567890', gameId: 'game-1', completedAt: () => '2026-09-23T21:00:00.000Z' });
+  const recorder = createPerformanceRecorder(storage, { profileId: 'EUC-test-profile-1234567890', gameId: 'game-1', humanTracking: 'owner', completedAt: () => '2026-09-23T21:00:00.000Z' });
   const seen: string[] = [];
   const observer = {
     handCompleted(view: Parameters<NonNullable<typeof recorder.handCompleted>>[0],
@@ -78,13 +78,16 @@ test('public completion tracking records one complete game without exposing hidd
   assert.deepEqual(game.score, final.score);
   assert.equal(game.id, 'game-1');
   assert.equal(game.completedAt, '2026-09-23T21:00:00.000Z');
+  assert.equal(game.humanTracking, 'owner');
   assert.deepEqual(game.opponents.map(opponent => opponent.id), selectOpponentProfiles('mixed', 20260923).map(opponent => opponent.id));
 
   const summary = summarizePerformance(book);
   assert.equal(summary.games, 1);
   assert.equal(summary.wins + summary.losses, 1);
   assert.equal(summary.hands, final.handNumber);
-  assert.equal(summary.callsBySeat.reduce((a, b) => a + b, 0), summary.hands);
+  assert.equal(summary.botCallsBySeat.reduce((a, b) => a + b, 0), summary.botHands);
+  assert.equal(summary.botGames, 1);
+  assert.equal(summary.botHands, final.handNumber);
   assert.match(performanceText(summary), /West calls:/);
   assert.match(performanceText(summary), /East calls:/);
   assert.equal(loadPendingArchives(storage).length, 1);
@@ -103,13 +106,50 @@ test('performance recovery profile survives reload and is not regenerated', () =
   assert.equal(calls, 1);
 });
 
+
+test('other-player games feed bot analysis without contaminating owner performance', () => {
+  const opponents = [
+    { seat: 1 as const, id: 'strong-assertive' as const, label: 'Assertive Strong', level: 'strong' as const },
+    { seat: 3 as const, id: 'strong-conservative' as const, label: 'Conservative Strong', level: 'strong' as const },
+  ];
+  const hand = (caller: 0 | 1 | 2 | 3) => ({
+    handNumber: 1, dealer: 0 as const, caller, round: 1 as const, alone: false,
+    makerTricks: 3, awardedTeam: (caller % 2) as 0 | 1, points: 1, reason: 'made' as const,
+  });
+  const summary = summarizePerformance({
+    version: 1,
+    games: [
+      {
+        id: 'owner-game', completedAt: '2026-09-23T21:00:00.000Z', humanTracking: 'owner',
+        difficulty: 'strong', opponents, winner: 0, score: [10, 6], hands: [hand(0), hand(1), hand(2)],
+      },
+      {
+        id: 'other-game', completedAt: '2026-09-23T22:00:00.000Z', humanTracking: 'other',
+        difficulty: 'strong', opponents, winner: 1, score: [7, 10], hands: [hand(0), hand(2), hand(3)],
+      },
+    ],
+  });
+  assert.equal(summary.games, 1);
+  assert.equal(summary.wins, 1);
+  assert.equal(summary.losses, 0);
+  assert.equal(summary.ownerCaller.calls, 1);
+  assert.equal(summary.botGames, 2);
+  assert.equal(summary.botHands, 6);
+  assert.equal(summary.valCaller.calls, 2);
+  assert.equal(summary.botCallsBySeat[1], 1);
+  assert.equal(summary.botCallsBySeat[3], 1);
+  assert.equal(summary.opponents[0]!.games, 2);
+  assert.match(performanceText(summary), /My tracked games: 1/);
+  assert.match(performanceText(summary), /Bot observations: 2 completed games/);
+});
+
 test('invalid or unavailable local storage data fails closed without affecting game statistics', () => {
   const broken: StorageLike = {
     getItem() { throw new Error('blocked'); },
     setItem() { throw new Error('blocked'); },
   };
   assert.deepEqual(loadPerformance(broken), { version: 1, games: [] });
-  assert.equal(performanceText(summarizePerformance(loadPerformance(broken))), 'No completed games recorded yet.');
+  assert.equal(performanceText(summarizePerformance(loadPerformance(broken))), 'No games recorded for my performance yet.');
 });
 
 test('deal audit finds no large card-location or seat-zero pair anomaly across 20,000 replayable deals', () => {

@@ -46,11 +46,11 @@ export const OPPONENT_PROFILES: Readonly<Record<OpponentProfileId, OpponentProfi
     { orderThreshold: 2.45, callThreshold: 2.35, aloneThreshold: 4.0, trumpLead: 1.38, conservation: 0.13 }),
 });
 
-const POOLS: Readonly<Record<OpponentLevel, readonly OpponentProfileId[]>> = Object.freeze({
-  casual: Object.freeze(['casual-cautious', 'casual-bold']),
-  strong: Object.freeze(['strong-balanced', 'strong-conservative', 'strong-assertive', 'strong-partnership']),
-  expert: Object.freeze(['expert-balanced', 'expert-conservative', 'expert-assertive']),
-});
+const POOLS: Readonly<Record<OpponentLevel, readonly OpponentProfileId[]>> = {
+  casual: ['casual-cautious', 'casual-bold'],
+  strong: ['strong-balanced', 'strong-conservative', 'strong-assertive', 'strong-partnership'],
+  expert: ['expert-balanced', 'expert-conservative', 'expert-assertive'],
+};
 
 function word(seed: number, salt: string): number {
   return hashText(`${seed >>> 0}:${salt}`);

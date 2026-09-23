@@ -14,13 +14,13 @@ The central up-card shows its face in round one, its patterned back in round two
 
 Five- and six-card hands each use one flex row, without sorting, overlap, truncating accessible names or disabling unavailable cards. Rank and suit faces are decorative; native buttons retain their exact PR #6 semantic descriptions and handlers, including bower wording. Hearts/diamonds are red and clubs/spades dark.
 
-CSS grid places all bid/action controls below the hand while retaining PR #6 DOM order: positive bids, hand heading/cards, legal Pass, Repeat current state, available Review last trick. Plain/ringed suit bids keep full accessible labels. Repeat uses a decorative star before a call and called-suit glyph afterward, resetting on the next hand. Review uses a local inline SVG of rabbit ears emerging from a top hat. Both keep their exact accessible names. There are no duplicate interactive controls.
+CSS grid places all bid/action controls below the hand. VoiceOver/DOM order is now hand heading/cards, positive bids, legal Pass, Repeat current state, available Review last trick. Automatic bidding focus still lands on the first positive bid, so swiping left immediately reaches the hand. Plain/ringed suit bids keep full accessible labels. Repeat uses a decorative star before a call and called-suit glyph afterward, resetting on the next hand. Review uses a local inline SVG of rabbit ears emerging from a top hat. Both keep their exact accessible names. There are no duplicate interactive controls.
 
 ## Protected contract
 
-Engine, policies, controller, announcer, presentation summaries, session, main entry/randomness and sound are unchanged. First-legal focus selection and focus bookkeeping in render.ts are unchanged. Existing 112 tests are unchanged. Twelve new tests cover visual accessibility, stable five/six-card hands and actions, privacy of visual faces, independent dealer/active treatment, public completed-trick hold, and byte-identity of protected modules. Full matches, hidden-information and determinism tests remain green.
+Engine, policies, announcer, presentation summaries, session, main entry/randomness and sound are unchanged. The controller mirrors PR #6's real-device remediation by extending only the narrator-to-focus quiet guard from 750 ms to 1500 ms; focus selection itself is unchanged. First-legal focus selection and focus bookkeeping in render.ts remain unchanged. Existing coverage is preserved, with an added swipe-order regression for hand → bids → Pass → state → last trick. Full matches, hidden-information and determinism tests remain required to stay green.
 
-Validation: npm ci --ignore-scripts; npm run check (124 passing); npm run build; git diff --check.
+Validation: npm ci --ignore-scripts; npm run check; npm run build; git diff --check. Current passing count is recorded by CI for the latest branch head.
 
 ## Browser layout checks
 
@@ -28,7 +28,7 @@ scripts/mobile-layout-fixtures.ts creates an independent browser regression page
 
 The harness is emitted under /layout-check/ only when Netlify CONTEXT is deploy-preview. It is not included in the normal production build, and is not a game feature. It bundles only the presentation and static sample seat-zero views; the referee used to generate fixtures runs at build time. The app itself retains its protected hidden-information boundary.
 
-Browser measurements and visual review remain BLOCKED, not passed. Draft PR #7 opened against the required feature branch, and GitHub CI passed, but Netlify produced no deploy-preview commit status or bot comment. Netlify documentation requires the PR base to be production or have branch deploys enabled; whether that setting is enabled for feat/euchre-narrator-and-audio could not be inspected through the available connector. The project dashboard requires authentication, which was not attempted. No working preview URL has been verified.
+PR #7 was retargeted to main solely for preview generation. The GitHub-connected Netlify project now creates deploy previews automatically for PR #7. Real-device VoiceOver acceptance and browser layout measurements remain required before merge.
 
 The cloud browser also refused localhost and local-file fixture URLs. No browser-policy bypass or alternative automation surface was used. The harness is committed and ready for the authorized automatic preview; browser measurements and visual inspection must be completed once that preview is available. The normal build removes any previously generated preview fixture directory before rebuilding, so fixtures cannot carry over into production output. No Netlify CLI, manual deployment or authentication is used. Real iPhone VoiceOver acceptance remains required; DOM/Chromium layout checks cannot certify Safari speech/focus or Dynamic Type behavior. Enlarged text should scroll rather than be clipped.
 

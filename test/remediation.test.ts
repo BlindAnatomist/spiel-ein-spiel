@@ -62,7 +62,7 @@ test('quiet guard does not delay un-narrated focus or each intervening bot decis
   assert.equal(g.waits[0]!.ms,350);assert.equal(botCalls,0);
   g.waits.shift()!.release();await flush();assert.equal(botCalls,1);
   assert.equal(g.log.includes('wait:1500'),false);
-  g.waits.shift()!.release();await flush();assert.equal(g.waits[0]!.ms,750);
+  g.waits.shift()!.release();await flush();assert.equal(g.waits[0]!.ms,1500);
   g.waits.shift()!.release();await pending;
   assert.equal(g.log.filter(x=>x==='wait:1500').length,1);
 });

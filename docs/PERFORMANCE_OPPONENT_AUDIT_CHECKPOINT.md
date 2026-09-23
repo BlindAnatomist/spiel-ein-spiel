@@ -101,6 +101,8 @@ Netlify Forms is site-side persistent storage. Form detection is enabled for the
 
 The Performance summary button is explicitly user-invoked. It writes ordinary static text and moves focus only because the user activated that control. It does not add another live region, automatic announcement or in-game focus transition.
 
+An `Analysis` button sits with the New Game setup controls. It reads only games classified as `My performance` and groups them into sequential 10-game blocks. The accessible analysis reports win rate, owner calling-success rate and average final-score differential from the first block through the latest block. A sighted-only SVG chart presents win rate and calling success across the same blocks; it is `aria-hidden` because the equivalent trend information is already stated in text. Other-player games never enter this human trend chart.
+
 ## Deal-distribution audit
 
 `src/audit/deals.ts` uses the authoritative deal function itself rather than a parallel shuffle implementation.
@@ -165,4 +167,5 @@ Real-device owner testing should confirm that:
 2. Mixed opponents are playable and feel behaviorally varied without illegal actions;
 3. Performance summary is easy to reach and does not interfere with game navigation;
 4. New Game still behaves as expected and does not count an abandoned game;
-5. a game begun as `Other player — bot data only` leaves the owner's human summary unchanged while increasing bot observations.
+5. a game begun as `Other player — bot data only` leaves the owner's human summary and Analysis trend unchanged while increasing bot observations;
+6. Analysis text and the sighted chart use the same owner-only 10-game block data.

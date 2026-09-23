@@ -4,7 +4,7 @@ import { auditDeals } from '../src/audit/deals.ts';
 import { createBot } from '../src/bots/index.ts';
 import { OPPONENT_PROFILES, selectOpponentProfiles } from '../src/bots/profiles.ts';
 import type { OpponentDifficulty } from '../src/bots/profiles.ts';
-import { createPerformanceRecorder, ensurePerformanceProfile, loadPendingArchives, loadPerformance, markPerformanceArchived, performanceText, summarizePerformance } from '../web/performance.ts';
+import { createPerformanceRecorder, ensurePerformanceProfile, loadPendingArchives, loadPerformance, markPerformanceArchived, ownerTrend, performanceAnalysisText, performanceText, summarizePerformance } from '../web/performance.ts';
 import type { StorageLike } from '../web/performance.ts';
 import { createSession } from '../web/session.ts';
 
@@ -141,6 +141,61 @@ test('other-player games feed bot analysis without contaminating owner performan
   assert.equal(summary.opponents[0]!.games, 2);
   assert.match(performanceText(summary), /My tracked games: 1/);
   assert.match(performanceText(summary), /Bot observations: 2 completed games/);
+  const trend = ownerTrend({ version: 1, games: [
+    {
+      id: 'owner-game', completedAt: '2026-09-23T21:00:00.000Z', humanTracking: 'owner',
+      difficulty: 'strong', opponents, winner: 0, score: [10, 6], hands: [hand(0), hand(1), hand(2)],
+    },
+    {
+      id: 'other-game', completedAt: '2026-09-23T22:00:00.000Z', humanTracking: 'other',
+      difficulty: 'strong', opponents, winner: 1, score: [7, 10], hands: [hand(0), hand(2), hand(3)],
+    },
+  ] }, 1);
+  assert.equal(trend.length, 1);
+  assert.equal(trend[0]!.winRate, 100);
+  assert.equal(trend[0]!.callSuccessRate, 100);
+  assert.match(performanceAnalysisText({ version: 1, games: [
+    {
+      id: 'owner-game', completedAt: '2026-09-23T21:00:00.000Z', humanTracking: 'owner',
+      difficulty: 'strong', opponents, winner: 0, score: [10, 6], hands: [hand(0), hand(1), hand(2)],
+    },
+    {
+      id: 'other-game', completedAt: '2026-09-23T22:00:00.000Z', humanTracking: 'other',
+      difficulty: 'strong', opponents, winner: 1, score: [7, 10], hands: [hand(0), hand(2), hand(3)],
+    },
+  ] }, 1), /Analysis currently includes 1 tracked game/);
+});
+
+
+test('owner trend compares sequential owner-only game blocks', () => {
+  const opponents = [
+    { seat: 1 as const, id: 'strong-balanced' as const, label: 'Balanced Strong', level: 'strong' as const },
+    { seat: 3 as const, id: 'strong-assertive' as const, label: 'Assertive Strong', level: 'strong' as const },
+  ];
+  const games = Array.from({ length: 20 }, (_, index) => ({
+    id: `g-${index + 1}`,
+    completedAt: `2026-09-${String(index + 1).padStart(2, '0')}T12:00:00.000Z`,
+    humanTracking: 'owner' as const,
+    difficulty: 'strong' as const,
+    opponents,
+    winner: (index < 10 ? Number(index < 4) : Number(index < 17)) as 0 | 1,
+    score: (index < 10 ? [8, 10] : [10, 7]) as readonly [number, number],
+    hands: [{
+      handNumber: 1, dealer: 0 as const, caller: 0 as const, round: 1 as const, alone: false,
+      makerTricks: index < 10 ? 2 : 3, awardedTeam: index < 10 ? 1 as const : 0 as const,
+      points: index < 10 ? 2 : 1, reason: index < 10 ? 'euchred' as const : 'made' as const,
+    }],
+  }));
+  const trend = ownerTrend({ version: 1, games }, 10);
+  assert.equal(trend.length, 2);
+  assert.equal(trend[0]!.label, 'Games 1–10');
+  assert.equal(trend[0]!.winRate, 40);
+  assert.equal(trend[0]!.callSuccessRate, 0);
+  assert.equal(trend[1]!.winRate, 70);
+  assert.equal(trend[1]!.callSuccessRate, 100);
+  const text = performanceAnalysisText({ version: 1, games }, 10);
+  assert.match(text, /win rate changed from 40 to 70 percent/);
+  assert.match(text, /calling success changed from 0 to 100 percent/);
 });
 
 test('invalid or unavailable local storage data fails closed without affecting game statistics', () => {

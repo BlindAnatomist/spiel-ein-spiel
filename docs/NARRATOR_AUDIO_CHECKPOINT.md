@@ -30,3 +30,5 @@ DOM tests do not establish iPhone VoiceOver speech timing, interruption, focus o
 2. Human and bot performance tracking, including East versus West calling frequency.
 3. Multiple personalities within difficulty levels, including conservative, assertive, partnership-oriented, card-conserving and aggressive-loner candidates.
 Neither is implemented here.
+
+Deployment note: repository linkage to Netlify was established after this checkpoint was created; this documentation-only update exists solely to trigger a fresh PR deployment preview.

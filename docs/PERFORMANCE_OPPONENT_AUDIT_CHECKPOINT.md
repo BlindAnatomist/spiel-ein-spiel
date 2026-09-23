@@ -103,6 +103,29 @@ The Performance summary button is explicitly user-invoked. It writes ordinary st
 
 An `Analysis` button sits with the New Game setup controls. It reads only games classified as `My performance` and groups them into sequential 10-game blocks. The accessible analysis reports win rate, owner calling-success rate and average final-score differential from the first block through the latest block. A sighted-only SVG chart presents win rate and calling success across the same blocks; it is `aria-hidden` because the equivalent trend information is already stated in text. Other-player games never enter this human trend chart.
 
+### Compact setup and protected action order
+
+The owner rejected the earlier PR #8 top-of-page control expansion as too cluttered. The setup is deliberately reduced to:
+
+- opponent difficulty;
+- one toggle button whose two states are `My performance` and `Bot data only`;
+- New Game;
+- one Analysis button;
+- the existing Sound Cues control.
+
+The separate Performance summary and Performance recovery code buttons are removed. Their information is available through Analysis instead. The explanatory setup hint is also removed.
+
+During bidding, the accepted VoiceOver/navigation order is now enforced as:
+
+1. Your hand heading;
+2. cards in stable engine order;
+3. positive call/order-up choices;
+4. Pass when legal;
+5. Repeat current state;
+6. Review last trick when available.
+
+Automatic bidding focus may still land on the first positive call/order-up action, but ordinary left/right navigation keeps the cards immediately before those choices. During play, the order is hand/cards, Repeat current state, then Review last trick when available. The first-legal-card focus rule for card play/discard is unchanged.
+
 ## Deal-distribution audit
 
 `src/audit/deals.ts` uses the authoritative deal function itself rather than a parallel shuffle implementation.

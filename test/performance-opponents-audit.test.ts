@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { auditDeals } from '../src/audit/deals.ts';
 import { createBot } from '../src/bots/index.ts';
 import { OPPONENT_PROFILES, selectOpponentProfiles } from '../src/bots/profiles.ts';
@@ -13,6 +14,15 @@ class MemoryStorage implements StorageLike {
   getItem(key: string): string | null { return this.values.get(key) ?? null; }
   setItem(key: string, value: string): void { this.values.set(key, value); }
 }
+
+test('data controls stay compact: one tracking toggle and one Analysis button', () => {
+  const html = readFileSync('web/index.html', 'utf8');
+  assert.equal((html.match(/id="human-tracking"/g) ?? []).length, 1);
+  assert.match(html, /id="human-tracking"[^>]*aria-pressed="true"[^>]*>My performance</);
+  assert.equal((html.match(/id="performance-analysis"/g) ?? []).length, 1);
+  assert.doesNotMatch(html, /Performance summary|Performance recovery code|Human performance data/);
+  assert.doesNotMatch(html, /Stick the dealer\. Maker may go alone/);
+});
 
 test('ordinary difficulties select two distinct profiles within the requested tier', () => {
   for (const difficulty of ['casual', 'strong', 'expert'] as const) {

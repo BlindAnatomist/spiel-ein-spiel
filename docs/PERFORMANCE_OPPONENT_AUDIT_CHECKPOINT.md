@@ -21,16 +21,18 @@ The existing Casual, Strong and Expert strategic cores remain. New profiles are 
 
 Current profiles:
 
-- Casual: Cautious Casual, Bold Casual.
+- Casual: Balanced Casual, Cautious Casual, Bold Casual.
 - Strong: Balanced Strong, Conservative Strong, Assertive Strong, Partnership Strong.
 - Expert: Balanced Expert, Conservative Expert, Assertive Expert.
 - Val remains Val and is not placed in the opponent profile pool.
 
-For Casual, Strong or Expert game setup, West and East receive two distinct profiles from the selected tier. For Mixed opponents, West and East are guaranteed to come from two different difficulty tiers.
+For live browser games at Casual, Strong or Expert, West and East receive two distinct profiles from the selected tier. For Mixed opponents, West and East are guaranteed to come from two different difficulty tiers.
+
+The programmatic `createSession(seed, level)` default remains the accepted PR #6 baseline: both opponents use the exact named policy selected by `level`. Live browser construction explicitly opts into `opponentMode: 'varied'`. This preserves deterministic test/replay semantics while making ordinary browser play varied.
 
 Profile selection is derived from the host's per-game seed. In live browser games that seed is already generated from `crypto.getRandomValues`. In deterministic tests the same seed reproduces the same profile pair. The seed is never passed into a decision policy.
 
-The profile mechanism changes strategy parameters only. It does not relax legal-play enforcement, grant hidden-card access, alter bowers, or create separate rule logic.
+Balanced profiles exactly reproduce the existing named policies. The profile mechanism changes strategy parameters only. It does not relax legal-play enforcement, grant hidden-card access, alter bowers, or create separate rule logic.
 
 ## Performance tracking
 

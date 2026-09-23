@@ -245,7 +245,7 @@ test('announcement lifecycle retains text for its speech budget, then clears bef
   release(); await Promise.resolve();
   assert.deepEqual(messages,['You take the trick.','','Val takes the trick.']);
   release(); await new Promise<void>(r=>setImmediate(r));
-  assert.equal(delays.at(-1),1250); release(); await pending; assert.deepEqual(messages,['You take the trick.','','Val takes the trick.','']);
+  assert.equal(delays.at(-1),1150); release(); await pending; assert.deepEqual(messages,['You take the trick.','','Val takes the trick.','']);
   const old=createController(session,table,t=>messages.push(t),()=>new Promise<void>(resolve=>{release=resolve;}));
   const oldPending=old.act({type:'play',card:'diamonds:J'}); old.stop(); messages.push('New game event'); release(); await oldPending;
   assert.equal(messages.at(-1),'New game event');

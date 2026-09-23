@@ -1,4 +1,4 @@
-import { effectiveSuit, rankOf, suitOf } from '../src/index.ts';
+import { effectiveSuit, rankOf, suitOf, teamOf } from '../src/index.ts';
 import type { Action, Card, PlayerView, Seat } from '../src/index.ts';
 export const names = ['You', 'West', 'Val', 'East'] as const;
 export function dealerAnnouncement(dealer: Seat): string {
@@ -29,9 +29,13 @@ export function resultText(v: PlayerView): string {
 export function events(before: PlayerView, after: PlayerView, actor: Seat, action: Action): string[] {
   const messages: string[] = [];
   if (actor !== 0) {
-    if (action.type === 'play') messages.push(`${names[actor]} plays ${cardName(action.card, after.trump).toLowerCase()}.`);
+    if (action.type === 'play') messages.push(`${names[actor]} ${before.trick.length === 0 && (after.trick.some(p => p.seat === actor && p.card === action.card) || after.completedTricks.length > before.completedTricks.length) ? 'leads' : 'plays'} ${cardName(action.card, after.trump).toLowerCase()}.`);
     else if (action.type === 'discard') messages.push(`${names[actor]} discards a card.`);
     else if (action.type === 'pass' || action.type === 'order-up' || action.type === 'call') messages.push(`${names[actor]} ${action.type === 'pass' ? 'passes' : action.type === 'order-up' ? `orders up ${after.trump}${action.alone ? ' and goes alone' : ''}` : `calls ${action.suit}${action.alone ? ' and goes alone' : ''}`}.`);
+  }
+  if (before.upCardStatus !== after.upCardStatus) {
+    if (after.upCardStatus === 'turned-down') messages.push('The up-card is turned down.');
+    if (after.upCardStatus === 'ordered') messages.push(`${names[after.dealer]} ${after.dealer === 0 ? 'pick' : 'picks'} up.`);
   }
   if (after.completedTricks.length > before.completedTricks.length) {
     const winner = after.completedTricks.at(-1)!.winner;
@@ -39,4 +43,33 @@ export function events(before: PlayerView, after: PlayerView, actor: Seat, actio
   }
   // Results are spoken through focus, never duplicated in the live region.
   return messages;
+}
+
+export function handAnnouncement(v: PlayerView): string {
+  return `Up-card: ${cardName(v.upCard).toLowerCase()}.`;
+}
+/** No hand, legal actions, hidden state, or strategy is read by either review. */
+export function currentState(v: PlayerView): string {
+  const parts = [`Dealer: ${names[v.dealer]}.`];
+  if (v.phase === 'bidding') {
+    parts.push(`Up-card: ${cardName(v.upCard).toLowerCase()}, ${v.upCardStatus}.`,
+      `${v.biddingRound === 1 ? 'First' : 'Second'} calling round.`);
+  } else {
+    parts.push(`Called suit: ${v.trump}. Caller: ${names[v.caller!]}.`);
+    if (v.alone) parts.push(`${names[v.caller!]} ${v.caller === 0 ? 'are' : 'is'} going alone.`);
+    const ours = v.completedTricks.filter(t => teamOf(t.winner) === 0).length;
+    parts.push(`You and Val have ${ours} ${ours === 1 ? 'trick' : 'tricks'}; opponents have ${v.completedTricks.length - ours}.`);
+    if (v.phase === 'discarding') parts.push(`Up-card: ${cardName(v.upCard).toLowerCase()}, ordered.`);
+    if (v.phase === 'playing' && v.trick.length) parts.push(`${names[v.trick[0]!.seat]} led ${cardName(v.trick[0]!.card, v.trump).toLowerCase()}.`);
+  }
+  if (v.result) parts.push(resultText(v));
+  else if (v.turn !== null) parts.push(v.phase === 'discarding' ? `${names[v.turn]} must discard.`
+    : v.phase === 'playing' && !v.trick.length ? `${names[v.turn]} ${v.turn === 0 ? 'lead' : 'leads'}.` : `${names[v.turn]} to act.`);
+  return parts.join(' ');
+}
+export function lastTrick(v: PlayerView): string {
+  const trick = v.completedTricks.at(-1);
+  if (!trick) return '';
+  return ['Last trick.', ...trick.plays.map((p, i) => `${names[p.seat]} ${i === 0 ? 'led' : 'played'} ${cardName(p.card, v.trump).toLowerCase()}.`),
+    `${names[trick.winner]} took the trick.`].join(' ');
 }

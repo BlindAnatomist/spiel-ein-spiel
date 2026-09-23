@@ -7,7 +7,7 @@ import type { PlayerView } from '../src/index.ts';
 import { createSession, type Session } from '../web/session.ts';
 import { createTable } from '../web/render.ts';
 import { createController } from '../web/controller.ts';
-import { dealerAnnouncement } from '../web/presentation.ts';
+import { cardName, dealerAnnouncement } from '../web/presentation.ts';
 
 function finishHand(session: Session): void {
   const human = createBot('strong');
@@ -79,11 +79,11 @@ test('controller announces dealer once at each hand start and not on ordinary re
   const speech: string[] = [];
   const controller = createController(session, table, text => speech.push(text), async () => {});
   await controller.start();
-  assert.deepEqual(speech, ['You deal.', '']);
+  assert.deepEqual(speech, ['You deal.', '', `Up-card: ${cardName(view.upCard).toLowerCase()}.`, '']);
   await controller.start();
-  assert.deepEqual(speech, ['You deal.', '']);
+  assert.deepEqual(speech, ['You deal.', '', `Up-card: ${cardName(view.upCard).toLowerCase()}.`, '']);
   view = { ...view, phase: 'hand-over', turn: null };
   await controller.next();
-  assert.deepEqual(speech, ['You deal.', '', 'West deals.', '']);
+  assert.deepEqual(speech, ['You deal.', '', `Up-card: ${cardName(view.upCard).toLowerCase()}.`, '', 'West deals.', '', `Up-card: ${cardName(view.upCard).toLowerCase()}.`, '']);
   dom.window.close();
 });

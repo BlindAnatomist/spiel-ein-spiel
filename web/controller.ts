@@ -1,9 +1,13 @@
 import type { Action } from '../src/index.ts';
-import { dealerAnnouncement } from './presentation.ts';
+import { createAnnouncer } from './announcer.ts';
+import { cueEvents, type SoundCue } from './sound.ts';
+import { currentState, lastTrick, handAnnouncement, dealerAnnouncement } from './presentation.ts';
 import type { Session, Update } from './session.ts';
 import type { createTable } from './render.ts';
 export function createController(session: Session, table: ReturnType<typeof createTable>, announce: (text: string) => void,
-  wait: (ms: number) => Promise<void> = ms => new Promise(resolve => setTimeout(resolve, ms))) {
+  wait: (ms: number) => Promise<void> = ms => new Promise(resolve => setTimeout(resolve, ms)),
+  sound: (cue: SoundCue) => void = () => {}) {
+  const speech = createAnnouncer(announce, wait);
   let busy = false;
   let stopped = false;
   let announcedHand = 0;
@@ -16,17 +20,12 @@ export function createController(session: Session, table: ReturnType<typeof crea
         const messages: string[] = [];
         if (handStart && current.handNumber !== announcedHand) {
           announcedHand = current.handNumber;
-          messages.push(dealerAnnouncement(current.dealer));
+          messages.push(dealerAnnouncement(current.dealer), handAnnouncement(current));
         }
         messages.push(...(update?.messages ?? []));
-        for (const message of messages) {
-          if (stopped) return;
-          announce(message);
-          await wait(Math.max(1600, message.split(' ').length * 300));
-          // Clear only this loop's message; a cancelled loop must not erase a new game's speech.
-          if (stopped) return;
-          announce('');
-        }
+        await Promise.all(messages.map(message => speech.say(message)));
+        // An explicitly requested review shares the queue and finishes before automatic focus.
+        await speech.say('');
         if (stopped) return;
         const view = session.view();
         if (view.turn === null || view.turn === 0) {
@@ -34,7 +33,9 @@ export function createController(session: Session, table: ReturnType<typeof crea
         }
         await wait(350);
         if (stopped) return;
+        const before = session.view();
         update = session.bot() ?? undefined;
+        if (update) cueEvents(before, update.view).forEach(sound);
         handStart = false;
         if (!update) throw new Error('Bot could not advance');
       }
@@ -44,14 +45,20 @@ export function createController(session: Session, table: ReturnType<typeof crea
     start: () => settle(undefined, true),
     act: async (action: Action) => {
       if (busy || stopped) return;
+      const before = session.view();
       const update = session.human(action);
       if (!update) return;
+      speech.cancelReviews();
+      cueEvents(before, update.view).forEach(sound);
       table.park(); await settle(update);
     },
     next: async () => {
       if (busy || stopped || session.view().phase !== 'hand-over') return;
+      speech.cancelReviews();
       table.park(); session.nextHand(); await settle(undefined, true);
     },
-    stop: () => { stopped = true; },
+    repeat: () => speech.say(() => currentState(session.view()), true),
+    review: () => speech.say(() => lastTrick(session.view()), true),
+    stop: () => { stopped = true; speech.stop(); },
   };
 }

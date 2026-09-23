@@ -1,22 +1,25 @@
 import { teamOf } from '../src/index.ts';
 import type { Action, Card, PlayerView } from '../src/index.ts';
 import { actionName, cardName, names, resultText } from './presentation.ts';
-export interface Handlers { act(action: Action): void; next(): void }
+export interface Handlers { act(action: Action): void; next(): void; repeat?(): void; review?(): void }
 /** No host/referee imports or capabilities. Receives only a seat-zero view. */
 export function createTable(root: HTMLElement, handlers: Handlers) {
   const d = root.ownerDocument;
-  root.innerHTML = `<p id="score"></p><div class="table"><p class="partner">Val · your partner</p><p class="west">West</p><p class="east">East</p><div class="center"><h2>Table</h2><p id="facts"></p><p id="trump"></p><p id="upcard"></p><h2>Current trick</h2><ul id="trick"></ul><p id="tricks"></p></div></div><h2 id="turn" tabindex="-1">Game actions</h2><div id="bids" class="actions"></div><div id="result" tabindex="-1"></div><button id="next" type="button" hidden>Deal next hand</button><h2>Your hand</h2><div id="hand" class="hand"></div>`;
+  root.innerHTML = `<div class="actions"><button id="repeat-state" type="button">Repeat current state</button><button id="review-trick" type="button" hidden>Review last trick</button></div><p id="score"></p><div class="table"><p class="partner">Val · your partner</p><p class="west">West</p><p class="east">East</p><div class="center"><h2>Table</h2><p id="facts"></p><p id="trump"></p><p id="upcard"></p><h2>Current trick</h2><ul id="trick"></ul><p id="tricks"></p></div></div><h2 id="turn" tabindex="-1">Game actions</h2><div id="bids" class="actions"></div><div id="result" tabindex="-1"></div><button id="next" type="button" hidden>Deal next hand</button><h2>Your hand</h2><div id="hand" class="hand"></div>`;
   const get = (id: string) => root.querySelector<HTMLElement>(`#${id}`)!;
   const hand = get('hand');
   const cards = new Map<Card, HTMLButtonElement>();
   let current: PlayerView;
   let ready = false;
   let focusKey = '';
+  get('repeat-state').onclick = () => handlers.repeat?.();
+  get('review-trick').onclick = () => handlers.review?.();
   get('next').onclick = () => handlers.next();
   function render(v: PlayerView, interactive = true) {
     if (v.seat !== 0) throw new Error('Human presentation requires seat zero');
     if (current && current.handNumber !== v.handNumber) { hand.replaceChildren(); cards.clear(); }
     current = v; ready = interactive;
+    get('review-trick').hidden = v.completedTricks.length === 0;
     get('score').textContent = `You & Val ${v.score[0]} — Opponents ${v.score[1]} · First to 10`;
     get('facts').textContent = `Hand ${v.handNumber}. Dealer: ${names[v.dealer]}.`;
     get('trump').textContent = `Called suit: ${v.trump ?? 'not yet called'}.${v.caller !== null ? ` Caller: ${names[v.caller]}.${v.alone ? ' Going alone.' : ''}` : ''}`;

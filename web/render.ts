@@ -1,3 +1,4 @@
+import { cardFace, spokenText } from './card-face.ts';
 import { teamOf } from '../src/index.ts';
 import type { Action, Card, PlayerView } from '../src/index.ts';
 import { actionName, cardName, names, resultText } from './presentation.ts';
@@ -24,7 +25,12 @@ export function createTable(root: HTMLElement, handlers: Handlers) {
     const ourTricks = v.completedTricks.filter(trick => teamOf(trick.winner) === 0).length;
     get('tricks').textContent = `Tricks: You and Val ${ourTricks}, opponents ${v.completedTricks.length - ourTricks}. ${v.completedTricks.length} of 5 complete.${v.sittingOut !== null ? ` ${names[v.sittingOut]} sits out this hand.` : ''}`;
     const plays = v.trick;
-    get('trick').replaceChildren(...plays.map(p => { const li = d.createElement('li'); li.textContent = `${names[p.seat]}: ${cardName(p.card, v.trump)}`; return li; }));
+    get('trick').replaceChildren(...plays.map(p => { const li = d.createElement('li');
+      li.className = `trick-seat seat-${p.seat}`;
+      const face = cardFace(d, p.card);
+      face.dataset.player = names[p.seat];
+      li.append(spokenText(d, `${names[p.seat]}: ${cardName(p.card, v.trump)}`), face);
+      return li; }));
     get('turn').textContent = v.result ? 'Hand complete' : v.turn === 0 ? v.phase === 'bidding' ? `Your bid — round ${v.biddingRound}` : v.phase === 'discarding' ? 'Discard one card' : 'Your turn to play' : `${names[v.turn!]}${v.phase === 'bidding' ? ` bids — round ${v.biddingRound}` : v.phase === 'discarding' ? ' must discard' : ' to play'}`;
     const bids = get('bids'); bids.replaceChildren();
     for (const action of v.legalActions.filter(a => a.type !== 'play' && a.type !== 'discard')) {
@@ -49,7 +55,10 @@ export function createTable(root: HTMLElement, handlers: Handlers) {
         };
       }
       const legal = v.legalActions.some(a => (a.type === 'play' || a.type === 'discard') && a.card === card);
-      button.textContent = v.phase === 'discarding' && v.turn === 0 ? `Discard ${cardName(card, v.trump)}` : `${cardName(card, v.trump)}, ${legal && interactive ? 'playable' : 'not playable'}`;
+      const label = v.phase === 'discarding' && v.turn === 0 ? `Discard ${cardName(card, v.trump)}` : `${cardName(card, v.trump)}, ${legal && interactive ? 'playable' : 'not playable'}`;
+      const face = cardFace(d, card);
+      face.dataset.availability = v.phase === 'discarding' && v.turn === 0 ? 'Discard' : legal && interactive ? 'Playable' : 'Not playable';
+      button.replaceChildren(spokenText(d, label), face);
       button.setAttribute('aria-disabled', String(!legal || !interactive));
       button.className = legal && interactive ? 'card playable' : 'card unavailable';
     }

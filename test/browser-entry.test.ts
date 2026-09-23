@@ -15,7 +15,7 @@ test('bundled browser entry randomizes dealer, uses live randomness, and plays t
   Object.defineProperty(dom.window.crypto,'getRandomValues',{value:(array:Uint32Array)=>{randomCalls++;array[0]=73;return array;}});
   dom.window.eval(output.outputFiles[0]!.text);
   const d=dom.window.document;
-  (d.querySelector('#setup button') as HTMLButtonElement).click();
+  (d.querySelector('#setup button[type="submit"]') as HTMLButtonElement).click();
   const flush=()=>new Promise<void>(resolve=>setImmediate(resolve));
   await flush();
   assert.equal((d.querySelector('#game') as HTMLElement).hidden,false);

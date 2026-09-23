@@ -41,7 +41,7 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   // Live games use browser cryptographic randomness for the starting dealer and every shuffle.
   const dealer = (randomWord() & 3) as Seat;
   const seed = randomWord();
-  const session = createSession(seed, level, { dealer, randomWord, observer: createPerformanceRecorder(storage) });
+  const session = createSession(seed, level, { dealer, randomWord, observer: createPerformanceRecorder(storage), opponentMode: 'varied' });
   root.hidden = false;
   const table = createTable(root, { act: action => { void controller!.act(action); }, next: () => { void controller!.next(); }, repeat: () => { void controller!.repeat(); }, review: () => { void controller!.review(); } });
   controller = createController(session, table, text => { live.textContent = text; }, undefined, cue => sounds.play(cue));

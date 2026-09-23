@@ -65,9 +65,9 @@ test('valid public opening lead is distinguished from a following play; human pl
   assert.deepEqual(events(v,v,0,{type:'play',card:'diamonds:J'}),[]);
 });
 test('repeat accurately describes both calling rounds, playing, loners and discard phase', () => {
-  assert.equal(currentState(base()),`Dealer: East. Up-card: ${cardName(base().upCard).toLowerCase()}, face-up. First calling round. You to act.`);
+  assert.equal(currentState(base()),`Hand ${base().handNumber}. Dealer: East. Score: you and Val 0, opponents 0. First to 10. You and Val have 0 tricks; opponents have 0. Up-card: ${cardName(base().upCard).toLowerCase()}, face-up. First calling round. You to act.`);
   assert.match(currentState({...base(),biddingRound:2,upCardStatus:'turned-down'}),/turned-down\. Second calling round/);
-  assert.equal(currentState(completed()),'Dealer: East. Called suit: hearts. Caller: Val. You and Val have 1 trick; opponents have 0. You lead.');
+  assert.equal(currentState(completed()),'Hand 1. Dealer: East. Score: you and Val 0, opponents 0. First to 10. You and Val have 1 trick; opponents have 0. Called suit: hearts. Caller: Val. You lead.');
   assert.match(currentState({...playing(),alone:true}),/Val is going alone/);
   assert.match(currentState({...playing(),phase:'discarding',turn:3,upCardStatus:'ordered'}),/ordered\. East must discard/);
   assert.match(currentState({...playing(),trick:[{seat:1,card:'diamonds:J'}]}),/West led jack of diamonds, left bower, counts as hearts\. You to act/);
@@ -105,6 +105,7 @@ test('automatic events and a requested review finish before focus resumes', asyn
   const controller=createController(session,table,t=>messages.push(t),()=>new Promise<void>(r=>releases.push(r)));
   const act=controller.act(v.legalActions[0]!);const review=controller.repeat();
   releases.shift()!();await flush();assert.equal(focusCount,0);assert.equal(messages.at(-1),currentState(v));
+  releases.shift()!();await flush();assert.equal(focusCount,0);assert.equal(messages.at(-1),'');
   releases.shift()!();await Promise.all([act,review]);assert.equal(focusCount,1);
 });
 test('all narrator and review text excludes private cards throughout real games', () => {

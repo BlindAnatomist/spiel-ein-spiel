@@ -3,6 +3,7 @@ export function createAnnouncer(write: (text: string) => void, wait: (ms: number
   type Entry = { text: () => string; review: boolean; done: () => void };
   let queue: Entry[] = [];
   let active = false;
+  let revision = 0;
   let stopped = false;
   let interrupt: (() => void) | undefined;
   async function drain() {
@@ -13,6 +14,7 @@ export function createAnnouncer(write: (text: string) => void, wait: (ms: number
         const entry = queue.shift()!;
         const text = entry.text();
         if (text) {
+          revision++;
           write(text);
           const duration = Math.max(1600, text.split(' ').length * 300);
           if (entry.review) {
@@ -39,6 +41,7 @@ export function createAnnouncer(write: (text: string) => void, wait: (ms: number
         void drain();
       });
     },
+    revision: () => revision,
     cancelReviews,
     stop() { stopped = true; cancelReviews(); queue.splice(0).forEach(entry => entry.done()); },
   };

@@ -4,6 +4,8 @@ import { cueEvents, type SoundCue } from './sound.ts';
 import { currentState, lastTrick, handAnnouncement, dealerAnnouncement } from './presentation.ts';
 import type { Session, Update } from './session.ts';
 import type { createTable } from './render.ts';
+/** Quiet time after the live region clears, only before automatic focus. */
+export const FOCUS_GUARD_MS = 750;
 export function createController(session: Session, table: ReturnType<typeof createTable>, announce: (text: string) => void,
   wait: (ms: number) => Promise<void> = ms => new Promise(resolve => setTimeout(resolve, ms)),
   sound: (cue: SoundCue) => void = () => {}) {
@@ -13,6 +15,7 @@ export function createController(session: Session, table: ReturnType<typeof crea
   let announcedHand = 0;
   async function settle(update?: Update, handStart = false) {
     busy = true;
+    const initialSpeech = speech.revision();
     try {
       while (!stopped) {
         const current = session.view();
@@ -29,6 +32,19 @@ export function createController(session: Session, table: ReturnType<typeof crea
         if (stopped) return;
         const view = session.view();
         if (view.turn === null || view.turn === 0) {
+          if (speech.revision() !== initialSpeech) {
+            // Reviews arriving during the guard must also finish and clear first.
+            let revision: number;
+            do {
+              await speech.say('');
+              if (stopped) return;
+              revision = speech.revision();
+              await wait(FOCUS_GUARD_MS);
+              if (stopped) return;
+              await speech.say('');
+            } while (speech.revision() !== revision);
+          }
+          if (stopped) return;
           table.render(view); table.focus(); return;
         }
         await wait(350);

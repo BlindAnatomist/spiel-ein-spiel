@@ -67,7 +67,8 @@ test('bidding controls exactly reflect engine legal actions, including stuck dea
     const turn = ref.player(0).view().turn!;
     if (turn === 0) {
       const v=ref.player(0).view(); const {root,table,dom}=fixture(v);
-      assert.deepEqual([...root.querySelectorAll('#bids button')].map(b=>b.textContent),v.legalActions.map(actionName));
+      assert.deepEqual([...root.querySelectorAll('#bids button')].map(b=>b.getAttribute('aria-label')),v.legalActions.filter(a=>a.type!=='pass').map(a=>actionName(a,v.upCard)));
+      assert.equal(root.querySelector<HTMLButtonElement>('#pass')!.hidden,!v.legalActions.some(a=>a.type==='pass'));
       table.focus(); assert.equal(dom.window.document.activeElement,root.querySelector('#bids button'));
       assert.match(root.querySelector('#turn')!.textContent!,/round 1/);
     }
@@ -78,7 +79,8 @@ test('bidding controls exactly reflect engine legal actions, including stuck dea
   assert.equal(v.turn,0);
   assert.equal(root.querySelectorAll('#bids button').length,6);
   assert.ok(!root.querySelector('#bids')!.textContent!.includes('Pass'));
-  assert.deepEqual([...root.querySelectorAll('#bids button')].map(b=>b.textContent),v.legalActions.map(actionName));
+  assert.deepEqual([...root.querySelectorAll('#bids button')].map(b=>b.getAttribute('aria-label')),v.legalActions.filter(a=>a.type!=='pass').map(a=>actionName(a,v.upCard)));
+  assert.equal(root.querySelector<HTMLButtonElement>('#pass')!.hidden,!v.legalActions.some(a=>a.type==='pass'));
 });
 test('dealer pickup displays six distinct discard controls and focuses the first', () => {
   const ref=createReferee({seed:7}); ref.player(1).act({type:'order-up',alone:false});
@@ -242,7 +244,8 @@ test('announcement lifecycle retains text for its speech budget, then clears bef
   assert.deepEqual(messages,['You take the trick.']); assert.equal(delays[0],1600);
   release(); await Promise.resolve();
   assert.deepEqual(messages,['You take the trick.','','Val takes the trick.']);
-  release(); await pending; assert.deepEqual(messages,['You take the trick.','','Val takes the trick.','']);
+  release(); await new Promise<void>(r=>setImmediate(r));
+  assert.equal(delays.at(-1),750); release(); await pending; assert.deepEqual(messages,['You take the trick.','','Val takes the trick.','']);
   const old=createController(session,table,t=>messages.push(t),()=>new Promise<void>(resolve=>{release=resolve;}));
   const oldPending=old.act({type:'play',card:'diamonds:J'}); old.stop(); messages.push('New game event'); release(); await oldPending;
   assert.equal(messages.at(-1),'New game event');

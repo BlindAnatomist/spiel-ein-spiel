@@ -1,11 +1,11 @@
-import { teamOf } from '../src/index.ts';
+import { suitOf, teamOf } from '../src/index.ts';
 import type { Action, Card, PlayerView } from '../src/index.ts';
 import { actionName, cardName, names, resultText } from './presentation.ts';
 export interface Handlers { act(action: Action): void; next(): void; repeat?(): void; review?(): void }
 /** No host/referee imports or capabilities. Receives only a seat-zero view. */
 export function createTable(root: HTMLElement, handlers: Handlers) {
   const d = root.ownerDocument;
-  root.innerHTML = `<div class="actions"><button id="repeat-state" type="button">Repeat current state</button><button id="review-trick" type="button" hidden>Review last trick</button></div><p id="score"></p><div class="table"><p class="partner">Val · your partner</p><p class="west">West</p><p class="east">East</p><div class="center"><h2>Table</h2><p id="facts"></p><p id="trump"></p><p id="upcard"></p><h2>Current trick</h2><ul id="trick"></ul><p id="tricks"></p></div></div><h2 id="turn" tabindex="-1">Game actions</h2><div id="bids" class="actions"></div><div id="result" tabindex="-1"></div><button id="next" type="button" hidden>Deal next hand</button><h2>Your hand</h2><div id="hand" class="hand"></div>`;
+  root.innerHTML = `<p id="score" aria-hidden="true"></p><div class="table"><p class="partner" aria-hidden="true">Val · your partner</p><p class="west" aria-hidden="true">West</p><p class="east" aria-hidden="true">East</p><div class="center"><h2 aria-hidden="true">Table</h2><p id="facts" aria-hidden="true"></p><p id="trump" aria-hidden="true"></p><p id="upcard" aria-hidden="true"></p><h2>Current trick</h2><ul id="trick"></ul><p id="tricks" aria-hidden="true"></p></div></div><h2 id="turn" tabindex="-1">Game actions</h2><div id="bids" class="actions"></div><div id="result" tabindex="-1"></div><button id="next" type="button" hidden>Deal next hand</button><h2>Your hand</h2><div id="hand" class="hand"></div><div id="after-hand" class="actions"><button id="pass" type="button" hidden>Pass</button><button id="repeat-state" type="button">Repeat current state</button><button id="review-trick" type="button" hidden>Review last trick</button></div>`;
   const get = (id: string) => root.querySelector<HTMLElement>(`#${id}`)!;
   const hand = get('hand');
   const cards = new Map<Card, HTMLButtonElement>();
@@ -23,15 +23,30 @@ export function createTable(root: HTMLElement, handlers: Handlers) {
     get('score').textContent = `You & Val ${v.score[0]} — Opponents ${v.score[1]} · First to 10`;
     get('facts').textContent = `Hand ${v.handNumber}. Dealer: ${names[v.dealer]}.`;
     get('trump').textContent = `Called suit: ${v.trump ?? 'not yet called'}.${v.caller !== null ? ` Caller: ${names[v.caller]}.${v.alone ? ' Going alone.' : ''}` : ''}`;
+    // Keep historical up-card individually accessible when the phase summary omits it.
+    get('upcard').setAttribute('aria-hidden', String(v.phase === 'bidding' || v.phase === 'discarding'));
     get('upcard').textContent = `Up-card: ${cardName(v.upCard)} (${v.upCardStatus}).`;
     const ourTricks = v.completedTricks.filter(trick => teamOf(trick.winner) === 0).length;
     get('tricks').textContent = `Tricks: You and Val ${ourTricks}, opponents ${v.completedTricks.length - ourTricks}. ${v.completedTricks.length} of 5 complete.${v.sittingOut !== null ? ` ${names[v.sittingOut]} sits out this hand.` : ''}`;
     const plays = v.trick;
     get('trick').replaceChildren(...plays.map(p => { const li = d.createElement('li'); li.textContent = `${names[p.seat]}: ${cardName(p.card, v.trump)}`; return li; }));
     get('turn').textContent = v.result ? 'Hand complete' : v.turn === 0 ? v.phase === 'bidding' ? `Your bid — round ${v.biddingRound}` : v.phase === 'discarding' ? 'Discard one card' : 'Your turn to play' : `${names[v.turn!]}${v.phase === 'bidding' ? ` bids — round ${v.biddingRound}` : v.phase === 'discarding' ? ' must discard' : ' to play'}`;
+    const pass = v.legalActions.find(a => a.type === 'pass');
+    get('pass').hidden = !pass;
+    get('pass').setAttribute('aria-disabled', String(!interactive));
+    get('pass').onclick = () => { if (ready && pass) handlers.act(pass); };
     const bids = get('bids'); bids.replaceChildren();
-    for (const action of v.legalActions.filter(a => a.type !== 'play' && a.type !== 'discard')) {
-      const button = d.createElement('button'); button.type = 'button'; button.textContent = actionName(action);
+    for (const action of v.legalActions.filter(a => a.type === 'order-up' || a.type === 'call')) {
+      const button = d.createElement('button'); button.type = 'button'; button.setAttribute('aria-label', actionName(action, v.upCard));
+      if (action.type === 'order-up' || action.type === 'call') {
+        const suit = action.type === 'call' ? action.suit : suitOf(v.upCard);
+        button.className = 'suit-bid';
+        const symbol = d.createElement('span');
+        symbol.setAttribute('aria-hidden', 'true');
+        symbol.className = action.alone ? 'suit-symbol alone' : 'suit-symbol';
+        symbol.textContent = {hearts: '♥', diamonds: '♦', clubs: '♣', spades: '♠'}[suit];
+        button.append(symbol);
+      }
       button.setAttribute('aria-disabled', String(!interactive));
       button.onclick = () => { if (ready) handlers.act(action); };
       if (!bids.childElementCount) button.setAttribute('aria-describedby', 'turn');

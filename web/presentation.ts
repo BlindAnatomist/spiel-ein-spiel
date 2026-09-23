@@ -10,10 +10,10 @@ export function cardName(card: Card, trump: PlayerView['trump'] = null): string 
     ? suitOf(card) === trump ? ', right bower' : `, left bower, counts as ${trump}` : '';
   return `${ranks[rankOf(card)]} of ${suitOf(card)}${bower}`;
 }
-export function actionName(action: Action): string {
+export function actionName(action: Action, upCard?: Card): string {
   switch (action.type) {
     case 'pass': return 'Pass';
-    case 'order-up': return `Order it up${action.alone ? ' and go alone' : ''}`;
+    case 'order-up': return `${upCard ? `Order up ${suitOf(upCard)}` : 'Order it up'}${action.alone ? ' and go alone' : ''}`;
     case 'call': return `Call ${action.suit}${action.alone ? ' and go alone' : ''}`;
     case 'discard': return `Discard ${cardName(action.card)}`;
     case 'play': return cardName(action.card);
@@ -50,17 +50,22 @@ export function handAnnouncement(v: PlayerView): string {
 }
 /** No hand, legal actions, hidden state, or strategy is read by either review. */
 export function currentState(v: PlayerView): string {
-  const parts = [`Dealer: ${names[v.dealer]}.`];
+  const parts = [`Hand ${v.handNumber}. Dealer: ${names[v.dealer]}.`];
+  if (!v.result) parts.push(`Score: you and Val ${v.score[0]}, opponents ${v.score[1]}. First to 10.`);
+  const ours = v.completedTricks.filter(t => teamOf(t.winner) === 0).length;
+  parts.push(`You and Val have ${ours} ${ours === 1 ? 'trick' : 'tricks'}; opponents have ${v.completedTricks.length - ours}.`);
   if (v.phase === 'bidding') {
     parts.push(`Up-card: ${cardName(v.upCard).toLowerCase()}, ${v.upCardStatus}.`,
       `${v.biddingRound === 1 ? 'First' : 'Second'} calling round.`);
   } else {
     parts.push(`Called suit: ${v.trump}. Caller: ${names[v.caller!]}.`);
     if (v.alone) parts.push(`${names[v.caller!]} ${v.caller === 0 ? 'are' : 'is'} going alone.`);
-    const ours = v.completedTricks.filter(t => teamOf(t.winner) === 0).length;
-    parts.push(`You and Val have ${ours} ${ours === 1 ? 'trick' : 'tricks'}; opponents have ${v.completedTricks.length - ours}.`);
+    if (v.sittingOut !== null) parts.push(`${names[v.sittingOut]} ${v.sittingOut === 0 ? 'sit' : 'sits'} out.`);
     if (v.phase === 'discarding') parts.push(`Up-card: ${cardName(v.upCard).toLowerCase()}, ordered.`);
-    if (v.phase === 'playing' && v.trick.length) parts.push(`${names[v.trick[0]!.seat]} led ${cardName(v.trick[0]!.card, v.trump).toLowerCase()}.`);
+    if (v.phase === 'playing' && v.trick.length) {
+      parts.push('Current trick.', ...v.trick.map((p, i) =>
+        `${names[p.seat]} ${i === 0 ? 'led' : 'played'} ${cardName(p.card, v.trump).toLowerCase()}.`));
+    }
   }
   if (v.result) parts.push(resultText(v));
   else if (v.turn !== null) parts.push(v.phase === 'discarding' ? `${names[v.turn]} must discard.`

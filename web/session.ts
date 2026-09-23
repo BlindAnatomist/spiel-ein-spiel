@@ -1,7 +1,7 @@
 /** Trusted coordination. Referee and other seats never cross this module's return boundary. */
 import { createReferee } from '../src/referee.ts';
 import { createBot, createBotWithStrategy } from '../src/bots/index.ts';
-import { selectOpponentProfiles } from '../src/bots/profiles.ts';
+import { baselineOpponentProfiles, selectOpponentProfiles } from '../src/bots/profiles.ts';
 import type { OpponentDifficulty, OpponentLevel, OpponentProfileId } from '../src/bots/profiles.ts';
 import type { Action, PlayerView, Seat } from '../src/index.ts';
 import { events } from './presentation.ts';
@@ -28,7 +28,6 @@ export interface SessionObserver {
 }
 export interface Update { view: PlayerView; messages: readonly string[] }
 export interface Session {
-  readonly meta?: SessionMeta;
   view(): PlayerView;
   human(action: Action): Update | null;
   bot(): Update | null;
@@ -40,12 +39,16 @@ export interface SessionOptions {
   randomWord?: () => number;
   /** Public completion events only. Observer failures never interrupt play. */
   observer?: SessionObserver;
+  /** Baseline preserves the accepted deterministic policy routing; live games opt into varied profiles. */
+  opponentMode?: 'baseline' | 'varied';
 }
 
 export function createSession(seed: number, level: Difficulty, options: SessionOptions = {}): Session {
   const referee = createReferee({ seed, dealer: options.dealer, randomWord: options.randomWord });
   const ports = ([0, 1, 2, 3] as const).map(seat => referee.player(seat));
-  const profiles = selectOpponentProfiles(level, seed);
+  const profiles = level === 'mixed' || options.opponentMode === 'varied'
+    ? selectOpponentProfiles(level, seed)
+    : baselineOpponentProfiles(level);
   const policies = [
     null,
     createBotWithStrategy(profiles[0].strategy),
@@ -76,7 +79,6 @@ export function createSession(seed: number, level: Difficulty, options: SessionO
   };
 
   return Object.freeze({
-    meta,
     view,
     human: (action: Action) => apply(0, action),
     bot: () => {

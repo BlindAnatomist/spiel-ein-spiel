@@ -36,9 +36,9 @@ Balanced profiles exactly reproduce the existing named policies. The profile mec
 
 ## Performance tracking
 
-Tracking is browser-local and uses `localStorage`. No network request, account, backend, analytics service or telemetry endpoint is added.
+Tracking is local-first rather than browser-only. `localStorage` remains the immediate working record, while every completed game is also queued for append-only archival through Netlify Forms. No player account, password, analytics service or telemetry endpoint is added.
 
-Only completed games are persisted. Starting a new game before the current game ends does not count the abandoned game as a completed loss.
+Only completed games are persisted. Starting a new game before the current game ends does not count the abandoned game as a completed loss. Each completed game receives a stable game ID and completion timestamp before it is written locally and added to the archive queue.
 
 The persisted record contains public completion information:
 
@@ -70,6 +70,26 @@ The current summary reports:
 These are descriptive records, not a claim that the human alone caused a team outcome. Individual card-play quality is not yet scored.
 
 The history is bounded to the most recent 500 completed games to avoid unbounded browser storage growth.
+
+### Durability and recovery
+
+The browser creates one random performance recovery code, stored separately from the game history. The code is included with each server archive submission but is not a login credential and does not change game access.
+
+Archival sequence:
+
+1. complete game;
+2. save the full public performance record to localStorage;
+3. add the same record to a local pending-archive queue;
+4. submit it to the Netlify form `euchre-performance-ledger`;
+5. remove it from the pending queue only after an HTTP success response.
+
+The pending queue is retried when the page loads and whenever another completed game is queued. A refresh therefore does not discard either completed history or unsent archive work.
+
+A failed network request never blocks or changes game play. If the browser closes after the server accepted a record but before the local queue was cleared, a later retry may create a duplicate form submission; the stable game ID provides the deduplication key during recovery.
+
+The recovery code button exposes the code only on explicit request. The owner should keep that one code outside the web app. If Safari storage is lost, Netlify submissions can be retrieved by that code and reconstructed. This avoids account/password architecture while making the long-term record independent of one browser storage bucket.
+
+Netlify Forms is site-side persistent storage. Form detection is enabled for the existing Netlify project, and the static HTML contains the form definition so deployment processing can register it. The form stores only the same public performance record already described above; it never receives hands, kitty cards, shuffle words, the engine seed, hidden discards or referee snapshots.
 
 The Performance summary button is explicitly user-invoked. It writes ordinary static text and moves focus only because the user activated that control. It does not add another live region, automatic announcement or in-game focus transition.
 

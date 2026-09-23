@@ -90,6 +90,22 @@ test('six-card discard faces keep engine order and each legal discard works; foc
   assert.equal(buttons.length,6);assert.deepEqual(buttons.map(b=>b.getAttribute('aria-label')),v.hand.map(c=>`Discard ${cardName(c,v.trump)}`));
   buttons.forEach(b=>b.click());assert.deepEqual(actions,v.legalActions);table.focus();assert.equal(dom.window.document.activeElement,buttons[0]);
 });
+test('bidding swipe order is hand then bid choices then Pass and review controls while focus still lands on first bid',()=>{
+  const v=view();const {root,table,dom}=fixture(v);
+  const hand=root.querySelector('#hand')!;const bids=root.querySelector('#bids')!;const pass=root.querySelector('#pass')!;
+  const repeat=root.querySelector('#repeat-state')!;const review=root.querySelector('#review-trick')!;
+  const following=dom.window.Node.DOCUMENT_POSITION_FOLLOWING;
+  assert.ok(hand.compareDocumentPosition(bids)&following);
+  assert.ok(bids.compareDocumentPosition(pass)&following);
+  assert.ok(pass.compareDocumentPosition(repeat)&following);
+  assert.ok(repeat.compareDocumentPosition(review)&following);
+  const cards=[...root.querySelectorAll<HTMLButtonElement>('#hand button')];
+  const bidButtons=[...root.querySelectorAll<HTMLButtonElement>('#bids button')];
+  assert.ok(cards.length>0);assert.ok(bidButtons.length>0);
+  table.focus();assert.equal(dom.window.document.activeElement,bidButtons[0]);
+  assert.equal(bidButtons[0]!.previousElementSibling,null);
+  assert.ok(hand.lastElementChild===cards.at(-1));
+});
 test('all compact bids keep full labels and decorative alone rings through both calling rounds',()=>{
   const ref=createReferee({seed:17,dealer:3});
   for(const round of [1,2]) {

@@ -28,7 +28,7 @@ export interface SessionObserver {
 }
 export interface Update { view: PlayerView; messages: readonly string[] }
 export interface Session {
-  readonly meta: SessionMeta;
+  readonly meta?: SessionMeta;
   view(): PlayerView;
   human(action: Action): Update | null;
   bot(): Update | null;

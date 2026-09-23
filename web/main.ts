@@ -40,19 +40,16 @@ function recoveryId(): string {
 }
 
 const profileId = ensurePerformanceProfile(storage, recoveryId);
-const performanceButton = document.querySelector<HTMLButtonElement>('#performance-summary')!;
+const trackingToggle = document.querySelector<HTMLButtonElement>('#human-tracking')!;
 const analysisButton = document.querySelector<HTMLButtonElement>('#performance-analysis')!;
 const analysisPanel = document.querySelector<HTMLElement>('#analysis-panel')!;
 const analysisChart = document.querySelector<HTMLElement>('#analysis-chart')!;
-const recoveryButton = document.querySelector<HTMLButtonElement>('#performance-recovery')!;
 const performanceOutput = document.querySelector<HTMLElement>('#performance-output')!;
-
-performanceButton.onclick = () => {
-  const pending = loadPendingArchives(storage).length;
-  const archive = pending ? ` Server archive pending: ${pending} completed ${pending === 1 ? 'game' : 'games'}.` : ' Server archive is current.';
-  performanceOutput.textContent = performanceText(summarizePerformance(loadPerformance(storage))) + archive;
-  performanceOutput.hidden = false;
-  performanceOutput.focus();
+let humanTracking: HumanTracking = 'owner';
+trackingToggle.onclick = () => {
+  humanTracking = humanTracking === 'owner' ? 'other' : 'owner';
+  trackingToggle.setAttribute('aria-pressed', String(humanTracking === 'owner'));
+  trackingToggle.textContent = humanTracking === 'owner' ? 'My performance' : 'Bot data only';
 };
 
 function svgElement(name: string, attributes: Record<string, string> = {}): SVGElement {
@@ -114,15 +111,13 @@ function renderAnalysisChart(): void {
 
 analysisButton.onclick = () => {
   const book = loadPerformance(storage);
-  performanceOutput.textContent = performanceAnalysisText(book);
+  const pending = loadPendingArchives(storage).length;
+  const archive = pending
+    ? ` Server archive pending: ${pending} completed ${pending === 1 ? 'game' : 'games'}.`
+    : ' Server archive is current.';
+  performanceOutput.textContent = `${performanceText(summarizePerformance(book))} ${performanceAnalysisText(book)}${archive} Recovery code: ${profileId}.`;
   performanceOutput.hidden = false;
   renderAnalysisChart();
-  performanceOutput.focus();
-};
-
-recoveryButton.onclick = () => {
-  performanceOutput.textContent = `Performance recovery code: ${profileId}. Keep this code outside the game. It identifies your archived performance history if browser storage is ever lost.`;
-  performanceOutput.hidden = false;
   performanceOutput.focus();
 };
 
@@ -172,7 +167,6 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   event.preventDefault();
   controller?.stop(); live.textContent = '';
   const level = document.querySelector<HTMLSelectElement>('#difficulty')!.value as Difficulty;
-  const humanTracking = document.querySelector<HTMLSelectElement>('#human-tracking')!.value as HumanTracking;
   // Live games use browser cryptographic randomness for the starting dealer and every shuffle.
   const dealer = (randomWord() & 3) as Seat;
   const seed = randomWord();

@@ -7,6 +7,8 @@ import {
   loadPendingArchives,
   loadPerformance,
   markPerformanceArchived,
+  ownerTrend,
+  performanceAnalysisText,
   performanceText,
   summarizePerformance,
   type HumanTracking,
@@ -39,6 +41,9 @@ function recoveryId(): string {
 
 const profileId = ensurePerformanceProfile(storage, recoveryId);
 const performanceButton = document.querySelector<HTMLButtonElement>('#performance-summary')!;
+const analysisButton = document.querySelector<HTMLButtonElement>('#performance-analysis')!;
+const analysisPanel = document.querySelector<HTMLElement>('#analysis-panel')!;
+const analysisChart = document.querySelector<HTMLElement>('#analysis-chart')!;
 const recoveryButton = document.querySelector<HTMLButtonElement>('#performance-recovery')!;
 const performanceOutput = document.querySelector<HTMLElement>('#performance-output')!;
 
@@ -47,6 +52,71 @@ performanceButton.onclick = () => {
   const archive = pending ? ` Server archive pending: ${pending} completed ${pending === 1 ? 'game' : 'games'}.` : ' Server archive is current.';
   performanceOutput.textContent = performanceText(summarizePerformance(loadPerformance(storage))) + archive;
   performanceOutput.hidden = false;
+  performanceOutput.focus();
+};
+
+function svgElement(name: string, attributes: Record<string, string> = {}): SVGElement {
+  const element = document.createElementNS('http://www.w3.org/2000/svg', name);
+  for (const [key, value] of Object.entries(attributes)) element.setAttribute(key, value);
+  return element;
+}
+
+function renderAnalysisChart(): void {
+  const trend = ownerTrend(loadPerformance(storage));
+  analysisChart.replaceChildren();
+  analysisPanel.hidden = trend.length === 0;
+  if (!trend.length) return;
+
+  const width = 680;
+  const height = 300;
+  const left = 54;
+  const right = 20;
+  const top = 24;
+  const bottom = 58;
+  const plotWidth = width - left - right;
+  const plotHeight = height - top - bottom;
+  const svg = svgElement('svg', {
+    viewBox: `0 0 ${width} ${height}`,
+    role: 'img',
+    'aria-hidden': 'true',
+    focusable: 'false',
+  });
+
+  for (const value of [0, 25, 50, 75, 100]) {
+    const y = top + plotHeight - (value / 100) * plotHeight;
+    svg.append(svgElement('line', { x1: String(left), y1: String(y), x2: String(width - right), y2: String(y), class: 'analysis-grid' }));
+    const label = svgElement('text', { x: String(left - 8), y: String(y + 4), 'text-anchor': 'end', class: 'analysis-axis-label' });
+    label.textContent = `${value}%`;
+    svg.append(label);
+  }
+
+  const x = (index: number) => trend.length === 1 ? left + plotWidth / 2 : left + (index / (trend.length - 1)) * plotWidth;
+  const y = (value: number) => top + plotHeight - (value / 100) * plotHeight;
+  const winPoints = trend.map((point, index) => `${x(index)},${y(point.winRate)}`).join(' ');
+  const callPoints = trend.flatMap((point, index) => point.callSuccessRate === null ? [] : [`${x(index)},${y(point.callSuccessRate)}`]);
+
+  svg.append(svgElement('polyline', { points: winPoints, class: 'analysis-line win-line', fill: 'none' }));
+  if (callPoints.length > 1) svg.append(svgElement('polyline', { points: callPoints.join(' '), class: 'analysis-line call-line', fill: 'none' }));
+
+  trend.forEach((point, index) => {
+    const win = svgElement('circle', { cx: String(x(index)), cy: String(y(point.winRate)), r: '5', class: 'analysis-point win-point' });
+    svg.append(win);
+    if (point.callSuccessRate !== null) {
+      svg.append(svgElement('circle', { cx: String(x(index)), cy: String(y(point.callSuccessRate)), r: '5', class: 'analysis-point call-point' }));
+    }
+    const label = svgElement('text', { x: String(x(index)), y: String(height - 28), 'text-anchor': 'middle', class: 'analysis-axis-label' });
+    label.textContent = point.firstGame === point.lastGame ? String(point.firstGame) : `${point.firstGame}–${point.lastGame}`;
+    svg.append(label);
+  });
+
+  analysisChart.append(svg);
+}
+
+analysisButton.onclick = () => {
+  const book = loadPerformance(storage);
+  performanceOutput.textContent = performanceAnalysisText(book);
+  performanceOutput.hidden = false;
+  renderAnalysisChart();
   performanceOutput.focus();
 };
 

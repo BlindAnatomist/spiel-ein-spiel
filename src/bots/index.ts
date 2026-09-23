@@ -1,15 +1,12 @@
 import type { DecisionPolicy } from '../types.ts';
 import { STRATEGIES } from './config.ts';
-import type { BotLevel } from './config.ts';
+import type { BotLevel, Strategy } from './config.ts';
 import { bestBy, bidding, discardScore, heuristicPlay } from './heuristic.ts';
 import { searchPlay } from './search.ts';
 export { STRATEGIES } from './config.ts';
 export type { BotLevel, Strategy } from './config.ts';
-/** Stateless decision function. No referee, deal seed, private logs or seat ports. */
-export function createBot(level: BotLevel): DecisionPolicy {
-  if (!Object.hasOwn(STRATEGIES, level)) throw new Error('Unknown bot level');
-  const config = STRATEGIES[level];
-  if (!config) throw new Error('Unknown bot level');
+
+function configuredPolicy(config: Strategy): DecisionPolicy {
   return view => {
     if (!view.legalActions.length) throw new Error('Bot has no legal action');
     if (view.phase === 'bidding') return bidding(view, config);
@@ -19,4 +16,17 @@ export function createBot(level: BotLevel): DecisionPolicy {
     return config.samples && view.completedTricks.length >= 5 - config.exactCards
       ? searchPlay(view, config, fallback) : fallback;
   };
+}
+
+/** Build a policy from an immutable strategy configuration. No referee or hidden state enters here. */
+export function createBotWithStrategy(config: Strategy): DecisionPolicy {
+  return configuredPolicy(config);
+}
+
+/** Stateless decision function. No referee, deal seed, private logs or seat ports. */
+export function createBot(level: BotLevel): DecisionPolicy {
+  if (!Object.hasOwn(STRATEGIES, level)) throw new Error('Unknown bot level');
+  const config = STRATEGIES[level];
+  if (!config) throw new Error('Unknown bot level');
+  return configuredPolicy(config);
 }

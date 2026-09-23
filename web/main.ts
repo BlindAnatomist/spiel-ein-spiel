@@ -166,6 +166,9 @@ const randomWord = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
 document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   event.preventDefault();
   controller?.stop(); live.textContent = '';
+  performanceOutput.hidden = true;
+  analysisPanel.hidden = true;
+  analysisChart.replaceChildren();
   const level = document.querySelector<HTMLSelectElement>('#difficulty')!.value as Difficulty;
   // Live games use browser cryptographic randomness for the starting dealer and every shuffle.
   const dealer = (randomWord() & 3) as Seat;

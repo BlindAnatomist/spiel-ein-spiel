@@ -17,3 +17,9 @@
 .call-line,.call-point{stroke:#9ed3ff;fill:#9ed3ff}
 .call-line{stroke-dasharray:10 7}
 .chart-legend{font-size:.85rem;color:#d8e2dd}
+
+.setup-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+.setup-actions button{flex:1 1 150px}
+#human-tracking[aria-pressed="false"]{background:#d7ded9}
+#post-actions{margin-top:10px}
+#bids:empty{display:none}

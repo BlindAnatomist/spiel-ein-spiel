@@ -18,9 +18,12 @@ export interface HandPerformance {
   readonly reason: HandResult['reason'];
 }
 
+export type HumanTracking = 'owner' | 'other';
+
 export interface GamePerformance {
   readonly id: string;
   readonly completedAt: string;
+  readonly humanTracking: HumanTracking;
   readonly difficulty: Difficulty;
   readonly opponents: readonly OpponentIdentity[];
   readonly winner: Team;
@@ -46,6 +49,7 @@ export interface StorageLike {
 export interface RecorderOptions {
   readonly profileId?: string;
   readonly gameId?: string;
+  readonly humanTracking?: HumanTracking;
   readonly completedAt?: () => string;
   readonly archiveQueued?: () => void;
 }
@@ -84,8 +88,11 @@ export interface PerformanceSummary {
   recentWinRate: number | null;
   averageFinalScore: readonly [number, number] | null;
   hands: number;
-  callsBySeat: readonly [number, number, number, number];
-  callers: readonly [CallerSummary, CallerSummary, CallerSummary, CallerSummary];
+  ownerCaller: CallerSummary;
+  botGames: number;
+  botHands: number;
+  botCallsBySeat: readonly [number, number, number, number];
+  valCaller: CallerSummary;
   opponents: readonly OpponentSummary[];
 }
 
@@ -189,6 +196,7 @@ export function createPerformanceRecorder(storage: StorageLike, options: Recorde
       const game: GamePerformance = Object.freeze({
         id: options.gameId ?? `local-${book.games.length + 1}-${view.handNumber}`,
         completedAt: options.completedAt?.() ?? 'local',
+        humanTracking: options.humanTracking ?? 'owner',
         difficulty: meta.difficulty,
         opponents: Object.freeze(meta.opponents.map(opponent => Object.freeze({ ...opponent }))),
         winner: view.winner,
@@ -215,18 +223,24 @@ function addCaller(summary: CallerSummary, hand: HandPerformance): void {
 }
 
 export function summarizePerformance(book: PerformanceBook): PerformanceSummary {
-  const callers = [caller(), caller(), caller(), caller()] as [CallerSummary, CallerSummary, CallerSummary, CallerSummary];
-  const callsBySeat = [0, 0, 0, 0] as [number, number, number, number];
+  const ownerCaller = caller();
+  const valCaller = caller();
+  const botCallsBySeat = [0, 0, 0, 0] as [number, number, number, number];
   const profiles = new Map<string, OpponentSummary>();
+  const ownerGames = book.games.filter(game => game.humanTracking !== 'other');
   let wins = 0;
   let hands = 0;
+  let botHands = 0;
   let ourPoints = 0;
   let theirPoints = 0;
 
   for (const game of book.games) {
-    wins += Number(game.winner === 0);
-    ourPoints += game.score[0];
-    theirPoints += game.score[1];
+    const trackOwner = game.humanTracking !== 'other';
+    if (trackOwner) {
+      wins += Number(game.winner === 0);
+      ourPoints += game.score[0];
+      theirPoints += game.score[1];
+    }
     for (const opponent of game.opponents) {
       let summary = profiles.get(opponent.id);
       if (!summary) {
@@ -242,9 +256,13 @@ export function summarizePerformance(book: PerformanceBook): PerformanceSummary 
       summary.opponentTeamWins += Number(game.winner === 1);
     }
     for (const hand of game.hands) {
-      hands++;
-      callsBySeat[hand.caller]++;
-      addCaller(callers[hand.caller], hand);
+      botHands++;
+      botCallsBySeat[hand.caller]++;
+      if (trackOwner) {
+        hands++;
+        if (hand.caller === 0) addCaller(ownerCaller, hand);
+      }
+      if (hand.caller === 2) addCaller(valCaller, hand);
       if (hand.caller === 1 || hand.caller === 3) {
         const opponent = game.opponents.find(value => value.seat === hand.caller);
         const summary = opponent ? profiles.get(opponent.id) : undefined;
@@ -253,9 +271,9 @@ export function summarizePerformance(book: PerformanceBook): PerformanceSummary 
     }
   }
 
-  const recent = book.games.slice(-20);
+  const recent = ownerGames.slice(-20);
   const recentWins = recent.reduce((sum, game) => sum + Number(game.winner === 0), 0);
-  const games = book.games.length;
+  const games = ownerGames.length;
   return {
     games,
     wins,
@@ -266,8 +284,11 @@ export function summarizePerformance(book: PerformanceBook): PerformanceSummary 
     recentWinRate: recent.length ? recentWins / recent.length : null,
     averageFinalScore: games ? [ourPoints / games, theirPoints / games] : null,
     hands,
-    callsBySeat,
-    callers,
+    ownerCaller,
+    botGames: book.games.length,
+    botHands,
+    botCallsBySeat,
+    valCaller,
     opponents: [...profiles.values()].sort((a, b) => b.games - a.games || a.label.localeCompare(b.label)),
   };
 }
@@ -283,13 +304,18 @@ function callLine(name: string, summary: CallerSummary): string {
 }
 
 export function performanceText(summary: PerformanceSummary): string {
-  if (!summary.games) return 'No completed games recorded yet.';
-  const score = summary.averageFinalScore!;
-  const recent = summary.recentGames
-    ? ` Last ${summary.recentGames}: ${summary.recentWins} wins, ${percent(summary.recentWinRate)}.`
-    : '';
+  const owner = summary.games
+    ? (() => {
+        const score = summary.averageFinalScore!;
+        const recent = summary.recentGames
+          ? ` Last ${summary.recentGames}: ${summary.recentWins} wins, ${percent(summary.recentWinRate)}.`
+          : '';
+        return `My tracked games: ${summary.games}. You and Val: ${summary.wins} wins, ${summary.losses} losses, ${percent(summary.winRate)}. Average final score: ${score[0].toFixed(1)} to ${score[1].toFixed(1)}.${recent} My tracked hands: ${summary.hands}. ${callLine('Your calling record', summary.ownerCaller)}`;
+      })()
+    : 'No games recorded for my performance yet.';
+  if (!summary.botGames) return owner;
   const profiles = summary.opponents.length
     ? ` Opponent profiles encountered: ${summary.opponents.map(p => `${p.label}, ${p.games} games`).join('; ')}.`
     : '';
-  return `Completed games: ${summary.games}. You and Val: ${summary.wins} wins, ${summary.losses} losses, ${percent(summary.winRate)}. Average final score: ${score[0].toFixed(1)} to ${score[1].toFixed(1)}.${recent} Completed hands: ${summary.hands}. ${callLine('Your calling record', summary.callers[0])} ${callLine('Val calling record', summary.callers[2])} West calls: ${summary.callsBySeat[1]}. East calls: ${summary.callsBySeat[3]}.${profiles}`;
+  return `${owner} Bot observations: ${summary.botGames} completed games, ${summary.botHands} hands. ${callLine('Val calling record', summary.valCaller)} West calls: ${summary.botCallsBySeat[1]}. East calls: ${summary.botCallsBySeat[3]}.${profiles}`;
 }

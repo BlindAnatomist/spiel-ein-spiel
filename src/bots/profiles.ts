@@ -5,7 +5,7 @@ import { hashText } from './random.ts';
 export type OpponentLevel = Exclude<BotLevel, 'val'>;
 export type OpponentDifficulty = OpponentLevel | 'mixed';
 export type OpponentProfileId =
-  | 'casual-cautious' | 'casual-bold'
+  | 'casual-balanced' | 'casual-cautious' | 'casual-bold'
   | 'strong-balanced' | 'strong-conservative' | 'strong-assertive' | 'strong-partnership'
   | 'expert-balanced' | 'expert-conservative' | 'expert-assertive';
 
@@ -28,6 +28,7 @@ function profile(id: OpponentProfileId, label: string, level: OpponentLevel,
 }
 
 export const OPPONENT_PROFILES: Readonly<Record<OpponentProfileId, OpponentProfile>> = Object.freeze({
+  'casual-balanced': profile('casual-balanced', 'Balanced Casual', 'casual'),
   'casual-cautious': profile('casual-cautious', 'Cautious Casual', 'casual',
     { orderThreshold: 2.45, callThreshold: 2.25, aloneThreshold: 4.05 }),
   'casual-bold': profile('casual-bold', 'Bold Casual', 'casual',
@@ -47,7 +48,7 @@ export const OPPONENT_PROFILES: Readonly<Record<OpponentProfileId, OpponentProfi
 });
 
 const POOLS: Readonly<Record<OpponentLevel, readonly OpponentProfileId[]>> = {
-  casual: ['casual-cautious', 'casual-bold'],
+  casual: ['casual-balanced', 'casual-cautious', 'casual-bold'],
   strong: ['strong-balanced', 'strong-conservative', 'strong-assertive', 'strong-partnership'],
   expert: ['expert-balanced', 'expert-conservative', 'expert-assertive'],
 };
@@ -79,4 +80,13 @@ export function selectOpponentProfiles(difficulty: OpponentDifficulty, seed: num
   const westLevel = levels[westIndex]!;
   const eastLevel = levels[eastIndex]!;
   return [pick(westLevel, seed, 'mixed-west-profile'), pick(eastLevel, seed, 'mixed-east-profile')];
+}
+
+
+export function baselineOpponentProfiles(level: OpponentLevel):
+  readonly [OpponentProfile, OpponentProfile] {
+  const id = `${level}-balanced` as OpponentProfileId;
+  const profile = OPPONENT_PROFILES[id];
+  if (!profile) throw new Error(`Missing balanced profile for ${level}`);
+  return [profile, profile];
 }

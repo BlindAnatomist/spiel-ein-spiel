@@ -2,7 +2,7 @@
 import { build } from 'esbuild';
 import { mkdir, readFile, writeFile, copyFile } from 'node:fs/promises';
 import { createReferee } from '../src/referee.ts';
-const output = process.argv[2] ?? '/workspace/scratch/euchre-mobile-layout';
+const output = process.argv[2] ?? '/tmp/euchre-mobile-layout';
 await mkdir(output,{recursive:true});
 const bid=createReferee({seed:17,dealer:3});
 const round1=bid.player(0).view();

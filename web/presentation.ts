@@ -1,6 +1,9 @@
 import { effectiveSuit, rankOf, suitOf } from '../src/index.ts';
 import type { Action, Card, PlayerView, Seat } from '../src/index.ts';
 export const names = ['You', 'West', 'Val', 'East'] as const;
+export function dealerAnnouncement(dealer: Seat): string {
+  return dealer === 0 ? 'You deal.' : `${names[dealer]} deals.`;
+}
 export function cardName(card: Card, trump: PlayerView['trump'] = null): string {
   const ranks = { '9': 'Nine', '10': 'Ten', J: 'Jack', Q: 'Queen', K: 'King', A: 'Ace' };
   const bower = trump && rankOf(card) === 'J' && effectiveSuit(card, trump) === trump

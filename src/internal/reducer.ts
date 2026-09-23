@@ -1,7 +1,7 @@
 import { nextSeat, teamOf } from '../cards.ts';
 import type { Seat } from '../types.ts';
 import { applyBid, startPlay } from './bidding.ts';
-import { deal } from './deal.ts';
+import { deal, type RandomWord } from './deal.ts';
 import { canonicalAction } from './legal.ts';
 import { scoreHand } from './scoring.ts';
 import type { State } from './state.ts';
@@ -42,7 +42,7 @@ export function transition(previous: State, seat: Seat, input: unknown): State |
   return state;
 }
 /** Host action, deliberately absent from the player action union. */
-export function nextHand(state: State): State {
+export function nextHand(state: State, randomWord?: RandomWord): State {
   if (state.phase !== 'hand-over') throw new Error('Next hand requires a completed, nonterminal hand');
-  return deal(state.rng, nextSeat(state.dealer), state.score, state.handNumber + 1);
+  return deal(state.rng, nextSeat(state.dealer), state.score, state.handNumber + 1, randomWord);
 }

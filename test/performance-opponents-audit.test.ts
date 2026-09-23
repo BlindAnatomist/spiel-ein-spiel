@@ -4,7 +4,7 @@ import { auditDeals } from '../src/audit/deals.ts';
 import { createBot } from '../src/bots/index.ts';
 import { OPPONENT_PROFILES, selectOpponentProfiles } from '../src/bots/profiles.ts';
 import type { OpponentDifficulty } from '../src/bots/profiles.ts';
-import { createPerformanceRecorder, loadPerformance, performanceText, summarizePerformance } from '../web/performance.ts';
+import { createPerformanceRecorder, ensurePerformanceProfile, loadPendingArchives, loadPerformance, markPerformanceArchived, performanceText, summarizePerformance } from '../web/performance.ts';
 import type { StorageLike } from '../web/performance.ts';
 import { createSession } from '../web/session.ts';
 
@@ -37,7 +37,7 @@ test('mixed opponents always use two different difficulty levels and replay from
 
 test('public completion tracking records one complete game without exposing hidden state', () => {
   const storage = new MemoryStorage();
-  const recorder = createPerformanceRecorder(storage);
+  const recorder = createPerformanceRecorder(storage, { profileId: 'EUC-test-profile-1234567890', gameId: 'game-1', completedAt: () => '2026-09-23T21:00:00.000Z' });
   const seen: string[] = [];
   const observer = {
     handCompleted(view: Parameters<NonNullable<typeof recorder.handCompleted>>[0],
@@ -76,6 +76,8 @@ test('public completion tracking records one complete game without exposing hidd
   const game = book.games[0]!;
   assert.equal(game.hands.length, final.handNumber);
   assert.deepEqual(game.score, final.score);
+  assert.equal(game.id, 'game-1');
+  assert.equal(game.completedAt, '2026-09-23T21:00:00.000Z');
   assert.deepEqual(game.opponents.map(opponent => opponent.id), selectOpponentProfiles('mixed', 20260923).map(opponent => opponent.id));
 
   const summary = summarizePerformance(book);
@@ -85,6 +87,20 @@ test('public completion tracking records one complete game without exposing hidd
   assert.equal(summary.callsBySeat.reduce((a, b) => a + b, 0), summary.hands);
   assert.match(performanceText(summary), /West calls:/);
   assert.match(performanceText(summary), /East calls:/);
+  assert.equal(loadPendingArchives(storage).length, 1);
+  assert.equal(loadPendingArchives(storage)[0]!.profileId, 'EUC-test-profile-1234567890');
+  markPerformanceArchived(storage, 'game-1');
+  assert.deepEqual(loadPendingArchives(storage), []);
+});
+
+test('performance recovery profile survives reload and is not regenerated', () => {
+  const storage = new MemoryStorage();
+  let calls = 0;
+  const first = ensurePerformanceProfile(storage, () => { calls++; return '12345678-1234-1234-1234-123456789abc'; });
+  const second = ensurePerformanceProfile(storage, () => { calls++; return 'ffffffff-ffff-ffff-ffff-ffffffffffff'; });
+  assert.equal(first, 'EUC-12345678-1234-1234-1234-123456789abc');
+  assert.equal(second, first);
+  assert.equal(calls, 1);
 });
 
 test('invalid or unavailable local storage data fails closed without affecting game statistics', () => {

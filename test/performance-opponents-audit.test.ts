@@ -52,7 +52,7 @@ test('public completion tracking records one complete game without exposing hidd
       recorder.gameCompleted?.(view, meta);
     },
   };
-  const session = createSession(20260923, 'mixed', { dealer: 2, observer });
+  const session = createSession(20260923, 'mixed', { dealer: 2, observer, opponentMode: 'varied' });
   const human = createBot('strong');
 
   for (let step = 0; step < 3000; step++) {
@@ -76,7 +76,7 @@ test('public completion tracking records one complete game without exposing hidd
   const game = book.games[0]!;
   assert.equal(game.hands.length, final.handNumber);
   assert.deepEqual(game.score, final.score);
-  assert.deepEqual(game.opponents.map(opponent => opponent.id), session.meta!.opponents.map(opponent => opponent.id));
+  assert.deepEqual(game.opponents.map(opponent => opponent.id), selectOpponentProfiles('mixed', 20260923).map(opponent => opponent.id));
 
   const summary = summarizePerformance(book);
   assert.equal(summary.games, 1);

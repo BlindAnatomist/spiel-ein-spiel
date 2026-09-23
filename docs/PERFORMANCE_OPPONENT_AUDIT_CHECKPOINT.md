@@ -44,6 +44,7 @@ The persisted record contains public completion information:
 
 - selected setup difficulty;
 - West/East profile identity;
+- human tracking classification (`owner` or `other`);
 - final score and winning team;
 - for each completed hand: dealer, caller, calling round, loner status, maker trick count, awarded team, points and result reason.
 
@@ -57,14 +58,21 @@ It does not store:
 - random words;
 - bot inference state.
 
+The New Game setup has one human-data choice, defaulting to `My performance`:
+
+- `My performance`: the game contributes to both the owner's longitudinal human record and bot analysis.
+- `Other player — bot data only`: the game contributes to bot analysis but never to the owner's wins, losses, score averages, recent record, hand count or calling statistics.
+
+The choice is read once when New Game begins and stored immutably with that completed game. There are no named player profiles, accounts, logins or passwords.
+
 The current summary reports:
 
-- completed games, wins/losses, win rate and average final score for You and Val;
-- a rolling last-20 completed-game win rate;
-- total completed hands;
-- human calling record: calls, made-call rate, euchre rate, marches and loner results;
-- Val calling record with the same public measures;
-- West versus East calling counts;
+- owner-only completed games, wins/losses, win rate and average final score for You and Val;
+- an owner-only rolling last-20 completed-game win rate;
+- owner-only completed hands and human calling record;
+- bot observations across all completed games regardless of human player;
+- Val calling record across all games;
+- West versus East calling counts across all games;
 - opponent profiles encountered and number of completed games against each.
 
 These are descriptive records, not a claim that the human alone caused a team outcome. Individual card-play quality is not yet scored.
@@ -89,7 +97,7 @@ A failed network request never blocks or changes game play. If the browser close
 
 The recovery code button exposes the code only on explicit request. The owner should keep that one code outside the web app. If Safari storage is lost, Netlify submissions can be retrieved by that code and reconstructed. This avoids account/password architecture while making the long-term record independent of one browser storage bucket.
 
-Netlify Forms is site-side persistent storage. Form detection is enabled for the existing Netlify project, and the static HTML contains the form definition so deployment processing can register it. The form stores only the same public performance record already described above; it never receives hands, kitty cards, shuffle words, the engine seed, hidden discards or referee snapshots.
+Netlify Forms is site-side persistent storage. Form detection is enabled for the existing Netlify project, and the static HTML contains the form definition so deployment processing can register it. The form stores the same public performance record plus the `owner`/`other` classification described above; it never receives hands, kitty cards, shuffle words, the engine seed, hidden discards or referee snapshots.
 
 The Performance summary button is explicitly user-invoked. It writes ordinary static text and moves focus only because the user activated that control. It does not add another live region, automatic announcement or in-game focus transition.
 
@@ -156,4 +164,5 @@ Real-device owner testing should confirm that:
 1. existing PR #6 VoiceOver timing and focus remain unchanged during ordinary play;
 2. Mixed opponents are playable and feel behaviorally varied without illegal actions;
 3. Performance summary is easy to reach and does not interfere with game navigation;
-4. New Game still behaves as expected and does not count an abandoned game.
+4. New Game still behaves as expected and does not count an abandoned game;
+5. a game begun as `Other player — bot data only` leaves the owner's human summary unchanged while increasing bot observations.

@@ -29,25 +29,25 @@ function clockFixture(v = playing(), messages = ['East plays ace of clubs.']) {
     ms=>{log.push(`wait:${ms}`); return new Promise<void>(release=>waits.push({ms,release}));});
   return {...ui,controller,log,waits,session,setView:(next:PlayerView)=>{current=next;}};
 }
-test('automatic event clears before the 1500 ms guard starts; first legal card focuses only after guard', async () => {
+test('automatic event clears before the 1250 ms guard starts; first legal card focuses only after guard', async () => {
   const f=clockFixture(); const pending=f.controller.act(playing().legalActions[0]!);
   assert.deepEqual(f.log,['say:East plays ace of clubs.','wait:1600']);
   assert.equal(f.waits.length,1);
   f.waits.shift()!.release(); await flush();
-  assert.deepEqual(f.log.slice(-2),['clear','wait:1500']);
+  assert.deepEqual(f.log.slice(-2),['clear','wait:1250']);
   assert.equal(f.log.includes('focus'),false);
   f.waits.shift()!.release(); await pending;
   assert.equal(f.log.at(-1),'focus');
   assert.equal(f.dom.window.document.activeElement,f.root.querySelectorAll('#hand button')[1]);
-  assert.equal(FOCUS_GUARD_MS,1500);
+  assert.equal(FOCUS_GUARD_MS,1250);
 });
 test('West order-up and pickup both finish before guarded first-discard focus', async () => {
   const ref=createReferee({seed:7});ref.player(1).act({type:'order-up',alone:false});
   const v=ref.player(0).view();const f=clockFixture(v,['West orders up hearts.','You pick up.']);
   const pending=f.controller.act(v.legalActions[0]!);
   f.waits.shift()!.release();await flush();
-  assert.equal(f.waits[0]!.ms,1600);assert.equal(f.log.includes('wait:1500'),false);
-  f.waits.shift()!.release();await flush();assert.equal(f.log.at(-1),'wait:1500');
+  assert.equal(f.waits[0]!.ms,1600);assert.equal(f.log.includes('wait:1250'),false);
+  f.waits.shift()!.release();await flush();assert.equal(f.log.at(-1),'wait:1250');
   f.waits.shift()!.release();await pending;
   assert.equal(f.dom.window.document.activeElement,f.root.querySelector('#hand button'));
 });
@@ -61,17 +61,17 @@ test('quiet guard does not delay un-narrated focus or each intervening bot decis
   g.waits.shift()!.release();await flush();
   assert.equal(g.waits[0]!.ms,350);assert.equal(botCalls,0);
   g.waits.shift()!.release();await flush();assert.equal(botCalls,1);
-  assert.equal(g.log.includes('wait:1500'),false);
-  g.waits.shift()!.release();await flush();assert.equal(g.waits[0]!.ms,1500);
+  assert.equal(g.log.includes('wait:1250'),false);
+  g.waits.shift()!.release();await flush();assert.equal(g.waits[0]!.ms,1250);
   g.waits.shift()!.release();await pending;
-  assert.equal(g.log.filter(x=>x==='wait:1500').length,1);
+  assert.equal(g.log.filter(x=>x==='wait:1250').length,1);
 });
 test('review requested during quiet guard finishes and receives a fresh quiet interval', async () => {
   const f=clockFixture();const pending=f.controller.act(playing().legalActions[0]!);
   f.waits.shift()!.release();await flush();const guard=f.waits.shift()!;
   const review=f.controller.repeat();const speech=f.waits.shift()!;
   guard.release();await flush();assert.equal(f.log.includes('focus'),false);
-  speech.release();await review;await flush();assert.equal(f.log.at(-1),'wait:1500');
+  speech.release();await review;await flush();assert.equal(f.log.at(-1),'wait:1250');
   assert.equal(f.log.includes('focus'),false);f.waits.shift()!.release();await pending;
   assert.equal(f.log.filter(x=>x==='focus').length,1);
 });
@@ -82,7 +82,7 @@ test('stopping during the guard prevents stale focus; hand/game results retain g
   for(const phase of ['hand-over','game-over'] as const) {
     const v:PlayerView={...playing(),phase,turn:null,result:{team:0,points:1,makerTricks:3,reason:'made'},winner:phase==='game-over'?0:null};
     const g=clockFixture(v,['You take the trick.']);const done=g.controller.act({type:'play',card:'hearts:A'});
-    g.waits.shift()!.release();await flush();assert.equal(g.log.at(-1),'wait:1500');
+    g.waits.shift()!.release();await flush();assert.equal(g.log.at(-1),'wait:1250');
     g.waits.shift()!.release();await done;
     assert.equal(g.dom.window.document.activeElement,g.root.querySelector('#result'));
     assert.equal(g.log.filter(x=>x.startsWith('say:')).length,1);

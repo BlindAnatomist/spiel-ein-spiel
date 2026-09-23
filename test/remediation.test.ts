@@ -101,7 +101,7 @@ test('play navigation follows stable hand, then state and available trick review
   assert.deepEqual(order.slice(start),['Your hand',...initial.map(b=>b.textContent),'Repeat current state']);
   table.render({...v,completedTricks:[{plays:[{seat:1,card:'clubs:A'}],winner:1}]});
   assert.deepEqual(accessibleOrder(root).slice(-2),['Repeat current state','Review last trick']);
-  assert.equal(root.querySelector('#hand')!.nextElementSibling?.id,'after-hand');
+  assert.equal(root.querySelector('#hand')!.nextElementSibling?.id,'bids');
 });
 test('both calling rounds put stable hand before positive bids and textual Pass before reviews; stuck dealer omits Pass', () => {
   const ref=createReferee({seed:4,dealer:3});
@@ -124,8 +124,9 @@ test('both calling rounds put stable hand before positive bids and textual Pass 
   // Seat zero is the stuck dealer in this independent deal.
   const stuck=createReferee({seed:4,dealer:0});for(let i=0;i<7;i++)stuck.player(stuck.player(0).view().turn!).act({type:'pass'});
   const v=stuck.player(0).view();const {root}=fixture(v);const order=accessibleOrder(root);
+  const stuckBids=[...root.querySelectorAll<HTMLButtonElement>('#bids button')];
   assert.equal(root.querySelector<HTMLButtonElement>('#pass')!.hidden,true);
-  assert.deepEqual(order.slice(order.indexOf('Your hand')),['Your hand',...[...root.querySelectorAll('#hand button')].map(b=>b.textContent),...bids.map(b=>b.getAttribute('aria-label')),'Repeat current state']);
+  assert.deepEqual(order.slice(order.indexOf('Your hand')),['Your hand',...[...root.querySelectorAll('#hand button')].map(b=>b.textContent),...stuckBids.map(b=>b.getAttribute('aria-label')),'Repeat current state']);
 });
 test('compact order-up and call glyphs preserve explicit speech, legal actions and CSS touch targets', () => {
   const v=playing();

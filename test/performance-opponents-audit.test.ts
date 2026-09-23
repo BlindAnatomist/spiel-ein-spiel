@@ -178,7 +178,7 @@ test('owner trend compares sequential owner-only game blocks', () => {
     humanTracking: 'owner' as const,
     difficulty: 'strong' as const,
     opponents,
-    winner: (index < 10 ? Number(index < 4) : Number(index < 17)) as 0 | 1,
+    winner: (index < 10 ? (index < 4 ? 0 : 1) : (index < 17 ? 0 : 1)) as 0 | 1,
     score: (index < 10 ? [8, 10] : [10, 7]) as readonly [number, number],
     hands: [{
       handNumber: 1, dealer: 0 as const, caller: 0 as const, round: 1 as const, alone: false,

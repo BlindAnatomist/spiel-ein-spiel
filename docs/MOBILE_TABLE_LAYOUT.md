@@ -18,7 +18,7 @@ CSS grid places all bid/action controls below the hand. VoiceOver/DOM order is n
 
 ## Protected contract
 
-Engine, policies, announcer, presentation summaries, session, main entry/randomness and sound are unchanged. The controller mirrors PR #6's real-device remediation by extending only the narrator-to-focus quiet guard from 750 ms to 1500 ms; focus selection itself is unchanged. First-legal focus selection and focus bookkeeping in render.ts remain unchanged. Existing coverage is preserved, with an added swipe-order regression for hand → bids → Pass → state → last trick. Full matches, hidden-information and determinism tests remain required to stay green.
+Engine, policies, announcer, presentation summaries, session, main entry/randomness and sound are unchanged. The controller mirrors PR #6's real-device remediation by extending only the narrator-to-focus quiet guard from 750 ms to 1250 ms; focus selection itself is unchanged. First-legal focus selection and focus bookkeeping in render.ts remain unchanged. Existing coverage is preserved, with an added swipe-order regression for hand → bids → Pass → state → last trick. Full matches, hidden-information and determinism tests remain required to stay green.
 
 Validation: npm ci --ignore-scripts; npm run check; npm run build; git diff --check. Current passing count is recorded by CI for the latest branch head.
 

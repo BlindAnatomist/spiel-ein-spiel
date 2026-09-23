@@ -5,7 +5,7 @@ import { currentState, lastTrick, handAnnouncement, dealerAnnouncement } from '.
 import type { Session, Update } from './session.ts';
 import type { createTable } from './render.ts';
 /** Quiet time after the live region clears, only before automatic focus. */
-export const FOCUS_GUARD_MS = 750;
+export const FOCUS_GUARD_MS = 1500;
 export function createController(session: Session, table: ReturnType<typeof createTable>, announce: (text: string) => void,
   wait: (ms: number) => Promise<void> = ms => new Promise(resolve => setTimeout(resolve, ms)),
   sound: (cue: SoundCue) => void = () => {}) {

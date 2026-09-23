@@ -9,6 +9,7 @@ import {
   markPerformanceArchived,
   performanceText,
   summarizePerformance,
+  type HumanTracking,
   type PerformanceArchiveItem,
   type StorageLike,
 } from './performance.ts';
@@ -61,6 +62,7 @@ async function submitArchive(item: PerformanceArchiveItem): Promise<void> {
     profile_id: item.profileId,
     game_id: item.game.id,
     completed_at: item.game.completedAt,
+    human_tracking: item.game.humanTracking,
     payload: JSON.stringify(item.game),
   });
   const response = await fetch('/', {
@@ -100,6 +102,7 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   event.preventDefault();
   controller?.stop(); live.textContent = '';
   const level = document.querySelector<HTMLSelectElement>('#difficulty')!.value as Difficulty;
+  const humanTracking = document.querySelector<HTMLSelectElement>('#human-tracking')!.value as HumanTracking;
   // Live games use browser cryptographic randomness for the starting dealer and every shuffle.
   const dealer = (randomWord() & 3) as Seat;
   const seed = randomWord();
@@ -110,6 +113,7 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
     observer: createPerformanceRecorder(storage, {
       profileId,
       gameId,
+      humanTracking,
       completedAt: () => new Date().toISOString(),
       archiveQueued: () => { void flushPerformanceArchive(); },
     }),

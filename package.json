@@ -19,6 +19,7 @@
     "simulate": "node src/simulation/cli.ts",
     "evaluate": "node src/simulation/evaluate-cli.ts",
     "benchmark": "node src/simulation/benchmark-cli.ts",
+    "audit:deals": "node src/audit/deals-cli.ts",
     "build": "node scripts/build.ts",
     "dev": "npm run build && node scripts/serve.ts"
   },

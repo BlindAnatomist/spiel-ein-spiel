@@ -29,25 +29,25 @@ function clockFixture(v = playing(), messages = ['East plays ace of clubs.']) {
     ms=>{log.push(`wait:${ms}`); return new Promise<void>(release=>waits.push({ms,release}));});
   return {...ui,controller,log,waits,session,setView:(next:PlayerView)=>{current=next;}};
 }
-test('automatic event clears before the 750 ms guard starts; first legal card focuses only after guard', async () => {
+test('automatic event clears before the 1500 ms guard starts; first legal card focuses only after guard', async () => {
   const f=clockFixture(); const pending=f.controller.act(playing().legalActions[0]!);
   assert.deepEqual(f.log,['say:East plays ace of clubs.','wait:1600']);
   assert.equal(f.waits.length,1);
   f.waits.shift()!.release(); await flush();
-  assert.deepEqual(f.log.slice(-2),['clear','wait:750']);
+  assert.deepEqual(f.log.slice(-2),['clear','wait:1500']);
   assert.equal(f.log.includes('focus'),false);
   f.waits.shift()!.release(); await pending;
   assert.equal(f.log.at(-1),'focus');
   assert.equal(f.dom.window.document.activeElement,f.root.querySelectorAll('#hand button')[1]);
-  assert.equal(FOCUS_GUARD_MS,750);
+  assert.equal(FOCUS_GUARD_MS,1500);
 });
 test('West order-up and pickup both finish before guarded first-discard focus', async () => {
   const ref=createReferee({seed:7});ref.player(1).act({type:'order-up',alone:false});
   const v=ref.player(0).view();const f=clockFixture(v,['West orders up hearts.','You pick up.']);
   const pending=f.controller.act(v.legalActions[0]!);
   f.waits.shift()!.release();await flush();
-  assert.equal(f.waits[0]!.ms,1600);assert.equal(f.log.includes('wait:750'),false);
-  f.waits.shift()!.release();await flush();assert.equal(f.log.at(-1),'wait:750');
+  assert.equal(f.waits[0]!.ms,1600);assert.equal(f.log.includes('wait:1500'),false);
+  f.waits.shift()!.release();await flush();assert.equal(f.log.at(-1),'wait:1500');
   f.waits.shift()!.release();await pending;
   assert.equal(f.dom.window.document.activeElement,f.root.querySelector('#hand button'));
 });
@@ -61,17 +61,17 @@ test('quiet guard does not delay un-narrated focus or each intervening bot decis
   g.waits.shift()!.release();await flush();
   assert.equal(g.waits[0]!.ms,350);assert.equal(botCalls,0);
   g.waits.shift()!.release();await flush();assert.equal(botCalls,1);
-  assert.equal(g.log.includes('wait:750'),false);
+  assert.equal(g.log.includes('wait:1500'),false);
   g.waits.shift()!.release();await flush();assert.equal(g.waits[0]!.ms,750);
   g.waits.shift()!.release();await pending;
-  assert.equal(g.log.filter(x=>x==='wait:750').length,1);
+  assert.equal(g.log.filter(x=>x==='wait:1500').length,1);
 });
 test('review requested during quiet guard finishes and receives a fresh quiet interval', async () => {
   const f=clockFixture();const pending=f.controller.act(playing().legalActions[0]!);
   f.waits.shift()!.release();await flush();const guard=f.waits.shift()!;
   const review=f.controller.repeat();const speech=f.waits.shift()!;
   guard.release();await flush();assert.equal(f.log.includes('focus'),false);
-  speech.release();await review;await flush();assert.equal(f.log.at(-1),'wait:750');
+  speech.release();await review;await flush();assert.equal(f.log.at(-1),'wait:1500');
   assert.equal(f.log.includes('focus'),false);f.waits.shift()!.release();await pending;
   assert.equal(f.log.filter(x=>x==='focus').length,1);
 });
@@ -82,7 +82,7 @@ test('stopping during the guard prevents stale focus; hand/game results retain g
   for(const phase of ['hand-over','game-over'] as const) {
     const v:PlayerView={...playing(),phase,turn:null,result:{team:0,points:1,makerTricks:3,reason:'made'},winner:phase==='game-over'?0:null};
     const g=clockFixture(v,['You take the trick.']);const done=g.controller.act({type:'play',card:'hearts:A'});
-    g.waits.shift()!.release();await flush();assert.equal(g.log.at(-1),'wait:750');
+    g.waits.shift()!.release();await flush();assert.equal(g.log.at(-1),'wait:1500');
     g.waits.shift()!.release();await done;
     assert.equal(g.dom.window.document.activeElement,g.root.querySelector('#result'));
     assert.equal(g.log.filter(x=>x.startsWith('say:')).length,1);
@@ -103,7 +103,7 @@ test('play navigation follows stable hand, then state and available trick review
   assert.deepEqual(accessibleOrder(root).slice(-2),['Repeat current state','Review last trick']);
   assert.equal(root.querySelector('#hand')!.nextElementSibling?.id,'after-hand');
 });
-test('both calling rounds put positive bids before stable hand and textual Pass before reviews; stuck dealer omits Pass', () => {
+test('both calling rounds put stable hand before positive bids and textual Pass before reviews; stuck dealer omits Pass', () => {
   const ref=createReferee({seed:4,dealer:3});
   for(let step=0;step<8;step++) {
     const v=ref.player(0).view();
@@ -112,7 +112,7 @@ test('both calling rounds put positive bids before stable hand and textual Pass 
       const positive=v.legalActions.filter(a=>a.type==='order-up'||a.type==='call');
       const bids=[...root.querySelectorAll<HTMLButtonElement>('#bids button')];
       assert.equal(bids.length,positive.length);
-      assert.ok(order.indexOf(bids[0]!.getAttribute('aria-label')!)<order.indexOf('Your hand'));
+      assert.ok(order.indexOf('Your hand')<order.indexOf(bids[0]!.getAttribute('aria-label')!));
       assert.deepEqual([...root.querySelectorAll('#hand button')].map(b=>b.textContent?.split(',')[0]),v.hand.map(c=>cardName(c)));
       const pass=root.querySelector<HTMLButtonElement>('#pass')!;
       assert.equal(pass.textContent,'Pass');assert.equal(pass.hidden,false);
@@ -125,7 +125,7 @@ test('both calling rounds put positive bids before stable hand and textual Pass 
   const stuck=createReferee({seed:4,dealer:0});for(let i=0;i<7;i++)stuck.player(stuck.player(0).view().turn!).act({type:'pass'});
   const v=stuck.player(0).view();const {root}=fixture(v);const order=accessibleOrder(root);
   assert.equal(root.querySelector<HTMLButtonElement>('#pass')!.hidden,true);
-  assert.deepEqual(order.slice(order.indexOf('Your hand')),['Your hand',...[...root.querySelectorAll('#hand button')].map(b=>b.textContent),'Repeat current state']);
+  assert.deepEqual(order.slice(order.indexOf('Your hand')),['Your hand',...[...root.querySelectorAll('#hand button')].map(b=>b.textContent),...bids.map(b=>b.getAttribute('aria-label')),'Repeat current state']);
 });
 test('compact order-up and call glyphs preserve explicit speech, legal actions and CSS touch targets', () => {
   const v=playing();

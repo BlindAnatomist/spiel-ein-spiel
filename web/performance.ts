@@ -2,6 +2,8 @@ import type { HandResult, PlayerView, Seat, Team } from '../src/index.ts';
 import type { Difficulty, OpponentIdentity, SessionMeta, SessionObserver } from './session.ts';
 
 export const PERFORMANCE_STORAGE_KEY = 'spiel-ein-spiel:euchre-performance:v1';
+export const PERFORMANCE_PROFILE_KEY = 'spiel-ein-spiel:euchre-performance-profile:v1';
+export const PERFORMANCE_PENDING_ARCHIVE_KEY = 'spiel-ein-spiel:euchre-performance-pending:v1';
 const MAX_RECORDED_GAMES = 500;
 
 export interface HandPerformance {
@@ -17,6 +19,8 @@ export interface HandPerformance {
 }
 
 export interface GamePerformance {
+  readonly id: string;
+  readonly completedAt: string;
   readonly difficulty: Difficulty;
   readonly opponents: readonly OpponentIdentity[];
   readonly winner: Team;
@@ -29,9 +33,21 @@ export interface PerformanceBook {
   readonly games: readonly GamePerformance[];
 }
 
+export interface PerformanceArchiveItem {
+  readonly profileId: string;
+  readonly game: GamePerformance;
+}
+
 export interface StorageLike {
   getItem(key: string): string | null;
   setItem(key: string, value: string): void;
+}
+
+export interface RecorderOptions {
+  readonly profileId?: string;
+  readonly gameId?: string;
+  readonly completedAt?: () => string;
+  readonly archiveQueued?: () => void;
 }
 
 export interface CallerSummary {
@@ -99,6 +115,49 @@ function savePerformance(storage: StorageLike, book: PerformanceBook): void {
   try { storage.setItem(PERFORMANCE_STORAGE_KEY, JSON.stringify(book)); } catch {}
 }
 
+export function getPerformanceProfile(storage: StorageLike): string | null {
+  try {
+    const value = storage.getItem(PERFORMANCE_PROFILE_KEY);
+    return value && /^EUC-[A-Za-z0-9-]{16,}$/.test(value) ? value : null;
+  } catch {
+    return null;
+  }
+}
+
+export function ensurePerformanceProfile(storage: StorageLike, createId: () => string): string {
+  const existing = getPerformanceProfile(storage);
+  if (existing) return existing;
+  const created = `EUC-${createId().replace(/[^A-Za-z0-9-]/g, '')}`;
+  try { storage.setItem(PERFORMANCE_PROFILE_KEY, created); } catch {}
+  return created;
+}
+
+export function loadPendingArchives(storage: StorageLike): readonly PerformanceArchiveItem[] {
+  try {
+    const raw = storage.getItem(PERFORMANCE_PENDING_ARCHIVE_KEY);
+    if (!raw) return [];
+    const parsed: unknown = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed as PerformanceArchiveItem[];
+  } catch {
+    return [];
+  }
+}
+
+function savePendingArchives(storage: StorageLike, items: readonly PerformanceArchiveItem[]): void {
+  try { storage.setItem(PERFORMANCE_PENDING_ARCHIVE_KEY, JSON.stringify(items)); } catch {}
+}
+
+export function enqueuePerformanceArchive(storage: StorageLike, item: PerformanceArchiveItem): void {
+  const pending = loadPendingArchives(storage);
+  if (pending.some(value => value.game.id === item.game.id)) return;
+  savePendingArchives(storage, [...pending, item]);
+}
+
+export function markPerformanceArchived(storage: StorageLike, gameId: string): void {
+  savePendingArchives(storage, loadPendingArchives(storage).filter(item => item.game.id !== gameId));
+}
+
 function handRecord(view: PlayerView): HandPerformance | null {
   if (!view.result || view.caller === null) return null;
   return Object.freeze({
@@ -115,7 +174,7 @@ function handRecord(view: PlayerView): HandPerformance | null {
 }
 
 /** Records completed public results only. Abandoned games are not counted as completed games. */
-export function createPerformanceRecorder(storage: StorageLike): SessionObserver {
+export function createPerformanceRecorder(storage: StorageLike, options: RecorderOptions = {}): SessionObserver {
   const hands: HandPerformance[] = [];
   let saved = false;
   return {
@@ -128,14 +187,20 @@ export function createPerformanceRecorder(storage: StorageLike): SessionObserver
       saved = true;
       const book = loadPerformance(storage);
       const game: GamePerformance = Object.freeze({
+        id: options.gameId ?? `local-${book.games.length + 1}-${view.handNumber}`,
+        completedAt: options.completedAt?.() ?? 'local',
         difficulty: meta.difficulty,
         opponents: Object.freeze(meta.opponents.map(opponent => Object.freeze({ ...opponent }))),
         winner: view.winner,
         score: Object.freeze([view.score[0], view.score[1]]) as readonly [number, number],
         hands: Object.freeze(hands.map(hand => Object.freeze({ ...hand }))),
       });
-      const games = [...book.games, game].slice(-MAX_RECORDED_GAMES);
+      const games = [...book.games.filter(value => value.id !== game.id), game].slice(-MAX_RECORDED_GAMES);
       savePerformance(storage, { version: 1, games });
+      if (options.profileId) {
+        enqueuePerformanceArchive(storage, { profileId: options.profileId, game });
+        options.archiveQueued?.();
+      }
     },
   };
 }

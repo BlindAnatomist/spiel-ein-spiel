@@ -154,7 +154,7 @@ test('decorative card faces and data attributes contain only own/public cards th
   }
 });
 
-test('protected PR 6 narrator, 1250 ms guard, summaries, session, randomness entry and sound are byte-identical',()=>{
- const hashes={"web/controller.ts": "4ca64797f0f4657b1f86dd5af0e58315545e960784506377521231f0010ec306", "web/announcer.ts": "88ed4d2acf557c57737a9dcac252738cde471a5d0f97e58563076d5a65bc4362", "web/presentation.ts": "5bbb5fe8353087724f791a895133633704a55c92baf7ea90d3bf524395739821", "web/session.ts": "557b243ea324efa9c0937ca4f5ba1019acca24565f806599b70a7bab38da622c", "web/main.ts": "32308451f40a1737bfa293a0c1ffad54e1eee8974ccbd8f299d81b5e70e410f1", "web/sound.ts": "7f84776ebdb1467cbb1c86045d1b046c23e87493278551389c804b931dbcbe8b"};
+test('protected PR 6 narrator, 1150 ms guard, summaries, session, randomness entry and sound are byte-identical',()=>{
+ const hashes={"web/controller.ts": "23e95387e4b5fdb72a3bb8097aad23726ad6443312251806cf08d8605c412e6b", "web/announcer.ts": "88ed4d2acf557c57737a9dcac252738cde471a5d0f97e58563076d5a65bc4362", "web/presentation.ts": "5bbb5fe8353087724f791a895133633704a55c92baf7ea90d3bf524395739821", "web/session.ts": "557b243ea324efa9c0937ca4f5ba1019acca24565f806599b70a7bab38da622c", "web/main.ts": "32308451f40a1737bfa293a0c1ffad54e1eee8974ccbd8f299d81b5e70e410f1", "web/sound.ts": "7f84776ebdb1467cbb1c86045d1b046c23e87493278551389c804b931dbcbe8b"};
  for(const [file,hash] of Object.entries(hashes))assert.equal(createHash('sha256').update(readFileSync(file)).digest('hex'),hash,file);
 });

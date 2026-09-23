@@ -78,6 +78,17 @@ export interface OpponentSummary {
   lonerMarches: number;
 }
 
+
+export interface OwnerTrendPoint {
+  readonly label: string;
+  readonly firstGame: number;
+  readonly lastGame: number;
+  readonly games: number;
+  readonly winRate: number;
+  readonly callSuccessRate: number | null;
+  readonly averageScoreDifferential: number;
+}
+
 export interface PerformanceSummary {
   games: number;
   wins: number;
@@ -291,6 +302,51 @@ export function summarizePerformance(book: PerformanceBook): PerformanceSummary 
     valCaller,
     opponents: [...profiles.values()].sort((a, b) => b.games - a.games || a.label.localeCompare(b.label)),
   };
+}
+
+export function ownerTrend(book: PerformanceBook, batchSize = 10): readonly OwnerTrendPoint[] {
+  if (!Number.isSafeInteger(batchSize) || batchSize < 1) throw new RangeError('Batch size must be positive');
+  const games = book.games.filter(game => game.humanTracking !== 'other');
+  const points: OwnerTrendPoint[] = [];
+  for (let start = 0; start < games.length; start += batchSize) {
+    const batch = games.slice(start, start + batchSize);
+    const calls = batch.flatMap(game => game.hands).filter(hand => hand.caller === 0);
+    const madeCalls = calls.filter(hand => hand.reason !== 'euchred').length;
+    const firstGame = start + 1;
+    const lastGame = start + batch.length;
+    points.push({
+      label: firstGame === lastGame ? `Game ${firstGame}` : `Games ${firstGame}–${lastGame}`,
+      firstGame,
+      lastGame,
+      games: batch.length,
+      winRate: 100 * batch.filter(game => game.winner === 0).length / batch.length,
+      callSuccessRate: calls.length ? 100 * madeCalls / calls.length : null,
+      averageScoreDifferential: batch.reduce((sum, game) => sum + game.score[0] - game.score[1], 0) / batch.length,
+    });
+  }
+  return points;
+}
+
+function points(value: number): string {
+  return `${value >= 0 ? '+' : ''}${value.toFixed(1)}`;
+}
+
+export function performanceAnalysisText(book: PerformanceBook, batchSize = 10): string {
+  const trend = ownerTrend(book, batchSize);
+  const games = trend.reduce((sum, point) => sum + point.games, 0);
+  if (!games) return 'No games recorded for my performance yet.';
+  const latest = trend.at(-1)!;
+  const latestCalls = latest.callSuccessRate === null
+    ? 'no calls by you in this block'
+    : `your calls succeeded ${Math.round(latest.callSuccessRate)} percent of the time`;
+  if (trend.length === 1) {
+    return `Analysis currently includes ${games} tracked ${games === 1 ? 'game' : 'games'}. ${latest.label}: win rate ${Math.round(latest.winRate)} percent; ${latestCalls}; average final-score differential ${points(latest.averageScoreDifferential)}. More completed games are needed for a multi-block trend.`;
+  }
+  const first = trend[0]!;
+  const callChange = first.callSuccessRate === null || latest.callSuccessRate === null
+    ? 'Calling-success comparison is not available because one comparison block contains no calls by you.'
+    : `Your calling success changed from ${Math.round(first.callSuccessRate)} to ${Math.round(latest.callSuccessRate)} percent.`;
+  return `Analysis includes ${games} tracked games in blocks of ${batchSize}. From ${first.label} to ${latest.label}, win rate changed from ${Math.round(first.winRate)} to ${Math.round(latest.winRate)} percent. ${callChange} Average final-score differential changed from ${points(first.averageScoreDifferential)} to ${points(latest.averageScoreDifferential)} points. The chart shows win rate and calling success for each game block; Other-player games are excluded from these human trends.`;
 }
 
 function percent(value: number | null): string {

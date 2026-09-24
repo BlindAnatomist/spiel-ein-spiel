@@ -4,7 +4,8 @@ import { createBot, createBotWithStrategy } from '../src/bots/index.ts';
 import { baselineOpponentProfiles, selectOpponentProfiles } from '../src/bots/profiles.ts';
 import type { OpponentDifficulty, OpponentLevel, OpponentProfileId } from '../src/bots/profiles.ts';
 import type { Action, PlayerView, Seat } from '../src/index.ts';
-import { events } from './presentation.ts';
+import { events, names } from './presentation.ts';
+import type { SeatNames } from './presentation.ts';
 
 export type Difficulty = OpponentDifficulty;
 export const policyLevels = (level: Difficulty) => {
@@ -14,15 +15,19 @@ export const policyLevels = (level: Difficulty) => {
 
 export interface OpponentIdentity {
   readonly seat: 1 | 3;
+  readonly name: string;
   readonly id: OpponentProfileId;
   readonly label: string;
   readonly level: OpponentLevel;
 }
 export interface SessionMeta {
   readonly difficulty: Difficulty;
+  readonly seatNames: SeatNames;
   readonly opponents: readonly [OpponentIdentity, OpponentIdentity];
 }
 export interface SessionObserver {
+  handStarted?(view: PlayerView, meta: SessionMeta): void;
+  decision?(seat: Seat, view: PlayerView, action: Action, meta: SessionMeta): void;
   handCompleted?(view: PlayerView, meta: SessionMeta): void;
   gameCompleted?(view: PlayerView, meta: SessionMeta): void;
 }
@@ -41,6 +46,8 @@ export interface SessionOptions {
   observer?: SessionObserver;
   /** Baseline preserves the accepted deterministic policy routing; live games opt into varied profiles. */
   opponentMode?: 'baseline' | 'varied';
+  /** Live table labels; defaults preserve the accepted West/East baseline. */
+  seatNames?: SeatNames;
 }
 
 export function createSession(seed: number, level: Difficulty, options: SessionOptions = {}): Session {
@@ -55,28 +62,36 @@ export function createSession(seed: number, level: Difficulty, options: SessionO
     createBot('val'),
     createBotWithStrategy(profiles[1].strategy),
   ] as const;
+  const seatNames = options.seatNames ?? names;
   const opponents = Object.freeze([
-    Object.freeze({ seat: 1 as const, id: profiles[0].id, label: profiles[0].label, level: profiles[0].level }),
-    Object.freeze({ seat: 3 as const, id: profiles[1].id, label: profiles[1].label, level: profiles[1].level }),
+    Object.freeze({ seat: 1 as const, name: seatNames[1], id: profiles[0].id, label: profiles[0].label, level: profiles[0].level }),
+    Object.freeze({ seat: 3 as const, name: seatNames[3], id: profiles[1].id, label: profiles[1].label, level: profiles[1].level }),
   ] as const);
-  const meta: SessionMeta = Object.freeze({ difficulty: level, opponents });
+  const meta: SessionMeta = Object.freeze({ difficulty: level, seatNames, opponents });
   const view = () => ports[0]!.view();
 
-  function notify(kind: 'handCompleted' | 'gameCompleted', completed: PlayerView): void {
+  function notify(kind: 'handStarted' | 'handCompleted' | 'gameCompleted', completed: PlayerView): void {
     try { options.observer?.[kind]?.(completed, meta); } catch {}
+  }
+  function notifyDecision(seat: Seat, actorView: PlayerView, action: Action): void {
+    try { options.observer?.decision?.(seat, actorView, action, meta); } catch {}
   }
 
   const apply = (actor: Seat, action: Action): Update | null => {
     const before = view();
+    const actorView = ports[actor]!.view();
     const result = ports[actor]!.act(action);
     if (!result.ok) return null;
     const after = view();
+    notifyDecision(actor, actorView, action);
     if (before.result === null && after.result !== null) {
       notify('handCompleted', after);
       if (after.phase === 'game-over') notify('gameCompleted', after);
     }
-    return { view: after, messages: events(before, after, actor, action) };
+    return { view: after, messages: events(before, after, actor, action, seatNames) };
   };
+
+  notify('handStarted', view());
 
   return Object.freeze({
     view,
@@ -86,6 +101,6 @@ export function createSession(seed: number, level: Difficulty, options: SessionO
       if (seat === null || seat === 0) return null;
       return apply(seat, policies[seat]!(ports[seat]!.view()));
     },
-    nextHand: () => { referee.nextHand(); return view(); },
+    nextHand: () => { referee.nextHand(); const next = view(); notify('handStarted', next); return next; },
   });
 }

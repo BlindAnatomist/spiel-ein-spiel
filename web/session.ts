@@ -1,7 +1,7 @@
 /** Trusted coordination. Referee and other seats never cross this module's return boundary. */
 import { createReferee } from '../src/referee.ts';
 import { createBot, createBotWithStrategy } from '../src/bots/index.ts';
-import { baselineOpponentProfiles, selectOpponentProfiles } from '../src/bots/profiles.ts';
+import { baselineOpponentProfiles, seatNamesForProfiles, selectOpponentProfiles } from '../src/bots/profiles.ts';
 import type { OpponentDifficulty, OpponentLevel, OpponentProfileId } from '../src/bots/profiles.ts';
 import type { Action, PlayerView, Seat } from '../src/index.ts';
 import { events, names } from './presentation.ts';
@@ -62,7 +62,13 @@ export function createSession(seed: number, level: Difficulty, options: SessionO
     createBot('val'),
     createBotWithStrategy(profiles[1].strategy),
   ] as const;
-  const seatNames = options.seatNames ?? names;
+  const varied = level === 'mixed' || options.opponentMode === 'varied';
+  const permanentNames = seatNamesForProfiles(profiles);
+  const seatNames = options.seatNames ?? (varied ? permanentNames : names);
+  if (varied && options.seatNames &&
+      (seatNames[1] !== permanentNames[1] || seatNames[3] !== permanentNames[3])) {
+    throw new Error('Varied opponent names must match their permanent strategy identities');
+  }
   const opponents = Object.freeze([
     Object.freeze({ seat: 1 as const, name: seatNames[1], id: profiles[0].id, label: profiles[0].label, level: profiles[0].level }),
     Object.freeze({ seat: 3 as const, name: seatNames[3], id: profiles[1].id, label: profiles[1].label, level: profiles[1].level }),

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { auditDeals } from '../src/audit/deals.ts';
 import { createBot } from '../src/bots/index.ts';
-import { OPPONENT_PROFILES, selectOpponentProfiles, selectSeatNames } from '../src/bots/profiles.ts';
+import { OPPONENT_PROFILES, seatNamesForProfiles, selectOpponentProfiles, selectSeatNames } from '../src/bots/profiles.ts';
 import type { OpponentDifficulty } from '../src/bots/profiles.ts';
 import {
   createPerformanceRecorder,
@@ -30,8 +30,8 @@ class MemoryStorage implements StorageLike {
 }
 
 const namedOpponents: readonly [OpponentIdentity, OpponentIdentity] = [
-  { seat: 1, name: 'Warren', id: 'strong-assertive', label: 'Assertive Strong', level: 'strong' },
-  { seat: 3, name: 'Eleanor', id: 'strong-conservative', label: 'Conservative Strong', level: 'strong' },
+  { seat: 1, name: 'Wade', id: 'strong-assertive', label: 'Assertive Strong', level: 'strong' },
+  { seat: 3, name: 'Ellen', id: 'strong-conservative', label: 'Conservative Strong', level: 'strong' },
 ];
 
 function hand(caller: 0 | 1 | 2 | 3, reason: HandPerformance['reason'] = 'made'): HandPerformance {
@@ -96,29 +96,58 @@ test('ordinary difficulties select distinct strategy profiles within the request
   assert.ok(Object.isFrozen(OPPONENT_PROFILES['strong-balanced'].strategy));
 });
 
-test('table identities are deterministic, strategy-independent and preserve W-left E-right orientation', () => {
-  const seenW = new Set<string>();
-  const seenE = new Set<string>();
-  for (let seed = 0; seed < 100; seed++) {
-    const names = selectSeatNames(seed);
-    assert.equal(names[0], 'You');
-    assert.equal(names[2], 'Val');
-    assert.match(names[1], /^W/);
-    assert.match(names[3], /^E/);
-    assert.deepEqual(selectSeatNames(seed), names);
-    seenW.add(names[1]);
-    seenE.add(names[3]);
+test('each strategy owns compact permanent W-left and E-right identities and can occupy either side', () => {
+  const westNames = new Set<string>();
+  const eastNames = new Set<string>();
+  for (const profile of Object.values(OPPONENT_PROFILES)) {
+    assert.match(profile.westName, /^W/);
+    assert.match(profile.eastName, /^E/);
+    assert.ok(profile.westName.length <= 5, profile.westName);
+    assert.ok(profile.eastName.length <= 5, profile.eastName);
+    assert.equal(westNames.has(profile.westName), false);
+    assert.equal(eastNames.has(profile.eastName), false);
+    westNames.add(profile.westName);
+    eastNames.add(profile.eastName);
+    assert.deepEqual(
+      seatNamesForProfiles([profile, profile]),
+      ['You', profile.westName, 'Val', profile.eastName],
+    );
   }
-  assert.ok(seenW.size > 5);
-  assert.ok(seenE.size > 5);
+  assert.equal(westNames.size, 10);
+  assert.equal(eastNames.size, 10);
+
+  for (const difficulty of ['casual', 'strong', 'expert'] as const) {
+    const ids = Object.values(OPPONENT_PROFILES).filter(p => p.level === difficulty).map(p => p.id);
+    const left = new Set<string>();
+    const right = new Set<string>();
+    for (let seed = 0; seed < 1000; seed++) {
+      const [leftProfile, rightProfile] = selectOpponentProfiles(difficulty, seed);
+      left.add(leftProfile.id);
+      right.add(rightProfile.id);
+      const names = selectSeatNames(difficulty, seed);
+      assert.equal(names[1], leftProfile.westName);
+      assert.equal(names[3], rightProfile.eastName);
+    }
+    assert.deepEqual([...left].sort(), [...ids].sort());
+    assert.deepEqual([...right].sort(), [...ids].sort());
+  }
 });
 
 test('live session narration uses the selected W and E table identities', () => {
-  const seatNames = ['You', 'Warren', 'Val', 'Erin'] as const;
-  const session = createSession(12, 'casual', { dealer: 0, seatNames });
+  const seatNames = selectSeatNames('casual', 12);
+  const session = createSession(12, 'casual', { dealer: 0, seatNames, opponentMode: 'varied' });
   const update = session.bot();
   assert.ok(update);
-  assert.ok(update.messages.some(message => message.startsWith('Warren ')));
+  assert.ok(update.messages.some(message => message.startsWith(`${seatNames[1]} `)));
+});
+
+test('varied session rejects a table name that does not belong to the selected strategy', () => {
+  const correct = selectSeatNames('strong', 44);
+  const wrong = ['You', correct[1] === 'Wade' ? 'Walt' : 'Wade', 'Val', correct[3]] as const;
+  assert.throws(
+    () => createSession(44, 'strong', { opponentMode: 'varied', seatNames: wrong }),
+    /permanent strategy identities/,
+  );
 });
 
 test('mixed opponents always use two different difficulty levels and replay from the same seed', () => {
@@ -132,7 +161,7 @@ test('mixed opponents always use two different difficulty levels and replay from
 
 test('owner game archives rich permitted decision evidence and keeps local history compact', () => {
   const storage = new MemoryStorage();
-  const seatNames = selectSeatNames(20260923);
+  const seatNames = selectSeatNames('mixed', 20260923);
   const recorder = createPerformanceRecorder(storage, {
     profileId: 'EUC-test-profile-1234567890',
     gameId: 'game-1',
@@ -227,7 +256,7 @@ test('owner game archives rich permitted decision evidence and keeps local histo
 
 test('other-player games retain bot evidence but never archive that human private view or starting hand', () => {
   const storage = new MemoryStorage();
-  const seatNames = selectSeatNames(99);
+  const seatNames = selectSeatNames('strong', 99);
   const recorder = createPerformanceRecorder(storage, {
     profileId: 'EUC-other-profile-1234567890',
     gameId: 'other-game',

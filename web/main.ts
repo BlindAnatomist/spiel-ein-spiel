@@ -1,9 +1,13 @@
 import { createSoundCues } from './sound.ts';
 import type { Seat } from '../src/index.ts';
+import { selectSeatNames } from '../src/bots/profiles.ts';
 import { createSession, type Difficulty } from './session.ts';
 import {
   createPerformanceRecorder,
   ensurePerformanceProfile,
+  PERFORMANCE_DATASET_EPOCH,
+  PERFORMANCE_RULES_VERSION,
+  PERFORMANCE_SCHEMA_VERSION,
   loadPendingArchives,
   loadPerformance,
   markPerformanceArchived,
@@ -17,6 +21,9 @@ import {
 } from './performance.ts';
 import { createTable } from './render.ts';
 import { createController } from './controller.ts';
+
+declare const __BUILD_COMMIT__: string;
+const buildCommit = typeof __BUILD_COMMIT__ === 'string' ? __BUILD_COMMIT__ : 'development';
 
 const sounds = createSoundCues();
 const soundToggle = document.querySelector<HTMLButtonElement>('#sound-cues')!;
@@ -128,6 +135,10 @@ async function submitArchive(item: PerformanceArchiveItem): Promise<void> {
     game_id: item.game.id,
     completed_at: item.game.completedAt,
     human_tracking: item.game.humanTracking,
+    schema_version: String(PERFORMANCE_SCHEMA_VERSION),
+    dataset_epoch: String(PERFORMANCE_DATASET_EPOCH),
+    build_commit: item.game.buildCommit,
+    rules_version: PERFORMANCE_RULES_VERSION,
     payload: JSON.stringify(item.game),
   });
   const response = await fetch('/', {
@@ -173,6 +184,7 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   // Live games use browser cryptographic randomness for the starting dealer and every shuffle.
   const dealer = (randomWord() & 3) as Seat;
   const seed = randomWord();
+  const seatNames = selectSeatNames(seed);
   const gameId = crypto.randomUUID();
   const session = createSession(seed, level, {
     dealer,
@@ -181,14 +193,17 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
       profileId,
       gameId,
       humanTracking,
+      buildCommit,
+      rulesVersion: PERFORMANCE_RULES_VERSION,
       completedAt: () => new Date().toISOString(),
       archiveQueued: () => { void flushPerformanceArchive(); },
     }),
     opponentMode: 'varied',
+    seatNames,
   });
   root.hidden = false;
-  const table = createTable(root, { act: action => { void controller!.act(action); }, next: () => { void controller!.next(); }, repeat: () => { void controller!.repeat(); }, review: () => { void controller!.review(); } });
-  controller = createController(session, table, text => { live.textContent = text; }, undefined, cue => sounds.play(cue));
+  const table = createTable(root, { act: action => { void controller!.act(action); }, next: () => { void controller!.next(); }, repeat: () => { void controller!.repeat(); }, review: () => { void controller!.review(); } }, seatNames);
+  controller = createController(session, table, text => { live.textContent = text; }, undefined, cue => sounds.play(cue), seatNames);
   table.render(session.view(), false); table.park();
   void controller.start();
 };

@@ -387,6 +387,13 @@ test('deal audit accepts the injected live-random path and validates its source 
   assert.throws(() => auditDeals({ deals: 0, seed: 1 }));
 });
 
+test('rich archive submission relies on the persistent retry queue, not fetch keepalive', () => {
+  const source = readFileSync('web/main.ts', 'utf8');
+  assert.doesNotMatch(source, /keepalive\s*:\s*true/);
+  assert.match(source, /loadPendingArchives/);
+  assert.match(source, /markPerformanceArchived/);
+});
+
 test('difficulty type includes mixed while preserving all existing named choices', () => {
   const values: OpponentDifficulty[] = ['casual', 'strong', 'expert', 'mixed'];
   assert.deepEqual(values, ['casual', 'strong', 'expert', 'mixed']);

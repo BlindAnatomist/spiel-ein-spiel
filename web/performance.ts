@@ -294,7 +294,7 @@ export function createPerformanceRecorder(storage: StorageLike, options: Recorde
           dealer: view.dealer,
           scoreBefore: [view.score[0], view.score[1]],
           upCard: view.upCard,
-          ownerStartingHand: humanTracking === 'owner' ? [...meta.seatNames[0] === 'You' ? view.hand : []] : null,
+          ownerStartingHand: humanTracking === 'owner' && seat === 0 ? [...view.hand] : null,
           decisions: [],
         };
         active.set(view.handNumber, hand);

@@ -1,15 +1,26 @@
-import type { HandResult, PlayerView, Seat, Team } from '../src/index.ts';
+import type { Action, Card, HandResult, PlayerView, Seat, Team } from '../src/index.ts';
 import type { Difficulty, OpponentIdentity, SessionMeta, SessionObserver } from './session.ts';
 
-export const PERFORMANCE_STORAGE_KEY = 'spiel-ein-spiel:euchre-performance:v1';
+export const PERFORMANCE_SCHEMA_VERSION = 2 as const;
+export const PERFORMANCE_DATASET_EPOCH = 1 as const;
+export const PERFORMANCE_RULES_VERSION = 'euchre-standard-v1';
+export const PERFORMANCE_STORAGE_KEY = 'spiel-ein-spiel:euchre-performance:v2';
 export const PERFORMANCE_PROFILE_KEY = 'spiel-ein-spiel:euchre-performance-profile:v1';
-export const PERFORMANCE_PENDING_ARCHIVE_KEY = 'spiel-ein-spiel:euchre-performance-pending:v1';
-const MAX_RECORDED_GAMES = 500;
+export const PERFORMANCE_PENDING_ARCHIVE_KEY = 'spiel-ein-spiel:euchre-performance-pending:v2';
+const MAX_RECORDED_GAMES = 300;
+
+export type HumanTracking = 'owner' | 'other';
+export type ActorKind = 'owner' | 'other-human' | 'val' | 'opponent';
 
 export interface HandPerformance {
   readonly handNumber: number;
   readonly dealer: Seat;
+  readonly scoreBefore: readonly [number, number];
+  readonly scoreAfter: readonly [number, number];
+  readonly upCard: Card;
+  readonly ownerStartingHand: readonly Card[] | null;
   readonly caller: Seat;
+  readonly trump: PlayerView['trump'];
   readonly round: 1 | 2;
   readonly alone: boolean;
   readonly makerTricks: number;
@@ -18,27 +29,62 @@ export interface HandPerformance {
   readonly reason: HandResult['reason'];
 }
 
-export type HumanTracking = 'owner' | 'other';
-
 export interface GamePerformance {
+  readonly schemaVersion: typeof PERFORMANCE_SCHEMA_VERSION;
+  readonly datasetEpoch: typeof PERFORMANCE_DATASET_EPOCH;
+  readonly buildCommit: string;
+  readonly rulesVersion: string;
   readonly id: string;
   readonly completedAt: string;
   readonly humanTracking: HumanTracking;
   readonly difficulty: Difficulty;
+  readonly startingDealer: Seat;
   readonly opponents: readonly OpponentIdentity[];
   readonly winner: Team;
   readonly score: readonly [number, number];
   readonly hands: readonly HandPerformance[];
 }
 
+export interface DecisionEvidence {
+  readonly sequence: number;
+  readonly seat: Seat;
+  readonly actorKind: ActorKind;
+  readonly actorName: string;
+  readonly profileId: string | null;
+  /** Exact permitted PlayerView before the action. Omitted for an untracked human. */
+  readonly view: PlayerView | null;
+  readonly action: Action;
+}
+
+export interface ArchivedHandRecord extends HandPerformance {
+  readonly decisions: readonly DecisionEvidence[];
+}
+
+export interface ArchivedGameRecord {
+  readonly schemaVersion: typeof PERFORMANCE_SCHEMA_VERSION;
+  readonly datasetEpoch: typeof PERFORMANCE_DATASET_EPOCH;
+  readonly buildCommit: string;
+  readonly rulesVersion: string;
+  readonly id: string;
+  readonly completedAt: string;
+  readonly humanTracking: HumanTracking;
+  readonly difficulty: Difficulty;
+  readonly startingDealer: Seat;
+  readonly seatNames: SessionMeta['seatNames'];
+  readonly opponents: readonly OpponentIdentity[];
+  readonly winner: Team;
+  readonly score: readonly [number, number];
+  readonly hands: readonly ArchivedHandRecord[];
+}
+
 export interface PerformanceBook {
-  readonly version: 1;
+  readonly version: 2;
   readonly games: readonly GamePerformance[];
 }
 
 export interface PerformanceArchiveItem {
   readonly profileId: string;
-  readonly game: GamePerformance;
+  readonly game: ArchivedGameRecord;
 }
 
 export interface StorageLike {
@@ -50,6 +96,8 @@ export interface RecorderOptions {
   readonly profileId?: string;
   readonly gameId?: string;
   readonly humanTracking?: HumanTracking;
+  readonly buildCommit?: string;
+  readonly rulesVersion?: string;
   readonly completedAt?: () => string;
   readonly archiveQueued?: () => void;
 }
@@ -77,7 +125,6 @@ export interface OpponentSummary {
   lonerAttempts: number;
   lonerMarches: number;
 }
-
 
 export interface OwnerTrendPoint {
   readonly label: string;
@@ -107,12 +154,26 @@ export interface PerformanceSummary {
   opponents: readonly OpponentSummary[];
 }
 
+interface ActiveHand {
+  handNumber: number;
+  dealer: Seat;
+  scoreBefore: readonly [number, number];
+  upCard: Card;
+  ownerStartingHand: readonly Card[] | null;
+  decisions: DecisionEvidence[];
+}
+
 function emptyBook(): PerformanceBook {
-  return { version: 1, games: [] };
+  return { version: 2, games: [] };
 }
 
 function caller(): CallerSummary {
   return { calls: 0, made: 0, euchred: 0, marches: 0, lonerAttempts: 0, lonerMarches: 0 };
+}
+
+function currentGames(book: PerformanceBook): readonly GamePerformance[] {
+  return book.games.filter(game =>
+    game.schemaVersion === PERFORMANCE_SCHEMA_VERSION && game.datasetEpoch === PERFORMANCE_DATASET_EPOCH);
 }
 
 export function loadPerformance(storage: StorageLike): PerformanceBook {
@@ -122,8 +183,8 @@ export function loadPerformance(storage: StorageLike): PerformanceBook {
     const parsed: unknown = JSON.parse(raw);
     if (!parsed || typeof parsed !== 'object') return emptyBook();
     const candidate = parsed as { version?: unknown; games?: unknown };
-    if (candidate.version !== 1 || !Array.isArray(candidate.games)) return emptyBook();
-    return { version: 1, games: candidate.games as GamePerformance[] };
+    if (candidate.version !== 2 || !Array.isArray(candidate.games)) return emptyBook();
+    return { version: 2, games: candidate.games as GamePerformance[] };
   } catch {
     return emptyBook();
   }
@@ -176,48 +237,149 @@ export function markPerformanceArchived(storage: StorageLike, gameId: string): v
   savePendingArchives(storage, loadPendingArchives(storage).filter(item => item.game.id !== gameId));
 }
 
-function handRecord(view: PlayerView): HandPerformance | null {
-  if (!view.result || view.caller === null) return null;
-  return Object.freeze({
-    handNumber: view.handNumber,
-    dealer: view.dealer,
-    caller: view.caller,
-    round: view.biddingRound,
-    alone: view.alone,
-    makerTricks: view.result.makerTricks,
-    awardedTeam: view.result.team,
-    points: view.result.points,
-    reason: view.result.reason,
-  });
+function actorIdentity(seat: Seat, humanTracking: HumanTracking, meta: SessionMeta): {
+  kind: ActorKind; name: string; profileId: string | null;
+} {
+  if (seat === 0) return {
+    kind: humanTracking === 'owner' ? 'owner' : 'other-human',
+    name: humanTracking === 'owner' ? 'Owner' : 'Other player',
+    profileId: null,
+  };
+  if (seat === 2) return { kind: 'val', name: 'Val', profileId: 'val' };
+  const opponent = meta.opponents.find(value => value.seat === seat);
+  return {
+    kind: 'opponent',
+    name: opponent?.name ?? meta.seatNames[seat],
+    profileId: opponent?.id ?? null,
+  };
 }
 
-/** Records completed public results only. Abandoned games are not counted as completed games. */
+function compactHand(hand: ArchivedHandRecord): HandPerformance {
+  const { decisions: _decisions, ...summary } = hand;
+  return summary;
+}
+
+/**
+ * Records a compact local summary plus a richer server archive.
+ * The archive stores exact permitted pre-decision views for the owner and all bots.
+ * An untracked human contributes actions/public outcomes but never a private hand/view.
+ */
 export function createPerformanceRecorder(storage: StorageLike, options: RecorderOptions = {}): SessionObserver {
-  const hands: HandPerformance[] = [];
+  const humanTracking = options.humanTracking ?? 'owner';
+  const active = new Map<number, ActiveHand>();
+  const completed: ArchivedHandRecord[] = [];
+  let decisionSequence = 0;
   let saved = false;
+  let startingDealer: Seat | null = null;
+
   return {
-    handCompleted(view) {
-      const record = handRecord(view);
-      if (record && !hands.some(hand => hand.handNumber === record.handNumber)) hands.push(record);
+    handStarted(view) {
+      if (startingDealer === null) startingDealer = view.dealer;
+      if (active.has(view.handNumber) || completed.some(hand => hand.handNumber === view.handNumber)) return;
+      active.set(view.handNumber, {
+        handNumber: view.handNumber,
+        dealer: view.dealer,
+        scoreBefore: [view.score[0], view.score[1]],
+        upCard: view.upCard,
+        ownerStartingHand: humanTracking === 'owner' ? [...view.hand] : null,
+        decisions: [],
+      });
     },
+
+    decision(seat, view, action, meta) {
+      let hand = active.get(view.handNumber);
+      if (!hand) {
+        hand = {
+          handNumber: view.handNumber,
+          dealer: view.dealer,
+          scoreBefore: [view.score[0], view.score[1]],
+          upCard: view.upCard,
+          ownerStartingHand: humanTracking === 'owner' ? [...meta.seatNames[0] === 'You' ? view.hand : []] : null,
+          decisions: [],
+        };
+        active.set(view.handNumber, hand);
+      }
+      const identity = actorIdentity(seat, humanTracking, meta);
+      hand.decisions.push(Object.freeze({
+        sequence: ++decisionSequence,
+        seat,
+        actorKind: identity.kind,
+        actorName: identity.name,
+        profileId: identity.profileId,
+        view: seat === 0 && humanTracking === 'other' ? null : structuredClone(view),
+        action: structuredClone(action),
+      }));
+    },
+
+    handCompleted(view) {
+      if (!view.result || view.caller === null) return;
+      const base = active.get(view.handNumber);
+      if (!base || completed.some(hand => hand.handNumber === view.handNumber)) return;
+      completed.push(Object.freeze({
+        handNumber: base.handNumber,
+        dealer: base.dealer,
+        scoreBefore: base.scoreBefore,
+        scoreAfter: [view.score[0], view.score[1]],
+        upCard: base.upCard,
+        ownerStartingHand: base.ownerStartingHand,
+        decisions: Object.freeze([...base.decisions]),
+        caller: view.caller,
+        trump: view.trump,
+        round: view.biddingRound,
+        alone: view.alone,
+        makerTricks: view.result.makerTricks,
+        awardedTeam: view.result.team,
+        points: view.result.points,
+        reason: view.result.reason,
+      }));
+      active.delete(view.handNumber);
+    },
+
     gameCompleted(view, meta: SessionMeta) {
-      if (saved || view.winner === null) return;
+      if (saved || view.winner === null || startingDealer === null) return;
       saved = true;
       const book = loadPerformance(storage);
-      const game: GamePerformance = Object.freeze({
-        id: options.gameId ?? `local-${book.games.length + 1}-${view.handNumber}`,
-        completedAt: options.completedAt?.() ?? 'local',
-        humanTracking: options.humanTracking ?? 'owner',
+      const completedAt = options.completedAt?.() ?? 'local';
+      const id = options.gameId ?? `local-${book.games.length + 1}-${view.handNumber}`;
+      const buildCommit = options.buildCommit ?? 'development';
+      const rulesVersion = options.rulesVersion ?? PERFORMANCE_RULES_VERSION;
+      const opponents = Object.freeze(meta.opponents.map(opponent => Object.freeze({ ...opponent })));
+      const hands = Object.freeze([...completed].sort((a, b) => a.handNumber - b.handNumber));
+      const archive: ArchivedGameRecord = Object.freeze({
+        schemaVersion: PERFORMANCE_SCHEMA_VERSION,
+        datasetEpoch: PERFORMANCE_DATASET_EPOCH,
+        buildCommit,
+        rulesVersion,
+        id,
+        completedAt,
+        humanTracking,
         difficulty: meta.difficulty,
-        opponents: Object.freeze(meta.opponents.map(opponent => Object.freeze({ ...opponent }))),
+        startingDealer,
+        seatNames: Object.freeze([...meta.seatNames]) as SessionMeta['seatNames'],
+        opponents,
         winner: view.winner,
         score: Object.freeze([view.score[0], view.score[1]]) as readonly [number, number],
-        hands: Object.freeze(hands.map(hand => Object.freeze({ ...hand }))),
+        hands,
       });
-      const games = [...book.games.filter(value => value.id !== game.id), game].slice(-MAX_RECORDED_GAMES);
-      savePerformance(storage, { version: 1, games });
+      const game: GamePerformance = Object.freeze({
+        schemaVersion: archive.schemaVersion,
+        datasetEpoch: archive.datasetEpoch,
+        buildCommit: archive.buildCommit,
+        rulesVersion: archive.rulesVersion,
+        id: archive.id,
+        completedAt: archive.completedAt,
+        humanTracking: archive.humanTracking,
+        difficulty: archive.difficulty,
+        startingDealer: archive.startingDealer,
+        opponents: archive.opponents,
+        winner: archive.winner,
+        score: archive.score,
+        hands: Object.freeze(archive.hands.map(compactHand)),
+      });
+      const games = [...currentGames(book).filter(value => value.id !== game.id), game].slice(-MAX_RECORDED_GAMES);
+      savePerformance(storage, { version: 2, games });
       if (options.profileId) {
-        enqueuePerformanceArchive(storage, { profileId: options.profileId, game });
+        enqueuePerformanceArchive(storage, { profileId: options.profileId, game: archive });
         options.archiveQueued?.();
       }
     },
@@ -234,18 +396,19 @@ function addCaller(summary: CallerSummary, hand: HandPerformance): void {
 }
 
 export function summarizePerformance(book: PerformanceBook): PerformanceSummary {
+  const gamesInEpoch = currentGames(book);
   const ownerCaller = caller();
   const valCaller = caller();
   const botCallsBySeat = [0, 0, 0, 0] as [number, number, number, number];
   const profiles = new Map<string, OpponentSummary>();
-  const ownerGames = book.games.filter(game => game.humanTracking !== 'other');
+  const ownerGames = gamesInEpoch.filter(game => game.humanTracking !== 'other');
   let wins = 0;
   let hands = 0;
   let botHands = 0;
   let ourPoints = 0;
   let theirPoints = 0;
 
-  for (const game of book.games) {
+  for (const game of gamesInEpoch) {
     const trackOwner = game.humanTracking !== 'other';
     if (trackOwner) {
       wins += Number(game.winner === 0);
@@ -296,7 +459,7 @@ export function summarizePerformance(book: PerformanceBook): PerformanceSummary 
     averageFinalScore: games ? [ourPoints / games, theirPoints / games] : null,
     hands,
     ownerCaller,
-    botGames: book.games.length,
+    botGames: gamesInEpoch.length,
     botHands,
     botCallsBySeat,
     valCaller,
@@ -306,7 +469,7 @@ export function summarizePerformance(book: PerformanceBook): PerformanceSummary 
 
 export function ownerTrend(book: PerformanceBook, batchSize = 10): readonly OwnerTrendPoint[] {
   if (!Number.isSafeInteger(batchSize) || batchSize < 1) throw new RangeError('Batch size must be positive');
-  const games = book.games.filter(game => game.humanTracking !== 'other');
+  const games = currentGames(book).filter(game => game.humanTracking !== 'other');
   const points: OwnerTrendPoint[] = [];
   for (let start = 0; start < games.length; start += batchSize) {
     const batch = games.slice(start, start + batchSize);
@@ -373,5 +536,5 @@ export function performanceText(summary: PerformanceSummary): string {
   const profiles = summary.opponents.length
     ? ` Opponent profiles encountered: ${summary.opponents.map(p => `${p.label}, ${p.games} games`).join('; ')}.`
     : '';
-  return `${owner} Bot observations: ${summary.botGames} completed games, ${summary.botHands} hands. ${callLine('Val calling record', summary.valCaller)} West calls: ${summary.botCallsBySeat[1]}. East calls: ${summary.botCallsBySeat[3]}.${profiles}`;
+  return `${owner} Bot observations: ${summary.botGames} completed games, ${summary.botHands} hands. ${callLine('Val calling record', summary.valCaller)} Left-seat calls: ${summary.botCallsBySeat[1]}. Right-seat calls: ${summary.botCallsBySeat[3]}.${profiles}`;
 }

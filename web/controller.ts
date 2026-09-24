@@ -1,14 +1,16 @@
 import type { Action } from '../src/index.ts';
 import { createAnnouncer } from './announcer.ts';
 import { cueEvents, type SoundCue } from './sound.ts';
-import { currentState, lastTrick, handAnnouncement, dealerAnnouncement } from './presentation.ts';
+import { currentState, lastTrick, handAnnouncement, dealerAnnouncement, names } from './presentation.ts';
+import type { SeatNames } from './presentation.ts';
 import type { Session, Update } from './session.ts';
 import type { createTable } from './render.ts';
 /** Quiet time after the live region clears, only before automatic focus. */
 export const FOCUS_GUARD_MS = 1150;
 export function createController(session: Session, table: ReturnType<typeof createTable>, announce: (text: string) => void,
   wait: (ms: number) => Promise<void> = ms => new Promise(resolve => setTimeout(resolve, ms)),
-  sound: (cue: SoundCue) => void = () => {}) {
+  sound: (cue: SoundCue) => void = () => {},
+  seatNames: SeatNames = names) {
   const speech = createAnnouncer(announce, wait);
   let busy = false;
   let stopped = false;
@@ -23,7 +25,7 @@ export function createController(session: Session, table: ReturnType<typeof crea
         const messages: string[] = [];
         if (handStart && current.handNumber !== announcedHand) {
           announcedHand = current.handNumber;
-          messages.push(dealerAnnouncement(current.dealer), handAnnouncement(current));
+          messages.push(dealerAnnouncement(current.dealer, seatNames), handAnnouncement(current));
         }
         messages.push(...(update?.messages ?? []));
         await Promise.all(messages.map(message => speech.say(message)));
@@ -73,8 +75,8 @@ export function createController(session: Session, table: ReturnType<typeof crea
       speech.cancelReviews();
       table.park(); session.nextHand(); await settle(undefined, true);
     },
-    repeat: () => speech.say(() => currentState(session.view()), true),
-    review: () => speech.say(() => lastTrick(session.view()), true),
+    repeat: () => speech.say(() => currentState(session.view(), seatNames), true),
+    review: () => speech.say(() => lastTrick(session.view(), seatNames), true),
     stop: () => { stopped = true; speech.stop(); },
   };
 }

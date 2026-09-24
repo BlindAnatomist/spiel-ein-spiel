@@ -11,7 +11,7 @@ test('bundled browser entry randomizes dealer, uses live randomness, and plays t
   // jsdom omits this browser API; use Node's native implementation in the harness.
   dom.window.structuredClone=structuredClone;
   let randomCalls=0;
-  // 73 & 3 = seat 1 (West), making the random starting dealer observable.
+  // 73 & 3 = seat 1, making the randomized left-seat dealer observable.
   Object.defineProperty(dom.window.crypto,'getRandomValues',{value:(array:Uint32Array)=>{randomCalls++;array[0]=73;return array;}});
   dom.window.eval(output.outputFiles[0]!.text);
   const d=dom.window.document;
@@ -19,7 +19,9 @@ test('bundled browser entry randomizes dealer, uses live randomness, and plays t
   const flush=()=>new Promise<void>(resolve=>setImmediate(resolve));
   await flush();
   assert.equal((d.querySelector('#game') as HTMLElement).hidden,false);
-  assert.match(d.querySelector('#facts')!.textContent!,/Dealer: West/);
+  assert.match(d.querySelector('#facts')!.textContent!,/Dealer: W/);
+  assert.match(d.querySelector('.west')!.textContent!,/^W/);
+  assert.match(d.querySelector('.east')!.textContent!,/^E/);
   assert.ok(randomCalls>=25); // dealer + seed + 23 shuffle draws
   let hands=0;
   for(let step=0;step<600;step++) {

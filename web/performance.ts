@@ -279,7 +279,7 @@ export function createPerformanceRecorder(storage: StorageLike, options: Recorde
       active.set(view.handNumber, {
         handNumber: view.handNumber,
         dealer: view.dealer,
-        scoreBefore: [view.score[0], view.score[1]],
+        scoreBefore: [view.score[0], view.score[1]] as const,
         upCard: view.upCard,
         ownerStartingHand: humanTracking === 'owner' ? [...view.hand] : null,
         decisions: [],
@@ -292,7 +292,7 @@ export function createPerformanceRecorder(storage: StorageLike, options: Recorde
         hand = {
           handNumber: view.handNumber,
           dealer: view.dealer,
-          scoreBefore: [view.score[0], view.score[1]],
+          scoreBefore: [view.score[0], view.score[1]] as const,
           upCard: view.upCard,
           ownerStartingHand: humanTracking === 'owner' && seat === 0 ? [...view.hand] : null,
           decisions: [],
@@ -319,7 +319,7 @@ export function createPerformanceRecorder(storage: StorageLike, options: Recorde
         handNumber: base.handNumber,
         dealer: base.dealer,
         scoreBefore: base.scoreBefore,
-        scoreAfter: [view.score[0], view.score[1]],
+        scoreAfter: [view.score[0], view.score[1]] as const,
         upCard: base.upCard,
         ownerStartingHand: base.ownerStartingHand,
         decisions: Object.freeze([...base.decisions]),

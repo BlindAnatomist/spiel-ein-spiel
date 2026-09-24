@@ -113,6 +113,14 @@ test('table identities are deterministic, strategy-independent and preserve W-le
   assert.ok(seenE.size > 5);
 });
 
+test('live session narration uses the selected W and E table identities', () => {
+  const seatNames = ['You', 'Warren', 'Val', 'Erin'] as const;
+  const session = createSession(12, 'casual', { dealer: 0, seatNames });
+  const update = session.bot();
+  assert.ok(update);
+  assert.ok(update.messages.some(message => message.startsWith('Warren ')));
+});
+
 test('mixed opponents always use two different difficulty levels and replay from the same seed', () => {
   for (let seed = 0; seed < 80; seed++) {
     const first = selectOpponentProfiles('mixed', seed);

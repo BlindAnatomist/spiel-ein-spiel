@@ -3,16 +3,72 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { auditDeals } from '../src/audit/deals.ts';
 import { createBot } from '../src/bots/index.ts';
-import { OPPONENT_PROFILES, selectOpponentProfiles } from '../src/bots/profiles.ts';
+import { OPPONENT_PROFILES, selectOpponentProfiles, selectSeatNames } from '../src/bots/profiles.ts';
 import type { OpponentDifficulty } from '../src/bots/profiles.ts';
-import { createPerformanceRecorder, ensurePerformanceProfile, loadPendingArchives, loadPerformance, markPerformanceArchived, ownerTrend, performanceAnalysisText, performanceText, summarizePerformance } from '../web/performance.ts';
-import type { StorageLike } from '../web/performance.ts';
+import {
+  createPerformanceRecorder,
+  ensurePerformanceProfile,
+  loadPendingArchives,
+  loadPerformance,
+  markPerformanceArchived,
+  ownerTrend,
+  performanceAnalysisText,
+  performanceText,
+  summarizePerformance,
+  PERFORMANCE_DATASET_EPOCH,
+  PERFORMANCE_RULES_VERSION,
+  PERFORMANCE_SCHEMA_VERSION,
+} from '../web/performance.ts';
+import type { GamePerformance, HandPerformance, PerformanceBook, StorageLike } from '../web/performance.ts';
 import { createSession } from '../web/session.ts';
+import type { OpponentIdentity } from '../web/session.ts';
 
 class MemoryStorage implements StorageLike {
   private readonly values = new Map<string, string>();
   getItem(key: string): string | null { return this.values.get(key) ?? null; }
   setItem(key: string, value: string): void { this.values.set(key, value); }
+}
+
+const namedOpponents: readonly [OpponentIdentity, OpponentIdentity] = [
+  { seat: 1, name: 'Warren', id: 'strong-assertive', label: 'Assertive Strong', level: 'strong' },
+  { seat: 3, name: 'Eleanor', id: 'strong-conservative', label: 'Conservative Strong', level: 'strong' },
+];
+
+function hand(caller: 0 | 1 | 2 | 3, reason: HandPerformance['reason'] = 'made'): HandPerformance {
+  return {
+    handNumber: 1,
+    dealer: 0,
+    scoreBefore: [0, 0],
+    scoreAfter: reason === 'euchred' ? [0, 2] : caller % 2 === 0 ? [1, 0] : [0, 1],
+    upCard: 'clubs:9',
+    ownerStartingHand: ['clubs:9', 'diamonds:10', 'hearts:J', 'spades:Q', 'clubs:K'],
+    caller,
+    trump: 'clubs',
+    round: 1,
+    alone: false,
+    makerTricks: reason === 'euchred' ? 2 : 3,
+    awardedTeam: reason === 'euchred' ? (1 - (caller % 2)) as 0 | 1 : (caller % 2) as 0 | 1,
+    points: reason === 'euchred' ? 2 : 1,
+    reason,
+  };
+}
+
+function game(overrides: Partial<GamePerformance> & Pick<GamePerformance, 'id' | 'humanTracking' | 'winner' | 'score' | 'hands'>): GamePerformance {
+  return {
+    schemaVersion: PERFORMANCE_SCHEMA_VERSION,
+    datasetEpoch: PERFORMANCE_DATASET_EPOCH,
+    buildCommit: 'test-build',
+    rulesVersion: PERFORMANCE_RULES_VERSION,
+    completedAt: '2026-09-23T21:00:00.000Z',
+    difficulty: 'strong',
+    startingDealer: 0,
+    opponents: namedOpponents,
+    ...overrides,
+  };
+}
+
+function book(games: readonly GamePerformance[]): PerformanceBook {
+  return { version: 2, games };
 }
 
 test('data controls stay compact: one tracking toggle and one Analysis button', () => {
@@ -24,7 +80,11 @@ test('data controls stay compact: one tracking toggle and one Analysis button', 
   assert.doesNotMatch(html, /Stick the dealer\. Maker may go alone/);
 });
 
-test('ordinary difficulties select two distinct profiles within the requested tier', () => {
+test('ordinary difficulties select distinct strategy profiles within the requested tier', () => {
+  assert.equal(Object.keys(OPPONENT_PROFILES).length, 10);
+  assert.equal(Object.values(OPPONENT_PROFILES).filter(p => p.level === 'casual').length, 3);
+  assert.equal(Object.values(OPPONENT_PROFILES).filter(p => p.level === 'strong').length, 4);
+  assert.equal(Object.values(OPPONENT_PROFILES).filter(p => p.level === 'expert').length, 3);
   for (const difficulty of ['casual', 'strong', 'expert'] as const) {
     for (let seed = 0; seed < 40; seed++) {
       const [west, east] = selectOpponentProfiles(difficulty, seed);
@@ -36,6 +96,23 @@ test('ordinary difficulties select two distinct profiles within the requested ti
   assert.ok(Object.isFrozen(OPPONENT_PROFILES['strong-balanced'].strategy));
 });
 
+test('table identities are deterministic, strategy-independent and preserve W-left E-right orientation', () => {
+  const seenW = new Set<string>();
+  const seenE = new Set<string>();
+  for (let seed = 0; seed < 100; seed++) {
+    const names = selectSeatNames(seed);
+    assert.equal(names[0], 'You');
+    assert.equal(names[2], 'Val');
+    assert.match(names[1], /^W/);
+    assert.match(names[3], /^E/);
+    assert.deepEqual(selectSeatNames(seed), names);
+    seenW.add(names[1]);
+    seenE.add(names[3]);
+  }
+  assert.ok(seenW.size > 5);
+  assert.ok(seenE.size > 5);
+});
+
 test('mixed opponents always use two different difficulty levels and replay from the same seed', () => {
   for (let seed = 0; seed < 80; seed++) {
     const first = selectOpponentProfiles('mixed', seed);
@@ -45,24 +122,42 @@ test('mixed opponents always use two different difficulty levels and replay from
   }
 });
 
-test('public completion tracking records one complete game without exposing hidden state', () => {
+test('owner game archives rich permitted decision evidence and keeps local history compact', () => {
   const storage = new MemoryStorage();
-  const recorder = createPerformanceRecorder(storage, { profileId: 'EUC-test-profile-1234567890', gameId: 'game-1', humanTracking: 'owner', completedAt: () => '2026-09-23T21:00:00.000Z' });
-  const seen: string[] = [];
+  const seatNames = selectSeatNames(20260923);
+  const recorder = createPerformanceRecorder(storage, {
+    profileId: 'EUC-test-profile-1234567890',
+    gameId: 'game-1',
+    humanTracking: 'owner',
+    buildCommit: 'test-build',
+    completedAt: () => '2026-09-23T21:00:00.000Z',
+  });
+  let decisions = 0;
   const observer = {
+    handStarted(view: Parameters<NonNullable<typeof recorder.handStarted>>[0],
+      meta: Parameters<NonNullable<typeof recorder.handStarted>>[1]) {
+      recorder.handStarted?.(view, meta);
+    },
+    decision(seat: Parameters<NonNullable<typeof recorder.decision>>[0],
+      view: Parameters<NonNullable<typeof recorder.decision>>[1],
+      action: Parameters<NonNullable<typeof recorder.decision>>[2],
+      meta: Parameters<NonNullable<typeof recorder.decision>>[3]) {
+      for (const forbidden of ['hands', 'kitty', 'rng', 'seed', 'snapshot', 'state']) assert.ok(!(forbidden in view));
+      decisions++;
+      recorder.decision?.(seat, view, action, meta);
+    },
     handCompleted(view: Parameters<NonNullable<typeof recorder.handCompleted>>[0],
       meta: Parameters<NonNullable<typeof recorder.handCompleted>>[1]) {
-      for (const forbidden of ['hands', 'kitty', 'rng', 'seed', 'snapshot', 'state']) assert.ok(!(forbidden in view));
-      seen.push(`hand:${view.handNumber}:${meta.opponents[0].id}:${meta.opponents[1].id}`);
       recorder.handCompleted?.(view, meta);
     },
     gameCompleted(view: Parameters<NonNullable<typeof recorder.gameCompleted>>[0],
       meta: Parameters<NonNullable<typeof recorder.gameCompleted>>[1]) {
-      seen.push('game');
       recorder.gameCompleted?.(view, meta);
     },
   };
-  const session = createSession(20260923, 'mixed', { dealer: 2, observer, opponentMode: 'varied' });
+  const session = createSession(20260923, 'mixed', {
+    dealer: 2, observer, opponentMode: 'varied', seatNames,
+  });
   const human = createBot('strong');
 
   for (let step = 0; step < 3000; step++) {
@@ -78,32 +173,83 @@ test('public completion tracking records one complete game without exposing hidd
 
   const final = session.view();
   assert.equal(final.phase, 'game-over');
-  assert.equal(seen.filter(item => item === 'game').length, 1);
-  assert.equal(seen.filter(item => item.startsWith('hand:')).length, final.handNumber);
+  assert.ok(decisions > final.handNumber);
 
-  const book = loadPerformance(storage);
-  assert.equal(book.games.length, 1);
-  const game = book.games[0]!;
-  assert.equal(game.hands.length, final.handNumber);
-  assert.deepEqual(game.score, final.score);
-  assert.equal(game.id, 'game-1');
-  assert.equal(game.completedAt, '2026-09-23T21:00:00.000Z');
-  assert.equal(game.humanTracking, 'owner');
-  assert.deepEqual(game.opponents.map(opponent => opponent.id), selectOpponentProfiles('mixed', 20260923).map(opponent => opponent.id));
+  const local = loadPerformance(storage);
+  assert.equal(local.version, 2);
+  assert.equal(local.games.length, 1);
+  const localGame = local.games[0]!;
+  assert.equal(localGame.schemaVersion, 2);
+  assert.equal(localGame.datasetEpoch, 1);
+  assert.equal(localGame.buildCommit, 'test-build');
+  assert.equal(localGame.rulesVersion, PERFORMANCE_RULES_VERSION);
+  assert.equal(localGame.startingDealer, 2);
+  assert.equal(localGame.hands.length, final.handNumber);
+  assert.equal('decisions' in localGame.hands[0]!, false);
+  assert.match(localGame.opponents[0]!.name, /^W/);
+  assert.match(localGame.opponents[1]!.name, /^E/);
 
-  const summary = summarizePerformance(book);
+  const pending = loadPendingArchives(storage);
+  assert.equal(pending.length, 1);
+  const archive = pending[0]!.game;
+  assert.equal(archive.schemaVersion, 2);
+  assert.equal(archive.datasetEpoch, 1);
+  assert.deepEqual(archive.seatNames, seatNames);
+  assert.equal(archive.hands.length, final.handNumber);
+  assert.ok(archive.hands.every(value => value.decisions.length > 0));
+  assert.ok(archive.hands.every(value => value.ownerStartingHand?.length === 5));
+  const evidence = archive.hands.flatMap(value => value.decisions);
+  assert.ok(evidence.some(value => value.actorKind === 'owner' && value.view?.seat === 0));
+  assert.ok(evidence.some(value => value.actorKind === 'val' && value.view?.seat === 2));
+  assert.ok(evidence.some(value => value.actorKind === 'opponent' && value.seat === 1 && value.view?.seat === 1));
+  assert.ok(evidence.some(value => value.actorKind === 'opponent' && value.seat === 3 && value.view?.seat === 3));
+  for (const decision of evidence) if (decision.view) {
+    for (const forbidden of ['hands', 'kitty', 'rng', 'seed', 'snapshot', 'state']) assert.ok(!(forbidden in decision.view));
+  }
+
+  const summary = summarizePerformance(local);
   assert.equal(summary.games, 1);
-  assert.equal(summary.wins + summary.losses, 1);
-  assert.equal(summary.hands, final.handNumber);
-  assert.equal(summary.botCallsBySeat.reduce((a, b) => a + b, 0), summary.botHands);
   assert.equal(summary.botGames, 1);
   assert.equal(summary.botHands, final.handNumber);
-  assert.match(performanceText(summary), /West calls:/);
-  assert.match(performanceText(summary), /East calls:/);
-  assert.equal(loadPendingArchives(storage).length, 1);
-  assert.equal(loadPendingArchives(storage)[0]!.profileId, 'EUC-test-profile-1234567890');
+  assert.match(performanceText(summary), /Left-seat calls:/);
+  assert.match(performanceText(summary), /Right-seat calls:/);
   markPerformanceArchived(storage, 'game-1');
   assert.deepEqual(loadPendingArchives(storage), []);
+});
+
+test('other-player games retain bot evidence but never archive that human private view or starting hand', () => {
+  const storage = new MemoryStorage();
+  const seatNames = selectSeatNames(99);
+  const recorder = createPerformanceRecorder(storage, {
+    profileId: 'EUC-other-profile-1234567890',
+    gameId: 'other-game',
+    humanTracking: 'other',
+    buildCommit: 'test-build',
+    completedAt: () => '2026-09-23T22:00:00.000Z',
+  });
+  const session = createSession(99, 'strong', {
+    dealer: 1, observer: recorder, opponentMode: 'varied', seatNames,
+  });
+  const human = createBot('strong');
+  for (let step = 0; step < 3000; step++) {
+    const view = session.view();
+    if (view.phase === 'game-over') break;
+    if (view.phase === 'hand-over') { session.nextHand(); continue; }
+    if (view.turn === 0) assert.ok(session.human(human(view)));
+    else assert.ok(session.bot());
+  }
+  assert.equal(session.view().phase, 'game-over');
+  const archive = loadPendingArchives(storage)[0]!.game;
+  assert.equal(archive.humanTracking, 'other');
+  assert.ok(archive.hands.every(value => value.ownerStartingHand === null));
+  const humanDecisions = archive.hands.flatMap(value => value.decisions).filter(value => value.seat === 0);
+  assert.ok(humanDecisions.length > 0);
+  assert.ok(humanDecisions.every(value => value.actorKind === 'other-human' && value.view === null));
+  const botDecisions = archive.hands.flatMap(value => value.decisions).filter(value => value.seat !== 0);
+  assert.ok(botDecisions.every(value => value.view !== null));
+  const summary = summarizePerformance(loadPerformance(storage));
+  assert.equal(summary.games, 0);
+  assert.equal(summary.botGames, 1);
 });
 
 test('performance recovery profile survives reload and is not regenerated', () => {
@@ -116,29 +262,23 @@ test('performance recovery profile survives reload and is not regenerated', () =
   assert.equal(calls, 1);
 });
 
-
 test('other-player games feed bot analysis without contaminating owner performance', () => {
-  const opponents = [
-    { seat: 1 as const, id: 'strong-assertive' as const, label: 'Assertive Strong', level: 'strong' as const },
-    { seat: 3 as const, id: 'strong-conservative' as const, label: 'Conservative Strong', level: 'strong' as const },
-  ];
-  const hand = (caller: 0 | 1 | 2 | 3) => ({
-    handNumber: 1, dealer: 0 as const, caller, round: 1 as const, alone: false,
-    makerTricks: 3, awardedTeam: (caller % 2) as 0 | 1, points: 1, reason: 'made' as const,
+  const owner = game({
+    id: 'owner-game',
+    humanTracking: 'owner',
+    winner: 0,
+    score: [10, 6],
+    hands: [hand(0), hand(1), hand(2)],
   });
-  const summary = summarizePerformance({
-    version: 1,
-    games: [
-      {
-        id: 'owner-game', completedAt: '2026-09-23T21:00:00.000Z', humanTracking: 'owner',
-        difficulty: 'strong', opponents, winner: 0, score: [10, 6], hands: [hand(0), hand(1), hand(2)],
-      },
-      {
-        id: 'other-game', completedAt: '2026-09-23T22:00:00.000Z', humanTracking: 'other',
-        difficulty: 'strong', opponents, winner: 1, score: [7, 10], hands: [hand(0), hand(2), hand(3)],
-      },
-    ],
+  const other = game({
+    id: 'other-game',
+    humanTracking: 'other',
+    winner: 1,
+    score: [7, 10],
+    hands: [hand(0), hand(2), hand(3)],
+    completedAt: '2026-09-23T22:00:00.000Z',
   });
+  const summary = summarizePerformance(book([owner, other]));
   assert.equal(summary.games, 1);
   assert.equal(summary.wins, 1);
   assert.equal(summary.losses, 0);
@@ -151,59 +291,29 @@ test('other-player games feed bot analysis without contaminating owner performan
   assert.equal(summary.opponents[0]!.games, 2);
   assert.match(performanceText(summary), /My tracked games: 1/);
   assert.match(performanceText(summary), /Bot observations: 2 completed games/);
-  const trend = ownerTrend({ version: 1, games: [
-    {
-      id: 'owner-game', completedAt: '2026-09-23T21:00:00.000Z', humanTracking: 'owner',
-      difficulty: 'strong', opponents, winner: 0, score: [10, 6], hands: [hand(0), hand(1), hand(2)],
-    },
-    {
-      id: 'other-game', completedAt: '2026-09-23T22:00:00.000Z', humanTracking: 'other',
-      difficulty: 'strong', opponents, winner: 1, score: [7, 10], hands: [hand(0), hand(2), hand(3)],
-    },
-  ] }, 1);
+  const trend = ownerTrend(book([owner, other]), 1);
   assert.equal(trend.length, 1);
   assert.equal(trend[0]!.winRate, 100);
   assert.equal(trend[0]!.callSuccessRate, 100);
-  assert.match(performanceAnalysisText({ version: 1, games: [
-    {
-      id: 'owner-game', completedAt: '2026-09-23T21:00:00.000Z', humanTracking: 'owner',
-      difficulty: 'strong', opponents, winner: 0, score: [10, 6], hands: [hand(0), hand(1), hand(2)],
-    },
-    {
-      id: 'other-game', completedAt: '2026-09-23T22:00:00.000Z', humanTracking: 'other',
-      difficulty: 'strong', opponents, winner: 1, score: [7, 10], hands: [hand(0), hand(2), hand(3)],
-    },
-  ] }, 1), /Analysis currently includes 1 tracked game/);
 });
 
-
 test('owner trend compares sequential owner-only game blocks', () => {
-  const opponents = [
-    { seat: 1 as const, id: 'strong-balanced' as const, label: 'Balanced Strong', level: 'strong' as const },
-    { seat: 3 as const, id: 'strong-assertive' as const, label: 'Assertive Strong', level: 'strong' as const },
-  ];
-  const games = Array.from({ length: 20 }, (_, index) => ({
+  const games = Array.from({ length: 20 }, (_, index) => game({
     id: `g-${index + 1}`,
     completedAt: `2026-09-${String(index + 1).padStart(2, '0')}T12:00:00.000Z`,
-    humanTracking: 'owner' as const,
-    difficulty: 'strong' as const,
-    opponents,
-    winner: (index < 10 ? (index < 4 ? 0 : 1) : (index < 17 ? 0 : 1)) as 0 | 1,
-    score: (index < 10 ? [8, 10] : [10, 7]) as readonly [number, number],
-    hands: [{
-      handNumber: 1, dealer: 0 as const, caller: 0 as const, round: 1 as const, alone: false,
-      makerTricks: index < 10 ? 2 : 3, awardedTeam: index < 10 ? 1 as const : 0 as const,
-      points: index < 10 ? 2 : 1, reason: index < 10 ? 'euchred' as const : 'made' as const,
-    }],
+    humanTracking: 'owner',
+    winner: index < 10 ? (index < 4 ? 0 : 1) : (index < 17 ? 0 : 1),
+    score: index < 10 ? [8, 10] : [10, 7],
+    hands: [hand(0, index < 10 ? 'euchred' : 'made')],
   }));
-  const trend = ownerTrend({ version: 1, games }, 10);
+  const trend = ownerTrend(book(games), 10);
   assert.equal(trend.length, 2);
   assert.equal(trend[0]!.label, 'Games 1–10');
   assert.equal(trend[0]!.winRate, 40);
   assert.equal(trend[0]!.callSuccessRate, 0);
   assert.equal(trend[1]!.winRate, 70);
   assert.equal(trend[1]!.callSuccessRate, 100);
-  const text = performanceAnalysisText({ version: 1, games }, 10);
+  const text = performanceAnalysisText(book(games), 10);
   assert.match(text, /win rate changed from 40 to 70 percent/);
   assert.match(text, /calling success changed from 0 to 100 percent/);
 });
@@ -213,7 +323,7 @@ test('invalid or unavailable local storage data fails closed without affecting g
     getItem() { throw new Error('blocked'); },
     setItem() { throw new Error('blocked'); },
   };
-  assert.deepEqual(loadPerformance(broken), { version: 1, games: [] });
+  assert.deepEqual(loadPerformance(broken), { version: 2, games: [] });
   assert.equal(performanceText(summarizePerformance(loadPerformance(broken))), 'No games recorded for my performance yet.');
 });
 

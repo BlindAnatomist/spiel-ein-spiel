@@ -184,7 +184,7 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   // Live games use browser cryptographic randomness for the starting dealer and every shuffle.
   const dealer = (randomWord() & 3) as Seat;
   const seed = randomWord();
-  const seatNames = selectSeatNames(seed);
+  const seatNames = selectSeatNames(level, seed);
   const gameId = crypto.randomUUID();
   const session = createSession(seed, level, {
     dealer,

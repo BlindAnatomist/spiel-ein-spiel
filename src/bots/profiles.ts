@@ -90,3 +90,22 @@ export function baselineOpponentProfiles(level: OpponentLevel):
   if (!profile) throw new Error(`Missing balanced profile for ${level}`);
   return [profile, profile];
 }
+
+
+export type SeatNames = readonly ['You', string, 'Val', string];
+
+const WEST_NAMES = Object.freeze([
+  'Walter', 'Warren', 'Wesley', 'Wyatt', 'Winston', 'Wallace',
+  'Wilbur', 'Waylon', 'Wendell', 'Wayne', 'Willard', 'Woodrow',
+] as const);
+const EAST_NAMES = Object.freeze([
+  'Eleanor', 'Evelyn', 'Edith', 'Eva', 'Esther', 'Erica',
+  'Elise', 'Elaine', 'Eileen', 'Erin', 'Emma', 'Elena',
+] as const);
+
+/** Table identity is independent of strategy. W always means seat 1; E always means seat 3. */
+export function selectSeatNames(seed: number): SeatNames {
+  const west = WEST_NAMES[word(seed, 'west-name') % WEST_NAMES.length]!;
+  const east = EAST_NAMES[word(seed, 'east-name') % EAST_NAMES.length]!;
+  return Object.freeze(['You', west, 'Val', east] as const);
+}

@@ -141,11 +141,12 @@ async function submitArchive(item: PerformanceArchiveItem): Promise<void> {
     rules_version: PERFORMANCE_RULES_VERSION,
     payload: JSON.stringify(item.game),
   });
+  // Rich decision transcripts can exceed the browser keepalive body limit.
+  // The persistent pending queue already provides retry-after-reload durability.
   const response = await fetch('/', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: body.toString(),
-    keepalive: true,
   });
   if (!response.ok) throw new Error(`Performance archive failed with status ${response.status}`);
 }

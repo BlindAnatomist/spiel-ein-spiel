@@ -15,107 +15,123 @@ PR #7 (`feat/euchre-mobile-table-layout`) is a separate visual-review branch and
 3. Provide an empirical audit path for deal distribution so perceived runs of weak or unusual hands can be compared with measured distributions.
 4. Preserve the accepted PR #6 VoiceOver, narrator, focus, hand-order and hidden-information contracts.
 
-## Opponent profiles
+## Opponent profiles and table identities
 
 The existing Casual, Strong and Expert strategic cores remain. New profiles are immutable parameter variants of those same legal-information policies.
 
-Current profiles:
+Current strategy profiles:
 
 - Casual: Balanced Casual, Cautious Casual, Bold Casual.
 - Strong: Balanced Strong, Conservative Strong, Assertive Strong, Partnership Strong.
 - Expert: Balanced Expert, Conservative Expert, Assertive Expert.
 - Val remains Val and is not placed in the opponent profile pool.
 
-For live browser games at Casual, Strong or Expert, West and East receive two distinct profiles from the selected tier. For Mixed opponents, West and East are guaranteed to come from two different difficulty tiers.
+For live browser games at Casual, Strong or Expert, the two opponent seats receive distinct profiles from the selected tier. For Mixed opponents, the two seats are guaranteed to come from different difficulty tiers.
 
-The programmatic `createSession(seed, level)` default remains the accepted PR #6 baseline: both opponents use the exact named policy selected by `level`. Live browser construction explicitly opts into `opponentMode: 'varied'`. This preserves deterministic test/replay semantics while making ordinary browser play varied.
+The programmatic `createSession(seed, level)` default remains the accepted PR #6 baseline: both opponents use the exact named policy selected by `level`. Live browser construction explicitly opts into `opponentMode: 'varied'`. Profile selection is derived from the host's per-game seed; the seed is never passed into a policy.
 
-Profile selection is derived from the host's per-game seed. In live browser games that seed is already generated from `crypto.getRandomValues`. In deterministic tests the same seed reproduces the same profile pair. The seed is never passed into a decision policy.
+Table identity is intentionally separate from strategy. Seat 1, formerly called West, receives a recurring first name beginning with W. Seat 3, formerly called East, receives a recurring first name beginning with E. Live games currently draw from 12 W-names and 12 E-names, deterministically from the game seed. The table name may recur with different strategy profiles in different games.
 
-Balanced profiles exactly reproduce the existing named policies. The profile mechanism changes strategy parameters only. It does not relax legal-play enforcement, grant hidden-card access, alter bowers, or create separate rule logic.
+This preserves immediate orientation without pretending that a table name is a strategy. The durable record stores seat, table name, strategy profile ID, profile label and level separately. Narration, dealer/current-state review, trick review, turn text and the visible seat labels all use the selected table names. Default programmatic tests continue to use West/East unless names are explicitly supplied.
 
-## Performance tracking
+Balanced profiles exactly reproduce the existing named policies. Profile variation never relaxes legal-play enforcement, grants hidden-card access, changes bowers, or creates separate rule logic.
 
-Tracking is local-first rather than browser-only. `localStorage` remains the immediate working record, while every completed game is also queued for append-only archival through Netlify Forms. No player account, password, analytics service or telemetry endpoint is added.
+## Performance tracking and evidence schema
 
-Only completed games are persisted. Starting a new game before the current game ends does not count the abandoned game as a completed loss. Each completed game receives a stable game ID and completion timestamp before it is written locally and added to the archive queue.
+Tracking is local-first but the durable analytical record lives in the Netlify ledger. There are no player accounts, passwords or named human profiles.
 
-The persisted record contains public completion information:
+The New Game setup has one toggle, defaulting to `My performance`:
 
-- selected setup difficulty;
-- West/East profile identity;
-- human tracking classification (`owner` or `other`);
-- final score and winning team;
-- for each completed hand: dealer, caller, calling round, loner status, maker trick count, awarded team, points and result reason.
+- `My performance`: contributes to the owner's longitudinal human record and to bot analysis.
+- `Bot data only`: contributes to bot analysis but never to the owner's human statistics or trend.
 
-It does not store:
+The choice is captured once when New Game begins and cannot be reclassified during that game.
 
-- hidden hands;
-- kitty contents;
-- discarded hidden cards;
-- referee snapshots;
-- engine seed;
-- random words;
-- bot inference state.
+### Schema version 2, dataset epoch 1
 
-The New Game setup has one human-data choice, defaulting to `My performance`:
+The serious longitudinal dataset begins with:
 
-- `My performance`: the game contributes to both the owner's longitudinal human record and bot analysis.
-- `Other player — bot data only`: the game contributes to bot analysis but never to the owner's wins, losses, score averages, recent record, hand count or calling statistics.
+- `schemaVersion: 2`;
+- `datasetEpoch: 1`;
+- exact build commit from the Netlify build;
+- rules version `euchre-standard-v1`;
+- stable game ID and completion timestamp;
+- human tracking classification;
+- selected difficulty;
+- starting dealer;
+- four table names;
+- exact W/E opponent profile IDs, labels and levels;
+- final score and winner.
 
-The choice is read once when New Game begins and stored immutably with that completed game. There are no named player profiles, accounts, logins or passwords.
+The earlier single infrastructure-test submission predates this schema and is not part of dataset epoch 1.
 
-The current summary reports:
+Each hand records:
 
-- owner-only completed games, wins/losses, win rate and average final score for You and Val;
-- an owner-only rolling last-20 completed-game win rate;
-- owner-only completed hands and human calling record;
-- bot observations across all completed games regardless of human player;
-- Val calling record across all games;
-- West versus East calling counts across all games;
-- opponent profiles encountered and number of completed games against each.
+- hand number;
+- dealer;
+- score before and after the hand;
+- up-card;
+- the owner's original five-card hand only for `My performance` games;
+- every accepted decision in sequence;
+- caller, called suit, calling round and loner status;
+- maker trick count, awarded team, points and result reason.
 
-These are descriptive records, not a claim that the human alone caused a team outcome. Individual card-play quality is not yet scored.
+Each accepted decision records:
 
-The history is bounded to the most recent 500 completed games to avoid unbounded browser storage growth.
+- global decision sequence number;
+- acting seat;
+- actor kind: owner, other human, Val or opponent;
+- table name;
+- bot profile ID when applicable;
+- action actually chosen;
+- exact permitted `PlayerView` immediately before the action, except for an untracked human.
 
-### Durability and recovery
+For `My performance`, the owner's decision view is preserved so future analysis can examine the actual hand, public information, legal alternatives and chosen action. For Val and both opponents, the same permitted-view evidence is preserved for bot analysis.
 
-The browser creates one random performance recovery code, stored separately from the game history. The code is included with each server archive submission but is not a login credential and does not change game access.
+For `Bot data only`, the other human's chosen action and public result remain part of the sequence, but that person's private hand and decision view are deliberately omitted. Val and opponent decision views are still archived.
+
+The recorded decision view is the same capability boundary the policy receives. It may contain that actor's own hand and public state, but never another seat's private hand, the hidden kitty, referee snapshot, engine seed, random words or privileged authoritative state. Recording occurs after a legal action succeeds and cannot feed information back into the live decision path.
+
+No permanent judgment such as “good move,” “bad move,” skill score or optimality score is stored. Those are derived analyses that can be recalculated later as evaluation methods improve.
+
+### Local summary versus durable archive
+
+The browser does not retain hundreds of full decision transcripts in localStorage. It keeps a compact version-2 summary, bounded to the most recent 300 completed games, for immediate Analysis use.
+
+The pending archive queue temporarily contains the richer record until Netlify accepts it. The server archive is the durable source for deeper later analysis.
 
 Archival sequence:
 
 1. complete game;
-2. save the full public performance record to localStorage;
-3. add the same record to a local pending-archive queue;
-4. submit it to the Netlify form `euchre-performance-ledger`;
-5. remove it from the pending queue only after an HTTP success response.
+2. construct the versioned rich record;
+3. save the compact summary locally;
+4. queue the rich record locally;
+5. submit it to `euchre-performance-ledger`;
+6. remove it from the pending queue only after an HTTP success response.
 
-The pending queue is retried when the page loads and whenever another completed game is queued. A refresh therefore does not discard either completed history or unsent archive work.
+The queue retries on page load and after subsequent completed games. Network failure never blocks game play. A stable game ID provides the deduplication key if an accepted submission is retried.
 
-A failed network request never blocks or changes game play. If the browser closes after the server accepted a record but before the local queue was cleared, a later retry may create a duplicate form submission; the stable game ID provides the deduplication key during recovery.
+The Netlify form exposes searchable envelope fields for profile ID, game ID, completion time, human-tracking mode, schema version, dataset epoch, build commit and rules version; the full rich record is carried in the payload.
 
-The recovery code button exposes the code only on explicit request. The owner should keep that one code outside the web app. If Safari storage is lost, Netlify submissions can be retrieved by that code and reconstructed. This avoids account/password architecture while making the long-term record independent of one browser storage bucket.
+A random recovery code identifies this installation's archive without becoming a login credential. It is available through Analysis rather than as a permanent extra button.
 
-Netlify Forms is site-side persistent storage. Form detection is enabled for the existing Netlify project, and the static HTML contains the form definition so deployment processing can register it. The form stores the same public performance record plus the `owner`/`other` classification described above; it never receives hands, kitty cards, shuffle words, the engine seed, hidden discards or referee snapshots.
+### Analysis
 
-The Performance summary button is explicitly user-invoked. It writes ordinary static text and moves focus only because the user activated that control. It does not add another live region, automatic announcement or in-game focus transition.
+There is exactly one Analysis button. The owner-facing trend uses only current-epoch `My performance` games and groups them into sequential 10-game blocks. Accessible text reports win rate, owner calling-success rate and average final-score differential. A sighted SVG chart shows win rate and calling success from the same owner-only blocks.
 
-An `Analysis` button sits with the New Game setup controls. It reads only games classified as `My performance` and groups them into sequential 10-game blocks. The accessible analysis reports win rate, owner calling-success rate and average final-score differential from the first block through the latest block. A sighted-only SVG chart presents win rate and calling success across the same blocks; it is `aria-hidden` because the equivalent trend information is already stated in text. Other-player games never enter this human trend chart.
+Bot summaries use all current-epoch completed games, including `Bot data only` games. The richer server evidence permits later analysis of bidding, card play, partnership decisions, opponent personality, dealer position and starting-hand quality without changing the historical record.
 
 ### Compact setup and protected action order
 
-The owner rejected the earlier PR #8 top-of-page control expansion as too cluttered. The setup is deliberately reduced to:
+The setup is deliberately limited to:
 
 - opponent difficulty;
-- one toggle button whose two states are `My performance` and `Bot data only`;
+- one `My performance` / `Bot data only` toggle;
 - New Game;
 - one Analysis button;
 - the existing Sound Cues control.
 
-The separate Performance summary and Performance recovery code buttons are removed. Their information is available through Analysis instead. The explanatory setup hint is also removed.
-
-During bidding, the accepted VoiceOver/navigation order is now enforced as:
+During bidding, VoiceOver/navigation order is:
 
 1. Your hand heading;
 2. cards in stable engine order;
@@ -124,7 +140,7 @@ During bidding, the accepted VoiceOver/navigation order is now enforced as:
 5. Repeat current state;
 6. Review last trick when available.
 
-Automatic bidding focus may still land on the first positive call/order-up action, but ordinary left/right navigation keeps the cards immediately before those choices. During play, the order is hand/cards, Repeat current state, then Review last trick when available. The first-legal-card focus rule for card play/discard is unchanged.
+Automatic bidding focus may still land on the first positive bid. During play, order remains hand/cards, Repeat current state, then Review last trick when available. The first-legal-card focus rule for play/discard is unchanged.
 
 ## Deal-distribution audit
 
@@ -157,19 +173,19 @@ The existing shuffle still uses rejection sampling before Fisher-Yates selection
 
 ## Protected PR #6 contract
 
-This checkpoint does not modify:
+The checkpoint changes presentation only where required for table names and the already-requested cards-first bidding navigation. It does not change:
 
-- `web/controller.ts`;
-- `web/announcer.ts`;
-- `web/render.ts`;
-- `web/presentation.ts`;
-- `web/sound.ts`;
-- rule, trick, scoring or bower code;
-- the first-legal-card focus algorithm;
+- Euchre rules, scoring, bowers or legal-action enforcement;
+- bot access to hidden information;
+- the serialized narrator writer;
 - the 1150 ms narration/focus guard;
-- hand ordering or unavailable-card reachability.
+- the first-legal-card play/discard focus algorithm;
+- stable hand order or unavailable-card reachability;
+- sound meanings or timing.
 
-The browser session remains the only trusted coordinator for player ports. Performance observers receive only the seat-zero `PlayerView` plus public opponent-profile metadata. Observer failures are caught so storage problems cannot interrupt game play.
+Default West/East names remain the programmatic fallback so existing deterministic and narrator tests retain their accepted baseline semantics. Live games pass the W/E table identities explicitly.
+
+The performance observer receives only actor-specific permitted views plus public session metadata. Observer failures are caught and cannot interrupt game play.
 
 ## Validation
 

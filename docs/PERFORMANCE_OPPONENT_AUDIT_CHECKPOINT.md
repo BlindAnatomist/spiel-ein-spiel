@@ -30,9 +30,24 @@ For live browser games at Casual, Strong or Expert, the two opponent seats recei
 
 The programmatic `createSession(seed, level)` default remains the accepted PR #6 baseline: both opponents use the exact named policy selected by `level`. Live browser construction explicitly opts into `opponentMode: 'varied'`. Profile selection is derived from the host's per-game seed; the seed is never passed into a policy.
 
-Table identity is intentionally separate from strategy. Seat 1, formerly called West, receives a recurring first name beginning with W. Seat 3, formerly called East, receives a recurring first name beginning with E. Live games currently draw from 12 W-names and 12 E-names, deterministically from the game seed. The table name may recur with different strategy profiles in different games.
+Table identity is permanent and symmetric by strategy. Every strategy profile owns exactly two compact identities: a W-name for seat 1 (the human's left) and an E-name for seat 3 (the human's right). The same strategy can therefore appear on either side without changing identity semantics, and a recurring name never changes level or strategy.
 
-This preserves immediate orientation without pretending that a table name is a strategy. The durable record stores seat, table name, strategy profile ID, profile label and level separately. Narration, dealer/current-state review, trick review, turn text and the visible seat labels all use the selected table names. Default programmatic tests continue to use West/East unless names are explicitly supplied.
+Permanent pairs:
+
+- Casual Balanced: Walt / Emma.
+- Casual Cautious: Wes / Edith.
+- Casual Bold: Wyatt / Eva.
+- Strong Balanced: Wayne / Elise.
+- Strong Conservative: Will / Ellen.
+- Strong Assertive: Wade / Erica.
+- Strong Partnership: Ward / Erin.
+- Expert Balanced: Wolf / Elsa.
+- Expert Conservative: Wren / Etta.
+- Expert Assertive: Webb / Eden.
+
+All names are five characters or fewer. W always marks the left seat and E always marks the right seat. Profile selection remains independent by seat, so no level or strategy is locked to one side of the table.
+
+The durable record stores seat, permanent table name, strategy profile ID, profile label and level separately. Narration, dealer/current-state review, trick review, turn text and visible seat labels all use the permanent names. A varied session rejects a supplied table name that does not match the selected strategy, preventing identity drift. Default non-varied programmatic tests retain West/East unless names are explicitly supplied.
 
 Balanced profiles exactly reproduce the existing named policies. Profile variation never relaxes legal-play enforcement, grants hidden-card access, changes bowers, or creates separate rule logic.
 
@@ -61,6 +76,7 @@ The serious longitudinal dataset begins with:
 - starting dealer;
 - four table names;
 - exact W/E opponent profile IDs, labels and levels;
+- permanent name/profile pairing, so historical Wade always means Strong Assertive on the left and Erica always means Strong Assertive on the right;
 - final score and winner.
 
 The earlier single infrastructure-test submission predates this schema and is not part of dataset epoch 1.

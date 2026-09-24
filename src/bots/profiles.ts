@@ -13,6 +13,8 @@ export interface OpponentProfile {
   readonly id: OpponentProfileId;
   readonly label: string;
   readonly level: OpponentLevel;
+  readonly westName: string;
+  readonly eastName: string;
   readonly strategy: Strategy;
 }
 
@@ -23,27 +25,27 @@ function variant(level: OpponentLevel, patch: Partial<Strategy> = {}): Strategy 
 }
 
 function profile(id: OpponentProfileId, label: string, level: OpponentLevel,
-  patch: Partial<Strategy> = {}): OpponentProfile {
-  return Object.freeze({ id, label, level, strategy: variant(level, patch) });
+  westName: string, eastName: string, patch: Partial<Strategy> = {}): OpponentProfile {
+  return Object.freeze({ id, label, level, westName, eastName, strategy: variant(level, patch) });
 }
 
 export const OPPONENT_PROFILES: Readonly<Record<OpponentProfileId, OpponentProfile>> = Object.freeze({
-  'casual-balanced': profile('casual-balanced', 'Balanced Casual', 'casual'),
-  'casual-cautious': profile('casual-cautious', 'Cautious Casual', 'casual',
+  'casual-balanced': profile('casual-balanced', 'Balanced Casual', 'casual', 'Walt', 'Emma'),
+  'casual-cautious': profile('casual-cautious', 'Cautious Casual', 'casual', 'Wes', 'Edith',
     { orderThreshold: 2.45, callThreshold: 2.25, aloneThreshold: 4.05 }),
-  'casual-bold': profile('casual-bold', 'Bold Casual', 'casual',
+  'casual-bold': profile('casual-bold', 'Bold Casual', 'casual', 'Wyatt', 'Eva',
     { orderThreshold: 1.95, callThreshold: 1.8, aloneThreshold: 3.45 }),
-  'strong-balanced': profile('strong-balanced', 'Balanced Strong', 'strong'),
-  'strong-conservative': profile('strong-conservative', 'Conservative Strong', 'strong',
+  'strong-balanced': profile('strong-balanced', 'Balanced Strong', 'strong', 'Wayne', 'Elise'),
+  'strong-conservative': profile('strong-conservative', 'Conservative Strong', 'strong', 'Will', 'Ellen',
     { orderThreshold: 3.25, callThreshold: 3.05, aloneThreshold: 4.55, partnerReturn: 0.82, conservation: 0.22 }),
-  'strong-assertive': profile('strong-assertive', 'Assertive Strong', 'strong',
+  'strong-assertive': profile('strong-assertive', 'Assertive Strong', 'strong', 'Wade', 'Erica',
     { orderThreshold: 2.75, callThreshold: 2.65, aloneThreshold: 4.0, trumpLead: 1.38, conservation: 0.12 }),
-  'strong-partnership': profile('strong-partnership', 'Partnership Strong', 'strong',
+  'strong-partnership': profile('strong-partnership', 'Partnership Strong', 'strong', 'Ward', 'Erin',
     { partnerDealerBonus: 0.5, partnerReturn: 1.08, voidWeight: 1.5, conservation: 0.2 }),
-  'expert-balanced': profile('expert-balanced', 'Balanced Expert', 'expert'),
-  'expert-conservative': profile('expert-conservative', 'Conservative Expert', 'expert',
+  'expert-balanced': profile('expert-balanced', 'Balanced Expert', 'expert', 'Wolf', 'Elsa'),
+  'expert-conservative': profile('expert-conservative', 'Conservative Expert', 'expert', 'Wren', 'Etta',
     { orderThreshold: 2.85, callThreshold: 2.75, aloneThreshold: 4.5, partnerReturn: 0.85, conservation: 0.21 }),
-  'expert-assertive': profile('expert-assertive', 'Assertive Expert', 'expert',
+  'expert-assertive': profile('expert-assertive', 'Assertive Expert', 'expert', 'Webb', 'Eden',
     { orderThreshold: 2.45, callThreshold: 2.35, aloneThreshold: 4.0, trumpLead: 1.38, conservation: 0.13 }),
 });
 
@@ -94,18 +96,14 @@ export function baselineOpponentProfiles(level: OpponentLevel):
 
 export type SeatNames = readonly ['You', string, 'Val', string];
 
-const WEST_NAMES = Object.freeze([
-  'Walter', 'Warren', 'Wesley', 'Wyatt', 'Winston', 'Wallace',
-  'Wilbur', 'Waylon', 'Wendell', 'Wayne', 'Willard', 'Woodrow',
-] as const);
-const EAST_NAMES = Object.freeze([
-  'Eleanor', 'Evelyn', 'Edith', 'Eva', 'Esther', 'Erica',
-  'Elise', 'Elaine', 'Eileen', 'Erin', 'Emma', 'Elena',
-] as const);
+/** Each strategy owns one permanent W identity and one permanent E identity. */
+export function seatNamesForProfiles(
+  profiles: readonly [OpponentProfile, OpponentProfile],
+): SeatNames {
+  return Object.freeze(['You', profiles[0].westName, 'Val', profiles[1].eastName] as const);
+}
 
-/** Table identity is independent of strategy. W always means seat 1; E always means seat 3. */
-export function selectSeatNames(seed: number): SeatNames {
-  const west = WEST_NAMES[word(seed, 'west-name') % WEST_NAMES.length]!;
-  const east = EAST_NAMES[word(seed, 'east-name') % EAST_NAMES.length]!;
-  return Object.freeze(['You', west, 'Val', east] as const);
+/** Live names are derived from the exact profiles selected for the two seats. */
+export function selectSeatNames(difficulty: OpponentDifficulty, seed: number): SeatNames {
+  return seatNamesForProfiles(selectOpponentProfiles(difficulty, seed));
 }

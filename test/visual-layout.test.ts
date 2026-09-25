@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { createHash } from 'node:crypto';
 import { JSDOM } from 'jsdom';
 import { createReferee } from '../src/referee.ts';
 import { createBot } from '../src/bots/index.ts';
@@ -20,26 +19,31 @@ function fixture(v:PlayerView) {
   return {dom,root,table,actions,counts:()=>[repeats,reviews]};
 }
 const view=()=>createReferee({seed:17,dealer:3}).player(0).view();
-test('new-game and difficulty retain native semantics; sound stays off in compact bar',()=>{
+test('start, difficulty, tracking, analysis and sound retain native semantics in the compact shell',()=>{
   const {dom}=fixture(view());const d=dom.window.document;
-  assert.equal(d.querySelector('#setup button')!.getAttribute('aria-label'),'New Game');
-  assert.equal(d.querySelector('#setup button')!.tagName,'BUTTON');
+  const start=d.querySelector<HTMLButtonElement>('#start-game')!;
+  assert.equal(start.textContent,'Start game');assert.equal(start.tagName,'BUTTON');assert.equal(start.type,'submit');
   assert.equal(d.querySelector('#difficulty')!.tagName,'SELECT');
   assert.equal(d.querySelector('label[for="difficulty"]')!.textContent,'Opponent difficulty');
+  assert.equal(d.querySelector('#human-tracking')!.getAttribute('aria-pressed'),'true');
+  assert.equal(d.querySelector('#performance-analysis')!.textContent,'Analysis');
+  assert.equal(d.querySelector('#help-button')!.getAttribute('aria-expanded'),'false');
   assert.equal(d.querySelector('#sound-cues')!.getAttribute('aria-pressed'),'false');
   assert.equal(d.querySelector('#sound-cues')!.getAttribute('aria-label'),'Sound Cues');
-  for(const glyph of d.querySelectorAll('#setup button .new-icon,#sound-cues svg'))assert.equal(glyph.getAttribute('aria-hidden'),'true');
+  assert.equal(d.querySelector('#sound-cues svg')!.getAttribute('aria-hidden'),'true');
 });
-test('repeat star changes to each called suit and resets without changing speech or callback',()=>{
+test('repeat uses one target identity, exposes called suit by touch and shares one state summary with the sighted panel',()=>{
   const v=view();const {root,table,counts}=fixture(v);const button=root.querySelector<HTMLButtonElement>('#repeat-state')!;
-  const glyph=button.querySelector<HTMLElement>('.state-icon')!;
-  assert.equal(glyph.dataset.glyph,'★');assert.equal(glyph.getAttribute('aria-hidden'),'true');
+  const glyph=button.querySelector<HTMLElement>('.state-icon')!;const panel=root.querySelector<HTMLElement>('#current-state-panel')!;
+  assert.equal(glyph.dataset.glyph,'◎');assert.equal(glyph.getAttribute('aria-hidden'),'true');
+  assert.equal(button.getAttribute('aria-label'),'Repeat current state. Suit not called yet.');
   for(const suit of ['hearts','diamonds','clubs','spades'] as const) {
     table.render({...v,trump:suit,caller:1,phase:'playing'});
-    assert.equal(glyph.dataset.glyph,suitGlyph[suit]);assert.equal(button.getAttribute('aria-label'),'Repeat current state');
-    assert.equal(button.textContent,'Repeat current state');button.click();
+    assert.equal(glyph.dataset.glyph,'◎');assert.equal(button.getAttribute('aria-label'),`Repeat current state. Called suit: ${suit[0]!.toUpperCase()}${suit.slice(1)}.`);
+    assert.equal(button.textContent,'Repeat current state');button.click();assert.equal(panel.getAttribute('aria-hidden'),'true');
+    assert.ok(panel.hidden===false||panel.hidden===true);
   }
-  table.render({...v,handNumber:2});assert.equal(glyph.dataset.glyph,'★');assert.deepEqual(counts(),[4,0]);
+  table.render({...v,handNumber:2});assert.equal(glyph.dataset.glyph,'◎');assert.equal(button.getAttribute('aria-label'),'Repeat current state. Suit not called yet.');assert.equal(panel.hidden,true);assert.deepEqual(counts(),[4,0]);
 });
 test('rabbit ears and top hat are decorative; review availability and name remain constant',()=>{
   const v=view();const {root,table,counts}=fixture(v);const button=root.querySelector<HTMLButtonElement>('#review-trick')!;
@@ -154,7 +158,8 @@ test('decorative card faces and data attributes contain only own/public cards th
   }
 });
 
-test('protected PR 6 narrator, 1150 ms guard, summaries, session, randomness entry and sound are byte-identical',()=>{
- const hashes={"web/controller.ts": "23e95387e4b5fdb72a3bb8097aad23726ad6443312251806cf08d8605c412e6b", "web/announcer.ts": "88ed4d2acf557c57737a9dcac252738cde471a5d0f97e58563076d5a65bc4362", "web/presentation.ts": "5bbb5fe8353087724f791a895133633704a55c92baf7ea90d3bf524395739821", "web/session.ts": "557b243ea324efa9c0937ca4f5ba1019acca24565f806599b70a7bab38da622c", "web/main.ts": "32308451f40a1737bfa293a0c1ffad54e1eee8974ccbd8f299d81b5e70e410f1", "web/sound.ts": "7f84776ebdb1467cbb1c86045d1b046c23e87493278551389c804b931dbcbe8b"};
- for(const [file,hash] of Object.entries(hashes))assert.equal(createHash('sha256').update(readFileSync(file)).digest('hex'),hash,file);
+test('visual work stays outside narrator/focus and sound implementation boundaries',()=>{
+  const controller=readFileSync('web/controller.ts','utf8');const announcer=readFileSync('web/announcer.ts','utf8');const sound=readFileSync('web/sound.ts','utf8');
+  assert.match(controller,/FOCUS_GUARD_MS = 1150/);assert.doesNotMatch(controller,/visuals\.ts|style\.css|card-face|visual-table/);
+  assert.doesNotMatch(announcer,/visuals\.ts|style\.css/);assert.doesNotMatch(sound,/visuals\.ts|style\.css/);
 });

@@ -1,47 +1,30 @@
-# Complete Euchre bot validation evidence
+# Euchre bot validation record
 
-All 336 scheduled batches / 41,024 complete games are required. `summary.json` and
-`recovery-verification.json` establish completion and reconciliation with the
-surviving original analysis. Read `../../docs/audits/bot-validation/REPORT.md`.
+This directory keeps the compact permanent record of the completed PR #8 bot-validation battery.
 
-The 82 originally recovered detailed chunks remain byte-for-byte unchanged.
-The 254 reconstructed chunks are committed in `reconstructed-results.zip` to
-keep publication compact. The downloadable result ZIP contains all 336 chunks
-individually. The compact pack contains only relative `detailed/*.json.gz` paths.
+The completed battery covered 41,024 games, 462,717 hands, 11,640,424 decisions and 2,688 independent matched seed blocks. The final report is in `../../docs/audits/bot-validation/REPORT.md`.
 
-From the repository root:
+The full raw repair package is intentionally not duplicated in the working repository. The owner retained the complete verified ZIP containing all 336 detailed batches, the original fixed manifest, analysis/recovery scripts, historical checkpoint files, logs and hashes. Its identity and SHA-256 are recorded in `ARCHIVE_RECORD.md`.
+
+Permanent repository evidence includes:
+
+- `summary.json`: final comparisons, denominators and uncertainty.
+- `analysis-final.json`: compact surviving original-analysis reference used in recovery verification.
+- `recovery-verification.json`: reconciliation of category totals and all 26 primary point estimates.
+- `COMPARISONS.txt`: readable controlled comparisons.
+- `DEALER_AND_LONERS.txt`: dealer, forced-call and loner appendix.
+- `profile.json.gz`, `profile-seat.json.gz`, `dealer-position.json.gz`, `forced-suit.json.gz`, and `controlled-hand-outcomes.json.gz`: compact result tables.
+- `fixtures.json.gz` and `tactical-summary.json`: targeted Val/tactical evidence.
+- `regressions/tactical-bound.json`: reproducible audit-harness bound regression.
+- `policy-config.json`, `provenance.json`, and `benchmark-reconstruction.json`: configuration, source identity and runtime provenance.
+
+The reusable audit harness remains under `src/audit/`. Expensive simulations are on demand and are not attached to push or deployment.
+
+To start a new fixed battery without modifying this permanent record:
 
 ```sh
-npm ci --ignore-scripts
-python3 scripts/restore-bot-validation.py
-npm run check
-npm run build
-git diff --check
-npm run audit:validation -- --mode run --workers 4
-python3 scripts/analyze-bot-validation.py
-python3 scripts/test-bot-validation-analysis.py
-python3 scripts/report-bot-validation.py
+npm run audit:validation -- --mode manifest --output reports/bot-validation-run
+npm run audit:validation -- --mode run --workers 4 --output reports/bot-validation-run
 ```
 
-A run validates existing chunks and executes only missing batches. To deliberately
-repeat the entire fixed schedule, use a separate output directory, first writing
-its manifest with `--mode manifest --output PATH`, then running with `--output PATH`.
-Never overwrite complete evidence to change a result. No simulations run on push
-or deploy, and none import browser/ledger collection code.
-
-`manifest.json`: source SHA, fixed allocation, seeds, case assignments and settings.
-`summary.json`: recomputed comparisons, denominators, block uncertainty and costs.
-`COMPARISONS.txt`: readable primary and exploratory comparisons.
-`DEALER_AND_LONERS.txt`: explicit-denominator dealer/forced/loner appendix.
-`*-position.json.gz`, `profile*.json.gz`, `forced-suit.json.gz`,
-`lineup-context.json.gz`, `controlled-hand-outcomes.json.gz`: context counts/rates.
-`fixtures.json.gz`, `tactical-summary.json`: complete targeted observations.
-`regressions/tactical-bound.json`: reproducible audit-bound regression, not a live defect.
-`provenance.json`, `logs/`, `run-wave*.json`, `SHA256SUMS`: commands, versions, checks and costs.
-
-`analysis-final.json`, `REPORT_PRE_RESET.md` (in docs), and files labeled PRE_RESET
-are historical artifacts. They are not substitutes for the reconstructed raw
-results. `recovery-inventory.json` documents the earlier loss; its lost-file flags
-refer to that historical checkpoint, not current completion. `RECOVERY.md` explains
-what was repaired. Undefined rates are null. Descriptive profile aggregates are
-not independent trials or human skill measurements.
+The generated `reports/bot-validation-run/` directory is ignored by Git.

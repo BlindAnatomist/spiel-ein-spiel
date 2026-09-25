@@ -68,8 +68,7 @@ The bootstrap for pooled cross-tier and Val comparisons resamples seed blocks wi
 `dealer-position.json.gz` key: profile, dealer relationship, bidding round, forced flag.
 `profile-seat.json.gz` key: profile, absolute seat.
 `forced-suit.json.gz` key: profile, called suit; every record is a forced second-round dealer opportunity.
-`lineup-context.json.gz` key: category, profile, absolute seat, dealer relationship, partner profile, clockwise opponent profile, counterclockwise opponent profile, bidding round, forced flag.
-Each row carries integer counts plus explicit rate numerator, denominator and denominator name. The full raw game records retain bid ordering, per-hand deal hashes and all results so these tables can be recomputed independently.
+Each retained compact table carries integer counts plus explicit rate numerator, denominator and denominator name. The verified full repair ZIP additionally retains `lineup-context.json.gz` and all raw game records, including bid ordering, per-hand deal hashes and results, so the historical tables can be recomputed independently.
 
 Development corrections: the first tactical-rollout bound allowed only 25 remaining actions and rejected a valid second-round continuation. The bounded rollout now permits the complete bidding-plus-play path. This was an audit-driver bound error, not a production termination defect; the original diagnostic is retained. Statistical self-checks additionally verify forced-call losses, undefined rates, matched-ratio arithmetic, within-game repetition and fixed-context bootstrap weights.
 
@@ -87,7 +86,4 @@ selector implementation; the new tactical count is reported rather than claiming
 its observations are identical to the lost targeted sample. Counterfactual rollouts
 allow 29 remaining actions, and the 28-action seed-3 regression is saved.
 
-In a fresh checkout, first run `python3 scripts/restore-bot-validation.py` to
-materialize the compact result pack. The downloadable ZIP already contains every
-individual chunk. Python analysis requires NumPy. No expensive command is attached
-to the automated push/deployment lifecycle.
+The working repository intentionally keeps only compact permanent evidence from the completed battery. The owner’s verified full repair ZIP contains every individual chunk plus the original analysis/recovery material; its checksum is recorded in `reports/bot-validation/ARCHIVE_RECORD.md`. To run a new battery, create a fresh output directory with `npm run audit:validation -- --mode manifest --output PATH`, then run `npm run audit:validation -- --mode run --workers 4 --output PATH`. No expensive command is attached to the automated push/deployment lifecycle.

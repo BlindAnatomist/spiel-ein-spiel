@@ -1,6 +1,6 @@
 Euchre bot validation and calibration — completed recovery, September 25, 2026 UTC
 
-No live engine or bot-policy defect was confirmed. All 41,024 scheduled games are now backed by retained per-game evidence. The lost portion was regenerated using the same fixed seeds and assignments. All category game, hand and decision totals and all 26 primary point estimates exactly match the surviving original analysis. No strategy parameters or production behavior were changed.
+No live engine or bot-policy defect was confirmed. All 41,024 scheduled games were backed by per-game evidence in the verified full repair archive. The lost portion was regenerated using the same fixed seeds and assignments. All category game, hand and decision totals and all 26 primary point estimates exactly match the surviving original analysis. No strategy parameters or production behavior were changed.
 
 No meaningful right-seat voluntary-calling advantage was established. Several intervals remain too wide to rule out the predeclared two-percentage-point margin. An exploratory lower right-seat call-success signal remains in one Strong comparison; its mechanism is unresolved.
 
@@ -12,7 +12,7 @@ Recovery and provenance
 
 The initial PR #8 SHA matched 46e4a0c04f9007387bc98ef4aaf1d256f20aec05. Main remains b6f647c7d64c58e7b147cb03df729433604d3650; PR #7 remains fba6aa22acffb20c27f7f0e2a35a4980d4227082. Only the existing PR #8 branch received audit changes.
 
-A prior executor reset lost unpublished harness files and 254 detailed batches. The 82 recovered batches (7,584 games) were retained byte for byte. The other 254 batches (33,440 games) were rerun, without adding or selecting seeds. Primary point estimates are unchanged. Pooled reconstructed intervals use a documented sorted-stratum bootstrap and can differ slightly from the preserved original intervals. The reconstructed driver exactly replays a retained game’s permitted decisions, deal signatures, scores and trace digest. Source and fixed manifest were published before recovery runs. Results were checkpointed between bounded waves. Historical partial-recovery files remain explicitly labeled.
+A prior executor reset lost unpublished harness files and 254 detailed batches. The 82 recovered batches (7,584 games) were retained byte for byte. The other 254 batches (33,440 games) were rerun, without adding or selecting seeds. Primary point estimates are unchanged. Pooled reconstructed intervals use a documented sorted-stratum bootstrap and can differ slightly from the preserved original intervals. The reconstructed driver exactly replayed a retained game’s permitted decisions, deal signatures, scores and trace digest. Source and the fixed schedule were published before recovery runs. The owner’s verified full repair ZIP preserves all 336 detailed batches plus the historical recovery/checkpoint material; its SHA-256 and publication receipt are recorded in `reports/bot-validation/ARCHIVE_RECORD.md`.
 
 There are 2,688 independent group/seed blocks, 429,260 matching-hand fingerprint comparisons and 48,279 hand occurrences beyond their block’s shortest game. No deal mismatches occurred. Complete games may end at different hands; complete-game outcomes retain tails, while the separate common-prefix analysis is an outcome-dependent sensitivity check.
 
@@ -32,7 +32,7 @@ strong: 10,240 games, 115,740 hands, 2,927,187 decisions, 32 cases, 320 independ
 
 symmetry: 1,408 games, 15,672 hands, 391,245 decisions, 44 cases, 352 independent blocks; 32 games per case.
 
-Total: 41,024 complete games, 462,717 hands and 11,640,424 decisions. The schedule covers every category before expanding its predetermined blocks. Four processes ran at most concurrently. Recovery wave runtimes are in run-wave*.json; per-batch costs are in the detailed records. Cached batches retain their original timings, so the sum is not one contiguous wall-clock measurement.
+Total: 41,024 complete games, 462,717 hands and 11,640,424 decisions. The schedule covers every category before expanding its predetermined blocks. Four processes ran at most concurrently. Recovery-wave logs and per-batch timing details are preserved in the verified full repair ZIP; compact runtime/provenance evidence remains in `provenance.json` and `benchmark-reconstruction.json`. Cached batches retained their original timings, so the sum is not one contiguous wall-clock measurement.
 
 Casual profiles and seats
 
@@ -112,7 +112,7 @@ Dealer positions, forced calls and loners
 
 All eleven policies contribute observations at dealer, first bidder, dealer’s partner and third bidder, split by round and forced status. There were 86,870 forced second-round dealer calls and 22,058 natural loner attempts. Each rate in the data carries numerator, denominator and denominator name. An opportunity is one bidding decision; a player can have opportunities in both rounds of a hand. Forced opportunities are excluded from voluntary rates. Undefined rates are null, not zero.
 
-The readable dealer/loner appendix reports every profile, dealer role, round and forced-suit selection, including makes, euchres, gross earned points, conceded points and net points. controlled-hand-outcomes.json.gz supplies hand outcomes by controlled matchup and focal/opposing team. lineup-context.json.gz retains profile, seat, partner and both opponents. Descriptive pooled profile totals depend on the experiment mixture and are not strength rankings.
+The readable dealer/loner appendix reports every profile, dealer role, round and forced-suit selection, including makes, euchres, gross earned points, conceded points and net points. `controlled-hand-outcomes.json.gz` supplies compact hand outcomes by controlled matchup and focal/opposing team. The full repair ZIP retains the larger lineup-context and per-game evidence. Descriptive pooled profile totals depend on the experiment mixture and are not strength rankings.
 
 casual-balanced: 337 natural attempts; 276 five-trick four-point successes; 61 three/four-trick one-point makes; 0 euchres.
 
@@ -204,4 +204,4 @@ Limits: Expert seat effects and individual matchups remain imprecise. Policy-wid
 
 Reproduction and files
 
-Run python3 scripts/restore-bot-validation.py to materialize the compact committed results pack. Then node src/audit/validation-cli.ts --mode run --workers 4 validates and retains all completed chunks. The fixed manifest is reports/bot-validation/manifest.json. Recompute without replaying games: python3 scripts/analyze-bot-validation.py, then python3 scripts/report-bot-validation.py. Python 3 with NumPy and Node 24 are required. The ZIP includes all 336 individual detailed chunks directly, the report, manifest, fixtures, sources, validation logs and hashes.
+The repository keeps the reusable Node audit harness, regression tests, final report, compact result summaries and selected fixtures. A fresh battery can be generated in a separate output directory with `npm run audit:validation -- --mode manifest --output PATH`, then executed with `npm run audit:validation -- --mode run --workers 4 --output PATH`. The historical 41,024-game raw evidence is intentionally not duplicated in the working tree; the owner’s verified full repair ZIP contains all 336 detailed chunks, the original manifest, analysis sources, recovery logs and hashes. See `reports/bot-validation/ARCHIVE_RECORD.md`.

@@ -32,6 +32,15 @@ soundToggle.onclick = () => {
   soundToggle.setAttribute('aria-pressed', String(enabled)); sounds.setEnabled(enabled);
 };
 
+const startButton = document.querySelector<HTMLButtonElement>('#start-game')!;
+const helpButton = document.querySelector<HTMLButtonElement>('#help-button')!;
+const helpPanel = document.querySelector<HTMLElement>('#help-panel')!;
+helpButton.onclick = () => {
+  const opening = helpPanel.hidden;
+  helpPanel.hidden = !opening;
+  helpButton.setAttribute('aria-expanded', String(opening));
+};
+
 const storage: StorageLike = {
   getItem(key) {
     try { return window.localStorage.getItem(key); } catch { return null; }
@@ -178,6 +187,9 @@ const randomWord = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
 document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   event.preventDefault();
   controller?.stop(); live.textContent = '';
+  startButton.textContent = 'New game';
+  helpPanel.hidden = true;
+  helpButton.setAttribute('aria-expanded', 'false');
   performanceOutput.hidden = true;
   analysisPanel.hidden = true;
   analysisChart.replaceChildren();

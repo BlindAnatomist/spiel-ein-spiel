@@ -29,6 +29,25 @@ function clockFixture(v = playing(), messages = ['East plays ace of clubs.']) {
     ms=>{log.push(`wait:${ms}`); return new Promise<void>(release=>waits.push({ms,release}));});
   return {...ui,controller,log,waits,session,setView:(next:PlayerView)=>{current=next;}};
 }
+test('sound cue callback is fire-and-forget and cannot add narrator or focus waits', async () => {
+  const before=playing();
+  const after:PlayerView={...before,trick:[{seat:0,card:'diamonds:J'}]};
+  const ui=fixture(before);let current=before;const log:string[]=[];const waits:number[]=[];const cues:string[]=[];
+  const session:Session={
+    view:()=>current,
+    human:()=>{current=after;return {view:after,messages:[]};},
+    bot:()=>null,
+    nextHand:()=>current,
+  };
+  const focus=ui.table.focus;ui.table.focus=()=>{log.push('focus');focus();};
+  const controller=createController(session,ui.table,t=>log.push(t ? 'say:'+t : 'clear'),
+    ms=>{waits.push(ms);return Promise.resolve();},cue=>{cues.push(cue);});
+  await controller.act(before.legalActions[0]!);
+  assert.deepEqual(cues,['card']);
+  assert.deepEqual(waits,[]);
+  assert.deepEqual(log,['focus']);
+});
+
 test('automatic event clears before the 1150 ms guard starts; first legal card focuses only after guard', async () => {
   const f=clockFixture(); const pending=f.controller.act(playing().legalActions[0]!);
   assert.deepEqual(f.log,['say:East plays ace of clubs.','wait:1600']);

@@ -194,6 +194,16 @@ The same-profile section reports right-minus-left differences in call rate, volu
 
 This audit is intended to detect persistent seat effects and strategy-balance differences much faster than human play can. It does not replace real-device testing of VoiceOver, narration timing, table comprehension or subjective game feel.
 
+Initial Strong audit, seed `20260924`, 250 games per case:
+
+- 4,000 complete simulated games.
+- In the same-profile seat test, right-minus-left voluntary-call-rate differences were only +0.43, +0.61, +0.69 and +0.62 percentage points for Balanced, Conservative, Assertive and Partnership Strong respectively.
+- Same-profile call-success differences were +1.85, +1.71, +0.86 and +1.69 percentage points respectively; these are small descriptive differences at this sample size, not evidence of a systematic seat advantage.
+- Across the full matched round robin, all Strong profiles combined called on 19.65% of left-seat opportunities and 19.29% of right-seat opportunities; voluntary call rates were 15.99% left and 15.72% right.
+- Combined call success was 88.19% left and 88.31% right; points per call were 1.199 left and 1.198 right.
+
+The initial simulation therefore does not reproduce the apparent right-seat anomaly from the first three human games. The 11-for-11 right-seat calling streak is currently best treated as a small-sample observation to continue watching rather than a detected engine or seat-position defect.
+
 ## Deal-distribution audit
 
 `src/audit/deals.ts` uses the authoritative deal function itself rather than a parallel shuffle implementation.

@@ -1,0 +1,20 @@
+{
+  "node": "v24.19.0",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "results": [
+    {
+      "category": "strong",
+      "games": 8,
+      "hands": 82,
+      "seconds": 0.32469462299999996,
+      "policyMs": 46.311545999998785
+    },
+    {
+      "category": "expert",
+      "games": 8,
+      "hands": 91,
+      "seconds": 1.5218651970000001,
+      "policyMs": 1238.0805919999952
+    }
+  ]
+}

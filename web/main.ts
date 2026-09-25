@@ -29,7 +29,12 @@ const sounds = createSoundCues();
 const soundToggle = document.querySelector<HTMLButtonElement>('#sound-cues')!;
 soundToggle.onclick = () => {
   const enabled = soundToggle.getAttribute('aria-pressed') !== 'true';
-  soundToggle.setAttribute('aria-pressed', String(enabled)); sounds.setEnabled(enabled);
+  soundToggle.setAttribute('aria-pressed', String(enabled));
+  void sounds.setEnabled(enabled).then(ready => {
+    // Confirmation proves that iOS/browser audio actually entered the running state.
+    // It remains entirely separate from narrator/focus timing.
+    if (enabled && ready && soundToggle.getAttribute('aria-pressed') === 'true') sounds.play('enabled');
+  });
 };
 
 const storage: StorageLike = {

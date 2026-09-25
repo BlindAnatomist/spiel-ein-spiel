@@ -1,0 +1,201 @@
+Dealer, forced-call and loner evidence
+
+These are descriptive rates in the declared experiment mixture. Each number includes its denominator. Raw game records preserve partner and opposing lineup; aggregate profile rates alone are not controlled strength comparisons.
+
+casual-balanced
+Calls: 36978; voluntary 31870; forced 5108; opportunities 151293; passes 114315.
+Natural loners: 337 attempts; 276 five-trick four-point successes; 61 three/four-trick one-point makes; 0 euchres.
+Natural five-trick success: 81.90% (276/337 loner_attempts). Ordinary alone makes are not four-point successes.
+Five-trick success uncertainty: +81.90; 95% interval [+68.20, +93.38], 640 independent blocks percentage points.
+dealer, round 1, voluntary: calls 8699/24254 opportunities; passes 15555; makes 7778/8699; euchres 921/8699; gross 10404, net 8562 points on 8699 calls.
+dealer, round 2, forced: calls 5108/5108 opportunities; passes 0; makes 3472/5108; euchres 1636/5108; gross 4018, net 746 points on 5108 calls.
+first bidder, left of dealer, round 1, voluntary: calls 3413/32090 opportunities; passes 28677; makes 2487/3413; euchres 926/3413; gross 2990, net 1138 points on 3413 calls.
+first bidder, left of dealer, round 2, voluntary: calls 5747/15533 opportunities; passes 9786; makes 4739/5747; euchres 1008/5747; gross 5898, net 3882 points on 5747 calls.
+dealer’s partner, round 1, voluntary: calls 3310/29703 opportunities; passes 26393; makes 2910/3310; euchres 400/3310; gross 3834, net 3034 points on 3310 calls.
+dealer’s partner, round 2, voluntary: calls 4499/11168 opportunities; passes 6669; makes 3467/4499; euchres 1032/4499; gross 4388, net 2324 points on 4499 calls.
+third bidder, right of dealer, round 1, voluntary: calls 3278/26287 opportunities; passes 23009; makes 2106/3278; euchres 1172/3278; gross 2420, net 76 points on 3278 calls.
+third bidder, right of dealer, round 2, voluntary: calls 2924/7150 opportunities; passes 4226; makes 2306/2924; euchres 618/2924; gross 2874, net 1638 points on 2924 calls.
+Forced suit clubs: selected 1296/5108 forced calls; made 904/1296; euchred 392/1296; points earned 1091; conceded 784; net 307.
+Forced suit diamonds: selected 1372/5108 forced calls; made 855/1372; euchred 517/1372; points earned 967; conceded 1034; net -67.
+Forced suit hearts: selected 1271/5108 forced calls; made 962/1271; euchred 309/1271; points earned 1060; conceded 618; net 442.
+Forced suit spades: selected 1169/5108 forced calls; made 751/1169; euchred 418/1169; points earned 900; conceded 836; net 64.
+
+casual-bold
+Calls: 14696; voluntary 13669; forced 1027; opportunities 46967; passes 32271.
+Natural loners: 282 attempts; 202 five-trick four-point successes; 79 three/four-trick one-point makes; 1 euchres.
+Natural five-trick success: 71.63% (202/282 loner_attempts). Ordinary alone makes are not four-point successes.
+Five-trick success uncertainty: +71.63; 95% interval [+61.00, +81.43], 384 independent blocks percentage points.
+dealer, round 1, voluntary: calls 3876/8010 opportunities; passes 4134; makes 3288/3876; euchres 588/3876; gross 4392, net 3216 points on 3876 calls.
+dealer, round 2, forced: calls 1027/1027 opportunities; passes 0; makes 698/1027; euchres 329/1027; gross 807, net 149 points on 1027 calls.
+first bidder, left of dealer, round 1, voluntary: calls 1836/10831 opportunities; passes 8995; makes 1151/1836; euchres 685/1836; gross 1376, net 6 points on 1836 calls.
+first bidder, left of dealer, round 2, voluntary: calls 1948/4027 opportunities; passes 2079; makes 1487/1948; euchres 461/1948; gross 1841, net 919 points on 1948 calls.
+dealer’s partner, round 1, voluntary: calls 1710/9955 opportunities; passes 8245; makes 1521/1710; euchres 189/1710; gross 2003, net 1625 points on 1710 calls.
+dealer’s partner, round 2, voluntary: calls 1620/3080 opportunities; passes 1460; makes 1210/1620; euchres 410/1620; gross 1447, net 627 points on 1620 calls.
+third bidder, right of dealer, round 1, voluntary: calls 1676/8323 opportunities; passes 6647; makes 1061/1676; euchres 615/1676; gross 1160, net -70 points on 1676 calls.
+third bidder, right of dealer, round 2, voluntary: calls 1003/1714 opportunities; passes 711; makes 777/1003; euchres 226/1003; gross 961, net 509 points on 1003 calls.
+Forced suit clubs: selected 253/1027 forced calls; made 176/253; euchred 77/253; points earned 224; conceded 154; net 70.
+Forced suit diamonds: selected 301/1027 forced calls; made 211/301; euchred 90/301; points earned 232; conceded 180; net 52.
+Forced suit hearts: selected 246/1027 forced calls; made 152/246; euchred 94/246; points earned 175; conceded 188; net -13.
+Forced suit spades: selected 227/1027 forced calls; made 159/227; euchred 68/227; points earned 176; conceded 136; net 40.
+
+casual-cautious
+Calls: 9839; voluntary 7622; forced 2217; opportunities 54729; passes 44890.
+Natural loners: 12 attempts; 8 five-trick four-point successes; 4 three/four-trick one-point makes; 0 euchres.
+Natural five-trick success: 66.67% (8/12 loner_attempts). Ordinary alone makes are not four-point successes.
+Five-trick success uncertainty: +66.67; 95% interval [+29.41, +100.00], 384 independent blocks percentage points.
+dealer, round 1, voluntary: calls 2124/8801 opportunities; passes 6677; makes 1957/2124; euchres 167/2124; gross 2603, net 2269 points on 2124 calls.
+dealer, round 2, forced: calls 2217/2217 opportunities; passes 0; makes 1512/2217; euchres 705/2217; gross 1718, net 308 points on 2217 calls.
+first bidder, left of dealer, round 1, voluntary: calls 590/11082 opportunities; passes 10492; makes 474/590; euchres 116/590; gross 582, net 350 points on 590 calls.
+first bidder, left of dealer, round 2, voluntary: calls 1315/5633 opportunities; passes 4318; makes 1141/1315; euchres 174/1315; gross 1428, net 1080 points on 1315 calls.
+dealer’s partner, round 1, voluntary: calls 699/10407 opportunities; passes 9708; makes 649/699; euchres 50/699; gross 900, net 800 points on 699 calls.
+dealer’s partner, round 2, voluntary: calls 1285/4668 opportunities; passes 3383; makes 1102/1285; euchres 183/1285; gross 1374, net 1008 points on 1285 calls.
+third bidder, right of dealer, round 1, voluntary: calls 678/9059 opportunities; passes 8381; makes 522/678; euchres 156/678; gross 587, net 275 points on 678 calls.
+third bidder, right of dealer, round 2, voluntary: calls 931/2862 opportunities; passes 1931; makes 829/931; euchres 102/931; gross 1070, net 866 points on 931 calls.
+Forced suit clubs: selected 614/2217 forced calls; made 420/614; euchred 194/614; points earned 492; conceded 388; net 104.
+Forced suit diamonds: selected 584/2217 forced calls; made 403/584; euchred 181/584; points earned 447; conceded 362; net 85.
+Forced suit hearts: selected 494/2217 forced calls; made 340/494; euchred 154/494; points earned 374; conceded 308; net 66.
+Forced suit spades: selected 525/2217 forced calls; made 349/525; euchred 176/525; points earned 405; conceded 352; net 53.
+
+expert-assertive
+Calls: 11221; voluntary 10458; forced 763; opportunities 37279; passes 26058.
+Natural loners: 723 attempts; 408 five-trick four-point successes; 312 three/four-trick one-point makes; 3 euchres.
+Natural five-trick success: 56.43% (408/723 loner_attempts). Ordinary alone makes are not four-point successes.
+Five-trick success uncertainty: +56.43; 95% interval [+49.46, +63.92], 320 independent blocks percentage points.
+dealer, round 1, voluntary: calls 3470/6097 opportunities; passes 2627; makes 3160/3470; euchres 310/3470; gross 4467, net 3847 points on 3470 calls.
+dealer, round 2, forced: calls 763/763 opportunities; passes 0; makes 569/763; euchres 194/763; gross 656, net 268 points on 763 calls.
+first bidder, left of dealer, round 1, voluntary: calls 828/8600 opportunities; passes 7772; makes 587/828; euchres 241/828; gross 779, net 297 points on 828 calls.
+first bidder, left of dealer, round 2, voluntary: calls 1678/3528 opportunities; passes 1850; makes 1416/1678; euchres 262/1678; gross 1859, net 1335 points on 1678 calls.
+dealer’s partner, round 1, voluntary: calls 1785/8022 opportunities; passes 6237; makes 1601/1785; euchres 184/1785; gross 2167, net 1799 points on 1785 calls.
+dealer’s partner, round 2, voluntary: calls 990/2025 opportunities; passes 1035; makes 782/990; euchres 208/990; gross 1041, net 625 points on 990 calls.
+third bidder, right of dealer, round 1, voluntary: calls 860/6738 opportunities; passes 5878; makes 661/860; euchres 199/860; gross 794, net 396 points on 860 calls.
+third bidder, right of dealer, round 2, voluntary: calls 847/1506 opportunities; passes 659; makes 725/847; euchres 122/847; gross 872, net 628 points on 847 calls.
+Forced suit clubs: selected 150/763 forced calls; made 98/150; euchred 52/150; points earned 118; conceded 104; net 14.
+Forced suit diamonds: selected 163/763 forced calls; made 134/163; euchred 29/163; points earned 143; conceded 58; net 85.
+Forced suit hearts: selected 208/763 forced calls; made 149/208; euchred 59/208; points earned 170; conceded 118; net 52.
+Forced suit spades: selected 242/763 forced calls; made 188/242; euchred 54/242; points earned 225; conceded 108; net 117.
+
+expert-balanced
+Calls: 33694; voluntary 29685; forced 4009; opportunities 126597; passes 92903.
+Natural loners: 1010 attempts; 767 five-trick four-point successes; 223 three/four-trick one-point makes; 20 euchres.
+Natural five-trick success: 75.94% (767/1010 loner_attempts). Ordinary alone makes are not four-point successes.
+Five-trick success uncertainty: +75.94; 95% interval [+66.37, +85.09], 576 independent blocks percentage points.
+dealer, round 1, voluntary: calls 9054/20633 opportunities; passes 11579; makes 8175/9054; euchres 879/9054; gross 11531, net 9773 points on 9054 calls.
+dealer, round 2, forced: calls 4009/4009 opportunities; passes 0; makes 2897/4009; euchres 1112/4009; gross 3446, net 1222 points on 4009 calls.
+first bidder, left of dealer, round 1, voluntary: calls 1777/26221 opportunities; passes 24444; makes 1433/1777; euchres 344/1777; gross 1676, net 988 points on 1777 calls.
+first bidder, left of dealer, round 2, voluntary: calls 5407/13126 opportunities; passes 7719; makes 4691/5407; euchres 716/5407; gross 5786, net 4354 points on 5407 calls.
+dealer’s partner, round 1, voluntary: calls 4873/25185 opportunities; passes 20312; makes 4244/4873; euchres 629/4873; gross 5698, net 4440 points on 4873 calls.
+dealer’s partner, round 2, voluntary: calls 3857/8984 opportunities; passes 5127; makes 3324/3857; euchres 533/3857; gross 4120, net 3054 points on 3857 calls.
+third bidder, right of dealer, round 1, voluntary: calls 1664/21747 opportunities; passes 20083; makes 1388/1664; euchres 276/1664; gross 1718, net 1166 points on 1664 calls.
+third bidder, right of dealer, round 2, voluntary: calls 3053/6692 opportunities; passes 3639; makes 2731/3053; euchres 322/3053; gross 3742, net 3098 points on 3053 calls.
+Forced suit clubs: selected 959/4009 forced calls; made 721/959; euchred 238/959; points earned 809; conceded 476; net 333.
+Forced suit diamonds: selected 944/4009 forced calls; made 736/944; euchred 208/944; points earned 856; conceded 416; net 440.
+Forced suit hearts: selected 1015/4009 forced calls; made 676/1015; euchred 339/1015; points earned 782; conceded 678; net 104.
+Forced suit spades: selected 1091/4009 forced calls; made 764/1091; euchred 327/1091; points earned 999; conceded 654; net 345.
+
+expert-conservative
+Calls: 8744; voluntary 7285; forced 1459; opportunities 41510; passes 32766.
+Natural loners: 187 attempts; 136 five-trick four-point successes; 46 three/four-trick one-point makes; 5 euchres.
+Natural five-trick success: 72.73% (136/187 loner_attempts). Ordinary alone makes are not four-point successes.
+Five-trick success uncertainty: +72.73; 95% interval [+59.35, +85.14], 320 independent blocks percentage points.
+dealer, round 1, voluntary: calls 2268/6529 opportunities; passes 4261; makes 2142/2268; euchres 126/2268; gross 3122, net 2870 points on 2268 calls.
+dealer, round 2, forced: calls 1459/1459 opportunities; passes 0; makes 1039/1459; euchres 420/1459; gross 1231, net 391 points on 1459 calls.
+first bidder, left of dealer, round 1, voluntary: calls 393/8653 opportunities; passes 8260; makes 302/393; euchres 91/393; gross 369, net 187 points on 393 calls.
+first bidder, left of dealer, round 2, voluntary: calls 1323/4407 opportunities; passes 3084; makes 1202/1323; euchres 121/1323; gross 1537, net 1295 points on 1323 calls.
+dealer’s partner, round 1, voluntary: calls 1253/8208 opportunities; passes 6955; makes 1168/1253; euchres 85/1253; gross 1640, net 1470 points on 1253 calls.
+dealer’s partner, round 2, voluntary: calls 842/2933 opportunities; passes 2091; makes 725/842; euchres 117/842; gross 980, net 746 points on 842 calls.
+third bidder, right of dealer, round 1, voluntary: calls 452/7178 opportunities; passes 6726; makes 384/452; euchres 68/452; gross 482, net 346 points on 452 calls.
+third bidder, right of dealer, round 2, voluntary: calls 754/2143 opportunities; passes 1389; makes 705/754; euchres 49/754; gross 878, net 780 points on 754 calls.
+Forced suit clubs: selected 373/1459 forced calls; made 240/373; euchred 133/373; points earned 273; conceded 266; net 7.
+Forced suit diamonds: selected 338/1459 forced calls; made 252/338; euchred 86/338; points earned 297; conceded 172; net 125.
+Forced suit hearts: selected 366/1459 forced calls; made 277/366; euchred 89/366; points earned 321; conceded 178; net 143.
+Forced suit spades: selected 382/1459 forced calls; made 270/382; euchred 112/382; points earned 340; conceded 224; net 116.
+
+strong-assertive
+Calls: 58151; voluntary 49192; forced 8959; opportunities 243564; passes 185413.
+Natural loners: 4734 attempts; 2389 five-trick four-point successes; 2322 three/four-trick one-point makes; 23 euchres.
+Natural five-trick success: 50.46% (2389/4734 loner_attempts). Ordinary alone makes are not four-point successes.
+Five-trick success uncertainty: +50.46; 95% interval [+45.14, +55.40], 1312 independent blocks percentage points.
+dealer, round 1, voluntary: calls 14993/39028 opportunities; passes 24035; makes 14126/14993; euchres 867/14993; gross 21111, net 19377 points on 14993 calls.
+dealer, round 2, forced: calls 8959/8959 opportunities; passes 0; makes 6791/8959; euchres 2168/8959; gross 8107, net 3771 points on 8959 calls.
+first bidder, left of dealer, round 1, voluntary: calls 2900/50001 opportunities; passes 47101; makes 2491/2900; euchres 409/2900; gross 3231, net 2413 points on 2900 calls.
+first bidder, left of dealer, round 2, voluntary: calls 8878/25428 opportunities; passes 16550; makes 7690/8878; euchres 1188/8878; gross 10211, net 7835 points on 8878 calls.
+dealer’s partner, round 1, voluntary: calls 8058/47574 opportunities; passes 39516; makes 7246/8058; euchres 812/8058; gross 9568, net 7944 points on 8058 calls.
+dealer’s partner, round 2, voluntary: calls 5941/17770 opportunities; passes 11829; makes 4868/5941; euchres 1073/5941; gross 6252, net 4106 points on 5941 calls.
+third bidder, right of dealer, round 1, voluntary: calls 3226/41452 opportunities; passes 38226; makes 2809/3226; euchres 417/3226; gross 3716, net 2882 points on 3226 calls.
+third bidder, right of dealer, round 2, voluntary: calls 5196/13352 opportunities; passes 8156; makes 4747/5196; euchres 449/5196; gross 6197, net 5299 points on 5196 calls.
+Forced suit clubs: selected 2475/8959 forced calls; made 1839/2475; euchred 636/2475; points earned 2182; conceded 1272; net 910.
+Forced suit diamonds: selected 2325/8959 forced calls; made 1817/2325; euchred 508/2325; points earned 2130; conceded 1016; net 1114.
+Forced suit hearts: selected 2036/8959 forced calls; made 1545/2036; euchred 491/2036; points earned 1981; conceded 982; net 999.
+Forced suit spades: selected 2123/8959 forced calls; made 1590/2123; euchred 533/2123; points earned 1814; conceded 1066; net 748.
+
+strong-balanced
+Calls: 155383; voluntary 123173; forced 32210; opportunities 827474; passes 672091.
+Natural loners: 8465 attempts; 5535 five-trick four-point successes; 2894 three/four-trick one-point makes; 36 euchres.
+Natural five-trick success: 65.39% (5535/8465 loner_attempts). Ordinary alone makes are not four-point successes.
+Five-trick success uncertainty: +65.39; 95% interval [+62.00, +68.77], 2176 independent blocks percentage points.
+dealer, round 1, voluntary: calls 41018/129702 opportunities; passes 88684; makes 39377/41018; euchres 1641/41018; gross 59806, net 56524 points on 41018 calls.
+dealer, round 2, forced: calls 32210/32210 opportunities; passes 0; makes 24031/32210; euchres 8179/32210; gross 28702, net 12344 points on 32210 calls.
+first bidder, left of dealer, round 1, voluntary: calls 6779/165516 opportunities; passes 158737; makes 5997/6779; euchres 782/6779; gross 8263, net 6699 points on 6779 calls.
+first bidder, left of dealer, round 2, voluntary: calls 21996/89847 opportunities; passes 67851; makes 19991/21996; euchres 2005/21996; gross 26084, net 22074 points on 21996 calls.
+dealer’s partner, round 1, voluntary: calls 16508/157597 opportunities; passes 141089; makes 15107/16508; euchres 1401/16508; gross 20718, net 17916 points on 16508 calls.
+dealer’s partner, round 2, voluntary: calls 17057/66435 opportunities; passes 49378; makes 15095/17057; euchres 1962/17057; gross 19571, net 15647 points on 17057 calls.
+third bidder, right of dealer, round 1, voluntary: calls 6504/138404 opportunities; passes 131900; makes 5756/6504; euchres 748/6504; gross 7402, net 5906 points on 6504 calls.
+third bidder, right of dealer, round 2, voluntary: calls 13311/47763 opportunities; passes 34452; makes 12388/13311; euchres 923/13311; gross 16683, net 14837 points on 13311 calls.
+Forced suit clubs: selected 8083/32210 forced calls; made 6039/8083; euchred 2044/8083; points earned 7382; conceded 4088; net 3294.
+Forced suit diamonds: selected 8349/32210 forced calls; made 6104/8349; euchred 2245/8349; points earned 7183; conceded 4490; net 2693.
+Forced suit hearts: selected 7992/32210 forced calls; made 5964/7992; euchred 2028/7992; points earned 7106; conceded 4056; net 3050.
+Forced suit spades: selected 7786/32210 forced calls; made 5924/7786; euchred 1862/7786; points earned 7031; conceded 3724; net 3307.
+
+strong-conservative
+Calls: 38713; voluntary 26946; forced 11767; opportunities 257301; passes 218588.
+Natural loners: 930 attempts; 867 five-trick four-point successes; 63 three/four-trick one-point makes; 0 euchres.
+Natural five-trick success: 93.23% (867/930 loner_attempts). Ordinary alone makes are not four-point successes.
+Five-trick success uncertainty: +93.23; 95% interval [+87.66, +97.91], 1312 independent blocks percentage points.
+dealer, round 1, voluntary: calls 8960/40076 opportunities; passes 31116; makes 8759/8960; euchres 201/8960; gross 13434, net 13032 points on 8960 calls.
+dealer, round 2, forced: calls 11767/11767 opportunities; passes 0; makes 9015/11767; euchres 2752/11767; gross 10374, net 4870 points on 11767 calls.
+first bidder, left of dealer, round 1, voluntary: calls 1082/50790 opportunities; passes 49708; makes 1045/1082; euchres 37/1082; gross 1410, net 1336 points on 1082 calls.
+first bidder, left of dealer, round 2, voluntary: calls 5685/28036 opportunities; passes 22351; makes 5319/5685; euchres 366/5685; gross 7296, net 6564 points on 5685 calls.
+dealer’s partner, round 1, voluntary: calls 3405/48164 opportunities; passes 44759; makes 3250/3405; euchres 155/3405; gross 4731, net 4421 points on 3405 calls.
+dealer’s partner, round 2, voluntary: calls 3762/21583 opportunities; passes 17821; makes 3510/3762; euchres 252/3762; gross 4691, net 4187 points on 3762 calls.
+third bidder, right of dealer, round 1, voluntary: calls 1046/42488 opportunities; passes 41442; makes 998/1046; euchres 48/1046; gross 1241, net 1145 points on 1046 calls.
+third bidder, right of dealer, round 2, voluntary: calls 3006/14397 opportunities; passes 11391; makes 2896/3006; euchres 110/3006; gross 3924, net 3704 points on 3006 calls.
+Forced suit clubs: selected 3091/11767 forced calls; made 2338/3091; euchred 753/3091; points earned 2781; conceded 1506; net 1275.
+Forced suit diamonds: selected 2772/11767 forced calls; made 2158/2772; euchred 614/2772; points earned 2463; conceded 1228; net 1235.
+Forced suit hearts: selected 3032/11767 forced calls; made 2244/3032; euchred 788/3032; points earned 2602; conceded 1576; net 1026.
+Forced suit spades: selected 2872/11767 forced calls; made 2275/2872; euchred 597/2872; points earned 2528; conceded 1194; net 1334.
+
+strong-partnership
+Calls: 48887; voluntary 38626; forced 10261; opportunities 248554; passes 199667.
+Natural loners: 2885 attempts; 1872 five-trick four-point successes; 993 three/four-trick one-point makes; 20 euchres.
+Natural five-trick success: 64.89% (1872/2885 loner_attempts). Ordinary alone makes are not four-point successes.
+Five-trick success uncertainty: +64.89; 95% interval [+58.93, +70.85], 1312 independent blocks percentage points.
+dealer, round 1, voluntary: calls 12080/39112 opportunities; passes 27032; makes 11671/12080; euchres 409/12080; gross 17977, net 17159 points on 12080 calls.
+dealer, round 2, forced: calls 10261/10261 opportunities; passes 0; makes 7894/10261; euchres 2367/10261; gross 9428, net 4694 points on 10261 calls.
+first bidder, left of dealer, round 1, voluntary: calls 1857/50204 opportunities; passes 48347; makes 1699/1857; euchres 158/1857; gross 2238, net 1922 points on 1857 calls.
+first bidder, left of dealer, round 2, voluntary: calls 6484/26610 opportunities; passes 20126; makes 5856/6484; euchres 628/6484; gross 7843, net 6587 points on 6484 calls.
+dealer’s partner, round 1, voluntary: calls 7438/47893 opportunities; passes 40455; makes 6845/7438; euchres 593/7438; gross 9253, net 8067 points on 7438 calls.
+dealer’s partner, round 2, voluntary: calls 4610/18083 opportunities; passes 13473; makes 4183/4610; euchres 427/4610; gross 5672, net 4818 points on 4610 calls.
+third bidder, right of dealer, round 1, voluntary: calls 2170/42025 opportunities; passes 39855; makes 1949/2170; euchres 221/2170; gross 2524, net 2082 points on 2170 calls.
+third bidder, right of dealer, round 2, voluntary: calls 3987/14366 opportunities; passes 10379; makes 3630/3987; euchres 357/3987; gross 4729, net 4015 points on 3987 calls.
+Forced suit clubs: selected 2592/10261 forced calls; made 1985/2592; euchred 607/2592; points earned 2318; conceded 1214; net 1104.
+Forced suit diamonds: selected 2504/10261 forced calls; made 1941/2504; euchred 563/2504; points earned 2425; conceded 1126; net 1299.
+Forced suit hearts: selected 2723/10261 forced calls; made 2024/2723; euchred 699/2723; points earned 2407; conceded 1398; net 1009.
+Forced suit spades: selected 2442/10261 forced calls; made 1944/2442; euchred 498/2442; points earned 2278; conceded 996; net 1282.
+
+val
+Calls: 46411; voluntary 37321; forced 9090; opportunities 240540; passes 194129.
+Natural loners: 2493 attempts; 1664 five-trick four-point successes; 829 three/four-trick one-point makes; 0 euchres.
+Natural five-trick success: 66.75% (1664/2493 loner_attempts). Ordinary alone makes are not four-point successes.
+Five-trick success uncertainty: +66.75; 95% interval [+60.05, +73.07], 1312 independent blocks percentage points.
+dealer, round 1, voluntary: calls 11775/38226 opportunities; passes 26451; makes 11348/11775; euchres 427/11775; gross 17439, net 16585 points on 11775 calls.
+dealer, round 2, forced: calls 9090/9090 opportunities; passes 0; makes 6809/9090; euchres 2281/9090; gross 8215, net 3653 points on 9090 calls.
+first bidder, left of dealer, round 1, voluntary: calls 2079/48729 opportunities; passes 46650; makes 1858/2079; euchres 221/2079; gross 2684, net 2242 points on 2079 calls.
+first bidder, left of dealer, round 2, voluntary: calls 6656/25976 opportunities; passes 19320; makes 5948/6656; euchres 708/6656; gross 7722, net 6306 points on 6656 calls.
+dealer’s partner, round 1, voluntary: calls 6369/46475 opportunities; passes 40106; makes 5827/6369; euchres 542/6369; gross 7784, net 6700 points on 6369 calls.
+dealer’s partner, round 2, voluntary: calls 4961/18305 opportunities; passes 13344; makes 4543/4961; euchres 418/4961; gross 6306, net 5470 points on 4961 calls.
+third bidder, right of dealer, round 1, voluntary: calls 1753/40074 opportunities; passes 38321; makes 1529/1753; euchres 224/1753; gross 1907, net 1459 points on 1753 calls.
+third bidder, right of dealer, round 2, voluntary: calls 3728/13665 opportunities; passes 9937; makes 3482/3728; euchres 246/3728; gross 4619, net 4127 points on 3728 calls.
+Forced suit clubs: selected 2270/9090 forced calls; made 1741/2270; euchred 529/2270; points earned 2111; conceded 1058; net 1053.
+Forced suit diamonds: selected 2358/9090 forced calls; made 1682/2358; euchred 676/2358; points earned 2012; conceded 1352; net 660.
+Forced suit hearts: selected 2141/9090 forced calls; made 1631/2141; euchred 510/2141; points earned 1997; conceded 1020; net 977.
+Forced suit spades: selected 2321/9090 forced calls; made 1755/2321; euchred 566/2321; points earned 2095; conceded 1132; net 963.

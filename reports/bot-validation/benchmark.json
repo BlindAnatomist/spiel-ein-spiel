@@ -1,0 +1,20 @@
+{
+  "node": "v24.19.0",
+  "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+  "results": [
+    {
+      "category": "strong",
+      "games": 8,
+      "hands": 103,
+      "seconds": 0.46628703699999974,
+      "policyMs": 66.37181800000133
+    },
+    {
+      "category": "expert",
+      "games": 8,
+      "hands": 96,
+      "seconds": 2.332870422,
+      "policyMs": 1977.1796500000005
+    }
+  ]
+}

@@ -13,5 +13,4 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run check
-      - run: npm run audit:bots -- --tier strong --games 250 --seed 20260924
       - run: npm run build

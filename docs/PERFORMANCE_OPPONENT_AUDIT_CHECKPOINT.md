@@ -158,6 +158,42 @@ During bidding, VoiceOver/navigation order is:
 
 Automatic bidding focus may still land on the first positive bid. During play, order remains hand/cards, Repeat current state, then Review last trick when available. The first-legal-card focus rule for play/discard is unchanged.
 
+## Bot-profile simulation audit
+
+The checkpoint now includes an on-demand bot-vs-bot audit for profile balance and seat effects. It uses the authoritative referee and the same bot policies as live play; it does not use the browser UI or any privileged state inside a policy.
+
+Run:
+
+```sh
+npm run audit:bots -- --tier strong --games 500 --seed 20260924
+```
+
+`--games` means games per audit case. For the four Strong profiles, the audit runs:
+
+- same-profile seat tests, placing the same strategy in seats 1 and 3 over matched seed/dealer sequences;
+- a full round robin of every distinct pair;
+- each round-robin pair twice on the same seed/dealer, with the profiles swapped left/right.
+
+Seat 0 is held at the tier's Balanced profile and seat 2 is held at Val so the opponent environment is stable while the left/right profiles vary.
+
+For each profile and seat, the report measures:
+
+- bidding opportunities;
+- voluntary opportunities, excluding stick-the-dealer forced calls;
+- calls and voluntary calls;
+- forced calls;
+- round-one versus round-two calls;
+- made calls and euchres;
+- marches;
+- loner attempts and successful loners;
+- average maker tricks;
+- points earned per call;
+- overall and voluntary call rates.
+
+The same-profile section reports right-minus-left differences in call rate, voluntary call rate, call success, euchre rate and points per call. The round robin aggregates every profile separately on the left and right as well as combined.
+
+This audit is intended to detect persistent seat effects and strategy-balance differences much faster than human play can. It does not replace real-device testing of VoiceOver, narration timing, table comprehension or subjective game feel.
+
 ## Deal-distribution audit
 
 `src/audit/deals.ts` uses the authoritative deal function itself rather than a parallel shuffle implementation.

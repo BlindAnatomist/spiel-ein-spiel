@@ -134,16 +134,16 @@ test('cue selection coalesces results and uses public differences only', () => {
     assert.deepEqual(cueEvents(v,{...after,winner:team}),[team===0?'game-win':'game-loss']);
   }
 });
-test('sound defaults off, enables only on gesture, stops on disable and tolerates unavailable audio', () => {
+test('sound defaults off, enables only on gesture, stops on disable and tolerates unavailable audio', async () => {
   let factories=0;let starts=0;let stops=0;
   const audio={state:'running',currentTime:0,destination:{},resume:async()=>{},
-    createOscillator:()=>({type:'',frequency:{value:0},connect(){},disconnect(){},start(){starts++;},stop(){stops++;},onended:null}),
+    createOscillator:()=>({type:'',frequency:{setValueAtTime(){}},connect(){},disconnect(){},start(){starts++;},stop(){stops++;},onended:null}),
     createGain:()=>({gain:{setValueAtTime(){},linearRampToValueAtTime(){}},connect(){},disconnect(){}})};
   const cues=createSoundCues(()=>{factories++;return audio as unknown as AudioContext;});
   cues.play('card');assert.equal(factories,0);assert.equal(starts,0);
-  cues.setEnabled(true);cues.play('trick');assert.equal(starts,1);assert.equal(factories,1);
-  cues.setEnabled(false);assert.equal(stops,2);cues.play('card');assert.equal(starts,1);
-  const unavailable=createSoundCues(()=>{throw Error('unavailable');});unavailable.setEnabled(true);assert.doesNotThrow(()=>unavailable.play('card'));
+  assert.equal(await cues.setEnabled(true),true);cues.play('trick');assert.equal(starts,2);assert.equal(factories,1);
+  assert.equal(await cues.setEnabled(false),false);assert.equal(stops,4);cues.play('card');assert.equal(starts,2);
+  const unavailable=createSoundCues(()=>{throw Error('unavailable');});assert.equal(await unavailable.setEnabled(true),false);assert.doesNotThrow(()=>unavailable.play('card'));
   assert.match(readFileSync('web/index.html','utf8'),/id="sound-cues"[^>]*aria-pressed="false"/);
   assert.doesNotMatch(readFileSync('web/sound.ts','utf8'),/fetch\(|https?:|setTimeout|\.focus\(/);
 });

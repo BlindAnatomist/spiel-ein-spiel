@@ -51,15 +51,18 @@ export function handAnnouncement(v: PlayerView): string {
 }
 /** No hand, legal actions, hidden state, or strategy is read by either review. */
 export function currentState(v: PlayerView, seatNames: SeatNames = names): string {
-  const parts = [`Hand ${v.handNumber}. Dealer: ${seatNames[v.dealer]}.`];
-  if (!v.result) parts.push(`Score: you and Val ${v.score[0]}, opponents ${v.score[1]}. First to 10.`);
+  const parts: string[] = [];
   const ours = v.completedTricks.filter(t => teamOf(t.winner) === 0).length;
-  parts.push(`You and Val have ${ours} ${ours === 1 ? 'trick' : 'tricks'}; opponents have ${v.completedTricks.length - ours}.`);
+  const opponents = v.completedTricks.length - ours;
+  const trickTotals = `You and Val have ${ours} ${ours === 1 ? 'trick' : 'tricks'}; opponents have ${opponents}.`;
   if (v.phase === 'bidding') {
-    parts.push(`Up-card: ${cardName(v.upCard).toLowerCase()}, ${v.upCardStatus}.`,
+    parts.push('Suit not called yet.',
+      `Up-card: ${cardName(v.upCard).toLowerCase()}, ${v.upCardStatus}.`,
       `${v.biddingRound === 1 ? 'First' : 'Second'} calling round.`);
+    if (v.turn !== null) parts.push(`${seatNames[v.turn]} to act.`);
+    parts.push(trickTotals);
   } else {
-    parts.push(`Called suit: ${v.trump}. Caller: ${seatNames[v.caller!]}.`);
+    parts.push(`Called suit: ${v.trump}.`, `Caller: ${seatNames[v.caller!]}.`);
     if (v.alone) parts.push(`${seatNames[v.caller!]} ${v.caller === 0 ? 'are' : 'is'} going alone.`);
     if (v.sittingOut !== null) parts.push(`${seatNames[v.sittingOut]} ${v.sittingOut === 0 ? 'sit' : 'sits'} out.`);
     if (v.phase === 'discarding') parts.push(`Up-card: ${cardName(v.upCard).toLowerCase()}, ordered.`);
@@ -67,10 +70,13 @@ export function currentState(v: PlayerView, seatNames: SeatNames = names): strin
       parts.push('Current trick.', ...v.trick.map((p, i) =>
         `${seatNames[p.seat]} ${i === 0 ? 'led' : 'played'} ${cardName(p.card, v.trump).toLowerCase()}.`));
     }
+    if (!v.result && v.turn !== null) parts.push(v.phase === 'discarding' ? `${seatNames[v.turn]} must discard.`
+      : v.phase === 'playing' && !v.trick.length ? `${seatNames[v.turn]} ${v.turn === 0 ? 'lead' : 'leads'}.` : `${seatNames[v.turn]} to act.`);
+    parts.push(trickTotals);
   }
+  parts.push(`Hand ${v.handNumber}. Dealer: ${seatNames[v.dealer]}.`);
   if (v.result) parts.push(resultText(v));
-  else if (v.turn !== null) parts.push(v.phase === 'discarding' ? `${seatNames[v.turn]} must discard.`
-    : v.phase === 'playing' && !v.trick.length ? `${seatNames[v.turn]} ${v.turn === 0 ? 'lead' : 'leads'}.` : `${seatNames[v.turn]} to act.`);
+  else parts.push(`Score: you and Val ${v.score[0]}, opponents ${v.score[1]}. First to 10.`);
   return parts.join(' ');
 }
 export function lastTrick(v: PlayerView, seatNames: SeatNames = names): string {

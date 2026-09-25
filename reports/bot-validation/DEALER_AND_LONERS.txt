@@ -1,0 +1,191 @@
+Dealer roles: 0 dealer; 1 first bidder; 2 dealer partner; 3 third bidder. Rates use exact listed denominators.
+
+dealer-position
+['casual-balanced', 0, 1, False]: opportunities 24254; passes 15555; voluntary calls/opportunities 8699/24254; forced calls 0; makes/calls 7778/8699; euchres/calls 921/8699; gross 10404; conceded 1842; net 8562; maker tricks/calls 32894/8699
+['casual-balanced', 0, 2, True]: opportunities 5108; passes 0; voluntary calls/opportunities 0/0; forced calls 5108; makes/calls 3472/5108; euchres/calls 1636/5108; gross 4018; conceded 3272; net 746; maker tricks/calls 15551/5108
+['casual-balanced', 1, 1, False]: opportunities 32090; passes 28677; voluntary calls/opportunities 3413/32090; forced calls 0; makes/calls 2487/3413; euchres/calls 926/3413; gross 2990; conceded 1852; net 1138; maker tricks/calls 10824/3413
+['casual-balanced', 1, 2, False]: opportunities 15533; passes 9786; voluntary calls/opportunities 5747/15533; forced calls 0; makes/calls 4739/5747; euchres/calls 1008/5747; gross 5898; conceded 2016; net 3882; maker tricks/calls 19999/5747
+['casual-balanced', 2, 1, False]: opportunities 29703; passes 26393; voluntary calls/opportunities 3310/29703; forced calls 0; makes/calls 2910/3310; euchres/calls 400/3310; gross 3834; conceded 800; net 3034; maker tricks/calls 12522/3310
+['casual-balanced', 2, 2, False]: opportunities 11168; passes 6669; voluntary calls/opportunities 4499/11168; forced calls 0; makes/calls 3467/4499; euchres/calls 1032/4499; gross 4388; conceded 2064; net 2324; maker tricks/calls 15526/4499
+['casual-balanced', 3, 1, False]: opportunities 26287; passes 23009; voluntary calls/opportunities 3278/26287; forced calls 0; makes/calls 2106/3278; euchres/calls 1172/3278; gross 2420; conceded 2344; net 76; maker tricks/calls 9674/3278
+['casual-balanced', 3, 2, False]: opportunities 7150; passes 4226; voluntary calls/opportunities 2924/7150; forced calls 0; makes/calls 2306/2924; euchres/calls 618/2924; gross 2874; conceded 1236; net 1638; maker tricks/calls 10049/2924
+['casual-bold', 0, 1, False]: opportunities 8010; passes 4134; voluntary calls/opportunities 3876/8010; forced calls 0; makes/calls 3288/3876; euchres/calls 588/3876; gross 4392; conceded 1176; net 3216; maker tricks/calls 14010/3876
+['casual-bold', 0, 2, True]: opportunities 1027; passes 0; voluntary calls/opportunities 0/0; forced calls 1027; makes/calls 698/1027; euchres/calls 329/1027; gross 807; conceded 658; net 149; maker tricks/calls 3074/1027
+['casual-bold', 1, 1, False]: opportunities 10831; passes 8995; voluntary calls/opportunities 1836/10831; forced calls 0; makes/calls 1151/1836; euchres/calls 685/1836; gross 1376; conceded 1370; net 6; maker tricks/calls 5314/1836
+['casual-bold', 1, 2, False]: opportunities 4027; passes 2079; voluntary calls/opportunities 1948/4027; forced calls 0; makes/calls 1487/1948; euchres/calls 461/1948; gross 1841; conceded 922; net 919; maker tricks/calls 6616/1948
+['casual-bold', 2, 1, False]: opportunities 9955; passes 8245; voluntary calls/opportunities 1710/9955; forced calls 0; makes/calls 1521/1710; euchres/calls 189/1710; gross 2003; conceded 378; net 1625; maker tricks/calls 6462/1710
+['casual-bold', 2, 2, False]: opportunities 3080; passes 1460; voluntary calls/opportunities 1620/3080; forced calls 0; makes/calls 1210/1620; euchres/calls 410/1620; gross 1447; conceded 820; net 627; maker tricks/calls 5249/1620
+['casual-bold', 3, 1, False]: opportunities 8323; passes 6647; voluntary calls/opportunities 1676/8323; forced calls 0; makes/calls 1061/1676; euchres/calls 615/1676; gross 1160; conceded 1230; net -70; maker tricks/calls 4778/1676
+['casual-bold', 3, 2, False]: opportunities 1714; passes 711; voluntary calls/opportunities 1003/1714; forced calls 0; makes/calls 777/1003; euchres/calls 226/1003; gross 961; conceded 452; net 509; maker tricks/calls 3373/1003
+['casual-cautious', 0, 1, False]: opportunities 8801; passes 6677; voluntary calls/opportunities 2124/8801; forced calls 0; makes/calls 1957/2124; euchres/calls 167/2124; gross 2603; conceded 334; net 2269; maker tricks/calls 8302/2124
+['casual-cautious', 0, 2, True]: opportunities 2217; passes 0; voluntary calls/opportunities 0/0; forced calls 2217; makes/calls 1512/2217; euchres/calls 705/2217; gross 1718; conceded 1410; net 308; maker tricks/calls 6801/2217
+['casual-cautious', 1, 1, False]: opportunities 11082; passes 10492; voluntary calls/opportunities 590/11082; forced calls 0; makes/calls 474/590; euchres/calls 116/590; gross 582; conceded 232; net 350; maker tricks/calls 1995/590
+['casual-cautious', 1, 2, False]: opportunities 5633; passes 4318; voluntary calls/opportunities 1315/5633; forced calls 0; makes/calls 1141/1315; euchres/calls 174/1315; gross 1428; conceded 348; net 1080; maker tricks/calls 4835/1315
+['casual-cautious', 2, 1, False]: opportunities 10407; passes 9708; voluntary calls/opportunities 699/10407; forced calls 0; makes/calls 649/699; euchres/calls 50/699; gross 900; conceded 100; net 800; maker tricks/calls 2778/699
+['casual-cautious', 2, 2, False]: opportunities 4668; passes 3383; voluntary calls/opportunities 1285/4668; forced calls 0; makes/calls 1102/1285; euchres/calls 183/1285; gross 1374; conceded 366; net 1008; maker tricks/calls 4698/1285
+['casual-cautious', 3, 1, False]: opportunities 9059; passes 8381; voluntary calls/opportunities 678/9059; forced calls 0; makes/calls 522/678; euchres/calls 156/678; gross 587; conceded 312; net 275; maker tricks/calls 2175/678
+['casual-cautious', 3, 2, False]: opportunities 2862; passes 1931; voluntary calls/opportunities 931/2862; forced calls 0; makes/calls 829/931; euchres/calls 102/931; gross 1070; conceded 204; net 866; maker tricks/calls 3524/931
+['expert-assertive', 0, 1, False]: opportunities 6097; passes 2627; voluntary calls/opportunities 3470/6097; forced calls 0; makes/calls 3160/3470; euchres/calls 310/3470; gross 4467; conceded 620; net 3847; maker tricks/calls 13044/3470
+['expert-assertive', 0, 2, True]: opportunities 763; passes 0; voluntary calls/opportunities 0/0; forced calls 763; makes/calls 569/763; euchres/calls 194/763; gross 656; conceded 388; net 268; maker tricks/calls 2400/763
+['expert-assertive', 1, 1, False]: opportunities 8600; passes 7772; voluntary calls/opportunities 828/8600; forced calls 0; makes/calls 587/828; euchres/calls 241/828; gross 779; conceded 482; net 297; maker tricks/calls 2669/828
+['expert-assertive', 1, 2, False]: opportunities 3528; passes 1850; voluntary calls/opportunities 1678/3528; forced calls 0; makes/calls 1416/1678; euchres/calls 262/1678; gross 1859; conceded 524; net 1335; maker tricks/calls 5954/1678
+['expert-assertive', 2, 1, False]: opportunities 8022; passes 6237; voluntary calls/opportunities 1785/8022; forced calls 0; makes/calls 1601/1785; euchres/calls 184/1785; gross 2167; conceded 368; net 1799; maker tricks/calls 6807/1785
+['expert-assertive', 2, 2, False]: opportunities 2025; passes 1035; voluntary calls/opportunities 990/2025; forced calls 0; makes/calls 782/990; euchres/calls 208/990; gross 1041; conceded 416; net 625; maker tricks/calls 3433/990
+['expert-assertive', 3, 1, False]: opportunities 6738; passes 5878; voluntary calls/opportunities 860/6738; forced calls 0; makes/calls 661/860; euchres/calls 199/860; gross 794; conceded 398; net 396; maker tricks/calls 2800/860
+['expert-assertive', 3, 2, False]: opportunities 1506; passes 659; voluntary calls/opportunities 847/1506; forced calls 0; makes/calls 725/847; euchres/calls 122/847; gross 872; conceded 244; net 628; maker tricks/calls 2949/847
+['expert-balanced', 0, 1, False]: opportunities 20633; passes 11579; voluntary calls/opportunities 9054/20633; forced calls 0; makes/calls 8175/9054; euchres/calls 879/9054; gross 11531; conceded 1758; net 9773; maker tricks/calls 34728/9054
+['expert-balanced', 0, 2, True]: opportunities 4009; passes 0; voluntary calls/opportunities 0/0; forced calls 4009; makes/calls 2897/4009; euchres/calls 1112/4009; gross 3446; conceded 2224; net 1222; maker tricks/calls 12735/4009
+['expert-balanced', 1, 1, False]: opportunities 26221; passes 24444; voluntary calls/opportunities 1777/26221; forced calls 0; makes/calls 1433/1777; euchres/calls 344/1777; gross 1676; conceded 688; net 988; maker tricks/calls 5909/1777
+['expert-balanced', 1, 2, False]: opportunities 13126; passes 7719; voluntary calls/opportunities 5407/13126; forced calls 0; makes/calls 4691/5407; euchres/calls 716/5407; gross 5786; conceded 1432; net 4354; maker tricks/calls 19078/5407
+['expert-balanced', 2, 1, False]: opportunities 25185; passes 20312; voluntary calls/opportunities 4873/25185; forced calls 0; makes/calls 4244/4873; euchres/calls 629/4873; gross 5698; conceded 1258; net 4440; maker tricks/calls 18256/4873
+['expert-balanced', 2, 2, False]: opportunities 8984; passes 5127; voluntary calls/opportunities 3857/8984; forced calls 0; makes/calls 3324/3857; euchres/calls 533/3857; gross 4120; conceded 1066; net 3054; maker tricks/calls 13798/3857
+['expert-balanced', 3, 1, False]: opportunities 21747; passes 20083; voluntary calls/opportunities 1664/21747; forced calls 0; makes/calls 1388/1664; euchres/calls 276/1664; gross 1718; conceded 552; net 1166; maker tricks/calls 5710/1664
+['expert-balanced', 3, 2, False]: opportunities 6692; passes 3639; voluntary calls/opportunities 3053/6692; forced calls 0; makes/calls 2731/3053; euchres/calls 322/3053; gross 3742; conceded 644; net 3098; maker tricks/calls 11636/3053
+['expert-conservative', 0, 1, False]: opportunities 6529; passes 4261; voluntary calls/opportunities 2268/6529; forced calls 0; makes/calls 2142/2268; euchres/calls 126/2268; gross 3122; conceded 252; net 2870; maker tricks/calls 9154/2268
+['expert-conservative', 0, 2, True]: opportunities 1459; passes 0; voluntary calls/opportunities 0/0; forced calls 1459; makes/calls 1039/1459; euchres/calls 420/1459; gross 1231; conceded 840; net 391; maker tricks/calls 4660/1459
+['expert-conservative', 1, 1, False]: opportunities 8653; passes 8260; voluntary calls/opportunities 393/8653; forced calls 0; makes/calls 302/393; euchres/calls 91/393; gross 369; conceded 182; net 187; maker tricks/calls 1308/393
+['expert-conservative', 1, 2, False]: opportunities 4407; passes 3084; voluntary calls/opportunities 1323/4407; forced calls 0; makes/calls 1202/1323; euchres/calls 121/1323; gross 1537; conceded 242; net 1295; maker tricks/calls 4995/1323
+['expert-conservative', 2, 1, False]: opportunities 8208; passes 6955; voluntary calls/opportunities 1253/8208; forced calls 0; makes/calls 1168/1253; euchres/calls 85/1253; gross 1640; conceded 170; net 1470; maker tricks/calls 5060/1253
+['expert-conservative', 2, 2, False]: opportunities 2933; passes 2091; voluntary calls/opportunities 842/2933; forced calls 0; makes/calls 725/842; euchres/calls 117/842; gross 980; conceded 234; net 746; maker tricks/calls 3100/842
+['expert-conservative', 3, 1, False]: opportunities 7178; passes 6726; voluntary calls/opportunities 452/7178; forced calls 0; makes/calls 384/452; euchres/calls 68/452; gross 482; conceded 136; net 346; maker tricks/calls 1591/452
+['expert-conservative', 3, 2, False]: opportunities 2143; passes 1389; voluntary calls/opportunities 754/2143; forced calls 0; makes/calls 705/754; euchres/calls 49/754; gross 878; conceded 98; net 780; maker tricks/calls 2816/754
+['strong-assertive', 0, 1, False]: opportunities 39028; passes 24035; voluntary calls/opportunities 14993/39028; forced calls 0; makes/calls 14126/14993; euchres/calls 867/14993; gross 21111; conceded 1734; net 19377; maker tricks/calls 59217/14993
+['strong-assertive', 0, 2, True]: opportunities 8959; passes 0; voluntary calls/opportunities 0/0; forced calls 8959; makes/calls 6791/8959; euchres/calls 2168/8959; gross 8107; conceded 4336; net 3771; maker tricks/calls 28861/8959
+['strong-assertive', 1, 1, False]: opportunities 50001; passes 47101; voluntary calls/opportunities 2900/50001; forced calls 0; makes/calls 2491/2900; euchres/calls 409/2900; gross 3231; conceded 818; net 2413; maker tricks/calls 10161/2900
+['strong-assertive', 1, 2, False]: opportunities 25428; passes 16550; voluntary calls/opportunities 8878/25428; forced calls 0; makes/calls 7690/8878; euchres/calls 1188/8878; gross 10211; conceded 2376; net 7835; maker tricks/calls 32336/8878
+['strong-assertive', 2, 1, False]: opportunities 47574; passes 39516; voluntary calls/opportunities 8058/47574; forced calls 0; makes/calls 7246/8058; euchres/calls 812/8058; gross 9568; conceded 1624; net 7944; maker tricks/calls 30670/8058
+['strong-assertive', 2, 2, False]: opportunities 17770; passes 11829; voluntary calls/opportunities 5941/17770; forced calls 0; makes/calls 4868/5941; euchres/calls 1073/5941; gross 6252; conceded 2146; net 4106; maker tricks/calls 21033/5941
+['strong-assertive', 3, 1, False]: opportunities 41452; passes 38226; voluntary calls/opportunities 3226/41452; forced calls 0; makes/calls 2809/3226; euchres/calls 417/3226; gross 3716; conceded 834; net 2882; maker tricks/calls 11627/3226
+['strong-assertive', 3, 2, False]: opportunities 13352; passes 8156; voluntary calls/opportunities 5196/13352; forced calls 0; makes/calls 4747/5196; euchres/calls 449/5196; gross 6197; conceded 898; net 5299; maker tricks/calls 19195/5196
+['strong-balanced', 0, 1, False]: opportunities 129702; passes 88684; voluntary calls/opportunities 41018/129702; forced calls 0; makes/calls 39377/41018; euchres/calls 1641/41018; gross 59806; conceded 3282; net 56524; maker tricks/calls 166086/41018
+['strong-balanced', 0, 2, True]: opportunities 32210; passes 0; voluntary calls/opportunities 0/0; forced calls 32210; makes/calls 24031/32210; euchres/calls 8179/32210; gross 28702; conceded 16358; net 12344; maker tricks/calls 104542/32210
+['strong-balanced', 1, 1, False]: opportunities 165516; passes 158737; voluntary calls/opportunities 6779/165516; forced calls 0; makes/calls 5997/6779; euchres/calls 782/6779; gross 8263; conceded 1564; net 6699; maker tricks/calls 25497/6779
+['strong-balanced', 1, 2, False]: opportunities 89847; passes 67851; voluntary calls/opportunities 21996/89847; forced calls 0; makes/calls 19991/21996; euchres/calls 2005/21996; gross 26084; conceded 4010; net 22074; maker tricks/calls 82806/21996
+['strong-balanced', 2, 1, False]: opportunities 157597; passes 141089; voluntary calls/opportunities 16508/157597; forced calls 0; makes/calls 15107/16508; euchres/calls 1401/16508; gross 20718; conceded 2802; net 17916; maker tricks/calls 64940/16508
+['strong-balanced', 2, 2, False]: opportunities 66435; passes 49378; voluntary calls/opportunities 17057/66435; forced calls 0; makes/calls 15095/17057; euchres/calls 1962/17057; gross 19571; conceded 3924; net 15647; maker tricks/calls 63239/17057
+['strong-balanced', 3, 1, False]: opportunities 138404; passes 131900; voluntary calls/opportunities 6504/138404; forced calls 0; makes/calls 5756/6504; euchres/calls 748/6504; gross 7402; conceded 1496; net 5906; maker tricks/calls 23724/6504
+['strong-balanced', 3, 2, False]: opportunities 47763; passes 34452; voluntary calls/opportunities 13311/47763; forced calls 0; makes/calls 12388/13311; euchres/calls 923/13311; gross 16683; conceded 1846; net 14837; maker tricks/calls 51505/13311
+['strong-conservative', 0, 1, False]: opportunities 40076; passes 31116; voluntary calls/opportunities 8960/40076; forced calls 0; makes/calls 8759/8960; euchres/calls 201/8960; gross 13434; conceded 402; net 13032; maker tricks/calls 37793/8960
+['strong-conservative', 0, 2, True]: opportunities 11767; passes 0; voluntary calls/opportunities 0/0; forced calls 11767; makes/calls 9015/11767; euchres/calls 2752/11767; gross 10374; conceded 5504; net 4870; maker tricks/calls 38231/11767
+['strong-conservative', 1, 1, False]: opportunities 50790; passes 49708; voluntary calls/opportunities 1082/50790; forced calls 0; makes/calls 1045/1082; euchres/calls 37/1082; gross 1410; conceded 74; net 1336; maker tricks/calls 4244/1082
+['strong-conservative', 1, 2, False]: opportunities 28036; passes 22351; voluntary calls/opportunities 5685/28036; forced calls 0; makes/calls 5319/5685; euchres/calls 366/5685; gross 7296; conceded 732; net 6564; maker tricks/calls 22400/5685
+['strong-conservative', 2, 1, False]: opportunities 48164; passes 44759; voluntary calls/opportunities 3405/48164; forced calls 0; makes/calls 3250/3405; euchres/calls 155/3405; gross 4731; conceded 310; net 4421; maker tricks/calls 14090/3405
+['strong-conservative', 2, 2, False]: opportunities 21583; passes 17821; voluntary calls/opportunities 3762/21583; forced calls 0; makes/calls 3510/3762; euchres/calls 252/3762; gross 4691; conceded 504; net 4187; maker tricks/calls 14634/3762
+['strong-conservative', 3, 1, False]: opportunities 42488; passes 41442; voluntary calls/opportunities 1046/42488; forced calls 0; makes/calls 998/1046; euchres/calls 48/1046; gross 1241; conceded 96; net 1145; maker tricks/calls 4137/1046
+['strong-conservative', 3, 2, False]: opportunities 14397; passes 11391; voluntary calls/opportunities 3006/14397; forced calls 0; makes/calls 2896/3006; euchres/calls 110/3006; gross 3924; conceded 220; net 3704; maker tricks/calls 12029/3006
+['strong-partnership', 0, 1, False]: opportunities 39112; passes 27032; voluntary calls/opportunities 12080/39112; forced calls 0; makes/calls 11671/12080; euchres/calls 409/12080; gross 17977; conceded 818; net 17159; maker tricks/calls 49071/12080
+['strong-partnership', 0, 2, True]: opportunities 10261; passes 0; voluntary calls/opportunities 0/0; forced calls 10261; makes/calls 7894/10261; euchres/calls 2367/10261; gross 9428; conceded 4734; net 4694; maker tricks/calls 33689/10261
+['strong-partnership', 1, 1, False]: opportunities 50204; passes 48347; voluntary calls/opportunities 1857/50204; forced calls 0; makes/calls 1699/1857; euchres/calls 158/1857; gross 2238; conceded 316; net 1922; maker tricks/calls 6975/1857
+['strong-partnership', 1, 2, False]: opportunities 26610; passes 20126; voluntary calls/opportunities 6484/26610; forced calls 0; makes/calls 5856/6484; euchres/calls 628/6484; gross 7843; conceded 1256; net 6587; maker tricks/calls 24473/6484
+['strong-partnership', 2, 1, False]: opportunities 47893; passes 40455; voluntary calls/opportunities 7438/47893; forced calls 0; makes/calls 6845/7438; euchres/calls 593/7438; gross 9253; conceded 1186; net 8067; maker tricks/calls 29095/7438
+['strong-partnership', 2, 2, False]: opportunities 18083; passes 13473; voluntary calls/opportunities 4610/18083; forced calls 0; makes/calls 4183/4610; euchres/calls 427/4610; gross 5672; conceded 854; net 4818; maker tricks/calls 17489/4610
+['strong-partnership', 3, 1, False]: opportunities 42025; passes 39855; voluntary calls/opportunities 2170/42025; forced calls 0; makes/calls 1949/2170; euchres/calls 221/2170; gross 2524; conceded 442; net 2082; maker tricks/calls 8077/2170
+['strong-partnership', 3, 2, False]: opportunities 14366; passes 10379; voluntary calls/opportunities 3987/14366; forced calls 0; makes/calls 3630/3987; euchres/calls 357/3987; gross 4729; conceded 714; net 4015; maker tricks/calls 14965/3987
+['val', 0, 1, False]: opportunities 38226; passes 26451; voluntary calls/opportunities 11775/38226; forced calls 0; makes/calls 11348/11775; euchres/calls 427/11775; gross 17439; conceded 854; net 16585; maker tricks/calls 48387/11775
+['val', 0, 2, True]: opportunities 9090; passes 0; voluntary calls/opportunities 0/0; forced calls 9090; makes/calls 6809/9090; euchres/calls 2281/9090; gross 8215; conceded 4562; net 3653; maker tricks/calls 29277/9090
+['val', 1, 1, False]: opportunities 48729; passes 46650; voluntary calls/opportunities 2079/48729; forced calls 0; makes/calls 1858/2079; euchres/calls 221/2079; gross 2684; conceded 442; net 2242; maker tricks/calls 8093/2079
+['val', 1, 2, False]: opportunities 25976; passes 19320; voluntary calls/opportunities 6656/25976; forced calls 0; makes/calls 5948/6656; euchres/calls 708/6656; gross 7722; conceded 1416; net 6306; maker tricks/calls 24843/6656
+['val', 2, 1, False]: opportunities 46475; passes 40106; voluntary calls/opportunities 6369/46475; forced calls 0; makes/calls 5827/6369; euchres/calls 542/6369; gross 7784; conceded 1084; net 6700; maker tricks/calls 24765/6369
+['val', 2, 2, False]: opportunities 18305; passes 13344; voluntary calls/opportunities 4961/18305; forced calls 0; makes/calls 4543/4961; euchres/calls 418/4961; gross 6306; conceded 836; net 5470; maker tricks/calls 19223/4961
+['val', 3, 1, False]: opportunities 40074; passes 38321; voluntary calls/opportunities 1753/40074; forced calls 0; makes/calls 1529/1753; euchres/calls 224/1753; gross 1907; conceded 448; net 1459; maker tricks/calls 6250/1753
+['val', 3, 2, False]: opportunities 13665; passes 9937; voluntary calls/opportunities 3728/13665; forced calls 0; makes/calls 3482/3728; euchres/calls 246/3728; gross 4619; conceded 492; net 4127; maker tricks/calls 14339/3728
+forced-suit
+Suit selection count / all forced calls by this profile: 1296/5108
+['casual-balanced', 'clubs']: opportunities 1296; passes 0; voluntary calls/opportunities 0/0; forced calls 1296; makes/calls 904/1296; euchres/calls 392/1296; gross 1091; conceded 784; net 307; maker tricks/calls 4068/1296
+Suit selection count / all forced calls by this profile: 1372/5108
+['casual-balanced', 'diamonds']: opportunities 1372; passes 0; voluntary calls/opportunities 0/0; forced calls 1372; makes/calls 855/1372; euchres/calls 517/1372; gross 967; conceded 1034; net -67; maker tricks/calls 3936/1372
+Suit selection count / all forced calls by this profile: 1271/5108
+['casual-balanced', 'hearts']: opportunities 1271; passes 0; voluntary calls/opportunities 0/0; forced calls 1271; makes/calls 962/1271; euchres/calls 309/1271; gross 1060; conceded 618; net 442; maker tricks/calls 4063/1271
+Suit selection count / all forced calls by this profile: 1169/5108
+['casual-balanced', 'spades']: opportunities 1169; passes 0; voluntary calls/opportunities 0/0; forced calls 1169; makes/calls 751/1169; euchres/calls 418/1169; gross 900; conceded 836; net 64; maker tricks/calls 3484/1169
+Suit selection count / all forced calls by this profile: 253/1027
+['casual-bold', 'clubs']: opportunities 253; passes 0; voluntary calls/opportunities 0/0; forced calls 253; makes/calls 176/253; euchres/calls 77/253; gross 224; conceded 154; net 70; maker tricks/calls 763/253
+Suit selection count / all forced calls by this profile: 301/1027
+['casual-bold', 'diamonds']: opportunities 301; passes 0; voluntary calls/opportunities 0/0; forced calls 301; makes/calls 211/301; euchres/calls 90/301; gross 232; conceded 180; net 52; maker tricks/calls 909/301
+Suit selection count / all forced calls by this profile: 246/1027
+['casual-bold', 'hearts']: opportunities 246; passes 0; voluntary calls/opportunities 0/0; forced calls 246; makes/calls 152/246; euchres/calls 94/246; gross 175; conceded 188; net -13; maker tricks/calls 723/246
+Suit selection count / all forced calls by this profile: 227/1027
+['casual-bold', 'spades']: opportunities 227; passes 0; voluntary calls/opportunities 0/0; forced calls 227; makes/calls 159/227; euchres/calls 68/227; gross 176; conceded 136; net 40; maker tricks/calls 679/227
+Suit selection count / all forced calls by this profile: 614/2217
+['casual-cautious', 'clubs']: opportunities 614; passes 0; voluntary calls/opportunities 0/0; forced calls 614; makes/calls 420/614; euchres/calls 194/614; gross 492; conceded 388; net 104; maker tricks/calls 1915/614
+Suit selection count / all forced calls by this profile: 584/2217
+['casual-cautious', 'diamonds']: opportunities 584; passes 0; voluntary calls/opportunities 0/0; forced calls 584; makes/calls 403/584; euchres/calls 181/584; gross 447; conceded 362; net 85; maker tricks/calls 1809/584
+Suit selection count / all forced calls by this profile: 494/2217
+['casual-cautious', 'hearts']: opportunities 494; passes 0; voluntary calls/opportunities 0/0; forced calls 494; makes/calls 340/494; euchres/calls 154/494; gross 374; conceded 308; net 66; maker tricks/calls 1465/494
+Suit selection count / all forced calls by this profile: 525/2217
+['casual-cautious', 'spades']: opportunities 525; passes 0; voluntary calls/opportunities 0/0; forced calls 525; makes/calls 349/525; euchres/calls 176/525; gross 405; conceded 352; net 53; maker tricks/calls 1612/525
+Suit selection count / all forced calls by this profile: 150/763
+['expert-assertive', 'clubs']: opportunities 150; passes 0; voluntary calls/opportunities 0/0; forced calls 150; makes/calls 98/150; euchres/calls 52/150; gross 118; conceded 104; net 14; maker tricks/calls 451/150
+Suit selection count / all forced calls by this profile: 163/763
+['expert-assertive', 'diamonds']: opportunities 163; passes 0; voluntary calls/opportunities 0/0; forced calls 163; makes/calls 134/163; euchres/calls 29/163; gross 143; conceded 58; net 85; maker tricks/calls 528/163
+Suit selection count / all forced calls by this profile: 208/763
+['expert-assertive', 'hearts']: opportunities 208; passes 0; voluntary calls/opportunities 0/0; forced calls 208; makes/calls 149/208; euchres/calls 59/208; gross 170; conceded 118; net 52; maker tricks/calls 653/208
+Suit selection count / all forced calls by this profile: 242/763
+['expert-assertive', 'spades']: opportunities 242; passes 0; voluntary calls/opportunities 0/0; forced calls 242; makes/calls 188/242; euchres/calls 54/242; gross 225; conceded 108; net 117; maker tricks/calls 768/242
+Suit selection count / all forced calls by this profile: 959/4009
+['expert-balanced', 'clubs']: opportunities 959; passes 0; voluntary calls/opportunities 0/0; forced calls 959; makes/calls 721/959; euchres/calls 238/959; gross 809; conceded 476; net 333; maker tricks/calls 3069/959
+Suit selection count / all forced calls by this profile: 944/4009
+['expert-balanced', 'diamonds']: opportunities 944; passes 0; voluntary calls/opportunities 0/0; forced calls 944; makes/calls 736/944; euchres/calls 208/944; gross 856; conceded 416; net 440; maker tricks/calls 3102/944
+Suit selection count / all forced calls by this profile: 1015/4009
+['expert-balanced', 'hearts']: opportunities 1015; passes 0; voluntary calls/opportunities 0/0; forced calls 1015; makes/calls 676/1015; euchres/calls 339/1015; gross 782; conceded 678; net 104; maker tricks/calls 3006/1015
+Suit selection count / all forced calls by this profile: 1091/4009
+['expert-balanced', 'spades']: opportunities 1091; passes 0; voluntary calls/opportunities 0/0; forced calls 1091; makes/calls 764/1091; euchres/calls 327/1091; gross 999; conceded 654; net 345; maker tricks/calls 3558/1091
+Suit selection count / all forced calls by this profile: 373/1459
+['expert-conservative', 'clubs']: opportunities 373; passes 0; voluntary calls/opportunities 0/0; forced calls 373; makes/calls 240/373; euchres/calls 133/373; gross 273; conceded 266; net 7; maker tricks/calls 1134/373
+Suit selection count / all forced calls by this profile: 338/1459
+['expert-conservative', 'diamonds']: opportunities 338; passes 0; voluntary calls/opportunities 0/0; forced calls 338; makes/calls 252/338; euchres/calls 86/338; gross 297; conceded 172; net 125; maker tricks/calls 1077/338
+Suit selection count / all forced calls by this profile: 366/1459
+['expert-conservative', 'hearts']: opportunities 366; passes 0; voluntary calls/opportunities 0/0; forced calls 366; makes/calls 277/366; euchres/calls 89/366; gross 321; conceded 178; net 143; maker tricks/calls 1206/366
+Suit selection count / all forced calls by this profile: 382/1459
+['expert-conservative', 'spades']: opportunities 382; passes 0; voluntary calls/opportunities 0/0; forced calls 382; makes/calls 270/382; euchres/calls 112/382; gross 340; conceded 224; net 116; maker tricks/calls 1243/382
+Suit selection count / all forced calls by this profile: 2475/8959
+['strong-assertive', 'clubs']: opportunities 2475; passes 0; voluntary calls/opportunities 0/0; forced calls 2475; makes/calls 1839/2475; euchres/calls 636/2475; gross 2182; conceded 1272; net 910; maker tricks/calls 7941/2475
+Suit selection count / all forced calls by this profile: 2325/8959
+['strong-assertive', 'diamonds']: opportunities 2325; passes 0; voluntary calls/opportunities 0/0; forced calls 2325; makes/calls 1817/2325; euchres/calls 508/2325; gross 2130; conceded 1016; net 1114; maker tricks/calls 7487/2325
+Suit selection count / all forced calls by this profile: 2036/8959
+['strong-assertive', 'hearts']: opportunities 2036; passes 0; voluntary calls/opportunities 0/0; forced calls 2036; makes/calls 1545/2036; euchres/calls 491/2036; gross 1981; conceded 982; net 999; maker tricks/calls 6735/2036
+Suit selection count / all forced calls by this profile: 2123/8959
+['strong-assertive', 'spades']: opportunities 2123; passes 0; voluntary calls/opportunities 0/0; forced calls 2123; makes/calls 1590/2123; euchres/calls 533/2123; gross 1814; conceded 1066; net 748; maker tricks/calls 6698/2123
+Suit selection count / all forced calls by this profile: 8083/32210
+['strong-balanced', 'clubs']: opportunities 8083; passes 0; voluntary calls/opportunities 0/0; forced calls 8083; makes/calls 6039/8083; euchres/calls 2044/8083; gross 7382; conceded 4088; net 3294; maker tricks/calls 26559/8083
+Suit selection count / all forced calls by this profile: 8349/32210
+['strong-balanced', 'diamonds']: opportunities 8349; passes 0; voluntary calls/opportunities 0/0; forced calls 8349; makes/calls 6104/8349; euchres/calls 2245/8349; gross 7183; conceded 4490; net 2693; maker tricks/calls 26713/8349
+Suit selection count / all forced calls by this profile: 7992/32210
+['strong-balanced', 'hearts']: opportunities 7992; passes 0; voluntary calls/opportunities 0/0; forced calls 7992; makes/calls 5964/7992; euchres/calls 2028/7992; gross 7106; conceded 4056; net 3050; maker tricks/calls 25906/7992
+Suit selection count / all forced calls by this profile: 7786/32210
+['strong-balanced', 'spades']: opportunities 7786; passes 0; voluntary calls/opportunities 0/0; forced calls 7786; makes/calls 5924/7786; euchres/calls 1862/7786; gross 7031; conceded 3724; net 3307; maker tricks/calls 25364/7786
+Suit selection count / all forced calls by this profile: 3091/11767
+['strong-conservative', 'clubs']: opportunities 3091; passes 0; voluntary calls/opportunities 0/0; forced calls 3091; makes/calls 2338/3091; euchres/calls 753/3091; gross 2781; conceded 1506; net 1275; maker tricks/calls 10285/3091
+Suit selection count / all forced calls by this profile: 2772/11767
+['strong-conservative', 'diamonds']: opportunities 2772; passes 0; voluntary calls/opportunities 0/0; forced calls 2772; makes/calls 2158/2772; euchres/calls 614/2772; gross 2463; conceded 1228; net 1235; maker tricks/calls 8946/2772
+Suit selection count / all forced calls by this profile: 3032/11767
+['strong-conservative', 'hearts']: opportunities 3032; passes 0; voluntary calls/opportunities 0/0; forced calls 3032; makes/calls 2244/3032; euchres/calls 788/3032; gross 2602; conceded 1576; net 1026; maker tricks/calls 9678/3032
+Suit selection count / all forced calls by this profile: 2872/11767
+['strong-conservative', 'spades']: opportunities 2872; passes 0; voluntary calls/opportunities 0/0; forced calls 2872; makes/calls 2275/2872; euchres/calls 597/2872; gross 2528; conceded 1194; net 1334; maker tricks/calls 9322/2872
+Suit selection count / all forced calls by this profile: 2592/10261
+['strong-partnership', 'clubs']: opportunities 2592; passes 0; voluntary calls/opportunities 0/0; forced calls 2592; makes/calls 1985/2592; euchres/calls 607/2592; gross 2318; conceded 1214; net 1104; maker tricks/calls 8379/2592
+Suit selection count / all forced calls by this profile: 2504/10261
+['strong-partnership', 'diamonds']: opportunities 2504; passes 0; voluntary calls/opportunities 0/0; forced calls 2504; makes/calls 1941/2504; euchres/calls 563/2504; gross 2425; conceded 1126; net 1299; maker tricks/calls 8401/2504
+Suit selection count / all forced calls by this profile: 2723/10261
+['strong-partnership', 'hearts']: opportunities 2723; passes 0; voluntary calls/opportunities 0/0; forced calls 2723; makes/calls 2024/2723; euchres/calls 699/2723; gross 2407; conceded 1398; net 1009; maker tricks/calls 8766/2723
+Suit selection count / all forced calls by this profile: 2442/10261
+['strong-partnership', 'spades']: opportunities 2442; passes 0; voluntary calls/opportunities 0/0; forced calls 2442; makes/calls 1944/2442; euchres/calls 498/2442; gross 2278; conceded 996; net 1282; maker tricks/calls 8143/2442
+Suit selection count / all forced calls by this profile: 2270/9090
+['val', 'clubs']: opportunities 2270; passes 0; voluntary calls/opportunities 0/0; forced calls 2270; makes/calls 1741/2270; euchres/calls 529/2270; gross 2111; conceded 1058; net 1053; maker tricks/calls 7395/2270
+Suit selection count / all forced calls by this profile: 2358/9090
+['val', 'diamonds']: opportunities 2358; passes 0; voluntary calls/opportunities 0/0; forced calls 2358; makes/calls 1682/2358; euchres/calls 676/2358; gross 2012; conceded 1352; net 660; maker tricks/calls 7403/2358
+Suit selection count / all forced calls by this profile: 2141/9090
+['val', 'hearts']: opportunities 2141; passes 0; voluntary calls/opportunities 0/0; forced calls 2141; makes/calls 1631/2141; euchres/calls 510/2141; gross 1997; conceded 1020; net 977; maker tricks/calls 7040/2141
+Suit selection count / all forced calls by this profile: 2321/9090
+['val', 'spades']: opportunities 2321; passes 0; voluntary calls/opportunities 0/0; forced calls 2321; makes/calls 1755/2321; euchres/calls 566/2321; gross 2095; conceded 1132; net 963; maker tricks/calls 7439/2321
+casual-balanced: loners/calls 337/36978; five/attempts 276/337; three-four/attempts 61/337; euchres/attempts 0/337
+val: loners/calls 2493/46411; five/attempts 1664/2493; three-four/attempts 829/2493; euchres/attempts 0/2493
+casual-cautious: loners/calls 12/9839; five/attempts 8/12; three-four/attempts 4/12; euchres/attempts 0/12
+casual-bold: loners/calls 282/14696; five/attempts 202/282; three-four/attempts 79/282; euchres/attempts 1/282
+expert-balanced: loners/calls 1010/33694; five/attempts 767/1010; three-four/attempts 223/1010; euchres/attempts 20/1010
+expert-conservative: loners/calls 187/8744; five/attempts 136/187; three-four/attempts 46/187; euchres/attempts 5/187
+expert-assertive: loners/calls 723/11221; five/attempts 408/723; three-four/attempts 312/723; euchres/attempts 3/723
+strong-balanced: loners/calls 8465/155383; five/attempts 5535/8465; three-four/attempts 2894/8465; euchres/attempts 36/8465
+strong-conservative: loners/calls 930/38713; five/attempts 867/930; three-four/attempts 63/930; euchres/attempts 0/930
+strong-assertive: loners/calls 4734/58151; five/attempts 2389/4734; three-four/attempts 2322/4734; euchres/attempts 23/4734
+strong-partnership: loners/calls 2885/48887; five/attempts 1872/2885; three-four/attempts 993/2885; euchres/attempts 20/2885

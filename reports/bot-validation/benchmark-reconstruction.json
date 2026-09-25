@@ -1,0 +1,32 @@
+{
+  "node": "v24.19.0",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "results": [
+    {
+      "category": "strong",
+      "lineup": [
+        "strong-balanced",
+        "strong-balanced",
+        "val",
+        "strong-balanced"
+      ],
+      "games": 8,
+      "hands": 82,
+      "seconds": 0.3876093430000001,
+      "policyMs": 60.01449799999952
+    },
+    {
+      "category": "expert",
+      "lineup": [
+        "expert-balanced",
+        "expert-balanced",
+        "val",
+        "expert-balanced"
+      ],
+      "games": 8,
+      "hands": 91,
+      "seconds": 1.732555379,
+      "policyMs": 1417.6523579999994
+    }
+  ]
+}

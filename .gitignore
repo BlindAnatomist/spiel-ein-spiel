@@ -3,3 +3,4 @@ coverage/
 
 dist/
 .netlify/
+reports/bot-validation-run/

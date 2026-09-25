@@ -1,0 +1,32 @@
+{
+  "allCategoryCountsMatchOriginal": true,
+  "matchedPrimaryEstimates": [
+    "seat/casual/original/all/full",
+    "seat/casual/proxy-swapped/all/full",
+    "seat/expert/original/all/full",
+    "seat/expert/proxy-swapped/all/full",
+    "seat/strong/original/all/full",
+    "seat/strong/proxy-swapped/all/full",
+    "teams/casual-vs-strong/win",
+    "teams/casual-vs-strong/score",
+    "teams/strong-vs-expert/win",
+    "teams/strong-vs-expert/score",
+    "teams/casual-vs-expert/win",
+    "teams/casual-vs-expert/score",
+    "common/casual-vs-strong/win",
+    "common/casual-vs-strong/score",
+    "common/strong-vs-expert/win",
+    "common/strong-vs-expert/score",
+    "common/casual-vs-expert/win",
+    "common/casual-vs-expert/score",
+    "val/strong-balanced/win",
+    "val/strong-balanced/score",
+    "val/strong-conservative/win",
+    "val/strong-conservative/score",
+    "val/strong-assertive/win",
+    "val/strong-assertive/score",
+    "val/strong-partnership/win",
+    "val/strong-partnership/score"
+  ],
+  "note": "Costs change on rerun. Bootstrap seed labels are explicit in the analysis source; original intervals remain in analysis-final.json."
+}

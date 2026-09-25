@@ -1,0 +1,72 @@
+{
+  "sourceCommit": "46e4a0c04f9007387bc98ef4aaf1d256f20aec05",
+  "harnessVersion": "bot-validation-v2-reconstruction",
+  "sourceCheckpointCommit": "a56df2459e5b2c21c7f70c839430483df0be729a",
+  "fixedManifestCheckpointCommit": "9ad884c967429b485b28946dae26a7c161028386",
+  "completeRawEvidenceCommit": "271b5f82ea917df3e4122bac20bce3cb89abe8c0",
+  "main": "b6f647c7d64c58e7b147cb03df729433604d3650",
+  "pr7": "fba6aa22acffb20c27f7f0e2a35a4980d4227082",
+  "python": "3.12.14",
+  "numpy": "2.3.5",
+  "node": "v24.19.0",
+  "sourceSHA256": {
+    "scripts/analyze-bot-validation.py": "76059877f3fc3d1514058811a81ac071ebe09ee82a93b2c8dd9ec42fb18395df",
+    "scripts/package-bot-validation.py": "19dc6a7c61689f850e57017f83382577337b2e5eaa277bd9786737cd096f61e2",
+    "scripts/report-bot-validation.py": "7e259168fa366f1cfdb24bac96d22f60c7df662d6c845c99e4ff0cc6e7159c99",
+    "scripts/restore-bot-validation.py": "fec2d95841cd0e61796eb792265d57583892cb1b7182d28d3046d50754c862b0",
+    "scripts/test-bot-validation-analysis.py": "946dedc879af4092b19d9bece8a4583a9d445701e215844add1ebc4633c49522",
+    "src/audit/bots.ts": "a0b7b394d3641a884bcb8165c6d8ad431aed58ef3ed23d34a3a8ef7d473ab7d8",
+    "src/audit/validation-cli.ts": "9f85f93fd7a3252bdd73b53957bb324146e6d35810dd2ac540b3fa662ac10107",
+    "src/audit/validation-fixtures.ts": "eac22653eef2abdd857b4ea2d57103428f0bd8c6e8a0a6e3153eecf850307d80",
+    "src/audit/validation-invariants.ts": "d5085925a47e26391dc52ea04333c8e0fe4ac7cfa92a7986eaf87be3a982640f",
+    "src/audit/validation.ts": "01cb8f1db807f68107f3f3205a36fe9387dd48cd4ba2db5e36966bd4130a2dc3",
+    "test/bot-validation.test.ts": "882a54140184b896ecdf28ae622d0461205e7989f1b67a0b82e434e43ff85f6a"
+  },
+  "commands": [
+    "npm ci --ignore-scripts",
+    "npm run check",
+    "npm run build",
+    "git diff --check",
+    "node src/audit/validation-cli.ts --mode manifest",
+    "node src/audit/validation-cli.ts --mode benchmark",
+    "node src/audit/validation-cli.ts --mode run --workers 4 --max-jobs 64 (three waves)",
+    "node src/audit/validation-cli.ts --mode run --workers 4 (final 62 missing jobs)",
+    "node src/audit/validation-fixtures.ts --run",
+    "OPENBLAS_NUM_THREADS=1 python3 scripts/analyze-bot-validation.py",
+    "python3 scripts/test-bot-validation-analysis.py",
+    "python3 scripts/report-bot-validation.py",
+    "python3 scripts/restore-bot-validation.py",
+    "node src/audit/validation-cli.ts --mode run --workers 4 (336 retained, zero executed)"
+  ],
+  "validation": {
+    "baselineTests": 131,
+    "finalTests": 136,
+    "statisticalTests": 7,
+    "failedSimulationJobs": 0,
+    "finalResumePending": 0
+  },
+  "recoveryWaveSeconds": [
+    142.476586547,
+    108.41899000000001,
+    127.97467457599998,
+    145.237570332
+  ],
+  "timingNote": "Recovered chunks retain original measurements. Reconstructed chunks were measured on the replacement executor. Wave seconds exclude checkpoint and analysis time. Benchmark records exact case lineups.",
+  "tacticalSample": {
+    "games": 32,
+    "views": 276,
+    "scriptedLonerHands": 128
+  },
+  "publicationNote": "The final delivery ZIP includes a publication receipt naming the final branch commit; source hashes avoid a self-referential commit hash.",
+  "productionSourceSHA256": {
+    "src/bots/config.ts": "8fdd573b56cf0f3148331ac59a68ac0447f9fb17f305b0ac95385f7c03dad0ed",
+    "src/bots/profiles.ts": "f60196c408bc7c8c6cb7a9a78121c664172464b185d753b2fe53b741356e6f60",
+    "src/referee.ts": "24663ecd21e7ff9157a6d7d49a82a25bd5737c9c92f2a16a6fdd3439f31244e7",
+    "src/internal/deal.ts": "53f60744c65c00e36c2614b45ee461da6778c041afdba1ed844f5794771af9fd",
+    "src/internal/reducer.ts": "b038c02715a2c5f7cd90b85afa8123eff321040b770262fb303d1e53518f2ecb",
+    "src/internal/view.ts": "6383416f3eecba44ac048b199af336e69ad7ec36767abc75821591d36b8d259a",
+    "src/simulation/index.ts": "61f3a7acad7aee80906b79131bcd40e39a8f876bdf29bd88fa4ad47088db572f",
+    "src/simulation/args.ts": "d52ead396f57acafc56895732a60ebf37455641daf161553377d52a3127f3eb0"
+  },
+  "resultPackSHA256": "8d797d82e03b2754d6883309aa8fd88148e01bd67c1aa7877737e4f512a28655"
+}

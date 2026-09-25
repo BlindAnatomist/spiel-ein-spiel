@@ -1,0 +1,406 @@
+{
+  "coverage": {
+    "casual": {
+      "games": 2304,
+      "hands": 26624,
+      "decisions": 662521,
+      "worker_seconds": 93.19541795699969,
+      "cases": 18,
+      "blocks": 128
+    },
+    "expert": {
+      "games": 1152,
+      "hands": 12963,
+      "decisions": 322014,
+      "worker_seconds": 303.2780027489999,
+      "cases": 18,
+      "blocks": 64
+    },
+    "cross": {
+      "games": 10560,
+      "hands": 118967,
+      "decisions": 2992873,
+      "worker_seconds": 959.1268471469994,
+      "cases": 330,
+      "blocks": 1056
+    },
+    "val": {
+      "games": 15360,
+      "hands": 172751,
+      "decisions": 4344584,
+      "worker_seconds": 1101.9319410980004,
+      "cases": 960,
+      "blocks": 768
+    },
+    "strong": {
+      "games": 10240,
+      "hands": 115740,
+      "decisions": 2927187,
+      "worker_seconds": 510.8874453670006,
+      "cases": 32,
+      "blocks": 320
+    },
+    "symmetry": {
+      "games": 1408,
+      "hands": 15672,
+      "decisions": 391245,
+      "worker_seconds": 174.34518478300004,
+      "cases": 44,
+      "blocks": 352
+    }
+  },
+  "missing": 0,
+  "errors": [],
+  "primarySeat": {
+    "casual/original/all/full": {
+      "blocks": 128,
+      "estimate": 0.005546204100080526,
+      "ci95": [
+        -0.020118156298394592,
+        0.031988523479425005
+      ],
+      "validResamples": 1999,
+      "sparse": false,
+      "familyWise95": [
+        -0.031260305896293056,
+        0.0437963824394656
+      ]
+    },
+    "casual/proxy-swapped/all/full": {
+      "blocks": 128,
+      "estimate": 0.007474969560080341,
+      "ci95": [
+        -0.016976672746566453,
+        0.0331918951869689
+      ],
+      "validResamples": 1999,
+      "sparse": false,
+      "familyWise95": [
+        -0.028684799672701534,
+        0.04630447619253367
+      ]
+    },
+    "expert/original/all/full": {
+      "blocks": 64,
+      "estimate": -0.0015527211223204385,
+      "ci95": [
+        -0.041719577566575725,
+        0.03450437062446985
+      ],
+      "validResamples": 1999,
+      "sparse": false,
+      "familyWise95": [
+        -0.05872361206233368,
+        0.052238562029155805
+      ]
+    },
+    "expert/proxy-swapped/all/full": {
+      "blocks": 64,
+      "estimate": 0.005028454635908064,
+      "ci95": [
+        -0.031230151918780258,
+        0.043321555154002045
+      ],
+      "validResamples": 1999,
+      "sparse": false,
+      "familyWise95": [
+        -0.04765893543416644,
+        0.06406713227621087
+      ]
+    },
+    "strong/original/all/full": {
+      "blocks": 320,
+      "estimate": 0.00658466589566023,
+      "ci95": [
+        -0.007648621301901746,
+        0.021224783861835513
+      ],
+      "validResamples": 1999,
+      "sparse": false,
+      "familyWise95": [
+        -0.014751835196535315,
+        0.028415626567023407
+      ]
+    },
+    "strong/proxy-swapped/all/full": {
+      "blocks": 320,
+      "estimate": 0.0032325958108858632,
+      "ci95": [
+        -0.011239601991246875,
+        0.017857614312751097
+      ],
+      "validResamples": 1999,
+      "sparse": false,
+      "familyWise95": [
+        -0.01923281591302207,
+        0.02423868747465375
+      ]
+    }
+  },
+  "teams": {
+    "casual-vs-strong": {
+      "win": {
+        "blocks": 384,
+        "estimate": 0.70703125,
+        "ci95": [
+          0.6809895833333334,
+          0.734375
+        ],
+        "validResamples": 1999,
+        "sparse": false,
+        "familyWise95": [
+          0.6705729166666666,
+          0.74984130859375
+        ]
+      },
+      "score": {
+        "blocks": 384,
+        "estimate": 2.5911458333333335,
+        "ci95": [
+          2.348893229166667,
+          2.8346354166666665
+        ],
+        "validResamples": 1999,
+        "sparse": false
+      }
+    },
+    "strong-vs-expert": {
+      "win": {
+        "blocks": 384,
+        "estimate": 0.5833333333333334,
+        "ci95": [
+          0.5598958333333334,
+          0.6080729166666666
+        ],
+        "validResamples": 1999,
+        "sparse": false,
+        "familyWise95": [
+          0.5457316080729167,
+          0.6184895833333334
+        ]
+      },
+      "score": {
+        "blocks": 384,
+        "estimate": 1.0963541666666667,
+        "ci95": [
+          0.8905598958333333,
+          1.2877604166666667
+        ],
+        "validResamples": 1999,
+        "sparse": false
+      }
+    },
+    "casual-vs-expert": {
+      "win": {
+        "blocks": 288,
+        "estimate": 0.8020833333333334,
+        "ci95": [
+          0.7725694444444444,
+          0.8298611111111112
+        ],
+        "validResamples": 1999,
+        "sparse": false,
+        "familyWise95": [
+          0.7604166666666666,
+          0.8420138888888888
+        ]
+      },
+      "score": {
+        "blocks": 288,
+        "estimate": 3.595486111111111,
+        "ci95": [
+          3.324565972222222,
+          3.8524305555555554
+        ],
+        "validResamples": 1999,
+        "sparse": false
+      }
+    }
+  },
+  "common": {
+    "casual-vs-strong": {
+      "win": {
+        "blocks": 384,
+        "estimate": 0.13802083333333334,
+        "ci95": [
+          0.09895833333333333,
+          0.17721354166666656
+        ],
+        "validResamples": 1999,
+        "sparse": false,
+        "familyWise95": [
+          0.078125,
+          0.19759928385416653
+        ]
+      },
+      "score": {
+        "blocks": 384,
+        "estimate": 1.4348958333333333,
+        "ci95": [
+          1.1276041666666667,
+          1.7553385416666665
+        ],
+        "validResamples": 1999,
+        "sparse": false
+      }
+    },
+    "strong-vs-expert": {
+      "win": {
+        "blocks": 384,
+        "estimate": 0.068359375,
+        "ci95": [
+          0.033203125,
+          0.10481770833333333
+        ],
+        "validResamples": 1999,
+        "sparse": false,
+        "familyWise95": [
+          0.011798095703125,
+          0.1203633626302083
+        ]
+      },
+      "score": {
+        "blocks": 384,
+        "estimate": 0.7076822916666666,
+        "ci95": [
+          0.4537760416666667,
+          0.9694335937499999
+        ],
+        "validResamples": 1999,
+        "sparse": false
+      }
+    },
+    "casual-vs-expert": {
+      "win": {
+        "blocks": 288,
+        "estimate": 0.19444444444444445,
+        "ci95": [
+          0.14583333333333334,
+          0.24570312499999994
+        ],
+        "validResamples": 1999,
+        "sparse": false,
+        "familyWise95": [
+          0.11858452690972222,
+          0.2664930555555556
+        ]
+      },
+      "score": {
+        "blocks": 288,
+        "estimate": 2.013888888888889,
+        "ci95": [
+          1.6230034722222222,
+          2.4105902777777777
+        ],
+        "validResamples": 1999,
+        "sparse": false
+      }
+    }
+  },
+  "val": {
+    "strong-balanced": {
+      "win": {
+        "blocks": 768,
+        "estimate": 0.001953125,
+        "ci95": [
+          -0.008463541666666666,
+          0.013020833333333334
+        ],
+        "validResamples": 1999,
+        "sparse": false,
+        "familyWise95": [
+          -0.013306681315104166,
+          0.016561889648437484
+        ]
+      },
+      "score": {
+        "blocks": 768,
+        "estimate": 0.08235677083333333,
+        "ci95": [
+          0.0026041666666666665,
+          0.1640625
+        ],
+        "validResamples": 1999,
+        "sparse": false
+      }
+    },
+    "strong-conservative": {
+      "win": {
+        "blocks": 768,
+        "estimate": 0.043619791666666664,
+        "ci95": [
+          0.024739583333333332,
+          0.06282552083333333
+        ],
+        "validResamples": 1999,
+        "sparse": false,
+        "familyWise95": [
+          0.015378824869791667,
+          0.0705586751302083
+        ]
+      },
+      "score": {
+        "blocks": 768,
+        "estimate": 0.4420572916666667,
+        "ci95": [
+          0.30922851562500003,
+          0.5751953125
+        ],
+        "validResamples": 1999,
+        "sparse": false
+      }
+    },
+    "strong-assertive": {
+      "win": {
+        "blocks": 768,
+        "estimate": -0.021484375,
+        "ci95": [
+          -0.042317708333333336,
+          -0.0006510416666666666
+        ],
+        "validResamples": 1999,
+        "sparse": false,
+        "familyWise95": [
+          -0.05257568359375,
+          0.00907491048177082
+        ]
+      },
+      "score": {
+        "blocks": 768,
+        "estimate": -0.23209635416666666,
+        "ci95": [
+          -0.3835123697916667,
+          -0.0849609375
+        ],
+        "validResamples": 1999,
+        "sparse": false
+      }
+    },
+    "strong-partnership": {
+      "win": {
+        "blocks": 768,
+        "estimate": -0.0029296875,
+        "ci95": [
+          -0.008138020833333334,
+          0.0026041666666666665
+        ],
+        "validResamples": 1999,
+        "sparse": false,
+        "familyWise95": [
+          -0.0107421875,
+          0.005208333333333333
+        ]
+      },
+      "score": {
+        "blocks": 768,
+        "estimate": -0.007486979166666667,
+        "ci95": [
+          -0.036458333333333336,
+          0.019547526041666652
+        ],
+        "validResamples": 1999,
+        "sparse": false
+      }
+    }
+  }
+}

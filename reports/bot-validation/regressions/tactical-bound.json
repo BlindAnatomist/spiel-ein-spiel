@@ -1,0 +1,78 @@
+{
+  "kind": "audit-harness-bound-regression",
+  "seed": 3,
+  "dealer": 0,
+  "hand": 1,
+  "decision": 0,
+  "lineup": [
+    "strong-balanced",
+    "strong-assertive",
+    "val",
+    "strong-conservative"
+  ],
+  "action": {
+    "type": "pass"
+  },
+  "oldMaximum": 25,
+  "repairedMaximum": 29,
+  "outcome": {
+    "net": 2,
+    "result": {
+      "makerTricks": 2,
+      "team": 1,
+      "points": 2,
+      "reason": "euchred"
+    },
+    "steps": 28
+  },
+  "view": {
+    "seat": 1,
+    "hand": [
+      "clubs:K",
+      "spades:A",
+      "spades:K",
+      "diamonds:K",
+      "diamonds:9"
+    ],
+    "phase": "bidding",
+    "handNumber": 1,
+    "dealer": 0,
+    "turn": 1,
+    "biddingRound": 1,
+    "upCard": "hearts:K",
+    "upCardStatus": "face-up",
+    "bids": [],
+    "trump": null,
+    "caller": null,
+    "alone": false,
+    "sittingOut": null,
+    "trick": [],
+    "completedTricks": [],
+    "knownVoids": [
+      [],
+      [],
+      [],
+      []
+    ],
+    "score": [
+      0,
+      0
+    ],
+    "result": null,
+    "winner": null,
+    "legalActions": [
+      {
+        "type": "order-up",
+        "alone": false
+      },
+      {
+        "type": "order-up",
+        "alone": true
+      },
+      {
+        "type": "pass"
+      }
+    ]
+  },
+  "impact": "The old audit bound rejected a legal continuation; production termination was correct."
+}

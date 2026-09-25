@@ -10,39 +10,39 @@ interface Note {
   readonly wave?: OscillatorType;
 }
 
-const PATTERNS: Readonly<Record<SoundCue, readonly Note[]>> = Object.freeze({
-  enabled: Object.freeze([
+const PATTERNS = {
+  enabled: [
     { frequency: 620, offset: 0, duration: 0.07, gain: 0.06, wave: 'triangle' },
     { frequency: 820, offset: 0.075, duration: 0.09, gain: 0.065, wave: 'triangle' },
-  ]),
-  card: Object.freeze([
+  ],
+  card: [
     { frequency: 430, offset: 0, duration: 0.065, gain: 0.06, wave: 'triangle' },
-  ]),
-  trick: Object.freeze([
+  ],
+  trick: [
     { frequency: 500, offset: 0, duration: 0.08, gain: 0.065, wave: 'triangle' },
     { frequency: 680, offset: 0.085, duration: 0.11, gain: 0.07, wave: 'triangle' },
-  ]),
-  'hand-win': Object.freeze([
+  ],
+  'hand-win': [
     { frequency: 520, offset: 0, duration: 0.09, gain: 0.07, wave: 'triangle' },
     { frequency: 660, offset: 0.095, duration: 0.10, gain: 0.07, wave: 'triangle' },
     { frequency: 820, offset: 0.20, duration: 0.14, gain: 0.075, wave: 'triangle' },
-  ]),
-  'hand-loss': Object.freeze([
+  ],
+  'hand-loss': [
     { frequency: 420, offset: 0, duration: 0.10, gain: 0.065, wave: 'triangle' },
     { frequency: 300, offset: 0.11, duration: 0.16, gain: 0.065, wave: 'triangle' },
-  ]),
-  'game-win': Object.freeze([
+  ],
+  'game-win': [
     { frequency: 520, offset: 0, duration: 0.10, gain: 0.075, wave: 'triangle' },
     { frequency: 660, offset: 0.105, duration: 0.10, gain: 0.075, wave: 'triangle' },
     { frequency: 820, offset: 0.21, duration: 0.11, gain: 0.075, wave: 'triangle' },
     { frequency: 1040, offset: 0.325, duration: 0.18, gain: 0.08, wave: 'triangle' },
-  ]),
-  'game-loss': Object.freeze([
+  ],
+  'game-loss': [
     { frequency: 400, offset: 0, duration: 0.11, gain: 0.07, wave: 'triangle' },
     { frequency: 300, offset: 0.12, duration: 0.13, gain: 0.07, wave: 'triangle' },
     { frequency: 220, offset: 0.26, duration: 0.20, gain: 0.07, wave: 'triangle' },
-  ]),
-});
+  ],
+} as const satisfies Readonly<Record<SoundCue, readonly Note[]>>;
 
 /** Coalesce simultaneous results to one short cue, with the most useful result taking priority. */
 export function cueEvents(before: PlayerView, after: PlayerView): SoundCue[] {

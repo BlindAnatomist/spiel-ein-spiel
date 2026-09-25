@@ -1,1344 +1,1394 @@
-Controlled comparisons
-
-All differences are right-minus-left or named candidate-minus-comparator. Win and calling differences use percentage points. Score differences use points. Subgroup intervals are exploratory, unadjusted, and sparse below 32 independent blocks. Primary family-wise intervals are in summary.json.
+Controlled comparisons. Rates/wins are percentage points, score/net points retain point units. Subgroups are exploratory.
 
 Seat casual/original/all/full
-voluntary_call_rate: +0.55; 95% interval [-2.01, +3.20], 128 independent blocks
-make_rate: -3.48; 95% interval [-7.75, +1.18], 128 independent blocks
-net_points_per_call: -0.12; 95% interval [-0.28, +0.04], 128 independent blocks
+voluntary_call_rate: +0.55; 95% interval [-2.01, +3.20]; 128 independent blocks
+make_rate: -3.48; 95% interval [-7.75, +1.18]; 128 independent blocks
+net_points_per_call: -0.12; 95% interval [-0.28, +0.04]; 128 independent blocks
 Seat casual/original/same/full
-voluntary_call_rate: +0.80; 95% interval [-1.95, +3.54], 128 independent blocks
-make_rate: -3.98; 95% interval [-8.86, +0.71], 128 independent blocks
-net_points_per_call: -0.14; 95% interval [-0.30, +0.03], 128 independent blocks
+voluntary_call_rate: +0.80; 95% interval [-1.95, +3.54]; 128 independent blocks
+make_rate: -3.98; 95% interval [-8.86, +0.71]; 128 independent blocks
+net_points_per_call: -0.14; 95% interval [-0.30, +0.03]; 128 independent blocks
 Seat casual/original/casual-balanced/full
-voluntary_call_rate: +1.01; 95% interval [-1.71, +3.73], 128 independent blocks
-make_rate: -3.16; 95% interval [-8.80, +2.30], 128 independent blocks
-net_points_per_call: -0.11; 95% interval [-0.30, +0.07], 128 independent blocks
+voluntary_call_rate: +1.01; 95% interval [-1.71, +3.73]; 128 independent blocks
+make_rate: -3.16; 95% interval [-8.80, +2.30]; 128 independent blocks
+net_points_per_call: -0.11; 95% interval [-0.30, +0.07]; 128 independent blocks
+Seat casual/original/dealer-1/full
+voluntary_call_rate: +0.79; 95% interval [-3.36, +4.69]; 128 independent blocks
+make_rate: -4.31; 95% interval [-14.52, +5.71]; 128 independent blocks
+net_points_per_call: -0.15; 95% interval [-0.49, +0.19]; 128 independent blocks
 Seat casual/original/all/prefix
-voluntary_call_rate: +0.49; 95% interval [-2.42, +3.48], 128 independent blocks
-make_rate: -5.72; 95% interval [-10.90, -0.53], 128 independent blocks
-net_points_per_call: -0.18; 95% interval [-0.35, -0.00], 128 independent blocks
+voluntary_call_rate: +0.49; 95% interval [-2.42, +3.48]; 128 independent blocks
+make_rate: -5.72; 95% interval [-10.90, -0.53]; 128 independent blocks
+net_points_per_call: -0.18; 95% interval [-0.35, -0.00]; 128 independent blocks
 Seat casual/original/same/prefix
-voluntary_call_rate: +0.70; 95% interval [-2.19, +3.70], 128 independent blocks
-make_rate: -6.22; 95% interval [-11.72, -0.92], 128 independent blocks
-net_points_per_call: -0.19; 95% interval [-0.36, -0.01], 128 independent blocks
+voluntary_call_rate: +0.70; 95% interval [-2.19, +3.70]; 128 independent blocks
+make_rate: -6.22; 95% interval [-11.72, -0.92]; 128 independent blocks
+net_points_per_call: -0.19; 95% interval [-0.36, -0.01]; 128 independent blocks
 Seat casual/original/casual-balanced/prefix
-voluntary_call_rate: +0.82; 95% interval [-2.25, +3.94], 128 independent blocks
-make_rate: -5.25; 95% interval [-11.32, +0.64], 128 independent blocks
-net_points_per_call: -0.16; 95% interval [-0.37, +0.03], 128 independent blocks
-Seat casual/original/dealer-role-0/full
-voluntary_call_rate: -2.04; 95% interval [-8.65, +4.32], 128 independent blocks
-make_rate: -4.31; 95% interval [-11.88, +3.20], 128 independent blocks
-net_points_per_call: -0.09; 95% interval [-0.34, +0.17], 128 independent blocks
-Seat casual/original/dealer-role-1/full
-voluntary_call_rate: +0.79; 95% interval [-3.16, +4.68], 128 independent blocks
-make_rate: -4.31; 95% interval [-14.40, +5.60], 128 independent blocks
-net_points_per_call: -0.15; 95% interval [-0.50, +0.20], 128 independent blocks
-Seat casual/original/dealer-role-2/full
-voluntary_call_rate: +1.57; 95% interval [-2.15, +5.28], 128 independent blocks
-make_rate: -0.78; 95% interval [-8.93, +7.60], 128 independent blocks
-net_points_per_call: -0.19; 95% interval [-0.49, +0.10], 128 independent blocks
-Seat casual/original/dealer-role-3/full
-voluntary_call_rate: +1.33; 95% interval [-3.38, +5.91], 128 independent blocks
-make_rate: -3.61; 95% interval [-15.19, +7.53], 128 independent blocks
-net_points_per_call: -0.04; 95% interval [-0.42, +0.34], 128 independent blocks
+voluntary_call_rate: +0.82; 95% interval [-2.25, +3.94]; 128 independent blocks
+make_rate: -5.25; 95% interval [-11.32, +0.64]; 128 independent blocks
+net_points_per_call: -0.16; 95% interval [-0.37, +0.03]; 128 independent blocks
+Seat casual/original/dealer-1/prefix
+voluntary_call_rate: +1.14; 95% interval [-3.12, +5.38]; 128 independent blocks
+make_rate: -6.62; 95% interval [-18.36, +4.60]; 128 independent blocks
+net_points_per_call: -0.21; 95% interval [-0.58, +0.16]; 128 independent blocks
+Seat casual/original/dealer-3/full
+voluntary_call_rate: +1.33; 95% interval [-3.42, +5.82]; 128 independent blocks
+make_rate: -3.61; 95% interval [-15.05, +8.14]; 128 independent blocks
+net_points_per_call: -0.04; 95% interval [-0.42, +0.36]; 128 independent blocks
+Seat casual/original/dealer-3/prefix
+voluntary_call_rate: +0.74; 95% interval [-4.50, +5.80]; 128 independent blocks
+make_rate: -7.92; 95% interval [-21.62, +5.43]; 128 independent blocks
+net_points_per_call: -0.16; 95% interval [-0.59, +0.26]; 128 independent blocks
+Seat casual/original/dealer-2/full
+voluntary_call_rate: +1.57; 95% interval [-1.99, +5.50]; 128 independent blocks
+make_rate: -0.78; 95% interval [-9.26, +7.75]; 128 independent blocks
+net_points_per_call: -0.19; 95% interval [-0.51, +0.12]; 128 independent blocks
+Seat casual/original/dealer-2/prefix
+voluntary_call_rate: +2.14; 95% interval [-2.28, +6.60]; 128 independent blocks
+make_rate: -2.69; 95% interval [-12.37, +6.14]; 128 independent blocks
+net_points_per_call: -0.26; 95% interval [-0.60, +0.08]; 128 independent blocks
+Seat casual/original/dealer-0/full
+voluntary_call_rate: -2.04; 95% interval [-8.66, +4.49]; 128 independent blocks
+make_rate: -4.31; 95% interval [-12.02, +3.15]; 128 independent blocks
+net_points_per_call: -0.09; 95% interval [-0.36, +0.18]; 128 independent blocks
+Seat casual/original/dealer-0/prefix
+voluntary_call_rate: -3.41; 95% interval [-11.04, +3.98]; 126 independent blocks
+make_rate: -5.62; 95% interval [-14.00, +2.83]; 126 independent blocks
+net_points_per_call: -0.11; 95% interval [-0.38, +0.18]; 126 independent blocks
 Seat casual/proxy-swapped/all/full
-voluntary_call_rate: +0.75; 95% interval [-1.70, +3.32], 128 independent blocks
-make_rate: -0.95; 95% interval [-5.41, +3.55], 128 independent blocks
-net_points_per_call: -0.06; 95% interval [-0.21, +0.09], 128 independent blocks
+voluntary_call_rate: +0.75; 95% interval [-1.70, +3.32]; 128 independent blocks
+make_rate: -0.95; 95% interval [-5.41, +3.55]; 128 independent blocks
+net_points_per_call: -0.06; 95% interval [-0.21, +0.09]; 128 independent blocks
 Seat casual/proxy-swapped/same/full
-voluntary_call_rate: +1.04; 95% interval [-1.58, +3.76], 128 independent blocks
-make_rate: -1.59; 95% interval [-6.19, +3.00], 128 independent blocks
-net_points_per_call: -0.08; 95% interval [-0.23, +0.08], 128 independent blocks
+voluntary_call_rate: +1.04; 95% interval [-1.58, +3.76]; 128 independent blocks
+make_rate: -1.59; 95% interval [-6.19, +3.00]; 128 independent blocks
+net_points_per_call: -0.08; 95% interval [-0.23, +0.08]; 128 independent blocks
 Seat casual/proxy-swapped/casual-balanced/full
-voluntary_call_rate: +0.27; 95% interval [-2.61, +3.23], 128 independent blocks
-make_rate: +0.65; 95% interval [-4.82, +6.02], 128 independent blocks
-net_points_per_call: -0.01; 95% interval [-0.19, +0.17], 128 independent blocks
+voluntary_call_rate: +0.27; 95% interval [-2.61, +3.23]; 128 independent blocks
+make_rate: +0.65; 95% interval [-4.82, +6.02]; 128 independent blocks
+net_points_per_call: -0.01; 95% interval [-0.19, +0.17]; 128 independent blocks
+Seat casual/proxy-swapped/dealer-1/full
+voluntary_call_rate: +1.12; 95% interval [-2.72, +5.07]; 128 independent blocks
+make_rate: +2.28; 95% interval [-8.91, +13.05]; 128 independent blocks
+net_points_per_call: +0.09; 95% interval [-0.25, +0.44]; 128 independent blocks
 Seat casual/proxy-swapped/all/prefix
-voluntary_call_rate: +0.46; 95% interval [-2.48, +3.46], 128 independent blocks
-make_rate: -3.95; 95% interval [-9.03, +0.78], 128 independent blocks
-net_points_per_call: -0.16; 95% interval [-0.31, -0.00], 128 independent blocks
+voluntary_call_rate: +0.46; 95% interval [-2.48, +3.46]; 128 independent blocks
+make_rate: -3.95; 95% interval [-9.03, +0.78]; 128 independent blocks
+net_points_per_call: -0.16; 95% interval [-0.31, -0.00]; 128 independent blocks
 Seat casual/proxy-swapped/same/prefix
-voluntary_call_rate: +0.69; 95% interval [-2.15, +3.62], 128 independent blocks
-make_rate: -4.43; 95% interval [-9.28, +0.62], 128 independent blocks
-net_points_per_call: -0.17; 95% interval [-0.33, -0.01], 128 independent blocks
+voluntary_call_rate: +0.69; 95% interval [-2.15, +3.62]; 128 independent blocks
+make_rate: -4.43; 95% interval [-9.28, +0.62]; 128 independent blocks
+net_points_per_call: -0.17; 95% interval [-0.33, -0.01]; 128 independent blocks
 Seat casual/proxy-swapped/casual-balanced/prefix
-voluntary_call_rate: +0.09; 95% interval [-3.07, +3.13], 128 independent blocks
-make_rate: -1.61; 95% interval [-7.76, +4.25], 128 independent blocks
-net_points_per_call: -0.08; 95% interval [-0.26, +0.10], 128 independent blocks
-Seat casual/proxy-swapped/dealer-role-0/full
-voluntary_call_rate: -2.19; 95% interval [-9.22, +4.70], 128 independent blocks
-make_rate: -3.76; 95% interval [-12.10, +4.66], 128 independent blocks
-net_points_per_call: -0.20; 95% interval [-0.48, +0.08], 128 independent blocks
-Seat casual/proxy-swapped/dealer-role-1/full
-voluntary_call_rate: +1.12; 95% interval [-2.68, +5.06], 128 independent blocks
-make_rate: +2.28; 95% interval [-8.68, +12.99], 128 independent blocks
-net_points_per_call: +0.09; 95% interval [-0.24, +0.43], 128 independent blocks
-Seat casual/proxy-swapped/dealer-role-2/full
-voluntary_call_rate: +1.09; 95% interval [-2.77, +5.15], 128 independent blocks
-make_rate: +5.73; 95% interval [-2.39, +13.32], 128 independent blocks
-net_points_per_call: +0.14; 95% interval [-0.14, +0.43], 128 independent blocks
-Seat casual/proxy-swapped/dealer-role-3/full
-voluntary_call_rate: +1.35; 95% interval [-3.48, +6.43], 128 independent blocks
-make_rate: -7.20; 95% interval [-18.66, +4.56], 128 independent blocks
-net_points_per_call: -0.17; 95% interval [-0.55, +0.20], 128 independent blocks
+voluntary_call_rate: +0.09; 95% interval [-3.07, +3.13]; 128 independent blocks
+make_rate: -1.61; 95% interval [-7.76, +4.25]; 128 independent blocks
+net_points_per_call: -0.08; 95% interval [-0.26, +0.10]; 128 independent blocks
+Seat casual/proxy-swapped/dealer-1/prefix
+voluntary_call_rate: +0.78; 95% interval [-3.44, +5.23]; 128 independent blocks
+make_rate: -1.97; 95% interval [-13.89, +9.67]; 128 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.43, +0.28]; 128 independent blocks
+Seat casual/proxy-swapped/dealer-3/full
+voluntary_call_rate: +1.35; 95% interval [-3.32, +6.29]; 128 independent blocks
+make_rate: -7.20; 95% interval [-19.78, +4.64]; 128 independent blocks
+net_points_per_call: -0.17; 95% interval [-0.54, +0.20]; 128 independent blocks
+Seat casual/proxy-swapped/dealer-3/prefix
+voluntary_call_rate: -0.70; 95% interval [-6.01, +4.50]; 128 independent blocks
+make_rate: -8.11; 95% interval [-21.77, +5.17]; 128 independent blocks
+net_points_per_call: -0.17; 95% interval [-0.62, +0.27]; 128 independent blocks
+Seat casual/proxy-swapped/dealer-2/full
+voluntary_call_rate: +1.09; 95% interval [-2.72, +5.01]; 128 independent blocks
+make_rate: +5.73; 95% interval [-2.21, +13.98]; 128 independent blocks
+net_points_per_call: +0.14; 95% interval [-0.13, +0.42]; 128 independent blocks
+Seat casual/proxy-swapped/dealer-2/prefix
+voluntary_call_rate: +2.75; 95% interval [-1.53, +7.43]; 128 independent blocks
+make_rate: +3.06; 95% interval [-6.30, +12.51]; 128 independent blocks
+net_points_per_call: +0.00; 95% interval [-0.31, +0.33]; 128 independent blocks
+Seat casual/proxy-swapped/dealer-0/full
+voluntary_call_rate: -2.19; 95% interval [-9.48, +4.55]; 128 independent blocks
+make_rate: -3.76; 95% interval [-11.94, +5.41]; 128 independent blocks
+net_points_per_call: -0.20; 95% interval [-0.50, +0.08]; 128 independent blocks
+Seat casual/proxy-swapped/dealer-0/prefix
+voluntary_call_rate: -3.26; 95% interval [-11.31, +5.05]; 128 independent blocks
+make_rate: -8.09; 95% interval [-16.97, +0.91]; 128 independent blocks
+net_points_per_call: -0.32; 95% interval [-0.61, -0.02]; 128 independent blocks
 Seat casual/original/distinct/full
-voluntary_call_rate: +0.43; 95% interval [-2.23, +3.04], 128 independent blocks
-make_rate: -3.25; 95% interval [-8.09, +1.59], 128 independent blocks
-net_points_per_call: -0.11; 95% interval [-0.27, +0.05], 128 independent blocks
-Seat casual/original/casual-cautious/full
-voluntary_call_rate: +0.99; 95% interval [-1.34, +3.37], 128 independent blocks
-make_rate: -3.67; 95% interval [-9.18, +1.84], 128 independent blocks
-net_points_per_call: -0.12; 95% interval [-0.31, +0.06], 128 independent blocks
+voluntary_call_rate: +0.43; 95% interval [-2.23, +3.04]; 128 independent blocks
+make_rate: -3.25; 95% interval [-8.09, +1.59]; 128 independent blocks
+net_points_per_call: -0.11; 95% interval [-0.27, +0.05]; 128 independent blocks
 Seat casual/original/distinct/prefix
-voluntary_call_rate: +0.39; 95% interval [-2.62, +3.32], 128 independent blocks
-make_rate: -5.48; 95% interval [-10.66, -0.51], 128 independent blocks
-net_points_per_call: -0.17; 95% interval [-0.36, +0.00], 128 independent blocks
+voluntary_call_rate: +0.39; 95% interval [-2.62, +3.32]; 128 independent blocks
+make_rate: -5.48; 95% interval [-10.66, -0.51]; 128 independent blocks
+net_points_per_call: -0.17; 95% interval [-0.36, +0.00]; 128 independent blocks
+Seat casual/original/casual-cautious/full
+voluntary_call_rate: +0.99; 95% interval [-1.34, +3.37]; 128 independent blocks
+make_rate: -3.67; 95% interval [-9.18, +1.84]; 128 independent blocks
+net_points_per_call: -0.12; 95% interval [-0.31, +0.06]; 128 independent blocks
 Seat casual/original/casual-cautious/prefix
-voluntary_call_rate: +0.96; 95% interval [-1.83, +3.70], 128 independent blocks
-make_rate: -5.62; 95% interval [-11.42, +0.24], 128 independent blocks
-net_points_per_call: -0.17; 95% interval [-0.38, +0.02], 128 independent blocks
+voluntary_call_rate: +0.96; 95% interval [-1.83, +3.70]; 128 independent blocks
+make_rate: -5.62; 95% interval [-11.42, +0.24]; 128 independent blocks
+net_points_per_call: -0.17; 95% interval [-0.38, +0.02]; 128 independent blocks
 Seat casual/proxy-swapped/distinct/full
-voluntary_call_rate: +0.60; 95% interval [-1.96, +3.18], 128 independent blocks
-make_rate: -0.63; 95% interval [-5.31, +3.92], 128 independent blocks
-net_points_per_call: -0.05; 95% interval [-0.20, +0.10], 128 independent blocks
-Seat casual/proxy-swapped/casual-cautious/full
-voluntary_call_rate: +1.43; 95% interval [-0.88, +3.88], 128 independent blocks
-make_rate: -0.67; 95% interval [-6.36, +4.52], 128 independent blocks
-net_points_per_call: -0.07; 95% interval [-0.27, +0.11], 128 independent blocks
+voluntary_call_rate: +0.60; 95% interval [-1.96, +3.18]; 128 independent blocks
+make_rate: -0.63; 95% interval [-5.31, +3.92]; 128 independent blocks
+net_points_per_call: -0.05; 95% interval [-0.20, +0.10]; 128 independent blocks
 Seat casual/proxy-swapped/distinct/prefix
-voluntary_call_rate: +0.35; 95% interval [-2.53, +3.26], 128 independent blocks
-make_rate: -3.72; 95% interval [-8.77, +1.05], 128 independent blocks
-net_points_per_call: -0.15; 95% interval [-0.31, +0.02], 128 independent blocks
+voluntary_call_rate: +0.35; 95% interval [-2.53, +3.26]; 128 independent blocks
+make_rate: -3.72; 95% interval [-8.77, +1.05]; 128 independent blocks
+net_points_per_call: -0.15; 95% interval [-0.31, +0.02]; 128 independent blocks
+Seat casual/proxy-swapped/casual-cautious/full
+voluntary_call_rate: +1.43; 95% interval [-0.88, +3.88]; 128 independent blocks
+make_rate: -0.67; 95% interval [-6.36, +4.52]; 128 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.27, +0.11]; 128 independent blocks
 Seat casual/proxy-swapped/casual-cautious/prefix
-voluntary_call_rate: +0.98; 95% interval [-1.69, +3.79], 128 independent blocks
-make_rate: -4.25; 95% interval [-9.81, +1.36], 128 independent blocks
-net_points_per_call: -0.20; 95% interval [-0.39, -0.02], 128 independent blocks
+voluntary_call_rate: +0.98; 95% interval [-1.69, +3.79]; 128 independent blocks
+make_rate: -4.25; 95% interval [-9.81, +1.36]; 128 independent blocks
+net_points_per_call: -0.20; 95% interval [-0.39, -0.02]; 128 independent blocks
 Seat casual/original/casual-bold/full
-voluntary_call_rate: +0.07; 95% interval [-3.14, +3.29], 128 independent blocks
-make_rate: -3.99; 95% interval [-9.36, +0.84], 128 independent blocks
-net_points_per_call: -0.14; 95% interval [-0.31, +0.03], 128 independent blocks
+voluntary_call_rate: +0.07; 95% interval [-3.14, +3.29]; 128 independent blocks
+make_rate: -3.99; 95% interval [-9.36, +0.84]; 128 independent blocks
+net_points_per_call: -0.14; 95% interval [-0.31, +0.03]; 128 independent blocks
 Seat casual/original/casual-bold/prefix
-voluntary_call_rate: -0.24; 95% interval [-3.82, +3.36], 128 independent blocks
-make_rate: -6.42; 95% interval [-12.68, -0.42], 128 independent blocks
-net_points_per_call: -0.21; 95% interval [-0.41, -0.02], 128 independent blocks
+voluntary_call_rate: -0.24; 95% interval [-3.82, +3.36]; 128 independent blocks
+make_rate: -6.42; 95% interval [-12.68, -0.42]; 128 independent blocks
+net_points_per_call: -0.21; 95% interval [-0.41, -0.02]; 128 independent blocks
 Seat casual/proxy-swapped/casual-bold/full
-voluntary_call_rate: +0.71; 95% interval [-2.42, +4.06], 128 independent blocks
-make_rate: -2.65; 95% interval [-7.20, +2.05], 128 independent blocks
-net_points_per_call: -0.10; 95% interval [-0.25, +0.06], 128 independent blocks
+voluntary_call_rate: +0.71; 95% interval [-2.42, +4.06]; 128 independent blocks
+make_rate: -2.65; 95% interval [-7.20, +2.05]; 128 independent blocks
+net_points_per_call: -0.10; 95% interval [-0.25, +0.06]; 128 independent blocks
 Seat casual/proxy-swapped/casual-bold/prefix
-voluntary_call_rate: +0.35; 95% interval [-3.34, +4.11], 128 independent blocks
-make_rate: -5.83; 95% interval [-11.43, -0.49], 128 independent blocks
-net_points_per_call: -0.20; 95% interval [-0.37, -0.03], 128 independent blocks
+voluntary_call_rate: +0.35; 95% interval [-3.34, +4.11]; 128 independent blocks
+make_rate: -5.83; 95% interval [-11.43, -0.49]; 128 independent blocks
+net_points_per_call: -0.20; 95% interval [-0.37, -0.03]; 128 independent blocks
 Seat expert/original/all/full
-voluntary_call_rate: -0.16; 95% interval [-4.17, +3.45], 64 independent blocks
-make_rate: -4.83; 95% interval [-11.03, +1.53], 64 independent blocks
-net_points_per_call: -0.10; 95% interval [-0.32, +0.12], 64 independent blocks
+voluntary_call_rate: -0.16; 95% interval [-4.17, +3.45]; 64 independent blocks
+make_rate: -4.83; 95% interval [-11.03, +1.53]; 64 independent blocks
+net_points_per_call: -0.10; 95% interval [-0.32, +0.12]; 64 independent blocks
 Seat expert/original/same/full
-voluntary_call_rate: -0.06; 95% interval [-3.67, +3.65], 64 independent blocks
-make_rate: -4.73; 95% interval [-11.15, +1.66], 64 independent blocks
-net_points_per_call: -0.09; 95% interval [-0.31, +0.13], 64 independent blocks
+voluntary_call_rate: -0.06; 95% interval [-3.67, +3.65]; 64 independent blocks
+make_rate: -4.73; 95% interval [-11.15, +1.66]; 64 independent blocks
+net_points_per_call: -0.09; 95% interval [-0.31, +0.13]; 64 independent blocks
 Seat expert/original/expert-balanced/full
-voluntary_call_rate: +0.22; 95% interval [-3.69, +4.36], 64 independent blocks
-make_rate: -4.43; 95% interval [-11.56, +2.48], 64 independent blocks
-net_points_per_call: -0.08; 95% interval [-0.34, +0.16], 64 independent blocks
+voluntary_call_rate: +0.22; 95% interval [-3.69, +4.36]; 64 independent blocks
+make_rate: -4.43; 95% interval [-11.56, +2.48]; 64 independent blocks
+net_points_per_call: -0.08; 95% interval [-0.34, +0.16]; 64 independent blocks
+Seat expert/original/dealer-1/full
+voluntary_call_rate: +1.06; 95% interval [-3.82, +5.94]; 64 independent blocks
+make_rate: -11.58; 95% interval [-24.42, +0.32]; 64 independent blocks
+net_points_per_call: -0.27; 95% interval [-0.69, +0.17]; 64 independent blocks
 Seat expert/original/all/prefix
-voluntary_call_rate: +0.81; 95% interval [-3.32, +4.97], 64 independent blocks
-make_rate: -5.33; 95% interval [-12.20, +1.77], 64 independent blocks
-net_points_per_call: -0.14; 95% interval [-0.38, +0.10], 64 independent blocks
+voluntary_call_rate: +0.81; 95% interval [-3.32, +4.97]; 64 independent blocks
+make_rate: -5.33; 95% interval [-12.20, +1.77]; 64 independent blocks
+net_points_per_call: -0.14; 95% interval [-0.38, +0.10]; 64 independent blocks
 Seat expert/original/same/prefix
-voluntary_call_rate: +0.78; 95% interval [-3.55, +4.98], 64 independent blocks
-make_rate: -5.53; 95% interval [-11.80, +1.17], 64 independent blocks
-net_points_per_call: -0.14; 95% interval [-0.37, +0.11], 64 independent blocks
+voluntary_call_rate: +0.78; 95% interval [-3.55, +4.98]; 64 independent blocks
+make_rate: -5.53; 95% interval [-11.80, +1.17]; 64 independent blocks
+net_points_per_call: -0.14; 95% interval [-0.37, +0.11]; 64 independent blocks
 Seat expert/original/expert-balanced/prefix
-voluntary_call_rate: +1.10; 95% interval [-3.19, +5.61], 64 independent blocks
-make_rate: -4.63; 95% interval [-12.33, +3.09], 64 independent blocks
-net_points_per_call: -0.11; 95% interval [-0.39, +0.15], 64 independent blocks
-Seat expert/original/dealer-role-0/full
-voluntary_call_rate: -0.56; 95% interval [-11.67, +10.25], 64 independent blocks
-make_rate: -3.49; 95% interval [-13.45, +5.75], 64 independent blocks
-net_points_per_call: -0.10; 95% interval [-0.48, +0.24], 64 independent blocks
-Seat expert/original/dealer-role-1/full
-voluntary_call_rate: +1.06; 95% interval [-3.98, +5.71], 64 independent blocks
-make_rate: -11.58; 95% interval [-24.42, +0.54], 64 independent blocks
-net_points_per_call: -0.27; 95% interval [-0.69, +0.15], 64 independent blocks
-Seat expert/original/dealer-role-2/full
-voluntary_call_rate: -1.78; 95% interval [-8.57, +4.74], 64 independent blocks
-make_rate: +0.63; 95% interval [-10.67, +12.39], 64 independent blocks
-net_points_per_call: +0.11; 95% interval [-0.37, +0.62], 64 independent blocks
-Seat expert/original/dealer-role-3/full
-voluntary_call_rate: +1.33; 95% interval [-5.48, +7.94], 64 independent blocks
-make_rate: -6.48; 95% interval [-23.06, +9.57], 64 independent blocks
-net_points_per_call: -0.14; 95% interval [-0.71, +0.41], 64 independent blocks
+voluntary_call_rate: +1.10; 95% interval [-3.19, +5.61]; 64 independent blocks
+make_rate: -4.63; 95% interval [-12.33, +3.09]; 64 independent blocks
+net_points_per_call: -0.11; 95% interval [-0.39, +0.15]; 64 independent blocks
+Seat expert/original/dealer-1/prefix
+voluntary_call_rate: +1.00; 95% interval [-4.72, +6.41]; 64 independent blocks
+make_rate: -14.54; 95% interval [-29.23, -0.80]; 64 independent blocks
+net_points_per_call: -0.40; 95% interval [-0.88, +0.10]; 64 independent blocks
+Seat expert/original/dealer-2/full
+voluntary_call_rate: -1.78; 95% interval [-8.80, +5.00]; 64 independent blocks
+make_rate: +0.63; 95% interval [-11.14, +12.22]; 64 independent blocks
+net_points_per_call: +0.11; 95% interval [-0.38, +0.64]; 64 independent blocks
+Seat expert/original/dealer-2/prefix
+voluntary_call_rate: -0.70; 95% interval [-8.08, +6.43]; 64 independent blocks
+make_rate: +0.60; 95% interval [-12.83, +14.98]; 64 independent blocks
+net_points_per_call: +0.15; 95% interval [-0.39, +0.75]; 64 independent blocks
+Seat expert/original/dealer-0/full
+voluntary_call_rate: -0.56; 95% interval [-11.47, +10.09]; 64 independent blocks
+make_rate: -3.49; 95% interval [-13.72, +6.34]; 64 independent blocks
+net_points_per_call: -0.10; 95% interval [-0.48, +0.24]; 64 independent blocks
+Seat expert/original/dealer-0/prefix
+voluntary_call_rate: +1.65; 95% interval [-10.54, +13.78]; 64 independent blocks
+make_rate: -1.89; 95% interval [-12.73, +9.13]; 64 independent blocks
+net_points_per_call: -0.06; 95% interval [-0.45, +0.32]; 64 independent blocks
+Seat expert/original/dealer-3/full
+voluntary_call_rate: +1.33; 95% interval [-5.38, +7.81]; 64 independent blocks
+make_rate: -6.48; 95% interval [-24.32, +9.84]; 64 independent blocks
+net_points_per_call: -0.14; 95% interval [-0.72, +0.40]; 64 independent blocks
+Seat expert/original/dealer-3/prefix
+voluntary_call_rate: +2.82; 95% interval [-3.53, +10.02]; 64 independent blocks
+make_rate: -10.68; 95% interval [-28.40, +4.69]; 64 independent blocks
+net_points_per_call: -0.39; 95% interval [-0.92, +0.12]; 64 independent blocks
 Seat expert/proxy-swapped/all/full
-voluntary_call_rate: +0.50; 95% interval [-3.12, +4.33], 64 independent blocks
-make_rate: -3.24; 95% interval [-9.33, +3.02], 64 independent blocks
-net_points_per_call: -0.02; 95% interval [-0.25, +0.21], 64 independent blocks
+voluntary_call_rate: +0.50; 95% interval [-3.12, +4.33]; 64 independent blocks
+make_rate: -3.24; 95% interval [-9.33, +3.02]; 64 independent blocks
+net_points_per_call: -0.02; 95% interval [-0.25, +0.21]; 64 independent blocks
 Seat expert/proxy-swapped/same/full
-voluntary_call_rate: +0.70; 95% interval [-3.04, +4.23], 64 independent blocks
-make_rate: -2.85; 95% interval [-8.62, +3.25], 64 independent blocks
-net_points_per_call: -0.02; 95% interval [-0.25, +0.22], 64 independent blocks
+voluntary_call_rate: +0.70; 95% interval [-3.04, +4.23]; 64 independent blocks
+make_rate: -2.85; 95% interval [-8.62, +3.25]; 64 independent blocks
+net_points_per_call: -0.02; 95% interval [-0.25, +0.22]; 64 independent blocks
 Seat expert/proxy-swapped/expert-balanced/full
-voluntary_call_rate: +0.74; 95% interval [-3.13, +4.84], 64 independent blocks
-make_rate: -2.48; 95% interval [-9.32, +3.86], 64 independent blocks
-net_points_per_call: -0.00; 95% interval [-0.26, +0.27], 64 independent blocks
+voluntary_call_rate: +0.74; 95% interval [-3.13, +4.84]; 64 independent blocks
+make_rate: -2.48; 95% interval [-9.32, +3.86]; 64 independent blocks
+net_points_per_call: -0.00; 95% interval [-0.26, +0.27]; 64 independent blocks
+Seat expert/proxy-swapped/dealer-1/full
+voluntary_call_rate: -0.46; 95% interval [-5.40, +4.59]; 64 independent blocks
+make_rate: -13.82; 95% interval [-25.98, -1.14]; 64 independent blocks
+net_points_per_call: -0.34; 95% interval [-0.79, +0.11]; 64 independent blocks
 Seat expert/proxy-swapped/all/prefix
-voluntary_call_rate: +1.08; 95% interval [-3.31, +5.53], 64 independent blocks
-make_rate: -3.23; 95% interval [-9.54, +3.01], 64 independent blocks
-net_points_per_call: -0.05; 95% interval [-0.30, +0.19], 64 independent blocks
+voluntary_call_rate: +1.08; 95% interval [-3.31, +5.53]; 64 independent blocks
+make_rate: -3.23; 95% interval [-9.54, +3.01]; 64 independent blocks
+net_points_per_call: -0.05; 95% interval [-0.30, +0.19]; 64 independent blocks
 Seat expert/proxy-swapped/same/prefix
-voluntary_call_rate: +1.06; 95% interval [-3.12, +5.68], 64 independent blocks
-make_rate: -3.21; 95% interval [-9.61, +3.10], 64 independent blocks
-net_points_per_call: -0.05; 95% interval [-0.28, +0.20], 64 independent blocks
+voluntary_call_rate: +1.06; 95% interval [-3.12, +5.68]; 64 independent blocks
+make_rate: -3.21; 95% interval [-9.61, +3.10]; 64 independent blocks
+net_points_per_call: -0.05; 95% interval [-0.28, +0.20]; 64 independent blocks
 Seat expert/proxy-swapped/expert-balanced/prefix
-voluntary_call_rate: +1.16; 95% interval [-3.78, +5.79], 64 independent blocks
-make_rate: -1.93; 95% interval [-9.20, +5.64], 64 independent blocks
-net_points_per_call: -0.01; 95% interval [-0.27, +0.26], 64 independent blocks
-Seat expert/proxy-swapped/dealer-role-0/full
-voluntary_call_rate: -1.83; 95% interval [-12.57, +8.21], 64 independent blocks
-make_rate: -0.15; 95% interval [-9.32, +8.48], 64 independent blocks
-net_points_per_call: +0.05; 95% interval [-0.29, +0.41], 64 independent blocks
-Seat expert/proxy-swapped/dealer-role-1/full
-voluntary_call_rate: -0.46; 95% interval [-5.57, +4.48], 64 independent blocks
-make_rate: -13.82; 95% interval [-26.64, -1.54], 64 independent blocks
-net_points_per_call: -0.34; 95% interval [-0.78, +0.09], 64 independent blocks
-Seat expert/proxy-swapped/dealer-role-2/full
-voluntary_call_rate: -0.59; 95% interval [-7.75, +6.52], 64 independent blocks
-make_rate: +3.41; 95% interval [-8.27, +16.02], 64 independent blocks
-net_points_per_call: +0.23; 95% interval [-0.28, +0.73], 64 independent blocks
-Seat expert/proxy-swapped/dealer-role-3/full
-voluntary_call_rate: +2.93; 95% interval [-3.49, +9.50], 64 independent blocks
-make_rate: -5.68; 95% interval [-22.77, +11.14], 64 independent blocks
-net_points_per_call: -0.09; 95% interval [-0.72, +0.48], 64 independent blocks
+voluntary_call_rate: +1.16; 95% interval [-3.78, +5.79]; 64 independent blocks
+make_rate: -1.93; 95% interval [-9.20, +5.64]; 64 independent blocks
+net_points_per_call: -0.01; 95% interval [-0.27, +0.26]; 64 independent blocks
+Seat expert/proxy-swapped/dealer-1/prefix
+voluntary_call_rate: -0.16; 95% interval [-6.11, +5.80]; 64 independent blocks
+make_rate: -13.14; 95% interval [-29.06, +1.85]; 64 independent blocks
+net_points_per_call: -0.36; 95% interval [-0.91, +0.18]; 64 independent blocks
+Seat expert/proxy-swapped/dealer-2/full
+voluntary_call_rate: -0.59; 95% interval [-7.81, +5.94]; 64 independent blocks
+make_rate: +3.41; 95% interval [-8.46, +15.64]; 64 independent blocks
+net_points_per_call: +0.23; 95% interval [-0.27, +0.75]; 64 independent blocks
+Seat expert/proxy-swapped/dealer-2/prefix
+voluntary_call_rate: -0.98; 95% interval [-8.45, +6.23]; 64 independent blocks
+make_rate: +5.33; 95% interval [-8.51, +20.15]; 64 independent blocks
+net_points_per_call: +0.34; 95% interval [-0.24, +0.98]; 64 independent blocks
+Seat expert/proxy-swapped/dealer-0/full
+voluntary_call_rate: -1.83; 95% interval [-12.20, +8.37]; 64 independent blocks
+make_rate: -0.15; 95% interval [-9.12, +9.24]; 64 independent blocks
+net_points_per_call: +0.05; 95% interval [-0.30, +0.42]; 64 independent blocks
+Seat expert/proxy-swapped/dealer-0/prefix
+voluntary_call_rate: -0.10; 95% interval [-11.38, +11.14]; 64 independent blocks
+make_rate: +0.43; 95% interval [-9.89, +10.76]; 64 independent blocks
+net_points_per_call: +0.05; 95% interval [-0.35, +0.45]; 64 independent blocks
+Seat expert/proxy-swapped/dealer-3/full
+voluntary_call_rate: +2.93; 95% interval [-3.21, +9.05]; 64 independent blocks
+make_rate: -5.68; 95% interval [-22.44, +11.57]; 64 independent blocks
+net_points_per_call: -0.09; 95% interval [-0.70, +0.49]; 64 independent blocks
+Seat expert/proxy-swapped/dealer-3/prefix
+voluntary_call_rate: +4.70; 95% interval [-1.32, +11.02]; 64 independent blocks
+make_rate: -13.03; 95% interval [-31.75, +5.87]; 64 independent blocks
+net_points_per_call: -0.52; 95% interval [-1.17, +0.12]; 64 independent blocks
 Seat expert/original/distinct/full
-voluntary_call_rate: -0.20; 95% interval [-3.96, +3.43], 64 independent blocks
-make_rate: -4.88; 95% interval [-10.90, +1.75], 64 independent blocks
-net_points_per_call: -0.11; 95% interval [-0.33, +0.11], 64 independent blocks
-Seat expert/original/expert-conservative/full
-voluntary_call_rate: -0.79; 95% interval [-4.94, +3.05], 64 independent blocks
-make_rate: -4.03; 95% interval [-11.21, +3.13], 64 independent blocks
-net_points_per_call: -0.10; 95% interval [-0.32, +0.14], 64 independent blocks
+voluntary_call_rate: -0.20; 95% interval [-3.96, +3.43]; 64 independent blocks
+make_rate: -4.88; 95% interval [-10.90, +1.75]; 64 independent blocks
+net_points_per_call: -0.11; 95% interval [-0.33, +0.11]; 64 independent blocks
 Seat expert/original/distinct/prefix
-voluntary_call_rate: +0.82; 95% interval [-3.48, +5.22], 64 independent blocks
-make_rate: -5.23; 95% interval [-11.73, +0.99], 64 independent blocks
-net_points_per_call: -0.14; 95% interval [-0.39, +0.11], 64 independent blocks
+voluntary_call_rate: +0.82; 95% interval [-3.48, +5.22]; 64 independent blocks
+make_rate: -5.23; 95% interval [-11.73, +0.99]; 64 independent blocks
+net_points_per_call: -0.14; 95% interval [-0.39, +0.11]; 64 independent blocks
+Seat expert/original/expert-conservative/full
+voluntary_call_rate: -0.79; 95% interval [-4.94, +3.05]; 64 independent blocks
+make_rate: -4.03; 95% interval [-11.21, +3.13]; 64 independent blocks
+net_points_per_call: -0.10; 95% interval [-0.32, +0.14]; 64 independent blocks
 Seat expert/original/expert-conservative/prefix
-voluntary_call_rate: +0.22; 95% interval [-3.81, +4.28], 64 independent blocks
-make_rate: -5.30; 95% interval [-12.36, +2.09], 64 independent blocks
-net_points_per_call: -0.17; 95% interval [-0.44, +0.09], 64 independent blocks
+voluntary_call_rate: +0.22; 95% interval [-3.81, +4.28]; 64 independent blocks
+make_rate: -5.30; 95% interval [-12.36, +2.09]; 64 independent blocks
+net_points_per_call: -0.17; 95% interval [-0.44, +0.09]; 64 independent blocks
 Seat expert/proxy-swapped/distinct/full
-voluntary_call_rate: +0.40; 95% interval [-3.32, +4.49], 64 independent blocks
-make_rate: -3.44; 95% interval [-9.64, +2.28], 64 independent blocks
-net_points_per_call: -0.02; 95% interval [-0.26, +0.21], 64 independent blocks
-Seat expert/proxy-swapped/expert-conservative/full
-voluntary_call_rate: -0.50; 95% interval [-4.58, +3.38], 64 independent blocks
-make_rate: -1.25; 95% interval [-8.63, +5.73], 64 independent blocks
-net_points_per_call: +0.06; 95% interval [-0.19, +0.31], 64 independent blocks
+voluntary_call_rate: +0.40; 95% interval [-3.32, +4.49]; 64 independent blocks
+make_rate: -3.44; 95% interval [-9.64, +2.28]; 64 independent blocks
+net_points_per_call: -0.02; 95% interval [-0.26, +0.21]; 64 independent blocks
 Seat expert/proxy-swapped/distinct/prefix
-voluntary_call_rate: +1.08; 95% interval [-3.47, +5.37], 64 independent blocks
-make_rate: -3.24; 95% interval [-9.80, +3.12], 64 independent blocks
-net_points_per_call: -0.05; 95% interval [-0.29, +0.19], 64 independent blocks
+voluntary_call_rate: +1.08; 95% interval [-3.47, +5.37]; 64 independent blocks
+make_rate: -3.24; 95% interval [-9.80, +3.12]; 64 independent blocks
+net_points_per_call: -0.05; 95% interval [-0.29, +0.19]; 64 independent blocks
+Seat expert/proxy-swapped/expert-conservative/full
+voluntary_call_rate: -0.50; 95% interval [-4.58, +3.38]; 64 independent blocks
+make_rate: -1.25; 95% interval [-8.63, +5.73]; 64 independent blocks
+net_points_per_call: +0.06; 95% interval [-0.19, +0.31]; 64 independent blocks
 Seat expert/proxy-swapped/expert-conservative/prefix
-voluntary_call_rate: +0.47; 95% interval [-3.64, +4.90], 64 independent blocks
-make_rate: -3.69; 95% interval [-11.24, +3.56], 64 independent blocks
-net_points_per_call: -0.07; 95% interval [-0.34, +0.18], 64 independent blocks
+voluntary_call_rate: +0.47; 95% interval [-3.64, +4.90]; 64 independent blocks
+make_rate: -3.69; 95% interval [-11.24, +3.56]; 64 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.34, +0.18]; 64 independent blocks
 Seat expert/original/expert-assertive/full
-voluntary_call_rate: +0.24; 95% interval [-3.88, +4.32], 64 independent blocks
-make_rate: -5.67; 95% interval [-12.78, +0.57], 64 independent blocks
-net_points_per_call: -0.12; 95% interval [-0.37, +0.13], 64 independent blocks
+voluntary_call_rate: +0.24; 95% interval [-3.88, +4.32]; 64 independent blocks
+make_rate: -5.67; 95% interval [-12.78, +0.57]; 64 independent blocks
+net_points_per_call: -0.12; 95% interval [-0.37, +0.13]; 64 independent blocks
 Seat expert/original/expert-assertive/prefix
-voluntary_call_rate: +1.08; 95% interval [-3.67, +5.80], 64 independent blocks
-make_rate: -5.88; 95% interval [-12.80, +0.79], 64 independent blocks
-net_points_per_call: -0.14; 95% interval [-0.40, +0.12], 64 independent blocks
+voluntary_call_rate: +1.08; 95% interval [-3.67, +5.80]; 64 independent blocks
+make_rate: -5.88; 95% interval [-12.80, +0.79]; 64 independent blocks
+net_points_per_call: -0.14; 95% interval [-0.40, +0.12]; 64 independent blocks
 Seat expert/proxy-swapped/expert-assertive/full
-voluntary_call_rate: +1.45; 95% interval [-2.75, +5.46], 64 independent blocks
-make_rate: -5.21; 95% interval [-11.75, +1.63], 64 independent blocks
-net_points_per_call: -0.09; 95% interval [-0.33, +0.15], 64 independent blocks
+voluntary_call_rate: +1.45; 95% interval [-2.75, +5.46]; 64 independent blocks
+make_rate: -5.21; 95% interval [-11.75, +1.63]; 64 independent blocks
+net_points_per_call: -0.09; 95% interval [-0.33, +0.15]; 64 independent blocks
 Seat expert/proxy-swapped/expert-assertive/prefix
-voluntary_call_rate: +1.60; 95% interval [-3.38, +6.44], 64 independent blocks
-make_rate: -3.96; 95% interval [-11.57, +3.27], 64 independent blocks
-net_points_per_call: -0.07; 95% interval [-0.35, +0.21], 64 independent blocks
+voluntary_call_rate: +1.60; 95% interval [-3.38, +6.44]; 64 independent blocks
+make_rate: -3.96; 95% interval [-11.57, +3.27]; 64 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.35, +0.21]; 64 independent blocks
 Seat strong/original/all/full
-voluntary_call_rate: +0.66; 95% interval [-0.76, +2.12], 320 independent blocks
-make_rate: -1.98; 95% interval [-4.40, +0.56], 320 independent blocks
-net_points_per_call: -0.07; 95% interval [-0.17, +0.03], 320 independent blocks
+voluntary_call_rate: +0.66; 95% interval [-0.76, +2.12]; 320 independent blocks
+make_rate: -1.98; 95% interval [-4.40, +0.56]; 320 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.17, +0.03]; 320 independent blocks
 Seat strong/original/same/full
-voluntary_call_rate: +0.66; 95% interval [-0.83, +2.05], 320 independent blocks
-make_rate: -2.07; 95% interval [-4.71, +0.56], 320 independent blocks
-net_points_per_call: -0.07; 95% interval [-0.17, +0.03], 320 independent blocks
-Seat strong/original/batch-1/full
-voluntary_call_rate: +0.33; 95% interval [-1.70, +2.38], 160 independent blocks
-make_rate: -0.44; 95% interval [-3.85, +3.32], 160 independent blocks
-net_points_per_call: -0.03; 95% interval [-0.19, +0.12], 160 independent blocks
+voluntary_call_rate: +0.66; 95% interval [-0.83, +2.05]; 320 independent blocks
+make_rate: -2.07; 95% interval [-4.71, +0.56]; 320 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.17, +0.03]; 320 independent blocks
 Seat strong/original/strong-balanced/full
-voluntary_call_rate: +1.03; 95% interval [-0.52, +2.58], 320 independent blocks
-make_rate: -2.45; 95% interval [-5.27, +0.35], 320 independent blocks
-net_points_per_call: -0.09; 95% interval [-0.20, +0.02], 320 independent blocks
+voluntary_call_rate: +1.03; 95% interval [-0.52, +2.58]; 320 independent blocks
+make_rate: -2.45; 95% interval [-5.27, +0.35]; 320 independent blocks
+net_points_per_call: -0.09; 95% interval [-0.20, +0.02]; 320 independent blocks
+Seat strong/original/dealer-1/full
+voluntary_call_rate: +1.15; 95% interval [-0.94, +3.24]; 320 independent blocks
+make_rate: -2.45; 95% interval [-7.71, +2.65]; 320 independent blocks
+net_points_per_call: -0.19; 95% interval [-0.39, +0.02]; 320 independent blocks
+Seat strong/original/batch-1/full
+voluntary_call_rate: +0.33; 95% interval [-1.70, +2.38]; 160 independent blocks
+make_rate: -0.44; 95% interval [-3.85, +3.32]; 160 independent blocks
+net_points_per_call: -0.03; 95% interval [-0.19, +0.12]; 160 independent blocks
 Seat strong/original/all/prefix
-voluntary_call_rate: +0.54; 95% interval [-0.97, +2.14], 320 independent blocks
-make_rate: -1.92; 95% interval [-4.56, +0.75], 320 independent blocks
-net_points_per_call: -0.07; 95% interval [-0.18, +0.04], 320 independent blocks
+voluntary_call_rate: +0.54; 95% interval [-0.97, +2.14]; 320 independent blocks
+make_rate: -1.92; 95% interval [-4.56, +0.75]; 320 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.18, +0.04]; 320 independent blocks
 Seat strong/original/same/prefix
-voluntary_call_rate: +0.52; 95% interval [-1.07, +2.04], 320 independent blocks
-make_rate: -1.99; 95% interval [-4.59, +0.78], 320 independent blocks
-net_points_per_call: -0.07; 95% interval [-0.18, +0.04], 320 independent blocks
-Seat strong/original/batch-1/prefix
-voluntary_call_rate: +0.17; 95% interval [-1.92, +2.25], 160 independent blocks
-make_rate: -0.90; 95% interval [-4.84, +3.01], 160 independent blocks
-net_points_per_call: -0.06; 95% interval [-0.23, +0.10], 160 independent blocks
+voluntary_call_rate: +0.52; 95% interval [-1.07, +2.04]; 320 independent blocks
+make_rate: -1.99; 95% interval [-4.59, +0.78]; 320 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.18, +0.04]; 320 independent blocks
 Seat strong/original/strong-balanced/prefix
-voluntary_call_rate: +0.95; 95% interval [-0.77, +2.62], 320 independent blocks
-make_rate: -2.55; 95% interval [-5.55, +0.43], 320 independent blocks
-net_points_per_call: -0.09; 95% interval [-0.22, +0.03], 320 independent blocks
-Seat strong/original/dealer-role-0/full
-voluntary_call_rate: -1.07; 95% interval [-5.33, +3.28], 320 independent blocks
-make_rate: -2.36; 95% interval [-6.40, +1.62], 320 independent blocks
-net_points_per_call: -0.07; 95% interval [-0.23, +0.10], 320 independent blocks
-Seat strong/original/dealer-role-1/full
-voluntary_call_rate: +1.15; 95% interval [-0.89, +3.17], 320 independent blocks
-make_rate: -2.45; 95% interval [-7.67, +2.79], 320 independent blocks
-net_points_per_call: -0.19; 95% interval [-0.39, +0.03], 320 independent blocks
-Seat strong/original/dealer-role-2/full
-voluntary_call_rate: +1.77; 95% interval [-0.71, +4.34], 320 independent blocks
-make_rate: -1.55; 95% interval [-6.38, +3.46], 320 independent blocks
-net_points_per_call: +0.01; 95% interval [-0.18, +0.22], 320 independent blocks
-Seat strong/original/dealer-role-3/full
-voluntary_call_rate: -0.28; 95% interval [-2.39, +1.84], 320 independent blocks
-make_rate: -0.88; 95% interval [-6.23, +4.65], 320 independent blocks
-net_points_per_call: -0.06; 95% interval [-0.27, +0.16], 320 independent blocks
+voluntary_call_rate: +0.95; 95% interval [-0.77, +2.62]; 320 independent blocks
+make_rate: -2.55; 95% interval [-5.55, +0.43]; 320 independent blocks
+net_points_per_call: -0.09; 95% interval [-0.22, +0.03]; 320 independent blocks
+Seat strong/original/dealer-1/prefix
+voluntary_call_rate: +0.61; 95% interval [-1.60, +2.71]; 320 independent blocks
+make_rate: -2.63; 95% interval [-8.32, +3.08]; 320 independent blocks
+net_points_per_call: -0.19; 95% interval [-0.43, +0.04]; 320 independent blocks
+Seat strong/original/batch-1/prefix
+voluntary_call_rate: +0.17; 95% interval [-1.92, +2.25]; 160 independent blocks
+make_rate: -0.90; 95% interval [-4.84, +3.01]; 160 independent blocks
+net_points_per_call: -0.06; 95% interval [-0.23, +0.10]; 160 independent blocks
+Seat strong/original/dealer-2/full
+voluntary_call_rate: +1.77; 95% interval [-0.67, +4.23]; 320 independent blocks
+make_rate: -1.55; 95% interval [-6.35, +3.24]; 320 independent blocks
+net_points_per_call: +0.01; 95% interval [-0.17, +0.20]; 320 independent blocks
+Seat strong/original/dealer-2/prefix
+voluntary_call_rate: +2.19; 95% interval [-0.51, +4.99]; 320 independent blocks
+make_rate: -1.79; 95% interval [-7.21, +3.41]; 320 independent blocks
+net_points_per_call: +0.00; 95% interval [-0.21, +0.21]; 320 independent blocks
+Seat strong/original/dealer-0/full
+voluntary_call_rate: -1.07; 95% interval [-5.58, +3.42]; 320 independent blocks
+make_rate: -2.36; 95% interval [-6.41, +1.73]; 320 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.23, +0.10]; 320 independent blocks
+Seat strong/original/dealer-0/prefix
+voluntary_call_rate: -1.61; 95% interval [-6.09, +3.15]; 320 independent blocks
+make_rate: -2.37; 95% interval [-6.57, +2.07]; 320 independent blocks
+net_points_per_call: -0.08; 95% interval [-0.26, +0.09]; 320 independent blocks
+Seat strong/original/dealer-3/full
+voluntary_call_rate: -0.28; 95% interval [-2.51, +1.78]; 320 independent blocks
+make_rate: -0.88; 95% interval [-6.07, +4.91]; 320 independent blocks
+net_points_per_call: -0.06; 95% interval [-0.28, +0.17]; 320 independent blocks
+Seat strong/original/dealer-3/prefix
+voluntary_call_rate: -0.18; 95% interval [-2.56, +2.23]; 320 independent blocks
+make_rate: +0.32; 95% interval [-5.62, +6.27]; 320 independent blocks
+net_points_per_call: -0.01; 95% interval [-0.25, +0.25]; 320 independent blocks
 Seat strong/proxy-swapped/all/full
-voluntary_call_rate: +0.32; 95% interval [-1.12, +1.79], 320 independent blocks
-make_rate: -2.55; 95% interval [-5.15, -0.14], 320 independent blocks
-net_points_per_call: -0.08; 95% interval [-0.19, +0.02], 320 independent blocks
+voluntary_call_rate: +0.32; 95% interval [-1.12, +1.79]; 320 independent blocks
+make_rate: -2.55; 95% interval [-5.15, -0.14]; 320 independent blocks
+net_points_per_call: -0.08; 95% interval [-0.19, +0.02]; 320 independent blocks
 Seat strong/proxy-swapped/same/full
-voluntary_call_rate: +0.30; 95% interval [-1.20, +1.80], 320 independent blocks
-make_rate: -2.64; 95% interval [-5.21, -0.07], 320 independent blocks
-net_points_per_call: -0.09; 95% interval [-0.19, +0.02], 320 independent blocks
-Seat strong/proxy-swapped/batch-1/full
-voluntary_call_rate: -0.25; 95% interval [-2.23, +1.67], 160 independent blocks
-make_rate: -1.00; 95% interval [-4.65, +3.00], 160 independent blocks
-net_points_per_call: -0.03; 95% interval [-0.18, +0.11], 160 independent blocks
+voluntary_call_rate: +0.30; 95% interval [-1.20, +1.80]; 320 independent blocks
+make_rate: -2.64; 95% interval [-5.21, -0.07]; 320 independent blocks
+net_points_per_call: -0.09; 95% interval [-0.19, +0.02]; 320 independent blocks
 Seat strong/proxy-swapped/strong-balanced/full
-voluntary_call_rate: +0.61; 95% interval [-0.92, +2.24], 320 independent blocks
-make_rate: -3.03; 95% interval [-5.88, -0.14], 320 independent blocks
-net_points_per_call: -0.11; 95% interval [-0.22, +0.01], 320 independent blocks
+voluntary_call_rate: +0.61; 95% interval [-0.92, +2.24]; 320 independent blocks
+make_rate: -3.03; 95% interval [-5.88, -0.14]; 320 independent blocks
+net_points_per_call: -0.11; 95% interval [-0.22, +0.01]; 320 independent blocks
+Seat strong/proxy-swapped/dealer-1/full
+voluntary_call_rate: +0.65; 95% interval [-1.46, +2.72]; 320 independent blocks
+make_rate: -2.83; 95% interval [-8.40, +2.58]; 320 independent blocks
+net_points_per_call: -0.20; 95% interval [-0.43, +0.02]; 320 independent blocks
+Seat strong/proxy-swapped/batch-1/full
+voluntary_call_rate: -0.25; 95% interval [-2.23, +1.67]; 160 independent blocks
+make_rate: -1.00; 95% interval [-4.65, +3.00]; 160 independent blocks
+net_points_per_call: -0.03; 95% interval [-0.18, +0.11]; 160 independent blocks
 Seat strong/proxy-swapped/all/prefix
-voluntary_call_rate: +0.23; 95% interval [-1.43, +1.85], 320 independent blocks
-make_rate: -2.60; 95% interval [-5.29, +0.08], 320 independent blocks
-net_points_per_call: -0.09; 95% interval [-0.20, +0.02], 320 independent blocks
+voluntary_call_rate: +0.23; 95% interval [-1.43, +1.85]; 320 independent blocks
+make_rate: -2.60; 95% interval [-5.29, +0.08]; 320 independent blocks
+net_points_per_call: -0.09; 95% interval [-0.20, +0.02]; 320 independent blocks
 Seat strong/proxy-swapped/same/prefix
-voluntary_call_rate: +0.21; 95% interval [-1.38, +1.80], 320 independent blocks
-make_rate: -2.66; 95% interval [-5.37, -0.06], 320 independent blocks
-net_points_per_call: -0.09; 95% interval [-0.20, +0.02], 320 independent blocks
-Seat strong/proxy-swapped/batch-1/prefix
-voluntary_call_rate: -0.15; 95% interval [-2.30, +2.03], 160 independent blocks
-make_rate: -1.42; 95% interval [-5.45, +2.65], 160 independent blocks
-net_points_per_call: -0.07; 95% interval [-0.22, +0.09], 160 independent blocks
+voluntary_call_rate: +0.21; 95% interval [-1.38, +1.80]; 320 independent blocks
+make_rate: -2.66; 95% interval [-5.37, -0.06]; 320 independent blocks
+net_points_per_call: -0.09; 95% interval [-0.20, +0.02]; 320 independent blocks
 Seat strong/proxy-swapped/strong-balanced/prefix
-voluntary_call_rate: +0.63; 95% interval [-1.13, +2.37], 320 independent blocks
-make_rate: -3.20; 95% interval [-6.28, -0.11], 320 independent blocks
-net_points_per_call: -0.11; 95% interval [-0.24, +0.01], 320 independent blocks
-Seat strong/proxy-swapped/dealer-role-0/full
-voluntary_call_rate: -1.10; 95% interval [-5.38, +3.08], 320 independent blocks
-make_rate: -2.76; 95% interval [-6.65, +1.25], 320 independent blocks
-net_points_per_call: -0.08; 95% interval [-0.24, +0.09], 320 independent blocks
-Seat strong/proxy-swapped/dealer-role-1/full
-voluntary_call_rate: +0.65; 95% interval [-1.28, +2.60], 320 independent blocks
-make_rate: -2.83; 95% interval [-8.38, +2.61], 320 independent blocks
-net_points_per_call: -0.20; 95% interval [-0.42, +0.03], 320 independent blocks
-Seat strong/proxy-swapped/dealer-role-2/full
-voluntary_call_rate: +1.85; 95% interval [-0.73, +4.44], 320 independent blocks
-make_rate: -3.34; 95% interval [-8.56, +1.47], 320 independent blocks
-net_points_per_call: -0.04; 95% interval [-0.23, +0.16], 320 independent blocks
-Seat strong/proxy-swapped/dealer-role-3/full
-voluntary_call_rate: -0.98; 95% interval [-3.09, +1.27], 320 independent blocks
-make_rate: -0.35; 95% interval [-6.04, +5.63], 320 independent blocks
-net_points_per_call: -0.05; 95% interval [-0.27, +0.17], 320 independent blocks
+voluntary_call_rate: +0.63; 95% interval [-1.13, +2.37]; 320 independent blocks
+make_rate: -3.20; 95% interval [-6.28, -0.11]; 320 independent blocks
+net_points_per_call: -0.11; 95% interval [-0.24, +0.01]; 320 independent blocks
+Seat strong/proxy-swapped/dealer-1/prefix
+voluntary_call_rate: +0.15; 95% interval [-2.07, +2.28]; 320 independent blocks
+make_rate: -3.02; 95% interval [-8.75, +2.98]; 320 independent blocks
+net_points_per_call: -0.20; 95% interval [-0.44, +0.03]; 320 independent blocks
+Seat strong/proxy-swapped/batch-1/prefix
+voluntary_call_rate: -0.15; 95% interval [-2.30, +2.03]; 160 independent blocks
+make_rate: -1.42; 95% interval [-5.45, +2.65]; 160 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.22, +0.09]; 160 independent blocks
+Seat strong/proxy-swapped/dealer-2/full
+voluntary_call_rate: +1.85; 95% interval [-0.67, +4.47]; 320 independent blocks
+make_rate: -3.34; 95% interval [-8.58, +2.02]; 320 independent blocks
+net_points_per_call: -0.04; 95% interval [-0.24, +0.16]; 320 independent blocks
+Seat strong/proxy-swapped/dealer-2/prefix
+voluntary_call_rate: +2.15; 95% interval [-0.45, +4.89]; 320 independent blocks
+make_rate: -4.07; 95% interval [-9.57, +1.29]; 320 independent blocks
+net_points_per_call: -0.06; 95% interval [-0.29, +0.16]; 320 independent blocks
+Seat strong/proxy-swapped/dealer-0/full
+voluntary_call_rate: -1.10; 95% interval [-5.27, +3.16]; 320 independent blocks
+make_rate: -2.76; 95% interval [-6.79, +1.29]; 320 independent blocks
+net_points_per_call: -0.08; 95% interval [-0.24, +0.08]; 320 independent blocks
+Seat strong/proxy-swapped/dealer-0/prefix
+voluntary_call_rate: -1.49; 95% interval [-6.01, +3.18]; 320 independent blocks
+make_rate: -2.75; 95% interval [-7.04, +1.63]; 320 independent blocks
+net_points_per_call: -0.09; 95% interval [-0.26, +0.08]; 320 independent blocks
+Seat strong/proxy-swapped/dealer-3/full
+voluntary_call_rate: -0.98; 95% interval [-3.16, +1.24]; 320 independent blocks
+make_rate: -0.35; 95% interval [-5.77, +5.20]; 320 independent blocks
+net_points_per_call: -0.05; 95% interval [-0.28, +0.18]; 320 independent blocks
+Seat strong/proxy-swapped/dealer-3/prefix
+voluntary_call_rate: -0.86; 95% interval [-3.18, +1.49]; 320 independent blocks
+make_rate: +0.79; 95% interval [-4.95, +6.82]; 320 independent blocks
+net_points_per_call: +0.00; 95% interval [-0.25, +0.26]; 320 independent blocks
 Seat strong/original/distinct/full
-voluntary_call_rate: +0.66; 95% interval [-0.76, +2.14], 320 independent blocks
-make_rate: -1.94; 95% interval [-4.37, +0.49], 320 independent blocks
-net_points_per_call: -0.07; 95% interval [-0.17, +0.03], 320 independent blocks
-Seat strong/original/strong-conservative/full
-voluntary_call_rate: +0.66; 95% interval [-0.67, +1.95], 320 independent blocks
-make_rate: -2.07; 95% interval [-4.96, +1.01], 320 independent blocks
-net_points_per_call: -0.07; 95% interval [-0.18, +0.05], 320 independent blocks
+voluntary_call_rate: +0.66; 95% interval [-0.76, +2.14]; 320 independent blocks
+make_rate: -1.94; 95% interval [-4.37, +0.49]; 320 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.17, +0.03]; 320 independent blocks
 Seat strong/original/distinct/prefix
-voluntary_call_rate: +0.55; 95% interval [-1.04, +2.13], 320 independent blocks
-make_rate: -1.89; 95% interval [-4.60, +0.77], 320 independent blocks
-net_points_per_call: -0.07; 95% interval [-0.18, +0.04], 320 independent blocks
+voluntary_call_rate: +0.55; 95% interval [-1.04, +2.13]; 320 independent blocks
+make_rate: -1.89; 95% interval [-4.60, +0.77]; 320 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.18, +0.04]; 320 independent blocks
+Seat strong/original/strong-conservative/full
+voluntary_call_rate: +0.66; 95% interval [-0.67, +1.95]; 320 independent blocks
+make_rate: -2.07; 95% interval [-4.96, +1.01]; 320 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.18, +0.05]; 320 independent blocks
 Seat strong/original/strong-conservative/prefix
-voluntary_call_rate: +0.52; 95% interval [-0.87, +1.96], 320 independent blocks
-make_rate: -2.39; 95% interval [-5.52, +0.74], 320 independent blocks
-net_points_per_call: -0.09; 95% interval [-0.21, +0.04], 320 independent blocks
+voluntary_call_rate: +0.52; 95% interval [-0.87, +1.96]; 320 independent blocks
+make_rate: -2.39; 95% interval [-5.52, +0.74]; 320 independent blocks
+net_points_per_call: -0.09; 95% interval [-0.21, +0.04]; 320 independent blocks
 Seat strong/proxy-swapped/distinct/full
-voluntary_call_rate: +0.33; 95% interval [-1.14, +1.80], 320 independent blocks
-make_rate: -2.52; 95% interval [-5.09, +0.01], 320 independent blocks
-net_points_per_call: -0.08; 95% interval [-0.19, +0.03], 320 independent blocks
-Seat strong/proxy-swapped/strong-conservative/full
-voluntary_call_rate: +0.45; 95% interval [-0.85, +1.82], 320 independent blocks
-make_rate: -2.49; 95% interval [-5.35, +0.50], 320 independent blocks
-net_points_per_call: -0.08; 95% interval [-0.20, +0.04], 320 independent blocks
+voluntary_call_rate: +0.33; 95% interval [-1.14, +1.80]; 320 independent blocks
+make_rate: -2.52; 95% interval [-5.09, +0.01]; 320 independent blocks
+net_points_per_call: -0.08; 95% interval [-0.19, +0.03]; 320 independent blocks
 Seat strong/proxy-swapped/distinct/prefix
-voluntary_call_rate: +0.24; 95% interval [-1.32, +1.83], 320 independent blocks
-make_rate: -2.57; 95% interval [-5.21, +0.12], 320 independent blocks
-net_points_per_call: -0.09; 95% interval [-0.19, +0.02], 320 independent blocks
+voluntary_call_rate: +0.24; 95% interval [-1.32, +1.83]; 320 independent blocks
+make_rate: -2.57; 95% interval [-5.21, +0.12]; 320 independent blocks
+net_points_per_call: -0.09; 95% interval [-0.19, +0.02]; 320 independent blocks
+Seat strong/proxy-swapped/strong-conservative/full
+voluntary_call_rate: +0.45; 95% interval [-0.85, +1.82]; 320 independent blocks
+make_rate: -2.49; 95% interval [-5.35, +0.50]; 320 independent blocks
+net_points_per_call: -0.08; 95% interval [-0.20, +0.04]; 320 independent blocks
 Seat strong/proxy-swapped/strong-conservative/prefix
-voluntary_call_rate: +0.35; 95% interval [-1.09, +1.79], 320 independent blocks
-make_rate: -3.20; 95% interval [-6.40, -0.10], 320 independent blocks
-net_points_per_call: -0.11; 95% interval [-0.24, +0.01], 320 independent blocks
+voluntary_call_rate: +0.35; 95% interval [-1.09, +1.79]; 320 independent blocks
+make_rate: -3.20; 95% interval [-6.40, -0.10]; 320 independent blocks
+net_points_per_call: -0.11; 95% interval [-0.24, +0.01]; 320 independent blocks
 Seat strong/original/strong-assertive/full
-voluntary_call_rate: +0.26; 95% interval [-1.49, +2.07], 320 independent blocks
-make_rate: -1.45; 95% interval [-4.04, +1.29], 320 independent blocks
-net_points_per_call: -0.05; 95% interval [-0.16, +0.05], 320 independent blocks
+voluntary_call_rate: +0.26; 95% interval [-1.49, +2.07]; 320 independent blocks
+make_rate: -1.45; 95% interval [-4.04, +1.29]; 320 independent blocks
+net_points_per_call: -0.05; 95% interval [-0.16, +0.05]; 320 independent blocks
 Seat strong/original/strong-assertive/prefix
-voluntary_call_rate: +0.02; 95% interval [-1.73, +1.94], 320 independent blocks
-make_rate: -1.21; 95% interval [-3.99, +1.58], 320 independent blocks
-net_points_per_call: -0.05; 95% interval [-0.16, +0.06], 320 independent blocks
+voluntary_call_rate: +0.02; 95% interval [-1.73, +1.94]; 320 independent blocks
+make_rate: -1.21; 95% interval [-3.99, +1.58]; 320 independent blocks
+net_points_per_call: -0.05; 95% interval [-0.16, +0.06]; 320 independent blocks
 Seat strong/proxy-swapped/strong-assertive/full
-voluntary_call_rate: -0.09; 95% interval [-1.86, +1.67], 320 independent blocks
-make_rate: -2.12; 95% interval [-4.97, +0.59], 320 independent blocks
-net_points_per_call: -0.07; 95% interval [-0.18, +0.04], 320 independent blocks
+voluntary_call_rate: -0.09; 95% interval [-1.86, +1.67]; 320 independent blocks
+make_rate: -2.12; 95% interval [-4.97, +0.59]; 320 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.18, +0.04]; 320 independent blocks
 Seat strong/proxy-swapped/strong-assertive/prefix
-voluntary_call_rate: -0.41; 95% interval [-2.27, +1.46], 320 independent blocks
-make_rate: -1.83; 95% interval [-4.70, +0.90], 320 independent blocks
-net_points_per_call: -0.07; 95% interval [-0.17, +0.05], 320 independent blocks
+voluntary_call_rate: -0.41; 95% interval [-2.27, +1.46]; 320 independent blocks
+make_rate: -1.83; 95% interval [-4.70, +0.90]; 320 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.17, +0.05]; 320 independent blocks
 Seat strong/original/strong-partnership/full
-voluntary_call_rate: +0.70; 95% interval [-1.04, +2.25], 320 independent blocks
-make_rate: -2.11; 95% interval [-4.75, +0.41], 320 independent blocks
-net_points_per_call: -0.07; 95% interval [-0.18, +0.04], 320 independent blocks
+voluntary_call_rate: +0.70; 95% interval [-1.04, +2.25]; 320 independent blocks
+make_rate: -2.11; 95% interval [-4.75, +0.41]; 320 independent blocks
+net_points_per_call: -0.07; 95% interval [-0.18, +0.04]; 320 independent blocks
 Seat strong/original/strong-partnership/prefix
-voluntary_call_rate: +0.67; 95% interval [-1.04, +2.40], 320 independent blocks
-make_rate: -1.82; 95% interval [-4.53, +1.00], 320 independent blocks
-net_points_per_call: -0.06; 95% interval [-0.18, +0.05], 320 independent blocks
+voluntary_call_rate: +0.67; 95% interval [-1.04, +2.40]; 320 independent blocks
+make_rate: -1.82; 95% interval [-4.53, +1.00]; 320 independent blocks
+net_points_per_call: -0.06; 95% interval [-0.18, +0.05]; 320 independent blocks
 Seat strong/proxy-swapped/strong-partnership/full
-voluntary_call_rate: +0.34; 95% interval [-1.34, +2.07], 320 independent blocks
-make_rate: -2.66; 95% interval [-5.44, -0.12], 320 independent blocks
-net_points_per_call: -0.09; 95% interval [-0.19, +0.02], 320 independent blocks
+voluntary_call_rate: +0.34; 95% interval [-1.34, +2.07]; 320 independent blocks
+make_rate: -2.66; 95% interval [-5.44, -0.12]; 320 independent blocks
+net_points_per_call: -0.09; 95% interval [-0.19, +0.02]; 320 independent blocks
 Seat strong/proxy-swapped/strong-partnership/prefix
-voluntary_call_rate: +0.34; 95% interval [-1.40, +1.96], 320 independent blocks
-make_rate: -2.51; 95% interval [-5.36, +0.34], 320 independent blocks
-net_points_per_call: -0.08; 95% interval [-0.20, +0.03], 320 independent blocks
+voluntary_call_rate: +0.34; 95% interval [-1.40, +1.96]; 320 independent blocks
+make_rate: -2.51; 95% interval [-5.36, +0.34]; 320 independent blocks
+net_points_per_call: -0.08; 95% interval [-0.20, +0.03]; 320 independent blocks
 Seat strong/original/batch-2/full
-voluntary_call_rate: +0.97; 95% interval [-1.23, +3.14], 160 independent blocks
-make_rate: -3.46; 95% interval [-6.92, -0.15], 160 independent blocks
-net_points_per_call: -0.11; 95% interval [-0.25, +0.03], 160 independent blocks
+voluntary_call_rate: +0.97; 95% interval [-1.23, +3.14]; 160 independent blocks
+make_rate: -3.46; 95% interval [-6.92, -0.15]; 160 independent blocks
+net_points_per_call: -0.11; 95% interval [-0.25, +0.03]; 160 independent blocks
 Seat strong/original/batch-2/prefix
-voluntary_call_rate: +0.89; 95% interval [-1.34, +3.29], 160 independent blocks
-make_rate: -2.89; 95% interval [-6.68, +0.57], 160 independent blocks
-net_points_per_call: -0.08; 95% interval [-0.24, +0.06], 160 independent blocks
+voluntary_call_rate: +0.89; 95% interval [-1.34, +3.29]; 160 independent blocks
+make_rate: -2.89; 95% interval [-6.68, +0.57]; 160 independent blocks
+net_points_per_call: -0.08; 95% interval [-0.24, +0.06]; 160 independent blocks
 Seat strong/proxy-swapped/batch-2/full
-voluntary_call_rate: +0.87; 95% interval [-1.39, +3.02], 160 independent blocks
-make_rate: -4.06; 95% interval [-7.36, -0.68], 160 independent blocks
-net_points_per_call: -0.13; 95% interval [-0.27, -0.01], 160 independent blocks
+voluntary_call_rate: +0.87; 95% interval [-1.39, +3.02]; 160 independent blocks
+make_rate: -4.06; 95% interval [-7.36, -0.68]; 160 independent blocks
+net_points_per_call: -0.13; 95% interval [-0.27, -0.01]; 160 independent blocks
 Seat strong/proxy-swapped/batch-2/prefix
-voluntary_call_rate: +0.59; 95% interval [-1.75, +2.79], 160 independent blocks
-make_rate: -3.73; 95% interval [-7.53, -0.11], 160 independent blocks
-net_points_per_call: -0.11; 95% interval [-0.27, +0.04], 160 independent blocks
-Symmetry casual-balanced
-voluntary_call_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-make_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-net_points_per_call: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-Symmetry casual-cautious
-voluntary_call_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-make_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-net_points_per_call: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-Symmetry casual-bold
-voluntary_call_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-make_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-net_points_per_call: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-Symmetry strong-balanced
-voluntary_call_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-make_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-net_points_per_call: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-Symmetry strong-conservative
-voluntary_call_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-make_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-net_points_per_call: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-Symmetry strong-assertive
-voluntary_call_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-make_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-net_points_per_call: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-Symmetry strong-partnership
-voluntary_call_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-make_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-net_points_per_call: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-Symmetry expert-balanced
-voluntary_call_rate: +0.34; 95% interval [-0.12, +0.82], 32 independent blocks
-make_rate: +0.40; 95% interval [-1.59, +2.70], 32 independent blocks
-net_points_per_call: +0.01; 95% interval [-0.05, +0.08], 32 independent blocks
-Symmetry expert-conservative
-voluntary_call_rate: +0.17; 95% interval [-0.47, +0.68], 32 independent blocks
-make_rate: -0.53; 95% interval [-2.78, +1.52], 32 independent blocks
-net_points_per_call: -0.01; 95% interval [-0.08, +0.06], 32 independent blocks
-Symmetry expert-assertive
-voluntary_call_rate: +0.31; 95% interval [-0.14, +0.82], 32 independent blocks
-make_rate: -0.44; 95% interval [-1.74, +0.80], 32 independent blocks
-net_points_per_call: -0.01; 95% interval [-0.05, +0.04], 32 independent blocks
-Symmetry val
-voluntary_call_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-make_rate: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-net_points_per_call: +0.00; 95% interval [+0.00, +0.00], 32 independent blocks
-Profile differences casual/original/casual-cautious-minus-casual-balanced: -6.96; 95% interval [-7.77, -6.17], 128 independent blocks
-Profile differences casual/original/casual-bold-minus-casual-balanced: +8.66; 95% interval [+7.76, +9.55], 128 independent blocks
-Profile differences casual/original/casual-bold-minus-casual-cautious: +15.62; 95% interval [+14.53, +16.75], 128 independent blocks
-Profile differences casual/proxy-swapped/casual-cautious-minus-casual-balanced: -6.68; 95% interval [-7.49, -5.83], 128 independent blocks
-Profile differences casual/proxy-swapped/casual-bold-minus-casual-balanced: +8.57; 95% interval [+7.71, +9.43], 128 independent blocks
-Profile differences casual/proxy-swapped/casual-bold-minus-casual-cautious: +15.25; 95% interval [+14.08, +16.46], 128 independent blocks
-Profile differences strong/original/strong-conservative-minus-strong-balanced: -4.39; 95% interval [-4.80, -3.97], 320 independent blocks
-Profile differences strong/original/strong-assertive-minus-strong-balanced: +5.80; 95% interval [+5.32, +6.32], 320 independent blocks
-Profile differences strong/original/strong-partnership-minus-strong-balanced: +0.65; 95% interval [+0.46, +0.84], 320 independent blocks
-Profile differences strong/original/strong-assertive-minus-strong-conservative: +10.20; 95% interval [+9.62, +10.78], 320 independent blocks
-Profile differences strong/original/strong-partnership-minus-strong-conservative: +5.04; 95% interval [+4.62, +5.44], 320 independent blocks
-Profile differences strong/original/strong-partnership-minus-strong-assertive: -5.16; 95% interval [-5.66, -4.72], 320 independent blocks
-Profile differences strong/proxy-swapped/strong-conservative-minus-strong-balanced: -4.47; 95% interval [-4.90, -4.05], 320 independent blocks
-Profile differences strong/proxy-swapped/strong-assertive-minus-strong-balanced: +5.72; 95% interval [+5.20, +6.24], 320 independent blocks
-Profile differences strong/proxy-swapped/strong-partnership-minus-strong-balanced: +0.62; 95% interval [+0.44, +0.82], 320 independent blocks
-Profile differences strong/proxy-swapped/strong-assertive-minus-strong-conservative: +10.19; 95% interval [+9.62, +10.79], 320 independent blocks
-Profile differences strong/proxy-swapped/strong-partnership-minus-strong-conservative: +5.08; 95% interval [+4.66, +5.52], 320 independent blocks
-Profile differences strong/proxy-swapped/strong-partnership-minus-strong-assertive: -5.10; 95% interval [-5.61, -4.61], 320 independent blocks
-Profile differences expert/original/expert-conservative-minus-expert-balanced: -5.49; 95% interval [-6.69, -4.30], 64 independent blocks
-Profile differences expert/original/expert-assertive-minus-expert-balanced: +5.59; 95% interval [+4.42, +6.74], 64 independent blocks
-Profile differences expert/original/expert-assertive-minus-expert-conservative: +11.08; 95% interval [+9.43, +12.67], 64 independent blocks
-Profile differences expert/proxy-swapped/expert-conservative-minus-expert-balanced: -5.75; 95% interval [-6.90, -4.58], 64 independent blocks
-Profile differences expert/proxy-swapped/expert-assertive-minus-expert-balanced: +5.16; 95% interval [+4.05, +6.30], 64 independent blocks
-Profile differences expert/proxy-swapped/expert-assertive-minus-expert-conservative: +10.91; 95% interval [+9.30, +12.53], 64 independent blocks
-Team casual-vs-strong
-Win: +70.70; 95% interval [+68.10, +73.44], 384 independent blocks
-Score: +2.59; 95% interval [+2.35, +2.83], 384 independent blocks
-Team cross-casual-balanced-strong-balanced
-Win: +73.44; 95% interval [+65.62, +81.25], 32 independent blocks
-Score: +2.53; 95% interval [+1.73, +3.41], 32 independent blocks
-Team cross-casual-balanced-strong-conservative
-Win: +56.25; 95% interval [+46.88, +65.62], 32 independent blocks
-Score: +1.23; 95% interval [+0.36, +2.13], 32 independent blocks
-Team cross-casual-balanced-strong-assertive
-Win: +78.12; 95% interval [+68.75, +87.50], 32 independent blocks
-Score: +3.17; 95% interval [+2.22, +4.11], 32 independent blocks
-Team cross-casual-balanced-strong-partnership
-Win: +73.44; 95% interval [+65.62, +82.81], 32 independent blocks
-Score: +2.91; 95% interval [+2.00, +3.78], 32 independent blocks
-Team cross-casual-cautious-strong-balanced
-Win: +76.56; 95% interval [+68.75, +84.38], 32 independent blocks
-Score: +3.41; 95% interval [+2.73, +4.05], 32 independent blocks
-Team cross-casual-cautious-strong-conservative
-Win: +75.00; 95% interval [+65.62, +82.81], 32 independent blocks
-Score: +2.72; 95% interval [+2.02, +3.44], 32 independent blocks
-Team cross-casual-cautious-strong-assertive
-Win: +76.56; 95% interval [+67.19, +85.94], 32 independent blocks
-Score: +4.25; 95% interval [+3.41, +5.03], 32 independent blocks
-Team cross-casual-cautious-strong-partnership
-Win: +70.31; 95% interval [+62.50, +78.12], 32 independent blocks
-Score: +2.72; 95% interval [+2.02, +3.42], 32 independent blocks
-Team cross-casual-bold-strong-balanced
-Win: +67.19; 95% interval [+57.81, +76.56], 32 independent blocks
-Score: +1.91; 95% interval [+1.19, +2.66], 32 independent blocks
-Team cross-casual-bold-strong-conservative
-Win: +68.75; 95% interval [+57.81, +79.69], 32 independent blocks
-Score: +2.31; 95% interval [+1.36, +3.25], 32 independent blocks
-Team cross-casual-bold-strong-assertive
-Win: +65.62; 95% interval [+54.69, +76.56], 32 independent blocks
-Score: +2.17; 95% interval [+1.06, +3.20], 32 independent blocks
-Team cross-casual-bold-strong-partnership
-Win: +67.19; 95% interval [+57.81, +76.56], 32 independent blocks
-Score: +1.77; 95% interval [+0.86, +2.66], 32 independent blocks
-Team strong-vs-expert
-Win: +58.33; 95% interval [+55.99, +60.81], 384 independent blocks
-Score: +1.10; 95% interval [+0.89, +1.29], 384 independent blocks
-Team cross-strong-balanced-expert-balanced
-Win: +59.38; 95% interval [+50.00, +68.75], 32 independent blocks
-Score: +1.39; 95% interval [+0.55, +2.28], 32 independent blocks
-Team cross-strong-balanced-expert-conservative
-Win: +53.12; 95% interval [+46.88, +59.38], 32 independent blocks
-Score: +0.91; 95% interval [+0.34, +1.45], 32 independent blocks
-Team cross-strong-balanced-expert-assertive
-Win: +57.81; 95% interval [+48.44, +68.75], 32 independent blocks
-Score: +1.30; 95% interval [+0.47, +2.12], 32 independent blocks
-Team cross-strong-conservative-expert-balanced
-Win: +60.94; 95% interval [+51.56, +70.31], 32 independent blocks
-Score: +2.02; 95% interval [+1.25, +2.80], 32 independent blocks
-Team cross-strong-conservative-expert-conservative
-Win: +64.06; 95% interval [+53.12, +73.44], 32 independent blocks
-Score: +1.56; 95% interval [+0.76, +2.38], 32 independent blocks
-Team cross-strong-conservative-expert-assertive
-Win: +64.06; 95% interval [+56.25, +71.88], 32 independent blocks
-Score: +1.59; 95% interval [+0.91, +2.34], 32 independent blocks
-Team cross-strong-assertive-expert-balanced
-Win: +62.50; 95% interval [+56.25, +70.31], 32 independent blocks
-Score: +0.97; 95% interval [+0.44, +1.53], 32 independent blocks
-Team cross-strong-assertive-expert-conservative
-Win: +51.56; 95% interval [+43.75, +59.38], 32 independent blocks
-Score: +0.47; 95% interval [-0.11, +1.12], 32 independent blocks
-Team cross-strong-assertive-expert-assertive
-Win: +60.94; 95% interval [+53.12, +70.31], 32 independent blocks
-Score: +0.89; 95% interval [+0.23, +1.59], 32 independent blocks
-Team cross-strong-partnership-expert-balanced
-Win: +50.00; 95% interval [+42.11, +59.38], 32 independent blocks
-Score: +0.62; 95% interval [-0.25, +1.53], 32 independent blocks
-Team cross-strong-partnership-expert-conservative
-Win: +57.81; 95% interval [+50.00, +65.62], 32 independent blocks
-Score: +0.36; 95% interval [-0.06, +0.77], 32 independent blocks
-Team cross-strong-partnership-expert-assertive
-Win: +57.81; 95% interval [+48.44, +67.19], 32 independent blocks
-Score: +1.08; 95% interval [+0.28, +1.86], 32 independent blocks
-Team casual-vs-expert
-Win: +80.21; 95% interval [+77.26, +82.99], 288 independent blocks
-Score: +3.60; 95% interval [+3.32, +3.85], 288 independent blocks
-Team cross-casual-balanced-expert-balanced
-Win: +82.81; 95% interval [+75.00, +90.62], 32 independent blocks
-Score: +3.72; 95% interval [+2.92, +4.53], 32 independent blocks
-Team cross-casual-balanced-expert-conservative
-Win: +81.25; 95% interval [+73.44, +89.06], 32 independent blocks
-Score: +3.75; 95% interval [+3.05, +4.44], 32 independent blocks
-Team cross-casual-balanced-expert-assertive
-Win: +84.38; 95% interval [+76.56, +92.19], 32 independent blocks
-Score: +3.80; 95% interval [+2.98, +4.59], 32 independent blocks
-Team cross-casual-cautious-expert-balanced
-Win: +87.50; 95% interval [+79.69, +93.83], 32 independent blocks
-Score: +4.47; 95% interval [+3.83, +5.05], 32 independent blocks
-Team cross-casual-cautious-expert-conservative
-Win: +81.25; 95% interval [+73.44, +89.06], 32 independent blocks
-Score: +3.88; 95% interval [+3.12, +4.61], 32 independent blocks
-Team cross-casual-cautious-expert-assertive
-Win: +81.25; 95% interval [+71.88, +89.06], 32 independent blocks
-Score: +4.27; 95% interval [+3.19, +5.25], 32 independent blocks
-Team cross-casual-bold-expert-balanced
-Win: +71.88; 95% interval [+62.50, +79.69], 32 independent blocks
-Score: +2.75; 95% interval [+2.00, +3.53], 32 independent blocks
-Team cross-casual-bold-expert-conservative
-Win: +76.56; 95% interval [+67.19, +84.38], 32 independent blocks
-Score: +2.88; 95% interval [+2.08, +3.72], 32 independent blocks
-Team cross-casual-bold-expert-assertive
-Win: +75.00; 95% interval [+65.62, +84.38], 32 independent blocks
-Score: +2.86; 95% interval [+2.01, +3.66], 32 independent blocks
-Common partner casual-vs-strong
-Win: +13.80; 95% interval [+9.90, +17.72], 384 independent blocks
-Score: +1.43; 95% interval [+1.13, +1.76], 384 independent blocks
-Common partner cross-casual-balanced-strong-balanced
-Win: +25.00; 95% interval [+9.38, +40.62], 32 independent blocks
-Score: +2.62; 95% interval [+1.50, +3.91], 32 independent blocks
-Common partner cross-casual-balanced-strong-conservative
-Win: +21.88; 95% interval [+9.38, +37.50], 32 independent blocks
-Score: +1.91; 95% interval [+0.81, +3.09], 32 independent blocks
-Common partner cross-casual-balanced-strong-assertive
-Win: +15.62; 95% interval [+3.12, +31.25], 32 independent blocks
-Score: +1.62; 95% interval [+0.72, +2.75], 32 independent blocks
-Common partner cross-casual-balanced-strong-partnership
-Win: +6.25; 95% interval [-6.25, +18.75], 32 independent blocks
-Score: +0.66; 95% interval [-0.03, +1.34], 32 independent blocks
-Common partner cross-casual-cautious-strong-balanced
-Win: +9.38; 95% interval [-3.12, +21.88], 32 independent blocks
-Score: +0.97; 95% interval [-0.09, +1.94], 32 independent blocks
-Common partner cross-casual-cautious-strong-conservative
-Win: +12.50; 95% interval [-3.12, +28.12], 32 independent blocks
-Score: +1.62; 95% interval [+0.56, +2.75], 32 independent blocks
-Common partner cross-casual-cautious-strong-assertive
-Win: +28.12; 95% interval [+12.50, +43.75], 32 independent blocks
-Score: +2.69; 95% interval [+1.50, +3.91], 32 independent blocks
-Common partner cross-casual-cautious-strong-partnership
-Win: +3.12; 95% interval [-6.25, +15.62], 32 independent blocks
-Score: +0.62; 95% interval [-0.12, +1.44], 32 independent blocks
-Common partner cross-casual-bold-strong-balanced
-Win: -6.25; 95% interval [-21.88, +6.41], 32 independent blocks
-Score: +0.09; 95% interval [-1.06, +1.22], 32 independent blocks
-Common partner cross-casual-bold-strong-conservative
-Win: +12.50; 95% interval [-3.12, +28.12], 32 independent blocks
-Score: +1.53; 95% interval [+0.38, +2.72], 32 independent blocks
-Common partner cross-casual-bold-strong-assertive
-Win: +15.62; 95% interval [+3.12, +28.12], 32 independent blocks
-Score: +1.81; 95% interval [+0.59, +3.06], 32 independent blocks
-Common partner cross-casual-bold-strong-partnership
-Win: +21.88; 95% interval [+9.38, +37.50], 32 independent blocks
-Score: +1.06; 95% interval [-0.25, +2.38], 32 independent blocks
-Common partner strong-vs-expert
-Win: +6.84; 95% interval [+3.32, +10.48], 384 independent blocks
-Score: +0.71; 95% interval [+0.45, +0.97], 384 independent blocks
-Common partner cross-strong-balanced-expert-balanced
-Win: +7.03; 95% interval [-4.69, +19.53], 32 independent blocks
-Score: +1.09; 95% interval [+0.19, +1.94], 32 independent blocks
-Common partner cross-strong-balanced-expert-conservative
-Win: +3.12; 95% interval [-3.91, +11.72], 32 independent blocks
-Score: +0.32; 95% interval [-0.34, +0.91], 32 independent blocks
-Common partner cross-strong-balanced-expert-assertive
-Win: +12.50; 95% interval [+2.34, +25.00], 32 independent blocks
-Score: +1.20; 95% interval [+0.34, +2.20], 32 independent blocks
-Common partner cross-strong-conservative-expert-balanced
-Win: +9.38; 95% interval [-3.12, +23.44], 32 independent blocks
-Score: +0.84; 95% interval [-0.08, +1.89], 32 independent blocks
-Common partner cross-strong-conservative-expert-conservative
-Win: +7.03; 95% interval [-11.72, +25.00], 32 independent blocks
-Score: +0.70; 95% interval [-0.38, +1.79], 32 independent blocks
-Common partner cross-strong-conservative-expert-assertive
-Win: +22.66; 95% interval [+7.03, +40.62], 32 independent blocks
-Score: +1.84; 95% interval [+0.65, +3.02], 32 independent blocks
-Common partner cross-strong-assertive-expert-balanced
-Win: +2.34; 95% interval [-11.72, +16.41], 32 independent blocks
-Score: +0.72; 95% interval [-0.35, +1.85], 32 independent blocks
-Common partner cross-strong-assertive-expert-conservative
-Win: +0.00; 95% interval [-9.38, +9.38], 32 independent blocks
-Score: -0.19; 95% interval [-0.87, +0.53], 32 independent blocks
-Common partner cross-strong-assertive-expert-assertive
-Win: +7.03; 95% interval [-7.81, +22.66], 32 independent blocks
-Score: +0.61; 95% interval [-0.39, +1.60], 32 independent blocks
-Common partner cross-strong-partnership-expert-balanced
-Win: +7.03; 95% interval [+0.00, +16.41], 32 independent blocks
-Score: +1.01; 95% interval [+0.19, +2.00], 32 independent blocks
-Common partner cross-strong-partnership-expert-conservative
-Win: -1.56; 95% interval [-7.03, +1.56], 32 independent blocks
-Score: +0.29; 95% interval [-0.05, +0.64], 32 independent blocks
-Common partner cross-strong-partnership-expert-assertive
-Win: +5.47; 95% interval [-6.25, +18.01], 32 independent blocks
-Score: +0.07; 95% interval [-0.76, +0.90], 32 independent blocks
-Common partner casual-vs-expert
-Win: +19.44; 95% interval [+14.58, +24.57], 288 independent blocks
-Score: +2.01; 95% interval [+1.62, +2.41], 288 independent blocks
-Common partner cross-casual-balanced-expert-balanced
-Win: +21.88; 95% interval [+4.69, +39.06], 32 independent blocks
-Score: +2.13; 95% interval [+0.76, +3.62], 32 independent blocks
-Common partner cross-casual-balanced-expert-conservative
-Win: +8.59; 95% interval [-3.91, +21.09], 32 independent blocks
-Score: +0.76; 95% interval [-0.18, +1.80], 32 independent blocks
-Common partner cross-casual-balanced-expert-assertive
-Win: +13.28; 95% interval [+0.78, +28.12], 32 independent blocks
-Score: +1.83; 95% interval [+0.90, +2.77], 32 independent blocks
-Common partner cross-casual-cautious-expert-balanced
-Win: +17.97; 95% interval [+6.25, +32.03], 32 independent blocks
-Score: +2.23; 95% interval [+1.38, +3.17], 32 independent blocks
-Common partner cross-casual-cautious-expert-conservative
-Win: +20.31; 95% interval [+5.43, +35.20], 32 independent blocks
-Score: +1.82; 95% interval [+0.67, +3.01], 32 independent blocks
-Common partner cross-casual-cautious-expert-assertive
-Win: +26.56; 95% interval [+7.03, +43.75], 32 independent blocks
-Score: +3.47; 95% interval [+2.03, +4.90], 32 independent blocks
-Common partner cross-casual-bold-expert-balanced
-Win: +18.75; 95% interval [+3.12, +34.38], 32 independent blocks
-Score: +1.97; 95% interval [+0.63, +3.38], 32 independent blocks
-Common partner cross-casual-bold-expert-conservative
-Win: +22.66; 95% interval [+9.38, +36.72], 32 independent blocks
-Score: +2.15; 95% interval [+0.95, +3.34], 32 independent blocks
-Common partner cross-casual-bold-expert-assertive
-Win: +25.00; 95% interval [+11.68, +40.62], 32 independent blocks
-Score: +1.77; 95% interval [+0.80, +2.74], 32 independent blocks
-Val strong-balanced
-Win: +0.20; 95% interval [-0.85, +1.30], 768 independent blocks
-Score: +0.08; 95% interval [+0.00, +0.16], 768 independent blocks
-Val strong-balanced/casual-balanced
-Win: +0.00; 95% interval [-1.56, +1.56], 256 independent blocks
-Score: +0.07; 95% interval [-0.05, +0.20], 256 independent blocks
-Val strong-balanced/val-casual-balanced-strong-balanced-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.06; 95% interval [-0.19, +0.00], 16 independent blocks
-Val strong-conservative
-Win: +4.36; 95% interval [+2.47, +6.28], 768 independent blocks
-Score: +0.44; 95% interval [+0.31, +0.58], 768 independent blocks
-Val strong-conservative/casual-balanced
-Win: +6.25; 95% interval [+2.73, +9.77], 256 independent blocks
-Score: +0.57; 95% interval [+0.32, +0.82], 256 independent blocks
-Val strong-conservative/val-casual-balanced-strong-balanced-strong-balanced
-Win: +6.25; 95% interval [+0.00, +18.75], 16 independent blocks
-Score: +0.44; 95% interval [-0.12, +1.25], 16 independent blocks
-Val strong-assertive
-Win: -2.15; 95% interval [-4.23, -0.07], 768 independent blocks
-Score: -0.23; 95% interval [-0.38, -0.08], 768 independent blocks
-Val strong-assertive/casual-balanced
-Win: -1.56; 95% interval [-5.08, +1.95], 256 independent blocks
-Score: -0.26; 95% interval [-0.54, +0.04], 256 independent blocks
-Val strong-assertive/val-casual-balanced-strong-balanced-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.06; 95% interval [-0.19, +0.00], 16 independent blocks
-Val strong-partnership
-Win: -0.29; 95% interval [-0.81, +0.26], 768 independent blocks
-Score: -0.01; 95% interval [-0.04, +0.02], 768 independent blocks
-Val strong-partnership/casual-balanced
-Win: -0.78; 95% interval [-1.95, +0.00], 256 independent blocks
-Score: -0.03; 95% interval [-0.08, +0.02], 256 independent blocks
-Val strong-partnership/val-casual-balanced-strong-balanced-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-casual-balanced-strong-balanced-strong-conservative
-Win: +6.25; 95% interval [+0.00, +18.75], 16 independent blocks
-Score: +0.75; 95% interval [+0.00, +2.06], 16 independent blocks
-Val strong-conservative/val-casual-balanced-strong-balanced-strong-conservative
-Win: +18.75; 95% interval [+0.00, +37.50], 16 independent blocks
-Score: +1.12; 95% interval [-0.31, +2.50], 16 independent blocks
-Val strong-assertive/val-casual-balanced-strong-balanced-strong-conservative
-Win: +25.00; 95% interval [+6.25, +50.00], 16 independent blocks
-Score: +1.75; 95% interval [+0.38, +3.31], 16 independent blocks
-Val strong-partnership/val-casual-balanced-strong-balanced-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-casual-balanced-strong-balanced-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [-0.19, +0.19], 16 independent blocks
-Val strong-conservative/val-casual-balanced-strong-balanced-strong-assertive
-Win: +6.25; 95% interval [+0.00, +18.75], 16 independent blocks
-Score: +0.50; 95% interval [+0.00, +1.12], 16 independent blocks
-Val strong-assertive/val-casual-balanced-strong-balanced-strong-assertive
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: -1.00; 95% interval [-3.06, +0.44], 16 independent blocks
-Val strong-partnership/val-casual-balanced-strong-balanced-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-casual-balanced-strong-balanced-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.06; 95% interval [-0.19, +0.38], 16 independent blocks
-Val strong-conservative/val-casual-balanced-strong-balanced-strong-partnership
-Win: +12.50; 95% interval [+0.00, +31.25], 16 independent blocks
-Score: +1.19; 95% interval [-0.06, +2.75], 16 independent blocks
-Val strong-assertive/val-casual-balanced-strong-balanced-strong-partnership
-Win: -6.25; 95% interval [-25.00, +12.50], 16 independent blocks
-Score: -0.19; 95% interval [-1.56, +1.44], 16 independent blocks
-Val strong-partnership/val-casual-balanced-strong-balanced-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.12; 95% interval [+0.00, +0.38], 16 independent blocks
-Val strong-balanced/val-casual-balanced-strong-conservative-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-conservative/val-casual-balanced-strong-conservative-strong-balanced
-Win: +6.25; 95% interval [-12.50, +25.00], 16 independent blocks
-Score: +0.12; 95% interval [-0.81, +1.00], 16 independent blocks
-Val strong-assertive/val-casual-balanced-strong-conservative-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.88; 95% interval [-1.56, -0.25], 16 independent blocks
-Val strong-partnership/val-casual-balanced-strong-conservative-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-casual-balanced-strong-conservative-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.31; 95% interval [+0.00, +0.88], 16 independent blocks
-Val strong-conservative/val-casual-balanced-strong-conservative-strong-conservative
-Win: +12.50; 95% interval [+0.00, +31.25], 16 independent blocks
-Score: +1.06; 95% interval [+0.25, +2.00], 16 independent blocks
-Val strong-assertive/val-casual-balanced-strong-conservative-strong-conservative
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: -1.44; 95% interval [-3.06, -0.25], 16 independent blocks
-Val strong-partnership/val-casual-balanced-strong-conservative-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-casual-balanced-strong-conservative-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.12; 95% interval [+0.00, +0.31], 16 independent blocks
-Val strong-conservative/val-casual-balanced-strong-conservative-strong-assertive
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: -0.38; 95% interval [-1.44, +0.31], 16 independent blocks
-Val strong-assertive/val-casual-balanced-strong-conservative-strong-assertive
-Win: -12.50; 95% interval [-31.25, +0.00], 16 independent blocks
-Score: -0.50; 95% interval [-1.81, +0.62], 16 independent blocks
-Val strong-partnership/val-casual-balanced-strong-conservative-strong-assertive
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: -0.31; 95% interval [-0.94, +0.00], 16 independent blocks
-Val strong-balanced/val-casual-balanced-strong-conservative-strong-partnership
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: -0.38; 95% interval [-1.56, +0.44], 16 independent blocks
-Val strong-conservative/val-casual-balanced-strong-conservative-strong-partnership
-Win: +0.00; 95% interval [-18.75, +18.75], 16 independent blocks
-Score: +0.12; 95% interval [-1.56, +1.56], 16 independent blocks
-Val strong-assertive/val-casual-balanced-strong-conservative-strong-partnership
-Win: +0.00; 95% interval [-18.75, +18.75], 16 independent blocks
-Score: +0.56; 95% interval [-0.31, +1.75], 16 independent blocks
-Val strong-partnership/val-casual-balanced-strong-conservative-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-casual-balanced-strong-assertive-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.06; 95% interval [-0.12, +0.25], 16 independent blocks
-Val strong-conservative/val-casual-balanced-strong-assertive-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.31; 95% interval [-0.12, +0.88], 16 independent blocks
-Val strong-assertive/val-casual-balanced-strong-assertive-strong-balanced
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: -0.38; 95% interval [-1.25, +0.25], 16 independent blocks
-Val strong-partnership/val-casual-balanced-strong-assertive-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-casual-balanced-strong-assertive-strong-conservative
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: +0.19; 95% interval [-0.56, +0.88], 16 independent blocks
-Val strong-conservative/val-casual-balanced-strong-assertive-strong-conservative
-Win: +18.75; 95% interval [+0.00, +37.50], 16 independent blocks
-Score: +0.75; 95% interval [-0.12, +1.81], 16 independent blocks
-Val strong-assertive/val-casual-balanced-strong-assertive-strong-conservative
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [-1.19, +1.12], 16 independent blocks
-Val strong-partnership/val-casual-balanced-strong-assertive-strong-conservative
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: -0.25; 95% interval [-0.75, +0.00], 16 independent blocks
-Val strong-balanced/val-casual-balanced-strong-assertive-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.06; 95% interval [-0.19, +0.00], 16 independent blocks
-Val strong-conservative/val-casual-balanced-strong-assertive-strong-assertive
-Win: +12.50; 95% interval [+0.00, +31.25], 16 independent blocks
-Score: +1.69; 95% interval [+0.44, +3.19], 16 independent blocks
-Val strong-assertive/val-casual-balanced-strong-assertive-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.50; 95% interval [-1.50, +0.31], 16 independent blocks
-Val strong-partnership/val-casual-balanced-strong-assertive-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-casual-balanced-strong-assertive-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.12; 95% interval [+0.00, +0.38], 16 independent blocks
-Val strong-conservative/val-casual-balanced-strong-assertive-strong-partnership
-Win: +6.25; 95% interval [+0.00, +18.75], 16 independent blocks
-Score: +1.06; 95% interval [+0.25, +2.06], 16 independent blocks
-Val strong-assertive/val-casual-balanced-strong-assertive-strong-partnership
-Win: +0.00; 95% interval [-18.75, +18.75], 16 independent blocks
-Score: -0.25; 95% interval [-1.25, +0.88], 16 independent blocks
-Val strong-partnership/val-casual-balanced-strong-assertive-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-casual-balanced-strong-partnership-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.19; 95% interval [-0.56, +0.00], 16 independent blocks
-Val strong-conservative/val-casual-balanced-strong-partnership-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.19; 95% interval [-0.62, +1.06], 16 independent blocks
-Val strong-assertive/val-casual-balanced-strong-partnership-strong-balanced
-Win: -12.50; 95% interval [-31.25, +0.00], 16 independent blocks
-Score: -1.44; 95% interval [-2.82, -0.31], 16 independent blocks
-Val strong-partnership/val-casual-balanced-strong-partnership-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-casual-balanced-strong-partnership-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.06; 95% interval [+0.00, +0.19], 16 independent blocks
-Val strong-conservative/val-casual-balanced-strong-partnership-strong-conservative
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [-0.69, +0.69], 16 independent blocks
-Val strong-assertive/val-casual-balanced-strong-partnership-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.31; 95% interval [-0.06, +0.75], 16 independent blocks
-Val strong-partnership/val-casual-balanced-strong-partnership-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-casual-balanced-strong-partnership-strong-assertive
-Win: +6.25; 95% interval [+0.00, +18.75], 16 independent blocks
-Score: +0.12; 95% interval [-0.56, +0.94], 16 independent blocks
-Val strong-conservative/val-casual-balanced-strong-partnership-strong-assertive
-Win: +12.50; 95% interval [+0.00, +31.25], 16 independent blocks
-Score: +0.38; 95% interval [-0.38, +1.19], 16 independent blocks
-Val strong-assertive/val-casual-balanced-strong-partnership-strong-assertive
-Win: +18.75; 95% interval [+0.00, +37.50], 16 independent blocks
-Score: +0.56; 95% interval [-0.56, +1.75], 16 independent blocks
-Val strong-partnership/val-casual-balanced-strong-partnership-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-casual-balanced-strong-partnership-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.06; 95% interval [+0.00, +0.19], 16 independent blocks
-Val strong-conservative/val-casual-balanced-strong-partnership-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.56; 95% interval [+0.12, +1.12], 16 independent blocks
-Val strong-assertive/val-casual-balanced-strong-partnership-strong-partnership
-Win: -12.50; 95% interval [-31.25, +0.00], 16 independent blocks
-Score: -0.69; 95% interval [-1.56, +0.00], 16 independent blocks
-Val strong-partnership/val-casual-balanced-strong-partnership-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/strong-balanced
-Win: -0.39; 95% interval [-2.34, +1.56], 256 independent blocks
-Score: +0.03; 95% interval [-0.13, +0.18], 256 independent blocks
-Val strong-balanced/val-strong-balanced-strong-balanced-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.06; 95% interval [+0.00, +0.19], 16 independent blocks
-Val strong-conservative/strong-balanced
-Win: +3.91; 95% interval [+0.78, +7.42], 256 independent blocks
-Score: +0.45; 95% interval [+0.19, +0.70], 256 independent blocks
-Val strong-conservative/val-strong-balanced-strong-balanced-strong-balanced
-Win: +12.50; 95% interval [+0.00, +31.25], 16 independent blocks
-Score: +0.50; 95% interval [-0.31, +1.50], 16 independent blocks
-Val strong-assertive/strong-balanced
-Win: -4.30; 95% interval [-8.20, -0.78], 256 independent blocks
-Score: -0.36; 95% interval [-0.61, -0.08], 256 independent blocks
-Val strong-assertive/val-strong-balanced-strong-balanced-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.12; 95% interval [-0.88, +0.56], 16 independent blocks
-Val strong-partnership/strong-balanced
-Win: -0.39; 95% interval [-1.56, +0.78], 256 independent blocks
-Score: +0.00; 95% interval [-0.07, +0.07], 256 independent blocks
-Val strong-partnership/val-strong-balanced-strong-balanced-strong-balanced
-Win: +6.25; 95% interval [+0.00, +18.75], 16 independent blocks
-Score: +0.19; 95% interval [+0.00, +0.56], 16 independent blocks
-Val strong-balanced/val-strong-balanced-strong-balanced-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.06; 95% interval [-0.19, +0.00], 16 independent blocks
-Val strong-conservative/val-strong-balanced-strong-balanced-strong-conservative
-Win: +0.00; 95% interval [-18.75, +18.75], 16 independent blocks
-Score: -0.38; 95% interval [-1.31, +0.31], 16 independent blocks
-Val strong-assertive/val-strong-balanced-strong-balanced-strong-conservative
-Win: -25.00; 95% interval [-50.00, -6.25], 16 independent blocks
-Score: -1.38; 95% interval [-2.94, -0.06], 16 independent blocks
-Val strong-partnership/val-strong-balanced-strong-balanced-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-strong-balanced-strong-balanced-strong-assertive
-Win: +6.25; 95% interval [+0.00, +18.75], 16 independent blocks
-Score: +0.62; 95% interval [+0.00, +1.56], 16 independent blocks
-Val strong-conservative/val-strong-balanced-strong-balanced-strong-assertive
-Win: +6.25; 95% interval [+0.00, +18.75], 16 independent blocks
-Score: +0.62; 95% interval [-0.06, +1.44], 16 independent blocks
-Val strong-assertive/val-strong-balanced-strong-balanced-strong-assertive
-Win: +6.25; 95% interval [-12.50, +31.25], 16 independent blocks
-Score: +0.19; 95% interval [-1.06, +1.44], 16 independent blocks
-Val strong-partnership/val-strong-balanced-strong-balanced-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-strong-balanced-strong-balanced-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.06; 95% interval [+0.00, +0.19], 16 independent blocks
-Val strong-conservative/val-strong-balanced-strong-balanced-strong-partnership
-Win: +6.25; 95% interval [+0.00, +18.75], 16 independent blocks
-Score: +0.38; 95% interval [+0.00, +1.00], 16 independent blocks
-Val strong-assertive/val-strong-balanced-strong-balanced-strong-partnership
-Win: -6.25; 95% interval [-25.00, +12.50], 16 independent blocks
-Score: -1.00; 95% interval [-2.50, +0.38], 16 independent blocks
-Val strong-partnership/val-strong-balanced-strong-balanced-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-strong-balanced-strong-conservative-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.06; 95% interval [+0.00, +0.19], 16 independent blocks
-Val strong-conservative/val-strong-balanced-strong-conservative-strong-balanced
-Win: +12.50; 95% interval [+0.00, +31.25], 16 independent blocks
-Score: +1.25; 95% interval [+0.12, +2.94], 16 independent blocks
-Val strong-assertive/val-strong-balanced-strong-conservative-strong-balanced
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: -0.62; 95% interval [-1.25, -0.12], 16 independent blocks
-Val strong-partnership/val-strong-balanced-strong-conservative-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-strong-balanced-strong-conservative-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.31; 95% interval [+0.00, +0.75], 16 independent blocks
-Val strong-conservative/val-strong-balanced-strong-conservative-strong-conservative
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: -0.56; 95% interval [-1.94, +0.50], 16 independent blocks
-Val strong-assertive/val-strong-balanced-strong-conservative-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.44; 95% interval [-0.31, +1.12], 16 independent blocks
-Val strong-partnership/val-strong-balanced-strong-conservative-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.19; 95% interval [+0.00, +0.56], 16 independent blocks
-Val strong-balanced/val-strong-balanced-strong-conservative-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.12; 95% interval [+0.00, +0.31], 16 independent blocks
-Val strong-conservative/val-strong-balanced-strong-conservative-strong-assertive
-Win: +6.25; 95% interval [+0.00, +18.75], 16 independent blocks
-Score: +0.44; 95% interval [-0.31, +1.19], 16 independent blocks
-Val strong-assertive/val-strong-balanced-strong-conservative-strong-assertive
-Win: +0.00; 95% interval [-18.75, +18.75], 16 independent blocks
-Score: -0.50; 95% interval [-1.44, +0.38], 16 independent blocks
-Val strong-partnership/val-strong-balanced-strong-conservative-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-strong-balanced-strong-conservative-strong-partnership
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: -0.12; 95% interval [-0.56, +0.12], 16 independent blocks
-Val strong-conservative/val-strong-balanced-strong-conservative-strong-partnership
-Win: +6.25; 95% interval [+0.00, +18.75], 16 independent blocks
-Score: +1.00; 95% interval [-0.12, +2.50], 16 independent blocks
-Val strong-assertive/val-strong-balanced-strong-conservative-strong-partnership
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: -0.75; 95% interval [-1.50, -0.06], 16 independent blocks
-Val strong-partnership/val-strong-balanced-strong-conservative-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.12; 95% interval [-0.38, +0.00], 16 independent blocks
-Val strong-balanced/val-strong-balanced-strong-assertive-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-conservative/val-strong-balanced-strong-assertive-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.38; 95% interval [-0.12, +0.94], 16 independent blocks
-Val strong-assertive/val-strong-balanced-strong-assertive-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.44; 95% interval [-1.31, +0.25], 16 independent blocks
-Val strong-partnership/val-strong-balanced-strong-assertive-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-strong-balanced-strong-assertive-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.06; 95% interval [-0.81, +0.81], 16 independent blocks
-Val strong-conservative/val-strong-balanced-strong-assertive-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.75; 95% interval [+0.25, +1.44], 16 independent blocks
-Val strong-assertive/val-strong-balanced-strong-assertive-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.38; 95% interval [-0.12, +0.94], 16 independent blocks
-Val strong-partnership/val-strong-balanced-strong-assertive-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.25; 95% interval [+0.00, +0.75], 16 independent blocks
-Val strong-balanced/val-strong-balanced-strong-assertive-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-conservative/val-strong-balanced-strong-assertive-strong-assertive
-Win: -12.50; 95% interval [-31.25, +0.00], 16 independent blocks
-Score: -0.31; 95% interval [-1.38, +0.69], 16 independent blocks
-Val strong-assertive/val-strong-balanced-strong-assertive-strong-assertive
-Win: -25.00; 95% interval [-50.00, -6.25], 16 independent blocks
-Score: -1.25; 95% interval [-2.31, -0.38], 16 independent blocks
-Val strong-partnership/val-strong-balanced-strong-assertive-strong-assertive
-Win: -12.50; 95% interval [-31.25, +0.00], 16 independent blocks
-Score: -0.50; 95% interval [-1.38, +0.12], 16 independent blocks
-Val strong-balanced/val-strong-balanced-strong-assertive-strong-partnership
-Win: +0.00; 95% interval [-18.75, +18.75], 16 independent blocks
-Score: -0.12; 95% interval [-1.69, +1.44], 16 independent blocks
-Val strong-conservative/val-strong-balanced-strong-assertive-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.19; 95% interval [-0.56, +0.88], 16 independent blocks
-Val strong-assertive/val-strong-balanced-strong-assertive-strong-partnership
-Win: -12.50; 95% interval [-37.50, +12.50], 16 independent blocks
-Score: -0.75; 95% interval [-2.50, +1.06], 16 independent blocks
-Val strong-partnership/val-strong-balanced-strong-assertive-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-strong-balanced-strong-partnership-strong-balanced
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: -0.12; 95% interval [-0.62, +0.38], 16 independent blocks
-Val strong-conservative/val-strong-balanced-strong-partnership-strong-balanced
-Win: +6.25; 95% interval [+0.00, +18.75], 16 independent blocks
-Score: +0.75; 95% interval [+0.31, +1.25], 16 independent blocks
-Val strong-assertive/val-strong-balanced-strong-partnership-strong-balanced
-Win: +0.00; 95% interval [-18.75, +18.75], 16 independent blocks
-Score: -0.12; 95% interval [-1.50, +0.94], 16 independent blocks
-Val strong-partnership/val-strong-balanced-strong-partnership-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-strong-balanced-strong-partnership-strong-conservative
-Win: +0.00; 95% interval [-18.75, +18.75], 16 independent blocks
-Score: -0.31; 95% interval [-1.56, +0.81], 16 independent blocks
-Val strong-conservative/val-strong-balanced-strong-partnership-strong-conservative
-Win: +6.25; 95% interval [-12.50, +25.00], 16 independent blocks
-Score: +0.56; 95% interval [-1.06, +1.94], 16 independent blocks
-Val strong-assertive/val-strong-balanced-strong-partnership-strong-conservative
-Win: +6.25; 95% interval [-12.50, +25.00], 16 independent blocks
-Score: +0.25; 95% interval [-1.25, +1.81], 16 independent blocks
-Val strong-partnership/val-strong-balanced-strong-partnership-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-strong-balanced-strong-partnership-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [-0.44, +0.50], 16 independent blocks
-Val strong-conservative/val-strong-balanced-strong-partnership-strong-assertive
-Win: +6.25; 95% interval [+0.00, +18.75], 16 independent blocks
-Score: +0.75; 95% interval [-0.25, +1.88], 16 independent blocks
-Val strong-assertive/val-strong-balanced-strong-partnership-strong-assertive
-Win: +0.00; 95% interval [-18.75, +18.75], 16 independent blocks
-Score: +0.56; 95% interval [-0.50, +1.75], 16 independent blocks
-Val strong-partnership/val-strong-balanced-strong-partnership-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-strong-balanced-strong-partnership-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.12; 95% interval [-0.56, +0.19], 16 independent blocks
-Val strong-conservative/val-strong-balanced-strong-partnership-strong-partnership
-Win: +12.50; 95% interval [+0.00, +31.25], 16 independent blocks
-Score: +0.88; 95% interval [-0.25, +2.38], 16 independent blocks
-Val strong-assertive/val-strong-balanced-strong-partnership-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.62; 95% interval [-1.12, -0.19], 16 independent blocks
-Val strong-partnership/val-strong-balanced-strong-partnership-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/expert-balanced
-Win: +0.98; 95% interval [-1.07, +3.22], 256 independent blocks
-Score: +0.15; 95% interval [+0.00, +0.30], 256 independent blocks
-Val strong-balanced/val-expert-balanced-strong-balanced-strong-balanced
-Win: +0.00; 95% interval [-18.75, +18.75], 16 independent blocks
-Score: +0.00; 95% interval [-0.80, +0.89], 16 independent blocks
-Val strong-conservative/expert-balanced
-Win: +2.93; 95% interval [+0.20, +5.76], 256 independent blocks
-Score: +0.31; 95% interval [+0.12, +0.50], 256 independent blocks
-Val strong-conservative/val-expert-balanced-strong-balanced-strong-balanced
-Win: +14.06; 95% interval [+0.00, +31.25], 16 independent blocks
-Score: +1.23; 95% interval [+0.33, +2.27], 16 independent blocks
-Val strong-assertive/expert-balanced
-Win: -0.59; 95% interval [-3.42, +2.25], 256 independent blocks
-Score: -0.08; 95% interval [-0.32, +0.17], 256 independent blocks
-Val strong-assertive/val-expert-balanced-strong-balanced-strong-balanced
-Win: +6.25; 95% interval [+0.00, +18.75], 16 independent blocks
-Score: +0.00; 95% interval [-0.69, +0.75], 16 independent blocks
-Val strong-partnership/expert-balanced
-Win: +0.29; 95% interval [+0.00, +0.88], 256 independent blocks
-Score: +0.00; 95% interval [-0.01, +0.03], 256 independent blocks
-Val strong-partnership/val-expert-balanced-strong-balanced-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.02; 95% interval [-0.14, +0.19], 16 independent blocks
-Val strong-balanced/val-expert-balanced-strong-balanced-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.03; 95% interval [-0.09, +0.19], 16 independent blocks
-Val strong-conservative/val-expert-balanced-strong-balanced-strong-conservative
-Win: +3.12; 95% interval [-4.69, +14.06], 16 independent blocks
-Score: +0.56; 95% interval [-0.25, +1.44], 16 independent blocks
-Val strong-assertive/val-expert-balanced-strong-balanced-strong-conservative
-Win: -6.25; 95% interval [-14.06, +0.00], 16 independent blocks
-Score: -0.27; 95% interval [-1.03, +0.53], 16 independent blocks
-Val strong-partnership/val-expert-balanced-strong-balanced-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.03; 95% interval [-0.09, +0.00], 16 independent blocks
-Val strong-balanced/val-expert-balanced-strong-balanced-strong-assertive
-Win: +1.56; 95% interval [+0.00, +4.69], 16 independent blocks
-Score: +0.25; 95% interval [-0.19, +0.94], 16 independent blocks
-Val strong-conservative/val-expert-balanced-strong-balanced-strong-assertive
-Win: +4.69; 95% interval [-4.69, +18.75], 16 independent blocks
-Score: +0.28; 95% interval [-0.34, +0.99], 16 independent blocks
-Val strong-assertive/val-expert-balanced-strong-balanced-strong-assertive
-Win: +1.56; 95% interval [+0.00, +4.69], 16 independent blocks
-Score: -0.12; 95% interval [-0.84, +0.78], 16 independent blocks
-Val strong-partnership/val-expert-balanced-strong-balanced-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-expert-balanced-strong-balanced-strong-partnership
-Win: +4.69; 95% interval [+0.00, +14.06], 16 independent blocks
-Score: +0.39; 95% interval [+0.00, +0.98], 16 independent blocks
-Val strong-conservative/val-expert-balanced-strong-balanced-strong-partnership
-Win: +3.12; 95% interval [-4.69, +14.06], 16 independent blocks
-Score: +0.05; 95% interval [-0.31, +0.55], 16 independent blocks
-Val strong-assertive/val-expert-balanced-strong-balanced-strong-partnership
-Win: +10.94; 95% interval [+0.00, +28.12], 16 independent blocks
-Score: -0.09; 95% interval [-1.20, +0.88], 16 independent blocks
-Val strong-partnership/val-expert-balanced-strong-balanced-strong-partnership
-Win: +4.69; 95% interval [+0.00, +14.06], 16 independent blocks
-Score: +0.14; 95% interval [+0.00, +0.42], 16 independent blocks
-Val strong-balanced/val-expert-balanced-strong-conservative-strong-balanced
-Win: +12.50; 95% interval [+0.00, +31.25], 16 independent blocks
-Score: +1.00; 95% interval [+0.00, +2.25], 16 independent blocks
-Val strong-conservative/val-expert-balanced-strong-conservative-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.02; 95% interval [-0.30, +0.31], 16 independent blocks
-Val strong-assertive/val-expert-balanced-strong-conservative-strong-balanced
-Win: +4.69; 95% interval [-6.25, +20.31], 16 independent blocks
-Score: +0.86; 95% interval [-0.09, +2.08], 16 independent blocks
-Val strong-partnership/val-expert-balanced-strong-conservative-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-expert-balanced-strong-conservative-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.06; 95% interval [-0.16, +0.36], 16 independent blocks
-Val strong-conservative/val-expert-balanced-strong-conservative-strong-conservative
-Win: +4.69; 95% interval [-15.62, +25.00], 16 independent blocks
-Score: +0.38; 95% interval [-0.62, +1.52], 16 independent blocks
-Val strong-assertive/val-expert-balanced-strong-conservative-strong-conservative
-Win: -7.81; 95% interval [-21.88, +0.00], 16 independent blocks
-Score: -0.44; 95% interval [-1.61, +0.34], 16 independent blocks
-Val strong-partnership/val-expert-balanced-strong-conservative-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.05; 95% interval [-0.14, +0.00], 16 independent blocks
-Val strong-balanced/val-expert-balanced-strong-conservative-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.19; 95% interval [+0.00, +0.56], 16 independent blocks
-Val strong-conservative/val-expert-balanced-strong-conservative-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.03; 95% interval [-0.38, +0.52], 16 independent blocks
-Val strong-assertive/val-expert-balanced-strong-conservative-strong-assertive
-Win: +0.00; 95% interval [-18.75, +18.75], 16 independent blocks
-Score: +0.45; 95% interval [-1.03, +1.92], 16 independent blocks
-Val strong-partnership/val-expert-balanced-strong-conservative-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-expert-balanced-strong-conservative-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.06; 95% interval [+0.00, +0.19], 16 independent blocks
-Val strong-conservative/val-expert-balanced-strong-conservative-strong-partnership
-Win: +3.12; 95% interval [+0.00, +9.38], 16 independent blocks
-Score: +0.64; 95% interval [+0.17, +1.38], 16 independent blocks
-Val strong-assertive/val-expert-balanced-strong-conservative-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.06; 95% interval [-0.50, +0.31], 16 independent blocks
-Val strong-partnership/val-expert-balanced-strong-conservative-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-expert-balanced-strong-assertive-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.06; 95% interval [+0.00, +0.19], 16 independent blocks
-Val strong-conservative/val-expert-balanced-strong-assertive-strong-balanced
-Win: +1.56; 95% interval [+0.00, +4.69], 16 independent blocks
-Score: +0.50; 95% interval [-0.03, +1.20], 16 independent blocks
-Val strong-assertive/val-expert-balanced-strong-assertive-strong-balanced
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: -0.81; 95% interval [-1.86, -0.02], 16 independent blocks
-Val strong-partnership/val-expert-balanced-strong-assertive-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-expert-balanced-strong-assertive-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.03; 95% interval [-0.09, +0.19], 16 independent blocks
-Val strong-conservative/val-expert-balanced-strong-assertive-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.11; 95% interval [-0.12, +0.39], 16 independent blocks
-Val strong-assertive/val-expert-balanced-strong-assertive-strong-conservative
-Win: -6.25; 95% interval [-18.75, +0.00], 16 independent blocks
-Score: -0.16; 95% interval [-0.83, +0.48], 16 independent blocks
-Val strong-partnership/val-expert-balanced-strong-assertive-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-expert-balanced-strong-assertive-strong-assertive
-Win: -3.12; 95% interval [-14.06, +4.69], 16 independent blocks
-Score: -0.14; 95% interval [-0.80, +0.38], 16 independent blocks
-Val strong-conservative/val-expert-balanced-strong-assertive-strong-assertive
-Win: +1.56; 95% interval [-12.50, +18.75], 16 independent blocks
-Score: +0.16; 95% interval [-0.72, +1.23], 16 independent blocks
-Val strong-assertive/val-expert-balanced-strong-assertive-strong-assertive
-Win: +1.56; 95% interval [+0.00, +4.69], 16 independent blocks
-Score: -0.06; 95% interval [-0.44, +0.31], 16 independent blocks
-Val strong-partnership/val-expert-balanced-strong-assertive-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-expert-balanced-strong-assertive-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.25; 95% interval [+0.00, +0.73], 16 independent blocks
-Val strong-conservative/val-expert-balanced-strong-assertive-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.06; 95% interval [-0.56, +0.75], 16 independent blocks
-Val strong-assertive/val-expert-balanced-strong-assertive-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.14; 95% interval [-0.19, +0.70], 16 independent blocks
-Val strong-partnership/val-expert-balanced-strong-assertive-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-expert-balanced-strong-partnership-strong-balanced
-Win: +3.12; 95% interval [+0.00, +9.38], 16 independent blocks
-Score: +0.22; 95% interval [+0.00, +0.66], 16 independent blocks
-Val strong-conservative/val-expert-balanced-strong-partnership-strong-balanced
-Win: +0.00; 95% interval [-18.75, +18.75], 16 independent blocks
-Score: +0.31; 95% interval [-0.99, +1.70], 16 independent blocks
-Val strong-assertive/val-expert-balanced-strong-partnership-strong-balanced
-Win: -7.81; 95% interval [-31.25, +15.62], 16 independent blocks
-Score: -0.61; 95% interval [-2.00, +0.67], 16 independent blocks
-Val strong-partnership/val-expert-balanced-strong-partnership-strong-balanced
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-expert-balanced-strong-partnership-strong-conservative
-Win: +6.25; 95% interval [+0.00, +18.75], 16 independent blocks
-Score: +0.62; 95% interval [-0.06, +1.75], 16 independent blocks
-Val strong-conservative/val-expert-balanced-strong-partnership-strong-conservative
-Win: +9.38; 95% interval [+0.00, +25.00], 16 independent blocks
-Score: +0.67; 95% interval [-0.22, +1.74], 16 independent blocks
-Val strong-assertive/val-expert-balanced-strong-partnership-strong-conservative
-Win: +6.25; 95% interval [-3.12, +20.31], 16 independent blocks
-Score: +0.64; 95% interval [-0.67, +2.24], 16 independent blocks
-Val strong-partnership/val-expert-balanced-strong-partnership-strong-conservative
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-expert-balanced-strong-partnership-strong-assertive
-Win: -9.38; 95% interval [-25.00, +0.00], 16 independent blocks
-Score: -0.83; 95% interval [-2.06, +0.00], 16 independent blocks
-Val strong-conservative/val-expert-balanced-strong-partnership-strong-assertive
-Win: +1.56; 95% interval [-9.38, +17.19], 16 independent blocks
-Score: +0.12; 95% interval [-0.53, +0.84], 16 independent blocks
-Val strong-assertive/val-expert-balanced-strong-partnership-strong-assertive
-Win: -3.12; 95% interval [-9.38, +0.00], 16 independent blocks
-Score: -0.61; 95% interval [-1.70, +0.00], 16 independent blocks
-Val strong-partnership/val-expert-balanced-strong-partnership-strong-assertive
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Val strong-balanced/val-expert-balanced-strong-partnership-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.12; 95% interval [+0.00, +0.38], 16 independent blocks
-Val strong-conservative/val-expert-balanced-strong-partnership-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: -0.19; 95% interval [-0.50, +0.00], 16 independent blocks
-Val strong-assertive/val-expert-balanced-strong-partnership-strong-partnership
-Win: -3.12; 95% interval [-9.38, +0.00], 16 independent blocks
-Score: -0.12; 95% interval [-0.94, +0.44], 16 independent blocks
-Val strong-partnership/val-expert-balanced-strong-partnership-strong-partnership
-Win: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
-Score: +0.00; 95% interval [+0.00, +0.00], 16 independent blocks
+voluntary_call_rate: +0.59; 95% interval [-1.75, +2.79]; 160 independent blocks
+make_rate: -3.73; 95% interval [-7.53, -0.11]; 160 independent blocks
+net_points_per_call: -0.11; 95% interval [-0.27, +0.04]; 160 independent blocks
+teams casual-vs-strong
+win: +70.70; 95% interval [+67.97, +73.31]; 384 independent blocks
+family-wise: +70.70; 95% interval [+66.83, +74.74]; 384 independent blocks
+score: +2.59; 95% interval [+2.34, +2.82]; 384 independent blocks
+teams casual-balanced-vs-strong-balanced
+win: +73.44; 95% interval [+65.62, +81.25]; 32 independent blocks
+score: +2.53; 95% interval [+1.72, +3.38]; 32 independent blocks
+teams casual-balanced-vs-strong-conservative
+win: +56.25; 95% interval [+46.88, +65.62]; 32 independent blocks
+score: +1.23; 95% interval [+0.41, +2.09]; 32 independent blocks
+teams casual-balanced-vs-strong-assertive
+win: +78.12; 95% interval [+68.75, +87.50]; 32 independent blocks
+score: +3.17; 95% interval [+2.23, +4.08]; 32 independent blocks
+teams casual-balanced-vs-strong-partnership
+win: +73.44; 95% interval [+65.55, +81.25]; 32 independent blocks
+score: +2.91; 95% interval [+2.00, +3.78]; 32 independent blocks
+teams casual-cautious-vs-strong-balanced
+win: +76.56; 95% interval [+68.75, +84.38]; 32 independent blocks
+score: +3.41; 95% interval [+2.72, +4.08]; 32 independent blocks
+teams casual-cautious-vs-strong-conservative
+win: +75.00; 95% interval [+67.19, +84.38]; 32 independent blocks
+score: +2.72; 95% interval [+2.02, +3.47]; 32 independent blocks
+teams casual-cautious-vs-strong-assertive
+win: +76.56; 95% interval [+67.19, +85.94]; 32 independent blocks
+score: +4.25; 95% interval [+3.42, +5.02]; 32 independent blocks
+teams casual-cautious-vs-strong-partnership
+win: +70.31; 95% interval [+62.50, +79.69]; 32 independent blocks
+score: +2.72; 95% interval [+1.97, +3.45]; 32 independent blocks
+teams casual-bold-vs-strong-balanced
+win: +67.19; 95% interval [+57.81, +76.56]; 32 independent blocks
+score: +1.91; 95% interval [+1.16, +2.66]; 32 independent blocks
+teams casual-bold-vs-strong-conservative
+win: +68.75; 95% interval [+57.81, +78.12]; 32 independent blocks
+score: +2.31; 95% interval [+1.33, +3.30]; 32 independent blocks
+teams casual-bold-vs-strong-assertive
+win: +65.62; 95% interval [+56.25, +75.00]; 32 independent blocks
+score: +2.17; 95% interval [+1.11, +3.17]; 32 independent blocks
+teams casual-bold-vs-strong-partnership
+win: +67.19; 95% interval [+57.81, +76.56]; 32 independent blocks
+score: +1.77; 95% interval [+0.89, +2.61]; 32 independent blocks
+teams strong-vs-expert
+win: +58.33; 95% interval [+55.86, +60.68]; 384 independent blocks
+family-wise: +58.33; 95% interval [+54.44, +62.21]; 384 independent blocks
+score: +1.10; 95% interval [+0.89, +1.32]; 384 independent blocks
+teams strong-balanced-vs-expert-balanced
+win: +59.38; 95% interval [+50.00, +68.75]; 32 independent blocks
+score: +1.39; 95% interval [+0.50, +2.25]; 32 independent blocks
+teams strong-balanced-vs-expert-conservative
+win: +53.12; 95% interval [+46.88, +59.38]; 32 independent blocks
+score: +0.91; 95% interval [+0.37, +1.44]; 32 independent blocks
+teams strong-balanced-vs-expert-assertive
+win: +57.81; 95% interval [+48.44, +67.19]; 32 independent blocks
+score: +1.30; 95% interval [+0.42, +2.14]; 32 independent blocks
+teams strong-conservative-vs-expert-balanced
+win: +60.94; 95% interval [+51.56, +70.31]; 32 independent blocks
+score: +2.02; 95% interval [+1.23, +2.83]; 32 independent blocks
+teams strong-conservative-vs-expert-conservative
+win: +64.06; 95% interval [+54.69, +73.44]; 32 independent blocks
+score: +1.56; 95% interval [+0.73, +2.41]; 32 independent blocks
+teams strong-conservative-vs-expert-assertive
+win: +64.06; 95% interval [+56.25, +71.88]; 32 independent blocks
+score: +1.59; 95% interval [+0.86, +2.31]; 32 independent blocks
+teams strong-assertive-vs-expert-balanced
+win: +62.50; 95% interval [+56.25, +70.31]; 32 independent blocks
+score: +0.97; 95% interval [+0.44, +1.49]; 32 independent blocks
+teams strong-assertive-vs-expert-conservative
+win: +51.56; 95% interval [+45.31, +57.81]; 32 independent blocks
+score: +0.47; 95% interval [-0.09, +1.08]; 32 independent blocks
+teams strong-assertive-vs-expert-assertive
+win: +60.94; 95% interval [+53.12, +68.75]; 32 independent blocks
+score: +0.89; 95% interval [+0.20, +1.59]; 32 independent blocks
+teams strong-partnership-vs-expert-balanced
+win: +50.00; 95% interval [+42.19, +59.38]; 32 independent blocks
+score: +0.62; 95% interval [-0.25, +1.50]; 32 independent blocks
+teams strong-partnership-vs-expert-conservative
+win: +57.81; 95% interval [+50.00, +65.62]; 32 independent blocks
+score: +0.36; 95% interval [-0.05, +0.80]; 32 independent blocks
+teams strong-partnership-vs-expert-assertive
+win: +57.81; 95% interval [+50.00, +67.19]; 32 independent blocks
+score: +1.08; 95% interval [+0.33, +1.88]; 32 independent blocks
+teams casual-vs-expert
+win: +80.21; 95% interval [+77.43, +82.99]; 288 independent blocks
+family-wise: +80.21; 95% interval [+75.72, +83.85]; 288 independent blocks
+score: +3.60; 95% interval [+3.33, +3.85]; 288 independent blocks
+teams casual-balanced-vs-expert-balanced
+win: +82.81; 95% interval [+75.00, +90.62]; 32 independent blocks
+score: +3.72; 95% interval [+2.97, +4.50]; 32 independent blocks
+teams casual-balanced-vs-expert-conservative
+win: +81.25; 95% interval [+73.36, +89.06]; 32 independent blocks
+score: +3.75; 95% interval [+3.05, +4.48]; 32 independent blocks
+teams casual-balanced-vs-expert-assertive
+win: +84.38; 95% interval [+76.56, +92.19]; 32 independent blocks
+score: +3.80; 95% interval [+2.95, +4.62]; 32 independent blocks
+teams casual-cautious-vs-expert-balanced
+win: +87.50; 95% interval [+79.69, +93.75]; 32 independent blocks
+score: +4.47; 95% interval [+3.88, +5.08]; 32 independent blocks
+teams casual-cautious-vs-expert-conservative
+win: +81.25; 95% interval [+73.44, +89.06]; 32 independent blocks
+score: +3.88; 95% interval [+3.14, +4.66]; 32 independent blocks
+teams casual-cautious-vs-expert-assertive
+win: +81.25; 95% interval [+71.88, +90.62]; 32 independent blocks
+score: +4.27; 95% interval [+3.22, +5.27]; 32 independent blocks
+teams casual-bold-vs-expert-balanced
+win: +71.88; 95% interval [+64.06, +81.25]; 32 independent blocks
+score: +2.75; 95% interval [+2.03, +3.52]; 32 independent blocks
+teams casual-bold-vs-expert-conservative
+win: +76.56; 95% interval [+67.19, +85.94]; 32 independent blocks
+score: +2.88; 95% interval [+2.06, +3.69]; 32 independent blocks
+teams casual-bold-vs-expert-assertive
+win: +75.00; 95% interval [+65.62, +84.38]; 32 independent blocks
+score: +2.86; 95% interval [+2.06, +3.67]; 32 independent blocks
+common casual-vs-strong
+win: +13.80; 95% interval [+9.90, +17.97]; 384 independent blocks
+family-wise: +13.80; 95% interval [+8.10, +19.76]; 384 independent blocks
+score: +1.43; 95% interval [+1.12, +1.75]; 384 independent blocks
+common casual-balanced-vs-strong-balanced
+win: +25.00; 95% interval [+12.50, +40.62]; 32 independent blocks
+score: +2.62; 95% interval [+1.50, +3.94]; 32 independent blocks
+common casual-balanced-vs-strong-conservative
+win: +21.88; 95% interval [+9.38, +37.50]; 32 independent blocks
+score: +1.91; 95% interval [+0.84, +3.09]; 32 independent blocks
+common casual-balanced-vs-strong-assertive
+win: +15.62; 95% interval [+3.12, +28.12]; 32 independent blocks
+score: +1.62; 95% interval [+0.69, +2.69]; 32 independent blocks
+common casual-balanced-vs-strong-partnership
+win: +6.25; 95% interval [-6.25, +18.75]; 32 independent blocks
+score: +0.66; 95% interval [-0.06, +1.31]; 32 independent blocks
+common casual-cautious-vs-strong-balanced
+win: +9.38; 95% interval [-3.12, +25.00]; 32 independent blocks
+score: +0.97; 95% interval [-0.06, +2.00]; 32 independent blocks
+common casual-cautious-vs-strong-conservative
+win: +12.50; 95% interval [-3.12, +28.12]; 32 independent blocks
+score: +1.62; 95% interval [+0.59, +2.66]; 32 independent blocks
+common casual-cautious-vs-strong-assertive
+win: +28.12; 95% interval [+12.50, +43.75]; 32 independent blocks
+score: +2.69; 95% interval [+1.47, +4.03]; 32 independent blocks
+common casual-cautious-vs-strong-partnership
+win: +3.12; 95% interval [-6.25, +12.50]; 32 independent blocks
+score: +0.62; 95% interval [-0.10, +1.50]; 32 independent blocks
+common casual-bold-vs-strong-balanced
+win: -6.25; 95% interval [-21.88, +9.38]; 32 independent blocks
+score: +0.09; 95% interval [-1.03, +1.31]; 32 independent blocks
+common casual-bold-vs-strong-conservative
+win: +12.50; 95% interval [-3.12, +28.12]; 32 independent blocks
+score: +1.53; 95% interval [+0.34, +2.78]; 32 independent blocks
+common casual-bold-vs-strong-assertive
+win: +15.62; 95% interval [+3.12, +28.12]; 32 independent blocks
+score: +1.81; 95% interval [+0.62, +3.00]; 32 independent blocks
+common casual-bold-vs-strong-partnership
+win: +21.88; 95% interval [+9.38, +37.50]; 32 independent blocks
+score: +1.06; 95% interval [-0.31, +2.44]; 32 independent blocks
+common strong-vs-expert
+win: +6.84; 95% interval [+3.26, +10.55]; 384 independent blocks
+family-wise: +6.84; 95% interval [+1.89, +12.30]; 384 independent blocks
+score: +0.71; 95% interval [+0.44, +0.98]; 384 independent blocks
+common strong-balanced-vs-expert-balanced
+win: +7.03; 95% interval [-4.69, +19.53]; 32 independent blocks
+score: +1.09; 95% interval [+0.22, +1.94]; 32 independent blocks
+common strong-balanced-vs-expert-conservative
+win: +3.12; 95% interval [-4.69, +12.50]; 32 independent blocks
+score: +0.32; 95% interval [-0.30, +0.89]; 32 independent blocks
+common strong-balanced-vs-expert-assertive
+win: +12.50; 95% interval [+2.34, +25.00]; 32 independent blocks
+score: +1.20; 95% interval [+0.37, +2.24]; 32 independent blocks
+common strong-conservative-vs-expert-balanced
+win: +9.38; 95% interval [-3.91, +22.70]; 32 independent blocks
+score: +0.84; 95% interval [-0.13, +1.84]; 32 independent blocks
+common strong-conservative-vs-expert-conservative
+win: +7.03; 95% interval [-11.72, +25.00]; 32 independent blocks
+score: +0.70; 95% interval [-0.46, +1.82]; 32 independent blocks
+common strong-conservative-vs-expert-assertive
+win: +22.66; 95% interval [+6.25, +39.06]; 32 independent blocks
+score: +1.84; 95% interval [+0.73, +3.00]; 32 independent blocks
+common strong-assertive-vs-expert-balanced
+win: +2.34; 95% interval [-11.72, +16.41]; 32 independent blocks
+score: +0.72; 95% interval [-0.34, +1.75]; 32 independent blocks
+common strong-assertive-vs-expert-conservative
+win: +0.00; 95% interval [-9.38, +9.38]; 32 independent blocks
+score: -0.19; 95% interval [-0.88, +0.54]; 32 independent blocks
+common strong-assertive-vs-expert-assertive
+win: +7.03; 95% interval [-8.59, +22.66]; 32 independent blocks
+score: +0.61; 95% interval [-0.34, +1.60]; 32 independent blocks
+common strong-partnership-vs-expert-balanced
+win: +7.03; 95% interval [+0.00, +16.41]; 32 independent blocks
+score: +1.01; 95% interval [+0.16, +2.00]; 32 independent blocks
+common strong-partnership-vs-expert-conservative
+win: -1.56; 95% interval [-7.03, +2.34]; 32 independent blocks
+score: +0.29; 95% interval [-0.05, +0.66]; 32 independent blocks
+common strong-partnership-vs-expert-assertive
+win: +5.47; 95% interval [-6.25, +18.75]; 32 independent blocks
+score: +0.07; 95% interval [-0.77, +0.88]; 32 independent blocks
+common casual-vs-expert
+win: +19.44; 95% interval [+14.58, +24.74]; 288 independent blocks
+family-wise: +19.44; 95% interval [+11.91, +27.25]; 288 independent blocks
+score: +2.01; 95% interval [+1.64, +2.42]; 288 independent blocks
+common casual-balanced-vs-expert-balanced
+win: +21.88; 95% interval [+5.47, +39.06]; 32 independent blocks
+score: +2.13; 95% interval [+0.78, +3.62]; 32 independent blocks
+common casual-balanced-vs-expert-conservative
+win: +8.59; 95% interval [-3.12, +21.88]; 32 independent blocks
+score: +0.76; 95% interval [-0.27, +1.86]; 32 independent blocks
+common casual-balanced-vs-expert-assertive
+win: +13.28; 95% interval [+0.78, +27.34]; 32 independent blocks
+score: +1.83; 95% interval [+0.91, +2.78]; 32 independent blocks
+common casual-cautious-vs-expert-balanced
+win: +17.97; 95% interval [+5.47, +31.25]; 32 independent blocks
+score: +2.23; 95% interval [+1.43, +3.16]; 32 independent blocks
+common casual-cautious-vs-expert-conservative
+win: +20.31; 95% interval [+5.47, +37.50]; 32 independent blocks
+score: +1.82; 95% interval [+0.70, +3.01]; 32 independent blocks
+common casual-cautious-vs-expert-assertive
+win: +26.56; 95% interval [+7.81, +45.35]; 32 independent blocks
+score: +3.47; 95% interval [+2.12, +4.88]; 32 independent blocks
+common casual-bold-vs-expert-balanced
+win: +18.75; 95% interval [+3.12, +34.38]; 32 independent blocks
+score: +1.97; 95% interval [+0.73, +3.35]; 32 independent blocks
+common casual-bold-vs-expert-conservative
+win: +22.66; 95% interval [+9.38, +36.72]; 32 independent blocks
+score: +2.15; 95% interval [+0.84, +3.39]; 32 independent blocks
+common casual-bold-vs-expert-assertive
+win: +25.00; 95% interval [+11.72, +39.84]; 32 independent blocks
+score: +1.77; 95% interval [+0.84, +2.73]; 32 independent blocks
+val strong-balanced
+win: +0.20; 95% interval [-0.85, +1.30]; 768 independent blocks
+family-wise: +0.20; 95% interval [-1.46, +1.75]; 768 independent blocks
+score: +0.08; 95% interval [+0.00, +0.17]; 768 independent blocks
+val strong-balanced/partner-casual-balanced
+win: +0.00; 95% interval [-1.56, +1.56]; 256 independent blocks
+score: +0.07; 95% interval [-0.05, +0.20]; 256 independent blocks
+val strong-balanced/val-casual-balanced-strong-balanced-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.06; 95% interval [-0.19, +0.00]; 16 independent blocks; sparse
+val strong-conservative
+win: +4.36; 95% interval [+2.54, +6.22]; 768 independent blocks
+family-wise: +4.36; 95% interval [+1.83, +7.30]; 768 independent blocks
+score: +0.44; 95% interval [+0.31, +0.58]; 768 independent blocks
+val strong-conservative/partner-casual-balanced
+win: +6.25; 95% interval [+2.73, +10.16]; 256 independent blocks
+score: +0.57; 95% interval [+0.32, +0.81]; 256 independent blocks
+val strong-conservative/val-casual-balanced-strong-balanced-strong-balanced
+win: +6.25; 95% interval [+0.00, +18.75]; 16 independent blocks; sparse
+score: +0.44; 95% interval [-0.12, +1.25]; 16 independent blocks; sparse
+val strong-assertive
+win: -2.15; 95% interval [-4.20, -0.10]; 768 independent blocks
+family-wise: -2.15; 95% interval [-5.20, +1.01]; 768 independent blocks
+score: -0.23; 95% interval [-0.39, -0.08]; 768 independent blocks
+val strong-assertive/partner-casual-balanced
+win: -1.56; 95% interval [-5.08, +1.95]; 256 independent blocks
+score: -0.26; 95% interval [-0.54, +0.01]; 256 independent blocks
+val strong-assertive/val-casual-balanced-strong-balanced-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.06; 95% interval [-0.19, +0.00]; 16 independent blocks; sparse
+val strong-partnership
+win: -0.29; 95% interval [-0.91, +0.23]; 768 independent blocks
+family-wise: -0.29; 95% interval [-1.29, +0.55]; 768 independent blocks
+score: -0.01; 95% interval [-0.04, +0.02]; 768 independent blocks
+val strong-partnership/partner-casual-balanced
+win: -0.78; 95% interval [-1.95, +0.00]; 256 independent blocks
+score: -0.03; 95% interval [-0.09, +0.02]; 256 independent blocks
+val strong-partnership/val-casual-balanced-strong-balanced-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-casual-balanced-strong-balanced-strong-conservative
+win: +6.25; 95% interval [+0.00, +18.75]; 16 independent blocks; sparse
+score: +0.75; 95% interval [+0.00, +2.06]; 16 independent blocks; sparse
+val strong-conservative/val-casual-balanced-strong-balanced-strong-conservative
+win: +18.75; 95% interval [+0.00, +37.50]; 16 independent blocks; sparse
+score: +1.12; 95% interval [-0.31, +2.50]; 16 independent blocks; sparse
+val strong-assertive/val-casual-balanced-strong-balanced-strong-conservative
+win: +25.00; 95% interval [+6.25, +50.00]; 16 independent blocks; sparse
+score: +1.75; 95% interval [+0.38, +3.31]; 16 independent blocks; sparse
+val strong-partnership/val-casual-balanced-strong-balanced-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-casual-balanced-strong-balanced-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [-0.19, +0.19]; 16 independent blocks; sparse
+val strong-conservative/val-casual-balanced-strong-balanced-strong-assertive
+win: +6.25; 95% interval [+0.00, +18.75]; 16 independent blocks; sparse
+score: +0.50; 95% interval [+0.00, +1.12]; 16 independent blocks; sparse
+val strong-assertive/val-casual-balanced-strong-balanced-strong-assertive
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: -1.00; 95% interval [-3.06, +0.44]; 16 independent blocks; sparse
+val strong-partnership/val-casual-balanced-strong-balanced-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-casual-balanced-strong-balanced-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.06; 95% interval [-0.19, +0.38]; 16 independent blocks; sparse
+val strong-conservative/val-casual-balanced-strong-balanced-strong-partnership
+win: +12.50; 95% interval [+0.00, +31.25]; 16 independent blocks; sparse
+score: +1.19; 95% interval [-0.06, +2.75]; 16 independent blocks; sparse
+val strong-assertive/val-casual-balanced-strong-balanced-strong-partnership
+win: -6.25; 95% interval [-25.00, +12.50]; 16 independent blocks; sparse
+score: -0.19; 95% interval [-1.56, +1.44]; 16 independent blocks; sparse
+val strong-partnership/val-casual-balanced-strong-balanced-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.12; 95% interval [+0.00, +0.38]; 16 independent blocks; sparse
+val strong-balanced/val-casual-balanced-strong-conservative-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-conservative/val-casual-balanced-strong-conservative-strong-balanced
+win: +6.25; 95% interval [-12.50, +25.00]; 16 independent blocks; sparse
+score: +0.12; 95% interval [-0.81, +1.00]; 16 independent blocks; sparse
+val strong-assertive/val-casual-balanced-strong-conservative-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.88; 95% interval [-1.56, -0.25]; 16 independent blocks; sparse
+val strong-partnership/val-casual-balanced-strong-conservative-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-casual-balanced-strong-conservative-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.31; 95% interval [+0.00, +0.88]; 16 independent blocks; sparse
+val strong-conservative/val-casual-balanced-strong-conservative-strong-conservative
+win: +12.50; 95% interval [+0.00, +31.25]; 16 independent blocks; sparse
+score: +1.06; 95% interval [+0.25, +2.00]; 16 independent blocks; sparse
+val strong-assertive/val-casual-balanced-strong-conservative-strong-conservative
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: -1.44; 95% interval [-3.06, -0.25]; 16 independent blocks; sparse
+val strong-partnership/val-casual-balanced-strong-conservative-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-casual-balanced-strong-conservative-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.12; 95% interval [+0.00, +0.31]; 16 independent blocks; sparse
+val strong-conservative/val-casual-balanced-strong-conservative-strong-assertive
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: -0.38; 95% interval [-1.44, +0.31]; 16 independent blocks; sparse
+val strong-assertive/val-casual-balanced-strong-conservative-strong-assertive
+win: -12.50; 95% interval [-31.25, +0.00]; 16 independent blocks; sparse
+score: -0.50; 95% interval [-1.81, +0.62]; 16 independent blocks; sparse
+val strong-partnership/val-casual-balanced-strong-conservative-strong-assertive
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: -0.31; 95% interval [-0.94, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-casual-balanced-strong-conservative-strong-partnership
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: -0.38; 95% interval [-1.56, +0.44]; 16 independent blocks; sparse
+val strong-conservative/val-casual-balanced-strong-conservative-strong-partnership
+win: +0.00; 95% interval [-18.75, +18.75]; 16 independent blocks; sparse
+score: +0.12; 95% interval [-1.56, +1.56]; 16 independent blocks; sparse
+val strong-assertive/val-casual-balanced-strong-conservative-strong-partnership
+win: +0.00; 95% interval [-18.75, +18.75]; 16 independent blocks; sparse
+score: +0.56; 95% interval [-0.31, +1.75]; 16 independent blocks; sparse
+val strong-partnership/val-casual-balanced-strong-conservative-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-casual-balanced-strong-assertive-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.06; 95% interval [-0.12, +0.25]; 16 independent blocks; sparse
+val strong-conservative/val-casual-balanced-strong-assertive-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.31; 95% interval [-0.12, +0.88]; 16 independent blocks; sparse
+val strong-assertive/val-casual-balanced-strong-assertive-strong-balanced
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: -0.38; 95% interval [-1.25, +0.25]; 16 independent blocks; sparse
+val strong-partnership/val-casual-balanced-strong-assertive-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-casual-balanced-strong-assertive-strong-conservative
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: +0.19; 95% interval [-0.56, +0.88]; 16 independent blocks; sparse
+val strong-conservative/val-casual-balanced-strong-assertive-strong-conservative
+win: +18.75; 95% interval [+0.00, +37.50]; 16 independent blocks; sparse
+score: +0.75; 95% interval [-0.12, +1.81]; 16 independent blocks; sparse
+val strong-assertive/val-casual-balanced-strong-assertive-strong-conservative
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [-1.19, +1.12]; 16 independent blocks; sparse
+val strong-partnership/val-casual-balanced-strong-assertive-strong-conservative
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: -0.25; 95% interval [-0.75, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-casual-balanced-strong-assertive-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.06; 95% interval [-0.19, +0.00]; 16 independent blocks; sparse
+val strong-conservative/val-casual-balanced-strong-assertive-strong-assertive
+win: +12.50; 95% interval [+0.00, +31.25]; 16 independent blocks; sparse
+score: +1.69; 95% interval [+0.44, +3.19]; 16 independent blocks; sparse
+val strong-assertive/val-casual-balanced-strong-assertive-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.50; 95% interval [-1.50, +0.31]; 16 independent blocks; sparse
+val strong-partnership/val-casual-balanced-strong-assertive-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-casual-balanced-strong-assertive-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.12; 95% interval [+0.00, +0.38]; 16 independent blocks; sparse
+val strong-conservative/val-casual-balanced-strong-assertive-strong-partnership
+win: +6.25; 95% interval [+0.00, +18.75]; 16 independent blocks; sparse
+score: +1.06; 95% interval [+0.25, +2.06]; 16 independent blocks; sparse
+val strong-assertive/val-casual-balanced-strong-assertive-strong-partnership
+win: +0.00; 95% interval [-18.75, +18.75]; 16 independent blocks; sparse
+score: -0.25; 95% interval [-1.25, +0.88]; 16 independent blocks; sparse
+val strong-partnership/val-casual-balanced-strong-assertive-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-casual-balanced-strong-partnership-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.19; 95% interval [-0.56, +0.00]; 16 independent blocks; sparse
+val strong-conservative/val-casual-balanced-strong-partnership-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.19; 95% interval [-0.62, +1.06]; 16 independent blocks; sparse
+val strong-assertive/val-casual-balanced-strong-partnership-strong-balanced
+win: -12.50; 95% interval [-31.25, +0.00]; 16 independent blocks; sparse
+score: -1.44; 95% interval [-2.82, -0.31]; 16 independent blocks; sparse
+val strong-partnership/val-casual-balanced-strong-partnership-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-casual-balanced-strong-partnership-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.06; 95% interval [+0.00, +0.19]; 16 independent blocks; sparse
+val strong-conservative/val-casual-balanced-strong-partnership-strong-conservative
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [-0.69, +0.69]; 16 independent blocks; sparse
+val strong-assertive/val-casual-balanced-strong-partnership-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.31; 95% interval [-0.06, +0.75]; 16 independent blocks; sparse
+val strong-partnership/val-casual-balanced-strong-partnership-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-casual-balanced-strong-partnership-strong-assertive
+win: +6.25; 95% interval [+0.00, +18.75]; 16 independent blocks; sparse
+score: +0.12; 95% interval [-0.56, +0.94]; 16 independent blocks; sparse
+val strong-conservative/val-casual-balanced-strong-partnership-strong-assertive
+win: +12.50; 95% interval [+0.00, +31.25]; 16 independent blocks; sparse
+score: +0.38; 95% interval [-0.38, +1.19]; 16 independent blocks; sparse
+val strong-assertive/val-casual-balanced-strong-partnership-strong-assertive
+win: +18.75; 95% interval [+0.00, +37.50]; 16 independent blocks; sparse
+score: +0.56; 95% interval [-0.56, +1.75]; 16 independent blocks; sparse
+val strong-partnership/val-casual-balanced-strong-partnership-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-casual-balanced-strong-partnership-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.06; 95% interval [+0.00, +0.19]; 16 independent blocks; sparse
+val strong-conservative/val-casual-balanced-strong-partnership-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.56; 95% interval [+0.12, +1.12]; 16 independent blocks; sparse
+val strong-assertive/val-casual-balanced-strong-partnership-strong-partnership
+win: -12.50; 95% interval [-31.25, +0.00]; 16 independent blocks; sparse
+score: -0.69; 95% interval [-1.56, +0.00]; 16 independent blocks; sparse
+val strong-partnership/val-casual-balanced-strong-partnership-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/partner-strong-balanced
+win: -0.39; 95% interval [-2.34, +1.56]; 256 independent blocks
+score: +0.03; 95% interval [-0.12, +0.19]; 256 independent blocks
+val strong-balanced/val-strong-balanced-strong-balanced-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.06; 95% interval [+0.00, +0.19]; 16 independent blocks; sparse
+val strong-conservative/partner-strong-balanced
+win: +3.91; 95% interval [+0.78, +7.42]; 256 independent blocks
+score: +0.45; 95% interval [+0.19, +0.72]; 256 independent blocks
+val strong-conservative/val-strong-balanced-strong-balanced-strong-balanced
+win: +12.50; 95% interval [+0.00, +31.25]; 16 independent blocks; sparse
+score: +0.50; 95% interval [-0.31, +1.50]; 16 independent blocks; sparse
+val strong-assertive/partner-strong-balanced
+win: -4.30; 95% interval [-8.20, -0.39]; 256 independent blocks
+score: -0.36; 95% interval [-0.61, -0.09]; 256 independent blocks
+val strong-assertive/val-strong-balanced-strong-balanced-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.12; 95% interval [-0.88, +0.56]; 16 independent blocks; sparse
+val strong-partnership/partner-strong-balanced
+win: -0.39; 95% interval [-1.56, +0.78]; 256 independent blocks
+score: +0.00; 95% interval [-0.07, +0.06]; 256 independent blocks
+val strong-partnership/val-strong-balanced-strong-balanced-strong-balanced
+win: +6.25; 95% interval [+0.00, +18.75]; 16 independent blocks; sparse
+score: +0.19; 95% interval [+0.00, +0.56]; 16 independent blocks; sparse
+val strong-balanced/val-strong-balanced-strong-balanced-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.06; 95% interval [-0.19, +0.00]; 16 independent blocks; sparse
+val strong-conservative/val-strong-balanced-strong-balanced-strong-conservative
+win: +0.00; 95% interval [-18.75, +18.75]; 16 independent blocks; sparse
+score: -0.38; 95% interval [-1.31, +0.31]; 16 independent blocks; sparse
+val strong-assertive/val-strong-balanced-strong-balanced-strong-conservative
+win: -25.00; 95% interval [-50.00, -6.25]; 16 independent blocks; sparse
+score: -1.38; 95% interval [-2.94, -0.06]; 16 independent blocks; sparse
+val strong-partnership/val-strong-balanced-strong-balanced-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-strong-balanced-strong-balanced-strong-assertive
+win: +6.25; 95% interval [+0.00, +18.75]; 16 independent blocks; sparse
+score: +0.62; 95% interval [+0.00, +1.56]; 16 independent blocks; sparse
+val strong-conservative/val-strong-balanced-strong-balanced-strong-assertive
+win: +6.25; 95% interval [+0.00, +18.75]; 16 independent blocks; sparse
+score: +0.62; 95% interval [-0.06, +1.44]; 16 independent blocks; sparse
+val strong-assertive/val-strong-balanced-strong-balanced-strong-assertive
+win: +6.25; 95% interval [-12.50, +31.25]; 16 independent blocks; sparse
+score: +0.19; 95% interval [-1.06, +1.44]; 16 independent blocks; sparse
+val strong-partnership/val-strong-balanced-strong-balanced-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-strong-balanced-strong-balanced-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.06; 95% interval [+0.00, +0.19]; 16 independent blocks; sparse
+val strong-conservative/val-strong-balanced-strong-balanced-strong-partnership
+win: +6.25; 95% interval [+0.00, +18.75]; 16 independent blocks; sparse
+score: +0.38; 95% interval [+0.00, +1.00]; 16 independent blocks; sparse
+val strong-assertive/val-strong-balanced-strong-balanced-strong-partnership
+win: -6.25; 95% interval [-25.00, +12.50]; 16 independent blocks; sparse
+score: -1.00; 95% interval [-2.50, +0.38]; 16 independent blocks; sparse
+val strong-partnership/val-strong-balanced-strong-balanced-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-strong-balanced-strong-conservative-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.06; 95% interval [+0.00, +0.19]; 16 independent blocks; sparse
+val strong-conservative/val-strong-balanced-strong-conservative-strong-balanced
+win: +12.50; 95% interval [+0.00, +31.25]; 16 independent blocks; sparse
+score: +1.25; 95% interval [+0.12, +2.94]; 16 independent blocks; sparse
+val strong-assertive/val-strong-balanced-strong-conservative-strong-balanced
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: -0.62; 95% interval [-1.25, -0.12]; 16 independent blocks; sparse
+val strong-partnership/val-strong-balanced-strong-conservative-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-strong-balanced-strong-conservative-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.31; 95% interval [+0.00, +0.75]; 16 independent blocks; sparse
+val strong-conservative/val-strong-balanced-strong-conservative-strong-conservative
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: -0.56; 95% interval [-1.94, +0.50]; 16 independent blocks; sparse
+val strong-assertive/val-strong-balanced-strong-conservative-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.44; 95% interval [-0.31, +1.12]; 16 independent blocks; sparse
+val strong-partnership/val-strong-balanced-strong-conservative-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.19; 95% interval [+0.00, +0.56]; 16 independent blocks; sparse
+val strong-balanced/val-strong-balanced-strong-conservative-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.12; 95% interval [+0.00, +0.31]; 16 independent blocks; sparse
+val strong-conservative/val-strong-balanced-strong-conservative-strong-assertive
+win: +6.25; 95% interval [+0.00, +18.75]; 16 independent blocks; sparse
+score: +0.44; 95% interval [-0.31, +1.19]; 16 independent blocks; sparse
+val strong-assertive/val-strong-balanced-strong-conservative-strong-assertive
+win: +0.00; 95% interval [-18.75, +18.75]; 16 independent blocks; sparse
+score: -0.50; 95% interval [-1.44, +0.38]; 16 independent blocks; sparse
+val strong-partnership/val-strong-balanced-strong-conservative-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-strong-balanced-strong-conservative-strong-partnership
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: -0.12; 95% interval [-0.56, +0.12]; 16 independent blocks; sparse
+val strong-conservative/val-strong-balanced-strong-conservative-strong-partnership
+win: +6.25; 95% interval [+0.00, +18.75]; 16 independent blocks; sparse
+score: +1.00; 95% interval [-0.12, +2.50]; 16 independent blocks; sparse
+val strong-assertive/val-strong-balanced-strong-conservative-strong-partnership
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: -0.75; 95% interval [-1.50, -0.06]; 16 independent blocks; sparse
+val strong-partnership/val-strong-balanced-strong-conservative-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.12; 95% interval [-0.38, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-strong-balanced-strong-assertive-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-conservative/val-strong-balanced-strong-assertive-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.38; 95% interval [-0.12, +0.94]; 16 independent blocks; sparse
+val strong-assertive/val-strong-balanced-strong-assertive-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.44; 95% interval [-1.31, +0.25]; 16 independent blocks; sparse
+val strong-partnership/val-strong-balanced-strong-assertive-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-strong-balanced-strong-assertive-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.06; 95% interval [-0.81, +0.81]; 16 independent blocks; sparse
+val strong-conservative/val-strong-balanced-strong-assertive-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.75; 95% interval [+0.25, +1.44]; 16 independent blocks; sparse
+val strong-assertive/val-strong-balanced-strong-assertive-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.38; 95% interval [-0.12, +0.94]; 16 independent blocks; sparse
+val strong-partnership/val-strong-balanced-strong-assertive-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.25; 95% interval [+0.00, +0.75]; 16 independent blocks; sparse
+val strong-balanced/val-strong-balanced-strong-assertive-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-conservative/val-strong-balanced-strong-assertive-strong-assertive
+win: -12.50; 95% interval [-31.25, +0.00]; 16 independent blocks; sparse
+score: -0.31; 95% interval [-1.38, +0.69]; 16 independent blocks; sparse
+val strong-assertive/val-strong-balanced-strong-assertive-strong-assertive
+win: -25.00; 95% interval [-50.00, -6.25]; 16 independent blocks; sparse
+score: -1.25; 95% interval [-2.31, -0.38]; 16 independent blocks; sparse
+val strong-partnership/val-strong-balanced-strong-assertive-strong-assertive
+win: -12.50; 95% interval [-31.25, +0.00]; 16 independent blocks; sparse
+score: -0.50; 95% interval [-1.38, +0.12]; 16 independent blocks; sparse
+val strong-balanced/val-strong-balanced-strong-assertive-strong-partnership
+win: +0.00; 95% interval [-18.75, +18.75]; 16 independent blocks; sparse
+score: -0.12; 95% interval [-1.69, +1.44]; 16 independent blocks; sparse
+val strong-conservative/val-strong-balanced-strong-assertive-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.19; 95% interval [-0.56, +0.88]; 16 independent blocks; sparse
+val strong-assertive/val-strong-balanced-strong-assertive-strong-partnership
+win: -12.50; 95% interval [-37.50, +12.50]; 16 independent blocks; sparse
+score: -0.75; 95% interval [-2.50, +1.06]; 16 independent blocks; sparse
+val strong-partnership/val-strong-balanced-strong-assertive-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-strong-balanced-strong-partnership-strong-balanced
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: -0.12; 95% interval [-0.62, +0.38]; 16 independent blocks; sparse
+val strong-conservative/val-strong-balanced-strong-partnership-strong-balanced
+win: +6.25; 95% interval [+0.00, +18.75]; 16 independent blocks; sparse
+score: +0.75; 95% interval [+0.31, +1.25]; 16 independent blocks; sparse
+val strong-assertive/val-strong-balanced-strong-partnership-strong-balanced
+win: +0.00; 95% interval [-18.75, +18.75]; 16 independent blocks; sparse
+score: -0.12; 95% interval [-1.50, +0.94]; 16 independent blocks; sparse
+val strong-partnership/val-strong-balanced-strong-partnership-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-strong-balanced-strong-partnership-strong-conservative
+win: +0.00; 95% interval [-18.75, +18.75]; 16 independent blocks; sparse
+score: -0.31; 95% interval [-1.56, +0.81]; 16 independent blocks; sparse
+val strong-conservative/val-strong-balanced-strong-partnership-strong-conservative
+win: +6.25; 95% interval [-12.50, +25.00]; 16 independent blocks; sparse
+score: +0.56; 95% interval [-1.06, +1.94]; 16 independent blocks; sparse
+val strong-assertive/val-strong-balanced-strong-partnership-strong-conservative
+win: +6.25; 95% interval [-12.50, +25.00]; 16 independent blocks; sparse
+score: +0.25; 95% interval [-1.25, +1.81]; 16 independent blocks; sparse
+val strong-partnership/val-strong-balanced-strong-partnership-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-strong-balanced-strong-partnership-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [-0.44, +0.50]; 16 independent blocks; sparse
+val strong-conservative/val-strong-balanced-strong-partnership-strong-assertive
+win: +6.25; 95% interval [+0.00, +18.75]; 16 independent blocks; sparse
+score: +0.75; 95% interval [-0.25, +1.88]; 16 independent blocks; sparse
+val strong-assertive/val-strong-balanced-strong-partnership-strong-assertive
+win: +0.00; 95% interval [-18.75, +18.75]; 16 independent blocks; sparse
+score: +0.56; 95% interval [-0.50, +1.75]; 16 independent blocks; sparse
+val strong-partnership/val-strong-balanced-strong-partnership-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-strong-balanced-strong-partnership-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.12; 95% interval [-0.56, +0.19]; 16 independent blocks; sparse
+val strong-conservative/val-strong-balanced-strong-partnership-strong-partnership
+win: +12.50; 95% interval [+0.00, +31.25]; 16 independent blocks; sparse
+score: +0.88; 95% interval [-0.25, +2.38]; 16 independent blocks; sparse
+val strong-assertive/val-strong-balanced-strong-partnership-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.62; 95% interval [-1.12, -0.19]; 16 independent blocks; sparse
+val strong-partnership/val-strong-balanced-strong-partnership-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/partner-expert-balanced
+win: +0.98; 95% interval [-0.98, +3.22]; 256 independent blocks
+score: +0.15; 95% interval [-0.00, +0.30]; 256 independent blocks
+val strong-balanced/val-expert-balanced-strong-balanced-strong-balanced
+win: +0.00; 95% interval [-18.75, +18.75]; 16 independent blocks; sparse
+score: +0.00; 95% interval [-0.80, +0.89]; 16 independent blocks; sparse
+val strong-conservative/partner-expert-balanced
+win: +2.93; 95% interval [+0.20, +5.67]; 256 independent blocks
+score: +0.31; 95% interval [+0.13, +0.50]; 256 independent blocks
+val strong-conservative/val-expert-balanced-strong-balanced-strong-balanced
+win: +14.06; 95% interval [+0.00, +31.25]; 16 independent blocks; sparse
+score: +1.23; 95% interval [+0.33, +2.27]; 16 independent blocks; sparse
+val strong-assertive/partner-expert-balanced
+win: -0.59; 95% interval [-3.61, +2.15]; 256 independent blocks
+score: -0.08; 95% interval [-0.31, +0.16]; 256 independent blocks
+val strong-assertive/val-expert-balanced-strong-balanced-strong-balanced
+win: +6.25; 95% interval [+0.00, +18.75]; 16 independent blocks; sparse
+score: +0.00; 95% interval [-0.69, +0.75]; 16 independent blocks; sparse
+val strong-partnership/partner-expert-balanced
+win: +0.29; 95% interval [+0.00, +0.88]; 256 independent blocks
+score: +0.00; 95% interval [-0.01, +0.03]; 256 independent blocks
+val strong-partnership/val-expert-balanced-strong-balanced-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.02; 95% interval [-0.14, +0.19]; 16 independent blocks; sparse
+val strong-balanced/val-expert-balanced-strong-balanced-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.03; 95% interval [-0.09, +0.19]; 16 independent blocks; sparse
+val strong-conservative/val-expert-balanced-strong-balanced-strong-conservative
+win: +3.12; 95% interval [-4.69, +14.06]; 16 independent blocks; sparse
+score: +0.56; 95% interval [-0.25, +1.44]; 16 independent blocks; sparse
+val strong-assertive/val-expert-balanced-strong-balanced-strong-conservative
+win: -6.25; 95% interval [-14.06, +0.00]; 16 independent blocks; sparse
+score: -0.27; 95% interval [-1.03, +0.53]; 16 independent blocks; sparse
+val strong-partnership/val-expert-balanced-strong-balanced-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.03; 95% interval [-0.09, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-expert-balanced-strong-balanced-strong-assertive
+win: +1.56; 95% interval [+0.00, +4.69]; 16 independent blocks; sparse
+score: +0.25; 95% interval [-0.19, +0.94]; 16 independent blocks; sparse
+val strong-conservative/val-expert-balanced-strong-balanced-strong-assertive
+win: +4.69; 95% interval [-4.69, +18.75]; 16 independent blocks; sparse
+score: +0.28; 95% interval [-0.34, +0.99]; 16 independent blocks; sparse
+val strong-assertive/val-expert-balanced-strong-balanced-strong-assertive
+win: +1.56; 95% interval [+0.00, +4.69]; 16 independent blocks; sparse
+score: -0.12; 95% interval [-0.84, +0.78]; 16 independent blocks; sparse
+val strong-partnership/val-expert-balanced-strong-balanced-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-expert-balanced-strong-balanced-strong-partnership
+win: +4.69; 95% interval [+0.00, +14.06]; 16 independent blocks; sparse
+score: +0.39; 95% interval [+0.00, +0.98]; 16 independent blocks; sparse
+val strong-conservative/val-expert-balanced-strong-balanced-strong-partnership
+win: +3.12; 95% interval [-4.69, +14.06]; 16 independent blocks; sparse
+score: +0.05; 95% interval [-0.31, +0.55]; 16 independent blocks; sparse
+val strong-assertive/val-expert-balanced-strong-balanced-strong-partnership
+win: +10.94; 95% interval [+0.00, +28.12]; 16 independent blocks; sparse
+score: -0.09; 95% interval [-1.20, +0.88]; 16 independent blocks; sparse
+val strong-partnership/val-expert-balanced-strong-balanced-strong-partnership
+win: +4.69; 95% interval [+0.00, +14.06]; 16 independent blocks; sparse
+score: +0.14; 95% interval [+0.00, +0.42]; 16 independent blocks; sparse
+val strong-balanced/val-expert-balanced-strong-conservative-strong-balanced
+win: +12.50; 95% interval [+0.00, +31.25]; 16 independent blocks; sparse
+score: +1.00; 95% interval [+0.00, +2.25]; 16 independent blocks; sparse
+val strong-conservative/val-expert-balanced-strong-conservative-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.02; 95% interval [-0.30, +0.31]; 16 independent blocks; sparse
+val strong-assertive/val-expert-balanced-strong-conservative-strong-balanced
+win: +4.69; 95% interval [-6.25, +20.31]; 16 independent blocks; sparse
+score: +0.86; 95% interval [-0.09, +2.08]; 16 independent blocks; sparse
+val strong-partnership/val-expert-balanced-strong-conservative-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-expert-balanced-strong-conservative-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.06; 95% interval [-0.16, +0.36]; 16 independent blocks; sparse
+val strong-conservative/val-expert-balanced-strong-conservative-strong-conservative
+win: +4.69; 95% interval [-15.62, +25.00]; 16 independent blocks; sparse
+score: +0.38; 95% interval [-0.62, +1.52]; 16 independent blocks; sparse
+val strong-assertive/val-expert-balanced-strong-conservative-strong-conservative
+win: -7.81; 95% interval [-21.88, +0.00]; 16 independent blocks; sparse
+score: -0.44; 95% interval [-1.61, +0.34]; 16 independent blocks; sparse
+val strong-partnership/val-expert-balanced-strong-conservative-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.05; 95% interval [-0.14, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-expert-balanced-strong-conservative-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.19; 95% interval [+0.00, +0.56]; 16 independent blocks; sparse
+val strong-conservative/val-expert-balanced-strong-conservative-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.03; 95% interval [-0.38, +0.52]; 16 independent blocks; sparse
+val strong-assertive/val-expert-balanced-strong-conservative-strong-assertive
+win: +0.00; 95% interval [-18.75, +18.75]; 16 independent blocks; sparse
+score: +0.45; 95% interval [-1.03, +1.92]; 16 independent blocks; sparse
+val strong-partnership/val-expert-balanced-strong-conservative-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-expert-balanced-strong-conservative-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.06; 95% interval [+0.00, +0.19]; 16 independent blocks; sparse
+val strong-conservative/val-expert-balanced-strong-conservative-strong-partnership
+win: +3.12; 95% interval [+0.00, +9.38]; 16 independent blocks; sparse
+score: +0.64; 95% interval [+0.17, +1.38]; 16 independent blocks; sparse
+val strong-assertive/val-expert-balanced-strong-conservative-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.06; 95% interval [-0.50, +0.31]; 16 independent blocks; sparse
+val strong-partnership/val-expert-balanced-strong-conservative-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-expert-balanced-strong-assertive-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.06; 95% interval [+0.00, +0.19]; 16 independent blocks; sparse
+val strong-conservative/val-expert-balanced-strong-assertive-strong-balanced
+win: +1.56; 95% interval [+0.00, +4.69]; 16 independent blocks; sparse
+score: +0.50; 95% interval [-0.03, +1.20]; 16 independent blocks; sparse
+val strong-assertive/val-expert-balanced-strong-assertive-strong-balanced
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: -0.81; 95% interval [-1.86, -0.02]; 16 independent blocks; sparse
+val strong-partnership/val-expert-balanced-strong-assertive-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-expert-balanced-strong-assertive-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.03; 95% interval [-0.09, +0.19]; 16 independent blocks; sparse
+val strong-conservative/val-expert-balanced-strong-assertive-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.11; 95% interval [-0.12, +0.39]; 16 independent blocks; sparse
+val strong-assertive/val-expert-balanced-strong-assertive-strong-conservative
+win: -6.25; 95% interval [-18.75, +0.00]; 16 independent blocks; sparse
+score: -0.16; 95% interval [-0.83, +0.48]; 16 independent blocks; sparse
+val strong-partnership/val-expert-balanced-strong-assertive-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-expert-balanced-strong-assertive-strong-assertive
+win: -3.12; 95% interval [-14.06, +4.69]; 16 independent blocks; sparse
+score: -0.14; 95% interval [-0.80, +0.38]; 16 independent blocks; sparse
+val strong-conservative/val-expert-balanced-strong-assertive-strong-assertive
+win: +1.56; 95% interval [-12.50, +18.75]; 16 independent blocks; sparse
+score: +0.16; 95% interval [-0.72, +1.23]; 16 independent blocks; sparse
+val strong-assertive/val-expert-balanced-strong-assertive-strong-assertive
+win: +1.56; 95% interval [+0.00, +4.69]; 16 independent blocks; sparse
+score: -0.06; 95% interval [-0.44, +0.31]; 16 independent blocks; sparse
+val strong-partnership/val-expert-balanced-strong-assertive-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-expert-balanced-strong-assertive-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.25; 95% interval [+0.00, +0.73]; 16 independent blocks; sparse
+val strong-conservative/val-expert-balanced-strong-assertive-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.06; 95% interval [-0.56, +0.75]; 16 independent blocks; sparse
+val strong-assertive/val-expert-balanced-strong-assertive-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.14; 95% interval [-0.19, +0.70]; 16 independent blocks; sparse
+val strong-partnership/val-expert-balanced-strong-assertive-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-expert-balanced-strong-partnership-strong-balanced
+win: +3.12; 95% interval [+0.00, +9.38]; 16 independent blocks; sparse
+score: +0.22; 95% interval [+0.00, +0.66]; 16 independent blocks; sparse
+val strong-conservative/val-expert-balanced-strong-partnership-strong-balanced
+win: +0.00; 95% interval [-18.75, +18.75]; 16 independent blocks; sparse
+score: +0.31; 95% interval [-0.99, +1.70]; 16 independent blocks; sparse
+val strong-assertive/val-expert-balanced-strong-partnership-strong-balanced
+win: -7.81; 95% interval [-31.25, +15.62]; 16 independent blocks; sparse
+score: -0.61; 95% interval [-2.00, +0.67]; 16 independent blocks; sparse
+val strong-partnership/val-expert-balanced-strong-partnership-strong-balanced
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-expert-balanced-strong-partnership-strong-conservative
+win: +6.25; 95% interval [+0.00, +18.75]; 16 independent blocks; sparse
+score: +0.62; 95% interval [-0.06, +1.75]; 16 independent blocks; sparse
+val strong-conservative/val-expert-balanced-strong-partnership-strong-conservative
+win: +9.38; 95% interval [+0.00, +25.00]; 16 independent blocks; sparse
+score: +0.67; 95% interval [-0.22, +1.74]; 16 independent blocks; sparse
+val strong-assertive/val-expert-balanced-strong-partnership-strong-conservative
+win: +6.25; 95% interval [-3.12, +20.31]; 16 independent blocks; sparse
+score: +0.64; 95% interval [-0.67, +2.24]; 16 independent blocks; sparse
+val strong-partnership/val-expert-balanced-strong-partnership-strong-conservative
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-expert-balanced-strong-partnership-strong-assertive
+win: -9.38; 95% interval [-25.00, +0.00]; 16 independent blocks; sparse
+score: -0.83; 95% interval [-2.06, +0.00]; 16 independent blocks; sparse
+val strong-conservative/val-expert-balanced-strong-partnership-strong-assertive
+win: +1.56; 95% interval [-9.38, +17.19]; 16 independent blocks; sparse
+score: +0.12; 95% interval [-0.53, +0.84]; 16 independent blocks; sparse
+val strong-assertive/val-expert-balanced-strong-partnership-strong-assertive
+win: -3.12; 95% interval [-9.38, +0.00]; 16 independent blocks; sparse
+score: -0.61; 95% interval [-1.70, +0.00]; 16 independent blocks; sparse
+val strong-partnership/val-expert-balanced-strong-partnership-strong-assertive
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+val strong-balanced/val-expert-balanced-strong-partnership-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.12; 95% interval [+0.00, +0.38]; 16 independent blocks; sparse
+val strong-conservative/val-expert-balanced-strong-partnership-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: -0.19; 95% interval [-0.50, +0.00]; 16 independent blocks; sparse
+val strong-assertive/val-expert-balanced-strong-partnership-strong-partnership
+win: -3.12; 95% interval [-9.38, +0.00]; 16 independent blocks; sparse
+score: -0.12; 95% interval [-0.94, +0.44]; 16 independent blocks; sparse
+val strong-partnership/val-expert-balanced-strong-partnership-strong-partnership
+win: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+score: +0.00; 95% interval [+0.00, +0.00]; 16 independent blocks; sparse
+Profile casual/original/casual-cautious-minus-casual-balanced: -6.96; 95% interval [-7.75, -6.16]; 128 independent blocks
+Profile casual/proxy-swapped/casual-cautious-minus-casual-balanced: -6.68; 95% interval [-7.48, -5.85]; 128 independent blocks
+Profile casual/original/casual-bold-minus-casual-balanced: +8.66; 95% interval [+7.79, +9.49]; 128 independent blocks
+Profile casual/proxy-swapped/casual-bold-minus-casual-balanced: +8.57; 95% interval [+7.72, +9.45]; 128 independent blocks
+Profile expert/original/expert-conservative-minus-expert-balanced: -5.49; 95% interval [-6.74, -4.34]; 64 independent blocks
+Profile expert/proxy-swapped/expert-conservative-minus-expert-balanced: -5.75; 95% interval [-6.90, -4.56]; 64 independent blocks
+Profile expert/original/expert-assertive-minus-expert-balanced: +5.59; 95% interval [+4.40, +6.74]; 64 independent blocks
+Profile expert/proxy-swapped/expert-assertive-minus-expert-balanced: +5.16; 95% interval [+4.01, +6.33]; 64 independent blocks
+Profile strong/original/strong-conservative-minus-strong-balanced: -4.39; 95% interval [-4.79, -3.99]; 320 independent blocks
+Profile strong/proxy-swapped/strong-conservative-minus-strong-balanced: -4.47; 95% interval [-4.86, -4.05]; 320 independent blocks
+Profile strong/original/strong-assertive-minus-strong-balanced: +5.80; 95% interval [+5.28, +6.31]; 320 independent blocks
+Profile strong/proxy-swapped/strong-assertive-minus-strong-balanced: +5.72; 95% interval [+5.23, +6.23]; 320 independent blocks
+Profile strong/original/strong-partnership-minus-strong-balanced: +0.65; 95% interval [+0.47, +0.84]; 320 independent blocks
+Profile strong/proxy-swapped/strong-partnership-minus-strong-balanced: +0.62; 95% interval [+0.43, +0.81]; 320 independent blocks

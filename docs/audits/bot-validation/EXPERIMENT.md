@@ -72,3 +72,22 @@ The bootstrap for pooled cross-tier and Val comparisons resamples seed blocks wi
 Each row carries integer counts plus explicit rate numerator, denominator and denominator name. The full raw game records retain bid ordering, per-hand deal hashes and all results so these tables can be recomputed independently.
 
 Development corrections: the first tactical-rollout bound allowed only 25 remaining actions and rejected a valid second-round continuation. The bounded rollout now permits the complete bidding-plus-play path. This was an audit-driver bound error, not a production termination defect; the original diagnostic is retained. Statistical self-checks additionally verify forced-call losses, undefined rates, matched-ratio arithmetic, within-game repetition and fixed-context bootstrap weights.
+
+## Reconstruction receipt
+
+The original schedule and thresholds above were retained after executor loss.
+The reconstructed executable manifest uses harness version
+`bot-validation-v2-reconstruction`. The 82 surviving batches are retained and only
+254 missing batches are regenerated. `recovery-verification.json` checks all
+coverage counts and primary point estimates against the surviving complete summary.
+
+The targeted return criterion is now explicitly: a legal lead choice after a
+completed trick that the partner led and their team won. This replaces the lost
+selector implementation; the new tactical count is reported rather than claiming
+its observations are identical to the lost targeted sample. Counterfactual rollouts
+allow 29 remaining actions, and the 28-action seed-3 regression is saved.
+
+In a fresh checkout, first run `python3 scripts/restore-bot-validation.py` to
+materialize the compact result pack. The downloadable ZIP already contains every
+individual chunk. Python analysis requires NumPy. No expensive command is attached
+to the automated push/deployment lifecycle.

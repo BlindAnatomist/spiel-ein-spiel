@@ -59,7 +59,7 @@ def read_chunk(job):
 
 def main():
  manifest=json.loads((OUT/'manifest.json').read_text());coverage=defaultdict(Counter);cases={};blocks={};matched=tail=0
- tables={k:defaultdict(empty) for k in ['profile','profile-seat','dealer-position','forced-suit','lineup-context']}
+ tables={k:defaultdict(empty) for k in ['profile','profile-seat','dealer-position','forced-suit','lineup-context','controlled-hand-outcomes']}
  profile_blocks=defaultdict(lambda:defaultdict(empty));seat=defaultdict(lambda:defaultdict(lambda:np.zeros((2,len(FIELDS)),dtype=np.int64)));profile_control=defaultdict(lambda:defaultdict(empty));symmetry=defaultdict(lambda:defaultdict(lambda:np.zeros((2,len(FIELDS)),dtype=np.int64)))
  pair=defaultdict(lambda:defaultdict(list));cost=defaultdict(lambda:[0.,0]);all_seeds=set();strong_seeds=set();rows=[]
  for job in manifest['jobs']:
@@ -80,6 +80,7 @@ def main():
       s=b['seat'];assert s==(h['dealer']+1+index)%4;assert b['round']==(1 if index<4 else 2);assert b['forced']==(index==7);p=g['lineup'][s];rel=(s-h['dealer'])%4;v=bid_counts(h,b)
       keys={'profile':(p,), 'profile-seat':(p,s),'dealer-position':(p,rel,b['round'],b['forced']),'lineup-context':(category,p,s,rel,g['lineup'][(s+2)%4],g['lineup'][(s+1)%4],g['lineup'][(s+3)%4],b['round'],b['forced'])}
       if b['forced']:keys['forced-suit']=(p,h['suit'])
+      if c['family'] in ['teams','common','val']:keys['controlled-hand-outcomes']=(category,group,c['family'],c['variant'],0 if s%2==c['focal']%2 else 1)
       for t,key in keys.items():tables[t][key]+=v
       profile_blocks[p][unit]+=v
       if c['family']=='seat' and s in (1,3):
@@ -104,10 +105,18 @@ def main():
   print('Loaded',job['id'],sum(x['games'] for x in coverage.values()),flush=True) if len(blocks)%256==0 else None
  assert sum(x['games'] for x in coverage.values())==manifest['expectedGames']==41024
  for cat,cv in coverage.items():cv['cases']=len({c['id'] for j in manifest['jobs'] if j['category']==cat for c in j['cases']});cv['blocks']=sum(j['count'] for j in manifest['jobs'] if j['category']==cat)
+ old_dealer=json.load(gzip.open(OUT/'dealer-position_PRE_RESET.json.gz'))
+ for row in old_dealer:
+  v=tables['dealer-position'][tuple(row['key'])]
+  for k in FIELDS:assert int(v[I[k]])==row[k],('dealer reconciliation',row['key'],k)
  for name,t in tables.items():
   for key,v in t.items():
    assert v[I['calls']]+v[I['passes']]==v[I['opportunities']];assert v[I['made']]+v[I['euchred']]==v[I['calls']];assert v[I['voluntary_calls']]+v[I['forced_calls']]==v[I['calls']];assert v[I['loner_five']]+v[I['loner_three_four']]+v[I['loner_euchres']]==v[I['loner_attempts']];assert v[I['net_points']]==v[I['gross_points']]-2*v[I['euchred']]
-  write(name+'.json.gz',[{'key':list(k),**counted(v)} for k,v in sorted(t.items())])
+  output_rows=[{'key':list(k),**counted(v)} for k,v in sorted(t.items())]
+  if name=='forced-suit':
+   for row in output_rows:
+    total=int(tables['profile'][(row['key'][0],)][I['forced_calls']]);row['suit_selection']={'value':rate(row['calls'],total),'numerator':row['calls'],'denominator':total,'denominator_name':'all forced calls by this profile'}
+  write(name+'.json.gz',output_rows)
  allcalls=sum(v[I['calls']] for v in tables['profile'].values());assert allcalls==sum(x['hands'] for x in coverage.values())
  summary={'version':'v2-reconstruction','coverage':dict(coverage),'missing':0,'errors':[],'matchedHands':matched,'unmatchedTailHands':tail,'independentBlocks':len(blocks),'seat':{},'profileContrasts':{},'symmetry':{},'teams':{},'common':{},'val':{},'profiles':{},'cost':{p:{'policyMilliseconds':ms,'decisions':n,'microsecondsPerDecision':1000*ms/n} for p,(ms,n) in cost.items()}}
  for key,byblock in seat.items():
@@ -130,14 +139,43 @@ def main():
  for kind in ['teams','common','val']:
   for key,row in original[kind].items():
    for metric,x in row.items():assert abs(summary[kind][key][metric]['estimate']-x['estimate'])<1e-14;verified.append(kind+'/'+key+'/'+metric)
+ def simulation_seed(base,index):
+  n=(base+(index+1)*0x9e3779b9)&0xffffffff;n=((n^(n>>16))*0x85ebca6b)&0xffffffff;n=((n^(n>>13))*0xc2b2ae35)&0xffffffff;return (n^(n>>16))&0xffffffff
+ old_seeds={simulation_seed(b,i) for b in [20260924,20260924^0x6d2b79f5] for i in range(250)}
+ assert not strong_seeds.intersection(old_seeds)
+ summary['strongSeedIsolation']={'freshDistinctSeeds':len(strong_seeds),'originalDistinctSeeds':len(old_seeds),'overlap':0}
+ assert len(all_seeds)==len(blocks),'Independent group/block seed collision'
  summary['recoveryVerification']={'allCategoryCountsMatchOriginal':True,'matchedPrimaryEstimates':verified,'note':'Costs change on rerun. Bootstrap seed labels are explicit in the analysis source; original intervals remain in analysis-final.json.'}
  write('summary.json',summary);write('recovery-verification.json',summary['recoveryVerification']);print('COMPLETE',sum(x['games'] for x in coverage.values()),sum(x['hands'] for x in coverage.values()),'blocks',len(blocks),'matched',matched,'tails',tail,flush=True)
  # Tactical outcomes are conditional continuations, never an optimality label.
- f=json.load(gzip.open(OUT/'fixtures.json.gz'));obs=f['tactical']['observations'];t={'games':len(f['tactical']['games']),'views':len(obs),'contexts':dict(Counter(k for o in obs for k in o['contexts'])),'lonerHands':len(f['loners']),'lonerOutcomes':dict(Counter(o['result']['reason'] for o in f['loners'])),'disagreements':{},'overtakes':{},'conditionalCosts':[]}
+ f=json.load(gzip.open(OUT/'fixtures.json.gz'));obs=f['tactical']['observations'];t={'games':len(f['tactical']['games']),'views':len(obs),'contexts':dict(Counter(k for o in obs for k in o['contexts'])),'lonerHands':len(f['loners']),'lonerOutcomes':dict(Counter(o['result']['reason'] for o in f['loners'])),'disagreements':{},'conditionalCosts':[]}
  for p in ['strong-balanced','strong-conservative','strong-assertive','strong-partnership']:
   t['disagreements'][p]=sum(o['choices'][0]['action']!=next(c['action'] for c in o['choices'] if c['profile']==p) for o in obs)
   for o in obs:
    v=o['choices'][0];c=next(c for c in o['choices'] if c['profile']==p)
    if v['outcome']['net']<c['outcome']['net']:t['conditionalCosts'].append({'seed':o['seed'],'hand':o['hand'],'decision':o['decision'],'seat':o['view']['seat'],'contexts':o['contexts'],'val':v,'alternative':c})
+ def effective(card,trump):
+  suit,rank=card.split(':');mate={'clubs':'spades','spades':'clubs','hearts':'diamonds','diamonds':'hearts'};return trump if rank=='J' and suit==mate[trump] else suit
+ def trick_winner(plays,trump):
+  led=effective(plays[0]['card'],trump)
+  def value(play):
+   card=play['card'];su,ra=card.split(':');ef=effective(card,trump)
+   return (100 if ef==trump else 50 if ef==led else 0)+(8 if ra=='J' and su==trump else 7 if ra=='J' and ef==trump else ['9','10','J','Q','K','A'].index(ra))
+  return max(plays,key=value)['seat']
+ t['behavior']={}
+ for p in ['val','strong-balanced','strong-conservative','strong-assertive','strong-partnership']:
+  b=Counter()
+  for o in obs:
+   v=o['view'];choice=next(c for c in o['choices'] if c['profile']==p);action=choice['action']
+   for context in o['contexts']:
+    b[context+'_opportunities']+=1
+    if action['type']!='play':continue
+    if context=='partner-winning' and trick_winner(v['trick']+[{'seat':v['seat'],'card':action['card']}],v['trump'])==v['seat']:b['partner_overtakes']+=1
+    if context=='trump-conservation' and effective(action['card'],v['trump'])==v['trump']:b['trump_plays']+=1
+    if context=='lead' and effective(action['card'],v['trump'])==v['trump']:b['trump_leads']+=1
+    if context=='partner-return':
+     previous=[tr for tr in v['completedTricks'] if tr['plays'][0]['seat']==(v['seat']+2)%4 and tr['winner']%2==v['seat']%2]
+     if any(effective(action['card'],v['trump'])==effective(tr['plays'][0]['card'],v['trump']) for tr in previous):b['partner_suit_returns']+=1
+  t['behavior'][p]=dict(b)
  write('tactical-summary.json',t)
 if __name__=='__main__':main()

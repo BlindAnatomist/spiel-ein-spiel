@@ -1,132 +1,207 @@
-Euchre bot validation and calibration report
-Executed September 25, 2026 UTC. All scheduled categories ran; evidence delivery is INCOMPLETE after an execution-workspace reset.
+Euchre bot validation and calibration — completed recovery, September 25, 2026 UTC
 
-Read reports/bot-validation/RECOVERY.md first. The surviving report and aggregate outputs describe observed completed runs, but only 82 of 336 detailed batches survived publication. The new harness, full manifest, fixture records and remaining raw batches were lost. Missing evidence now blocks completion and full audit acceptance. No simulations were rerun.
+No live engine or bot-policy defect was confirmed. All 41,024 scheduled games are now backed by retained per-game evidence. The lost portion was regenerated using the same fixed seeds and assignments. All category game, hand and decision totals and all 26 primary point estimates exactly match the surviving original analysis. No strategy parameters or production behavior were changed.
 
-1. Findings and acceptance implications
+No meaningful right-seat voluntary-calling advantage was established. Several intervals remain too wide to rule out the predeclared two-percentage-point margin. An exploratory lower right-seat call-success signal remains in one Strong comparison; its mechanism is unresolved.
 
-No live engine or policy defect was confirmed. All 41,024 scheduled complete games passed independent rule checks, permitted-view checks and corresponding-deal matching. These games contained 462,717 hands and 11,640,424 decisions. No simulation was sent to the human-performance ledger.
+The pooled evidence supports Casual < Strong < Expert for both same-tier teams and common-partner substitutions. Individual matchup uncertainty remains. Val is practically similar to Balanced and Partnership Strong in the tested pooled contexts. Its small apparent deficit to Assertive Strong is not robust to the primary multiple-comparison adjustment.
 
-No meaningful right-seat calling advantage was established. This is not proof that a two-percentage-point effect is absent: several confidence intervals remain wider than that margin. An exploratory lower right-seat call-success signal remains in the Strong proxy-swapped comparison. It is documented below rather than dismissed or converted into a live-game change.
+No confirmed live defect from this battery blocks PR #8 acceptance. The audit itself is complete; device and VoiceOver acceptance remain outside its scope. Nothing was merged. No simulation entered the human ledger.
 
-The intended Casual < Strong < Expert hierarchy is supported in the pooled controlled experiments. It is not established for every individual profile pairing. Expert retained its production search budget throughout.
+Recovery and provenance
 
-Val performed very similarly to Balanced Strong and Partnership Strong in the declared lineup mixture. It outperformed Conservative Strong directionally; its apparent deficit to Assertive Strong was small and did not survive the primary family-wise adjustment. These results do not warrant silently changing Val's parameters.
+The initial PR #8 SHA matched 46e4a0c04f9007387bc98ef4aaf1d256f20aec05. Main remains b6f647c7d64c58e7b147cb03df729433604d3650; PR #7 remains fba6aa22acffb20c27f7f0e2a35a4980d4227082. Only the existing PR #8 branch received audit changes.
 
-The run found no demonstrated live defect, but the subsequent loss of required evidence blocks completion of this audit assignment. The exploratory success-rate finding and limits on individual-matchup precision remain open calibration questions. This audit supplies no iPhone VoiceOver acceptance and does not substitute for the owner's acceptance of the existing interface. Nothing was merged.
+A prior executor reset lost unpublished harness files and 254 detailed batches. The 82 recovered batches (7,584 games) were retained byte for byte. The other 254 batches (33,440 games) were rerun, without adding or selecting seeds. Primary point estimates are unchanged. Pooled reconstructed intervals use a documented sorted-stratum bootstrap and can differ slightly from the preserved original intervals. The reconstructed driver exactly replays a retained game’s permitted decisions, deal signatures, scores and trace digest. Source and fixed manifest were published before recovery runs. Results were checkpointed between bounded waves. Historical partial-recovery files remain explicitly labeled.
 
-2. Experiment and evidence integrity
+There are 2,688 independent group/seed blocks, 429,260 matching-hand fingerprint comparisons and 48,279 hand occurrences beyond their block’s shortest game. No deal mismatches occurred. Complete games may end at different hands; complete-game outcomes retain tails, while the separate common-prefix analysis is an outcome-dependent sensitivity check.
 
-The starting PR #8 head matched 46e4a0c04f9007387bc98ef4aaf1d256f20aec05. Main was b6f647c7d64c58e7b147cb03df729433604d3650. PR #7 was fba6aa22acffb20c27f7f0e2a35a4980d4227082. Neither protected branch was incorporated or modified.
+The predeclared practical margins are 2 percentage points for voluntary calls, 5 percentage points for win differences, and 0.5 final-score points. Every bootstrap retains whole matched blocks; pooled cross-tier and Val comparisons resample within fixed lineup contexts. There are 1,999 deterministic resamples. Ordinary 95% intervals appear below; family-wise intervals for 16 primary comparisons appear in summary.json and COMPARISONS.txt. Subgroups are exploratory. Nonsignificance does not establish equivalence.
 
-The fixed manifest preceded the large run. Four processes completed 336 batches in approximately 790 seconds of wall time; summed worker elapsed time was approximately 3,143 seconds. The independent sampling units are 2,688 group/seed blocks, not 41,024 independent policy comparisons and certainly not eleven million independent decisions. All alternative assignments within a block remain together in uncertainty calculations. Pooled cross-tier and Val bootstraps preserve the fixed matchup proportions by resampling within each context.
+Actual coverage
 
-Each matching check uses a SHA256 fingerprint of the actual initial four hands and kitty, normalized only for a declared clockwise rotation. There were 429,260 repeated-hand fingerprint comparisons and zero mismatches. The records include 48,279 hand occurrences beyond their group/block's shortest game. These tails are included in complete-game outcomes. A separate common-prefix analysis retains only hands reached in every corresponding game; because that prefix depends on game endings, it is a sensitivity check rather than a fixed-length independent experiment.
+casual: 2,304 games, 26,624 hands, 662,521 decisions, 18 cases, 128 independent blocks; 128 games per case.
 
-Primary thresholds were two percentage points for voluntary calling, five percentage points for win-rate differences, and half a point for final-score differences. Ordinary 95% intervals below use 1,999 block-bootstrap resamples. Family-wise intervals across the 16 primary comparisons are also preserved in summary.json. Exploratory subgroup intervals are unadjusted. Zero observed rare events do not establish zero risk; a degenerate percentile interval is marked unavailable for that purpose. Sparse eligible samples are flagged.
+expert: 1,152 games, 12,963 hands, 322,014 decisions, 18 cases, 64 independent blocks; 64 games per case.
 
-3. Casual profile and seat audit
+cross: 10,560 games, 118,967 hands, 2,992,873 decisions, 330 cases, 1056 independent blocks; 32 games per case.
 
-Completed: 2,304 games, 26,624 hands, 18 cases, 128 games per case. This covers all three same-profile controls and all six distinct ordered profile pairings, with both proxy/Val assignments.
+val: 15,360 games, 172,751 hands, 4,344,584 decisions, 960 cases, 768 independent blocks; 16 games per case.
 
-Right minus left voluntary calling was +0.55 percentage points, 95% interval [-2.01, +3.20], with the original proxy assignment. After exchanging the proxy and Val, it was +0.75 [-1.70, +3.32]. Neither comparison establishes a two-point advantage or rules one out.
+strong: 10,240 games, 115,740 hands, 2,927,187 decisions, 32 cases, 320 independent blocks; 320 games per case.
 
-Profile variants demonstrably change behavior in the matched original environment. Relative to Balanced Casual, Cautious called voluntarily 6.96 percentage points less often, interval [-7.77, -6.17]; Bold called 8.66 points more often, interval [7.76, 9.55]. These are differences in bidding behavior, not a ranking of playing strength. Both orientations, dealer-role splits and all profile comparisons are retained in COMPARISONS.txt and the context data.
+symmetry: 1,408 games, 15,672 hands, 391,245 decisions, 44 cases, 352 independent blocks; 32 games per case.
 
-4. Expert profile and seat audit
+Total: 41,024 complete games, 462,717 hands and 11,640,424 decisions. The schedule covers every category before expanding its predetermined blocks. Four processes ran at most concurrently. Recovery wave runtimes are in run-wave*.json; per-batch costs are in the detailed records. Cached batches retain their original timings, so the sum is not one contiguous wall-clock measurement.
 
-Completed: 1,152 games, 12,963 hands, 18 cases, 64 games per case. All three same-profile controls, all six distinct orientations and both proxy assignments ran with the actual 24-sample, three-card search settings.
+Casual profiles and seats
 
-Right minus left voluntary calling was -0.16 percentage points, interval [-4.17, +3.45], with the original assignment, and +0.50 [-3.12, +4.33] after the proxy swap. Expert seat precision is the principal limitation of this category: these intervals cannot resolve a two-point effect.
+Every same-profile control and distinct ordered profile pair ran with both the original seat-zero proxy/Val placement and those opposing players exchanged. Initial dealers were balanced. Relative dealer position, absolute seat, profile, partner and opposing identities remain distinct.
 
-Conservative Expert called voluntarily 5.49 points less often than Balanced, interval [-6.69, -4.30]; Assertive called 5.59 points more often, interval [4.42, 6.74]. The profiles are behaviorally distinct without substituting a weaker search policy.
+original, right minus left: voluntary call rate +0.55; 95% interval [-2.01, +3.20]; 128 independent blocks percentage points; call make rate -3.48; 95% interval [-7.75, +1.18]; 128 independent blocks percentage points; net points per call -0.12; 95% interval [-0.28, +0.04]; 128 independent blocks.
 
-The audited benchmark completed eight all-Expert games in 2.33 seconds versus eight all-Strong games in 0.47 seconds. Expert policy execution accounted for approximately 1.98 seconds of its benchmark. These are Linux/Node timings including the audit workload, not iPhone latency predictions. Per-profile decision costs are recorded separately from wins and scores.
+proxy-swapped, right minus left: voluntary call rate +0.75; 95% interval [-1.70, +3.32]; 128 independent blocks percentage points; call make rate -0.95; 95% interval [-5.41, +3.55]; 128 independent blocks percentage points; net points per call -0.06; 95% interval [-0.21, +0.09]; 128 independent blocks.
 
-5. Cross-tier calibration
+casual-cautious-minus-casual-balanced: voluntary call difference -6.96; 95% interval [-7.75, -6.16]; 128 independent blocks percentage points. This describes bidding behavior, not a strength ranking.
 
-Completed: 10,560 games, 118,967 hands, all 33 cross-tier profile pairs. Each pair has 32 matched seed blocks: two same-tier-team assignments and eight common-partner assignments, covering both candidate policies at all four seats. There are 2,112 team-comparison games and 8,448 common-partner games.
+casual-bold-minus-casual-balanced: voluntary call difference +8.66; 95% interval [+7.79, +9.49]; 128 independent blocks percentage points. This describes bidding behavior, not a strength ranking.
 
-Strong versus Casual: Strong teams won 70.70%, interval [68.10%, 73.44%], across 768 games/384 blocks. Their average final-score advantage was 2.59 points [2.35, 2.83]. Changing only the focal player from Casual to Strong improved its team's win rate by 13.80 percentage points [9.90, 17.72] and score differential by 1.43 points [1.13, 1.76].
+Expert profiles and seats
 
-Expert versus Strong: Expert teams won 58.33%, interval [55.99%, 60.81%], across 768 games/384 blocks. Their score advantage was 1.10 points [0.89, 1.29]. The common-partner improvement was 6.84 percentage points [3.32, 10.48], with a 0.71-point score improvement [0.45, 0.97]. The directional advantage survives the primary family-wise adjustment; the minimum five-point practical margin is not established under every adjusted comparison.
+Every same-profile control and distinct ordered profile pair ran with both the original seat-zero proxy/Val placement and those opposing players exchanged. Initial dealers were balanced. Relative dealer position, absolute seat, profile, partner and opposing identities remain distinct.
 
-Expert versus Casual: Expert teams won 80.21%, interval [77.26%, 82.99%], across 576 games/288 blocks. Their score advantage was 3.60 points [3.32, 3.85]. The common-partner improvement was 19.44 percentage points [14.58, 24.57], with a 2.01-point score improvement [1.62, 2.41].
+original, right minus left: voluntary call rate -0.16; 95% interval [-4.17, +3.45]; 64 independent blocks percentage points; call make rate -4.83; 95% interval [-11.03, +1.53]; 64 independent blocks percentage points; net points per call -0.10; 95% interval [-0.32, +0.12]; 64 independent blocks.
 
-No cross-tier team matchup had a point estimate favoring the lower tier; one Expert/Strong pairing tied at 50%. Consequently no cross-tier three-profile cycle appeared in the observed team estimates. This is not proof of global transitivity: within-tier head-to-head team edges were not part of this cross-tier graph, and individual comparisons have only 32 blocks.
+proxy-swapped, right minus left: voluntary call rate +0.50; 95% interval [-3.12, +4.33]; 64 independent blocks percentage points; call make rate -3.24; 95% interval [-9.33, +3.02]; 64 independent blocks percentage points; net points per call -0.02; 95% interval [-0.25, +0.21]; 64 independent blocks.
 
-Two common-partner point estimates reversed the tier order: Balanced Strong replacing Bold Casual was -6.25 percentage points [-21.88, +6.41]; Conservative Expert replacing Partnership Strong was -1.56 [-7.03, +1.56]. Both intervals span zero. These unresolved reversals are retained as matchup uncertainty, not used to tune the labels.
+expert-conservative-minus-expert-balanced: voluntary call difference -5.49; 95% interval [-6.74, -4.34]; 64 independent blocks percentage points. This describes bidding behavior, not a strength ranking.
 
-6. Dealer position and forced calls
+expert-assertive-minus-expert-balanced: voluntary call difference +5.59; 95% interval [+4.40, +6.74]; 64 independent blocks percentage points. This describes bidding behavior, not a strength ranking.
 
-Every profile and Val contributed dealer, first-bidder, dealer-partner and third-bidder observations, split by round and voluntary versus forced opportunity. All 462,717 hands contribute to this audit. There were 86,870 forced calls, all in the required second-round dealer context. No prohibited-suit, turn-order or stick-the-dealer failure occurred.
+Expert retained its real 24-sample, three-card search budget. The 64 blocks leave wide seat intervals; the two-point seat margin is unresolved. benchmark-reconstruction.json records eight games per audited Strong/Expert lineup, with the exact lineup, elapsed time and policy time. Val occupies seat two in those benchmark cases; these are not four-Expert-versus-four-Strong team benchmarks. Per-profile policy cost is recorded separately from playing strength.
 
-Each rate includes its actual denominator. An opportunity is a bidding decision, so a player may have one opportunity in each round of the same hand. Forced calls are excluded from the voluntary-call denominator. Makes, euchres, trick averages and points are conditional on calls. Undefined rates remain unavailable.
+Independent Strong replication
 
-For example, Val made 6,809 of its 9,090 forced calls and was euchred on 2,281. Those calls earned 8,215 gross points, conceded 4,562, and produced 3,653 net points. Gross points alone would conceal the cost of euchres.
+Every same-profile control and distinct ordered profile pair ran with both the original seat-zero proxy/Val placement and those opposing players exchanged. Initial dealers were balanced. Relative dealer position, absolute seat, profile, partner and opposing identities remain distinct.
 
-DEALER_AND_LONERS.txt lists every profile's dealer/round/forced counts and all four forced-suit selections, including makes, euchres, points earned and points conceded. lineup-context.json.gz preserves partner and both opponent identities separately from absolute seat and dealer relationship. These conditional rates are descriptive unless a controlled comparison and its uncertainty are explicitly given.
+original, right minus left: voluntary call rate +0.66; 95% interval [-0.76, +2.12]; 320 independent blocks percentage points; call make rate -1.98; 95% interval [-4.40, +0.56]; 320 independent blocks percentage points; net points per call -0.07; 95% interval [-0.17, +0.03]; 320 independent blocks.
 
-7. Loner audit
+proxy-swapped, right minus left: voluntary call rate +0.32; 95% interval [-1.12, +1.79]; 320 independent blocks percentage points; call make rate -2.55; 95% interval [-5.15, -0.14]; 320 independent blocks percentage points; net points per call -0.08; 95% interval [-0.19, +0.02]; 320 independent blocks.
 
-The scheduled games contained 22,058 natural loner attempts. The evidence separates five-trick four-point successes, three/four-trick one-point makes and euchres for every profile. An ordinary made hand alone is never counted as a successful four-point loner.
+strong-conservative-minus-strong-balanced: voluntary call difference -4.39; 95% interval [-4.79, -3.99]; 320 independent blocks percentage points. This describes bidding behavior, not a strength ranking.
 
-Val attempted 2,493 natural loners: 1,664 took five tricks and 829 took three or four; none were euchred in this sample. These are repeated observations within matched games, not 2,493 independent risk trials. Zero observed euchres does not establish that Val cannot be euchred alone.
+strong-assertive-minus-strong-balanced: voluntary call difference +5.80; 95% interval [+5.28, +6.31]; 320 independent blocks percentage points. This describes bidding behavior, not a strength ranking.
 
-Cautious Casual had only 12 natural attempts: eight five-trick successes and four ordinary makes. Its loner calibration remains sparse. Attempt frequency alone does not establish timidity, recklessness or quality.
+strong-partnership-minus-strong-balanced: voluntary call difference +0.65; 95% interval [+0.47, +0.84]; 320 independent blocks percentage points. This describes bidding behavior, not a strength ranking.
 
-The separate rule supplement completed 128 scripted loner hands: all four dealers, all four callers, both bidding rounds and four fixed seeds. All passed partner sit-out, skipped turns, opening lead, dealer pickup/discard and scoring checks. They produced four loner marches, twelve ordinary makes and 112 euchres. The calls were deliberately forced by the fixture, often on unsuitable hands; those outcomes are not policy-performance evidence. The existing final-trick tests additionally cover every scoring result and both teams.
+The 320 fresh blocks comprise two predetermined 160-block batches, exceeding the previous 250 games/case. All 320 new seeds were checked against both original base-20260924 streams; none overlap. Common-prefix, same/distinct pairing, profile, batch and dealer-role comparisons are retained. Exchanging proxy and Val did not establish a meaningful right-seat calling advantage.
 
-8. Val-specific comparison and tactical evidence
+original/batch-1: voluntary +0.33; 95% interval [-1.70, +2.38]; 160 independent blocks; make rate -0.44; 95% interval [-3.85, +3.32]; 160 independent blocks percentage points.
 
-Completed: 15,360 games, 172,751 hands, 768 independent context/seed blocks. There are three partner tiers, all 16 ordered Strong opponent pairings, five focal policies, four seat rotations and 16 blocks per context. Each focal policy played 3,072 games. The same Val games are reused across four comparisons and must not be counted four times as new evidence.
+original/batch-2: voluntary +0.97; 95% interval [-1.23, +3.14]; 160 independent blocks; make rate -3.46; 95% interval [-6.92, -0.15]; 160 independent blocks percentage points.
 
-Val minus Balanced Strong: win-rate difference +0.20 percentage points, interval [-0.85, +1.30]; score difference +0.082 points [0.003, 0.164].
+proxy-swapped/batch-1: voluntary -0.25; 95% interval [-2.23, +1.67]; 160 independent blocks; make rate -1.00; 95% interval [-4.65, +3.00]; 160 independent blocks percentage points.
 
-Val minus Conservative Strong: +4.36 percentage points [2.47, 6.28]; score +0.442 [0.309, 0.575]. The direction survives family-wise adjustment, but a minimum five-point improvement is not established.
+proxy-swapped/batch-2: voluntary +0.87; 95% interval [-1.39, +3.02]; 160 independent blocks; make rate -4.06; 95% interval [-7.36, -0.68]; 160 independent blocks percentage points.
 
-Val minus Assertive Strong: -2.15 percentage points [-4.23, -0.07]; score -0.232 [-0.384, -0.085]. The family-wise win interval is [-5.26, +0.91], so the apparent deficit is not robust to that adjustment.
+Observed result: a negative right-minus-left call-success estimate, with one exploratory pooled interval excluding zero. Statistical interpretation: an unadjusted follow-up signal among many comparisons. Suspected cause: unresolved; finite-seed variation and lineup/dealer interactions remain possible. Confirmed defect: none. No bot-versus-bot result measures the owner’s playing strength.
 
-Val minus Partnership Strong: -0.29 percentage points [-0.81, +0.26]; score -0.007 [-0.036, +0.020].
+Cross-tier calibration
 
-For Balanced and Partnership, even the adjusted pooled win intervals lie within the predeclared plus/minus-five-point margin. This supports practical similarity in these tested contexts, not universal interchangeability. Val's Assertive deficit was most pronounced with a Strong partner: -4.30 points [-8.20, -0.78], an exploratory subgroup result. Individual partner/opponent contexts have only 16 blocks and remain sparse.
+All 33 profile pairs ran 32 blocks each: two team assignments plus eight common-partner assignments. This is 2,112 team games and 8,448 common-partner games. Team estimates below are higher-tier win percentages (compare with 50%), and higher-tier final-score advantages. Common-partner estimates are higher-minus-lower changes, holding the other three policies at Balanced Strong and rotating the focal seat.
 
-A separate fixed set of 32 complete tactical games retained 272 permitted views: 64 bidding, 64 lead, 52 partner-return, 64 partner-winning and 64 trump-conservation observations; a view can belong to more than one context. All five candidate policies received the same view. Their chosen actions were followed through fixed production-policy continuations in the host's actual deal.
+casual-vs-strong
+teams: win +70.70; 95% interval [+67.97, +73.31]; 384 independent blocks percentage points; score +2.59; 95% interval [+2.34, +2.82]; 384 independent blocks points.
+common: win +13.80; 95% interval [+9.90, +17.97]; 384 independent blocks percentage points; score +1.43; 95% interval [+1.12, +1.75]; 384 independent blocks points.
 
-Val differed from Balanced on two retained views, Conservative on three, Assertive on three and Partnership on one. In the 64 partner-winning positions, all five overtook the partner in the same three cases. Lead and return cases produced no disagreement in this selected sample. This is evidence of actual shared tactical behavior, not proof those choices are optimal.
+strong-vs-expert
+teams: win +58.33; 95% interval [+55.86, +60.68]; 384 independent blocks percentage points; score +1.10; 95% interval [+0.89, +1.32]; 384 independent blocks points.
+common: win +6.84; 95% interval [+3.26, +10.55]; 384 independent blocks percentage points; score +0.71; 95% interval [+0.44, +0.98]; 384 independent blocks points.
 
-One preserved example deserves attention: seed 3389964757, hand 1, seat 3. Val played spades:Q where Balanced Strong played spades:J. Under the fixed continuation, Val's team conceded one point while the alternative earned two by euchring the makers. The full permitted view, decision location and both continuations are retained in fixtures.json.gz and tactical-summary.json. The result establishes a conditional cost in that actual deal; it does not establish that spending the jack is better across the unseen deals compatible with the player's information. No live-policy defect is asserted from this example.
+casual-vs-expert
+teams: win +80.21; 95% interval [+77.43, +82.99]; 288 independent blocks percentage points; score +3.60; 95% interval [+3.33, +3.85]; 288 independent blocks points.
+common: win +19.44; 95% interval [+14.58, +24.74]; 288 independent blocks percentage points; score +2.01; 95% interval [+1.64, +2.42]; 288 independent blocks points.
 
-9. Independent Strong replication and unresolved seat finding
+No lower-tier team point estimate won a majority: observed team reversals []. No cross-tier three-profile cycle appears in these measured team edges; within-tier team edges were not all measured, so global transitivity is not established. Individual pair comparisons have only 32 blocks.
 
-Completed: 10,240 games, 115,740 hands, 32 cases, 320 games per case. Both fresh 160-block batches contain every same-profile control, all swapped distinct pairings and both proxy assignments. The generated seeds were checked against both original seed streams from the base-20260924 audit; no overlap was found.
+Common-partner reversal: casual-bold-vs-strong-balanced -6.25; 95% interval [-21.88, +9.38]; 32 independent blocks percentage points. This is an uncertain matchup, not a reason to tune labels.
 
-Original proxy assignment: right minus left voluntary calling +0.66 percentage points [-0.76, +2.12]. Proxy/Val exchanged: +0.32 [-1.12, +1.79]. Same-profile and distinct-profile estimates were nearly identical. Original-assignment batch estimates were +0.33 and +0.97; neither batch interval excluded zero. Common-prefix sensitivity estimates were +0.54 and +0.23 for the two proxy assignments, consistent with the full-game conclusion.
+Common-partner reversal: strong-partnership-vs-expert-conservative -1.56; 95% interval [-7.03, +2.34]; 32 independent blocks percentage points. This is an uncertain matchup, not a reason to tune labels.
 
-Thus the earlier suspected right-seat calling advantage is not confirmed. Small descriptive same-profile differences persist, but there is no demonstrated meaningful advantage and the original-assignment interval narrowly extends beyond the two-point margin. The experiment does not prove equivalence at that margin.
+Dealer positions, forced calls and loners
 
-Exploratory call-success finding: right minus left was -1.98 percentage points [-4.39, +0.56] with the original assignment and -2.55 [-5.15, -0.14] after the proxy swap. The latter interval excludes zero without multiple-comparison adjustment. The second fresh batch carried the stronger negative signal; the first did not. Exchanging the proxy and Val did not reverse the sign, and dealer-role intervals did not isolate a specific mechanism. Net points per call remained uncertain in the pooled comparisons.
+All eleven policies contribute observations at dealer, first bidder, dealer’s partner and third bidder, split by round and forced status. There were 86,870 forced second-round dealer calls and 22,058 natural loner attempts. Each rate in the data carries numerator, denominator and denominator name. An opportunity is one bidding decision; a player can have opportunities in both rounds of a hand. Forced opportunities are excluded from voluntary rates. Undefined rates are null, not zero.
 
-Observed result: a lower success rate in one exploratory aggregate. Statistical interpretation: a follow-up signal among numerous related comparisons. Suspected cause: unresolved; finite-seed variation and lineup/dealer interactions remain possible. Confirmed defect: none. A separately predeclared success-rate replication would be the smallest evidential next step; changing rules, bot thresholds or clockwise order is not justified by these results.
+The readable dealer/loner appendix reports every profile, dealer role, round and forced-suit selection, including makes, euchres, gross earned points, conceded points and net points. controlled-hand-outcomes.json.gz supplies hand outcomes by controlled matchup and focal/opposing team. lineup-context.json.gz retains profile, seat, partner and both opponents. Descriptive pooled profile totals depend on the experiment mixture and are not strength rankings.
 
-10. Symmetry, checks and limits
+casual-balanced: 337 natural attempts; 276 five-trick four-point successes; 61 three/four-trick one-point makes; 0 euchres.
 
-The symmetry control completed 1,408 games and 15,672 hands: all eleven policies, each alone in all four seats, with four clockwise rotations and 32 blocks per policy. Casual, Strong and Val rotations gave exactly zero aggregated right-left calling difference. Expert differences were approximately +0.17 to +0.34 percentage points, with all 95% intervals crossing zero. Expert's deterministic sampling depends on its permitted-view representation, which changes under rotation; its rotated action traces need not be identical. The deal matching still passed.
+val: 2493 natural attempts; 1664 five-trick four-point successes; 829 three/four-trick one-point makes; 0 euchres.
 
-The independent oracle checks legal bidding choices, round transitions, four passes before turn-down, prohibited-suit exclusion, forced calls, pickup/discard, ownership and effective follow-suit including bowers, every trick winner including the fifth, next leader, loner sit-out, card conservation, scoring, dealer rotation and termination. Policy inputs are explicitly allowlisted and use the production PlayerView. The unchanged existing suite also checks dependency boundaries and hidden-state noninterference.
+casual-cautious: 12 natural attempts; 8 five-trick four-point successes; 4 three/four-trick one-point makes; 0 euchres.
 
-Baseline: npm ci --ignore-scripts, npm run check (131 tests), npm run build and git diff --check passed. Final: the same required commands passed; 135 automated tests passed, with zero failures. Seven statistical/denominator self-checks passed. Large simulations are on demand, not attached to pushes or deployments.
+casual-bold: 282 natural attempts; 202 five-trick four-point successes; 79 three/four-trick one-point makes; 1 euchres.
 
-Audit-only corrections included the tactical continuation bound and uncertainty handling for zero observed rare events. An initial report serialization issue was corrected by converting NumPy flags to ordinary JSON scalars. None required changes to the engine or policies. The saved tactical-bound diagnostic is explicitly a development failure in the audit harness.
+expert-balanced: 1010 natural attempts; 767 five-trick four-point successes; 223 three/four-trick one-point makes; 20 euchres.
 
-Limits: controlled bot behavior does not measure the owner's playing strength. Profile-wide totals reflect the planned mix of opponents and repeated matched observations. Natural loners and individual matchups can remain sparse despite a large total game count. Expert sampling has its existing modeling limitations; no optimal-play oracle was introduced. Runtime is specific to this execution environment. Browser, narration, focus and VoiceOver acceptance are outside simulation's reach.
+expert-conservative: 187 natural attempts; 136 five-trick four-point successes; 46 three/four-trick one-point makes; 5 euchres.
 
-11. Recovery status and reproduction limitation
+expert-assertive: 723 natural attempts; 408 five-trick four-point successes; 312 three/four-trick one-point makes; 3 euchres.
 
-The original complete local commit was 977836840c657fcb338e5c6808a0254abc8e6e87; it never reached the remote branch. A Git credential failure required connector publication, which transferred 92 blobs before the execution service reset and erased the checkout. This recovery commit anchors surviving evidence only. It does not publish the lost commit.
+strong-balanced: 8465 natural attempts; 5535 five-trick four-point successes; 2894 three/four-trick one-point makes; 36 euchres.
 
-Surviving files include the experiment-design document, this report, the complete readable comparison and dealer/loner appendices, analysis-final.json with primary estimates and intervals, benchmark.json, dealer-position.json.gz and 82 raw batch files. recovery-inventory.json identifies every original file, its Git hash and whether its blob survived. REPORT_PRE_RESET.md and README_PRE_RESET.md preserve the pre-reset documents as historical snapshots; their statements that the whole package exists are superseded by RECOVERY.md.
+strong-conservative: 930 natural attempts; 867 five-trick four-point successes; 63 three/four-trick one-point makes; 0 euchres.
 
-The executable manifest, new harness and tests, full summary.json, full lineage summaries, fixture data and validation logs were not transferred. References to these files earlier in this report describe what was produced before reset, not what is available in this recovery package. In particular, the full tactical PlayerViews are missing; their result descriptions survive here.
+strong-assertive: 4734 natural attempts; 2389 five-trick four-point successes; 2322 three/four-trick one-point makes; 23 euchres.
 
-The original resume commands are recorded in recovery-inventory.json, but are not currently runnable without restoring the missing source and manifest. No source reconstruction or simulation rerun was substituted for the lost tested artifacts. There is no honest command that can recover erased raw results from their hashes alone. The user prohibited repeating finished work, so this package preserves the surviving evidence and identifies the remaining gap instead.
+strong-partnership: 2885 natural attempts; 1872 five-trick four-point successes; 993 three/four-trick one-point makes; 20 euchres.
+
+Cautious Casual has only twelve natural attempts. Zero observed loner euchres for a policy is not zero risk; degenerate event-risk intervals are unavailable and sparse eligible blocks are flagged. Attempt rate alone cannot establish timidity or recklessness.
+
+The separate scripted rule supplement ran 128 loner hands across all dealer/caller positions, both rounds and four fixed seeds. Outcomes: {'loner-march': 4, 'euchred': 112, 'made': 12}. All passed opening-lead, sit-out, skip order, pickup/discard and scoring checks. These deliberately forced calls are rule coverage, not natural strategy evidence.
+
+Val-specific controlled and tactical evidence
+
+Val and all four Strong alternatives each played 3,072 games: three partner tiers, all sixteen ordered Strong opponent pairs, four focal rotations, sixteen blocks/context. The 15,360 games contain 768 independent blocks. The same Val games serve multiple comparisons and are not new independent evidence each time.
+
+Val minus strong-balanced: win +0.20; 95% interval [-0.85, +1.30]; 768 independent blocks percentage points; score +0.08; 95% interval [+0.00, +0.17]; 768 independent blocks points. Family-wise win interval: +0.20; 95% interval [-1.46, +1.75]; 768 independent blocks.
+
+Val minus strong-conservative: win +4.36; 95% interval [+2.54, +6.22]; 768 independent blocks percentage points; score +0.44; 95% interval [+0.31, +0.58]; 768 independent blocks points. Family-wise win interval: +4.36; 95% interval [+1.83, +7.30]; 768 independent blocks.
+
+Val minus strong-assertive: win -2.15; 95% interval [-4.20, -0.10]; 768 independent blocks percentage points; score -0.23; 95% interval [-0.39, -0.08]; 768 independent blocks points. Family-wise win interval: -2.15; 95% interval [-5.20, +1.01]; 768 independent blocks.
+
+Val minus strong-partnership: win -0.29; 95% interval [-0.91, +0.23]; 768 independent blocks percentage points; score -0.01; 95% interval [-0.04, +0.02]; 768 independent blocks points. Family-wise win interval: -0.29; 95% interval [-1.29, +0.55]; 768 independent blocks.
+
+Balanced and Partnership pooled adjusted win intervals lie inside the plus/minus-five-point practical margin. This supports similarity only in these tested contexts. Conservative’s directional deficit does not establish a five-point minimum advantage for Val. Assertive’s apparent advantage does not survive the family-wise adjustment. Partner-specific and individual context estimates are exploratory; each context has only sixteen blocks.
+
+The reconstructed tactical supplement ran 32 complete games and retained 276 permitted views, with context counts {'bidding': 64, 'lead': 64, 'trump-conservation': 64, 'partner-winning': 64, 'partner-return': 60}. A view can have multiple selected contexts. Its partner-return criterion explicitly means: the player has a lead choice and a completed trick was led by its partner and won by their team. This transparent reconstructed criterion yields a different targeted sample from the lost original supplement; no original tactical sample count is claimed as recovered.
+
+All five policies receive exactly the same permitted view. Each chosen action is followed by fixed production-policy continuations on the actual host deal. Host state stays outside policy inputs. Action differences from Val: {'strong-balanced': 2, 'strong-conservative': 3, 'strong-assertive': 3, 'strong-partnership': 1}. The full views, actions and conditional hand outcomes are retained in fixtures.json.gz.
+
+Conditional-cost example: seed 3389964757, hand 1, decision 7, seat 3; Val {'type': 'play', 'card': 'spades:Q'} gives net -1, strong-balanced {'type': 'play', 'card': 'spades:J'} gives net 2.
+
+Conditional-cost example: seed 2269762794, hand 1, decision 1, seat 1; Val {'type': 'order-up', 'alone': False} gives net -2, strong-conservative {'type': 'pass'} gives net 1.
+
+Conditional-cost example: seed 3389964757, hand 1, decision 7, seat 3; Val {'type': 'play', 'card': 'spades:Q'} gives net -1, strong-assertive {'type': 'play', 'card': 'spades:J'} gives net 2.
+
+All five candidates overtook a winning partner in 3 of 64 selected positions, led trump in 22 of 64 lead choices, returned a previously partner-led team-won suit in 13 of 60 selected return opportunities, and played trump in 29 of 64 selected trump-conservation positions. These frequencies describe decisions; they are not mistake rates.
+
+These are actual conditional differences, not an optimal-play oracle. One actual deal cannot establish which action is best across unseen deals compatible with the player’s information. Heuristic disagreement alone is not called a mistake. Leads, returns, conserving trump and overtaking partners are measured explicitly in tactical-summary.json.
+
+Symmetry, validation and limitations
+
+casual-balanced: rotated all-same-policy right-minus-left voluntary rate +0.00; 95% interval [+0.00, +0.00]; 32 independent blocks percentage points.
+
+casual-cautious: rotated all-same-policy right-minus-left voluntary rate +0.00; 95% interval [+0.00, +0.00]; 32 independent blocks percentage points.
+
+casual-bold: rotated all-same-policy right-minus-left voluntary rate +0.00; 95% interval [+0.00, +0.00]; 32 independent blocks percentage points.
+
+strong-balanced: rotated all-same-policy right-minus-left voluntary rate +0.00; 95% interval [+0.00, +0.00]; 32 independent blocks percentage points.
+
+strong-conservative: rotated all-same-policy right-minus-left voluntary rate +0.00; 95% interval [+0.00, +0.00]; 32 independent blocks percentage points.
+
+strong-assertive: rotated all-same-policy right-minus-left voluntary rate +0.00; 95% interval [+0.00, +0.00]; 32 independent blocks percentage points.
+
+strong-partnership: rotated all-same-policy right-minus-left voluntary rate +0.00; 95% interval [+0.00, +0.00]; 32 independent blocks percentage points.
+
+expert-balanced: rotated all-same-policy right-minus-left voluntary rate +0.34; 95% interval [-0.10, +0.80]; 32 independent blocks percentage points.
+
+expert-conservative: rotated all-same-policy right-minus-left voluntary rate +0.17; 95% interval [-0.46, +0.70]; 32 independent blocks percentage points.
+
+expert-assertive: rotated all-same-policy right-minus-left voluntary rate +0.31; 95% interval [-0.16, +0.82]; 32 independent blocks percentage points.
+
+val: rotated all-same-policy right-minus-left voluntary rate +0.00; 95% interval [+0.00, +0.00]; 32 independent blocks percentage points.
+
+The symmetry control uses four clockwise rotations with matched dealer rotation. No rule direction is reversed. Expert’s deterministic sampling depends on the permitted-view representation, so rotated action traces can differ; matching initial deals is verified independently.
+
+Independent checks cover bidding order, four passes before turn-down, forbidden second-round suit, forced dealer calls, pickup/discard, ownership, effective follow-suit and bowers, every trick winner including the final trick, next leader, loner sit-out, card conservation, score increments, next dealer, termination, deterministic replay and the permitted-view boundary. Existing hidden-state noninterference tests remain in the baseline suite. No invariant failure was excluded from the schedule.
+
+Audit-only defects corrected during development/recovery: the original tactical continuation cap of 25 was too short for a valid remaining bid/discard/play path; it is 29. The reconstructed return selector initially demanded that the immediately preceding trick was won by the current leader’s partner, which cannot be the current leader; it was replaced with the explicit historical team-won criterion above. Undefined/sparse-event bootstrap cases are handled without invented certainty. No engine or policy change followed these harness corrections.
+
+Baseline npm ci --ignore-scripts, npm run check (131 tests), npm run build and git diff --check passed. The final validation logs record the rerun of those required commands and the completed suite. All 136 automated tests passed with zero failures. Seven statistical checks verify denominators, forced losses, loner distinctions, matched ratios, repeated observations, fixed-context weights and zero-event uncertainty. Expensive simulations remain on demand.
+
+Limits: Expert seat effects and individual matchups remain imprecise. Policy-wide summaries mix the declared lineups. Loner attempts can be sparse. Runtime is specific to this Linux/Node environment, not iPhone latency. No optimal-play oracle, automatic learning, human-strength inference or VoiceOver acceptance is claimed.
+
+Reproduction and files
+
+Run python3 scripts/restore-bot-validation.py to materialize the compact committed results pack. Then node src/audit/validation-cli.ts --mode run --workers 4 validates and retains all completed chunks. The fixed manifest is reports/bot-validation/manifest.json. Recompute without replaying games: python3 scripts/analyze-bot-validation.py, then python3 scripts/report-bot-validation.py. Python 3 with NumPy and Node 24 are required. The ZIP includes all 336 individual detailed chunks directly, the report, manifest, fixtures, sources, validation logs and hashes.

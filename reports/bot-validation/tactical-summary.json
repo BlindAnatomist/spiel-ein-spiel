@@ -1,0 +1,204 @@
+{
+  "games": 32,
+  "views": 276,
+  "contexts": {
+    "bidding": 64,
+    "lead": 64,
+    "trump-conservation": 64,
+    "partner-winning": 64,
+    "partner-return": 60
+  },
+  "lonerHands": 128,
+  "lonerOutcomes": {
+    "loner-march": 4,
+    "euchred": 112,
+    "made": 12
+  },
+  "disagreements": {
+    "strong-balanced": 2,
+    "strong-conservative": 3,
+    "strong-assertive": 3,
+    "strong-partnership": 1
+  },
+  "conditionalCosts": [
+    {
+      "seed": 3389964757,
+      "hand": 1,
+      "decision": 7,
+      "seat": 3,
+      "contexts": [
+        "trump-conservation"
+      ],
+      "val": {
+        "profile": "val",
+        "action": {
+          "type": "play",
+          "card": "spades:Q"
+        },
+        "outcome": {
+          "net": -1,
+          "result": {
+            "makerTricks": 3,
+            "team": 0,
+            "points": 1,
+            "reason": "made"
+          }
+        }
+      },
+      "alternative": {
+        "profile": "strong-balanced",
+        "action": {
+          "type": "play",
+          "card": "spades:J"
+        },
+        "outcome": {
+          "net": 2,
+          "result": {
+            "makerTricks": 2,
+            "team": 1,
+            "points": 2,
+            "reason": "euchred"
+          }
+        }
+      }
+    },
+    {
+      "seed": 2269762794,
+      "hand": 1,
+      "decision": 1,
+      "seat": 1,
+      "contexts": [
+        "bidding"
+      ],
+      "val": {
+        "profile": "val",
+        "action": {
+          "type": "order-up",
+          "alone": false
+        },
+        "outcome": {
+          "net": -2,
+          "result": {
+            "makerTricks": 2,
+            "team": 0,
+            "points": 2,
+            "reason": "euchred"
+          }
+        }
+      },
+      "alternative": {
+        "profile": "strong-conservative",
+        "action": {
+          "type": "pass"
+        },
+        "outcome": {
+          "net": 1,
+          "result": {
+            "makerTricks": 3,
+            "team": 1,
+            "points": 1,
+            "reason": "made"
+          }
+        }
+      }
+    },
+    {
+      "seed": 3389964757,
+      "hand": 1,
+      "decision": 7,
+      "seat": 3,
+      "contexts": [
+        "trump-conservation"
+      ],
+      "val": {
+        "profile": "val",
+        "action": {
+          "type": "play",
+          "card": "spades:Q"
+        },
+        "outcome": {
+          "net": -1,
+          "result": {
+            "makerTricks": 3,
+            "team": 0,
+            "points": 1,
+            "reason": "made"
+          }
+        }
+      },
+      "alternative": {
+        "profile": "strong-assertive",
+        "action": {
+          "type": "play",
+          "card": "spades:J"
+        },
+        "outcome": {
+          "net": 2,
+          "result": {
+            "makerTricks": 2,
+            "team": 1,
+            "points": 2,
+            "reason": "euchred"
+          }
+        }
+      }
+    }
+  ],
+  "behavior": {
+    "val": {
+      "bidding_opportunities": 64,
+      "lead_opportunities": 64,
+      "trump_leads": 22,
+      "trump-conservation_opportunities": 64,
+      "trump_plays": 29,
+      "partner-winning_opportunities": 64,
+      "partner-return_opportunities": 60,
+      "partner_suit_returns": 13,
+      "partner_overtakes": 3
+    },
+    "strong-balanced": {
+      "bidding_opportunities": 64,
+      "lead_opportunities": 64,
+      "trump_leads": 22,
+      "trump-conservation_opportunities": 64,
+      "trump_plays": 29,
+      "partner-winning_opportunities": 64,
+      "partner-return_opportunities": 60,
+      "partner_suit_returns": 13,
+      "partner_overtakes": 3
+    },
+    "strong-conservative": {
+      "bidding_opportunities": 64,
+      "lead_opportunities": 64,
+      "trump_leads": 22,
+      "trump-conservation_opportunities": 64,
+      "trump_plays": 29,
+      "partner-winning_opportunities": 64,
+      "partner-return_opportunities": 60,
+      "partner_suit_returns": 13,
+      "partner_overtakes": 3
+    },
+    "strong-assertive": {
+      "bidding_opportunities": 64,
+      "lead_opportunities": 64,
+      "trump_leads": 22,
+      "trump-conservation_opportunities": 64,
+      "trump_plays": 29,
+      "partner-winning_opportunities": 64,
+      "partner-return_opportunities": 60,
+      "partner_suit_returns": 13,
+      "partner_overtakes": 3
+    },
+    "strong-partnership": {
+      "bidding_opportunities": 64,
+      "lead_opportunities": 64,
+      "trump_leads": 22,
+      "trump-conservation_opportunities": 64,
+      "trump_plays": 29,
+      "partner-winning_opportunities": 64,
+      "partner-return_opportunities": 60,
+      "partner_suit_returns": 13,
+      "partner_overtakes": 3
+    }
+  }
+}

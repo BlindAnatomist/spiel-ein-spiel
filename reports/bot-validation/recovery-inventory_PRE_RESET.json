@@ -1,6 +1,6 @@
 {
-  "status": "COMPLETE_RECONSTRUCTED_EVIDENCE",
-  "reason": "82 raw batches retained byte-for-byte; 254 lost batches regenerated with fixed original seeds and assignments; all expected totals and primary point estimates reconciled.",
+  "status": "INCOMPLETE_EVIDENCE_RECOVERY",
+  "reason": "Execution service reset erased the local checkout after all simulations and analysis completed, during connector publication. No completed simulations were rerun.",
   "sourceCommit": "46e4a0c04f9007387bc98ef4aaf1d256f20aec05",
   "lostLocalCommit": "977836840c657fcb338e5c6808a0254abc8e6e87",
   "lostLocalTree": "14ecd90f240f31d1da3e014a373d65555012d962",
@@ -2643,19 +2643,5 @@
       "python3 scripts/report-bot-validation.py"
     ],
     "warning": "These original commands are NOT currently runnable: the new source and manifest were lost. Recreating missing raw results would repeat completed simulations and was not done because the user explicitly prohibited repeating completed work."
-  },
-  "historicalStatus": "INCOMPLETE_EVIDENCE_RECOVERY",
-  "historicalReason": "Execution service reset erased the local checkout after all simulations and analysis completed, during connector publication. No completed simulations were rerun.",
-  "completion": {
-    "batches": 336,
-    "games": 41024,
-    "hands": 462717,
-    "retainedBatches": 82,
-    "retainedGames": 7584,
-    "reconstructedBatches": 254,
-    "reconstructedGames": 33440,
-    "lostArtifactFlagsAreHistorical": true,
-    "verification": "recovery-verification.json",
-    "currentPack": "reconstructed-results.zip"
   }
 }

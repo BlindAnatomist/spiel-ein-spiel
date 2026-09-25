@@ -20,8 +20,8 @@ export function runValidationGame(c:Case,block:number,baseSeed:number):Game{
   const ports=([0,1,2,3] as const).map(s=>ref.player(s)),bots=c.lineup.map(auditPolicy),start=performance.now();
   const hands:Hand[]=[],trace:Array<{seat:Seat;action:Action}>=[],policyMs=[0,0,0,0],policyDecisions=[0,0,0,0];let decisions=0,s=ref.snapshot(),handDeal='',bids:BidRecord[]=[];
   function begin(){checkState(s);assert.deepEqual(s.hands.map(h=>h.length),[5,5,5,5]);assert.equal(s.kitty.length,4);assert.equal(s.upCard,s.kitty[0]);handDeal=digest({hands:[0,1,2,3].map(i=>s.hands[(i+c.rotation)%4]),kitty:s.kitty});bids=[];}
-  begin();
   try{
+    begin();
     for(;;){
       if(s.result){hands.push({number:s.handNumber,dealer:s.dealer,deal:handDeal,bids,caller:s.caller!,suit:s.trump!,alone:s.alone,result:s.result});if(s.phase==='game-over')break;
         const old=s;ref.nextHand();s=ref.snapshot();assert.equal(s.dealer,(old.dealer+1)%4);assert.equal(s.handNumber,old.handNumber+1);assert.deepEqual(s.score,old.score);begin();}

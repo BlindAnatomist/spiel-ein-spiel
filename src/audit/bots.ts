@@ -125,8 +125,11 @@ interface ProfileStats {
   right: MutableCallAudit;
 }
 
+export function auditPolicy(id: OpponentProfileId | 'val'): DecisionPolicy {
+  return id === 'val' ? createBot('val') : createBotWithStrategy(OPPONENT_PROFILES[id].strategy);
+}
 function policy(profile: OpponentProfile): DecisionPolicy {
-  return createBotWithStrategy(profile.strategy);
+  return auditPolicy(profile.id);
 }
 
 function runProfileGame(options: {

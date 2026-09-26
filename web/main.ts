@@ -11,6 +11,7 @@ import {
   loadPendingArchives,
   loadPerformance,
   markPerformanceArchived,
+  removePerformanceGame,
   ownerTrend,
   performanceAnalysisText,
   performanceText,
@@ -55,6 +56,8 @@ function recoveryId(): string {
     .map(value => value.toString(16).padStart(8, '0')).join('-');
 }
 
+// Remove the single owner-tracked Casual game from Cynthia's 2026-09-25 sighted test.
+removePerformanceGame(storage, '8bc51155-e8a4-4773-984a-02a7bfc536ed');
 const profileId = ensurePerformanceProfile(storage, recoveryId);
 const trackingToggle = document.querySelector<HTMLButtonElement>('#human-tracking')!;
 const analysisButton = document.querySelector<HTMLButtonElement>('#performance-analysis')!;

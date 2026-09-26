@@ -20,17 +20,17 @@ body:has(#game:not([hidden])) #top-score,body:has(#game:not([hidden])) #difficul
 .table-card .card-face:before{font-size:19px;top:4px;left:5px}.table-card .card-face:after{font-size:25px;right:5px;bottom:4px}.up-card .card-face:before{font-size:26px}.up-card .card-face:after{font-size:34px}
 #turn{grid-column:1/-1;grid-row:2;font-size:16px;line-height:22px;font-weight:650;min-height:22px;margin:2px 0;text-align:center;color:#e6eddf}
 #current-state-panel{grid-column:1/-1;grid-row:3;padding:8px 10px;border:1px solid #839b7c;border-radius:9px;background:#153d31;font-size:14px;line-height:1.35}
-.hand{grid-column:1/-1;grid-row:4;display:flex;flex-wrap:nowrap;gap:5px;min-width:0;margin:4px 0 6px}
-.card{position:relative;flex:1 1 0;min-width:48px;max-width:none;height:88px;padding:0;border:2px solid #b3c5b5;border-radius:9px;background:#faf5e9;box-shadow:0 2px 4px #031b17;overflow:visible}
+.hand{grid-column:1/-1;grid-row:4;display:flex;flex-wrap:nowrap;justify-content:center;gap:5px;min-width:0;margin:4px 0 6px}
+.card{position:relative;flex:0 1 64px;width:64px;min-width:48px;max-width:64px;height:88px;padding:0;border:2px solid #b3c5b5;border-radius:9px;background:#faf5e9;box-shadow:0 2px 4px #031b17;overflow:visible}
 .card.playable{border-color:#f3ce75;box-shadow:0 0 0 1px #d0ad56,0 3px 5px #021b18}.card.unavailable{background:#d8e0d9;border-color:#83988a;cursor:default}.card.unavailable .card-face{opacity:.72}
 .actions{display:flex;gap:6px;align-items:center;justify-content:center;flex-wrap:wrap;min-width:0}
-#bids{grid-column:1/-1;grid-row:5;gap:6px;flex-wrap:nowrap;margin:2px 0}#bids:empty{display:none}#bids .suit-bid{flex:0 1 50px;min-width:48px;min-height:48px;height:48px;padding:2px;font-size:1.6rem}
+#bid-legend{grid-column:1/-1;grid-row:5;text-align:center;font-size:12px;line-height:1.25;color:#d7e3dc;margin:0 4px 2px}#bids{grid-column:1/-1;grid-row:6;gap:6px;flex-wrap:nowrap;margin:2px 0}#bids:empty{display:none}#bids .suit-bid{flex:0 1 50px;min-width:48px;min-height:48px;height:48px;padding:2px;font-size:1.6rem}
 .suit-symbol{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border:2px solid transparent;border-radius:50%}
 .suit-symbol.alone{border-color:currentColor}
-#after-hand{grid-column:1/-1;grid-row:6;margin:2px 0 0;justify-content:flex-end}#pass{margin-right:auto;min-width:84px}#after-hand [hidden]{display:none}
+#after-hand{grid-column:1/-1;grid-row:7;margin:2px 0 0;justify-content:flex-end}#pass{margin-right:auto;min-width:84px}#after-hand [hidden]{display:none}
 .icon-button{width:48px;height:48px;min-width:48px;padding:5px;display:inline-flex;align-items:center;justify-content:center}.state-icon:before{content:attr(data-glyph);font-size:29px;line-height:1}.new-icon:before{content:'↻';font-size:33px;line-height:1}
 .icon-button svg{width:36px;height:36px;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.icon-button .rabbit{fill:#fff8e8;stroke:#17382f;stroke-width:1.8}.icon-button .hat{fill:#17382f;stroke:#17382f}.icon-button .brim{stroke:#17382f;stroke-width:3.5}.icon-button .band{stroke:#e4bd61;stroke-width:2.5}#sound-cues .sound-wave{opacity:.25}#sound-cues[aria-pressed=true] .sound-wave{opacity:1}
-#result{grid-column:1/-1;grid-row:7;font-size:16px;line-height:1.4;padding:10px;border:1px solid #839b7c;border-radius:10px;background:#153d31}#next{grid-column:1/-1;grid-row:8}noscript{grid-column:1/-1}
+#result{grid-column:1/-1;grid-row:8;font-size:16px;line-height:1.4;padding:10px;border:1px solid #839b7c;border-radius:10px;background:#153d31}#next{grid-column:1/-1;grid-row:9}noscript{grid-column:1/-1}
 @media(max-height:620px){main{padding-bottom:24px}.table{height:200px}.card{height:80px}.table-card{width:42px;height:54px}.up-card{width:60px;height:80px}.played.seat-2{top:32%}.played.seat-0{top:68%}}
 @media(min-width:600px){main{padding-top:20px}.table{height:300px}.card{height:110px}}
 @media(forced-colors:active){.seat.dealer{outline:2px solid Highlight}.seat.active{border-style:double;border-width:4px}.card.playable{outline:2px solid Highlight}}

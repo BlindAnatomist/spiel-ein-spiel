@@ -1,7 +1,7 @@
 import { cardFace, rabbitHat, renderVisualTable } from './visuals.ts';
 import { suitOf, teamOf } from '../src/index.ts';
 import type { Action, Card, PlayerView } from '../src/index.ts';
-import { actionName, cardName, currentState, names, resultText } from './presentation.ts';
+import { actionName, cardName, currentState, lastTrick, names, resultText } from './presentation.ts';
 import type { SeatNames } from './presentation.ts';
 export interface Handlers { act(action: Action): void; next(): void; repeat?(): void; review?(): void }
 /** No host/referee imports or capabilities. Receives only a seat-zero view. */
@@ -11,7 +11,7 @@ export function createTable(root: HTMLElement, handlers: Handlers, seatNames: Se
     <p class="partner seat" data-seat="2" aria-hidden="true">Val</p><p class="west seat" data-seat="1" aria-hidden="true">West</p><p class="east seat" data-seat="3" aria-hidden="true">East</p><p class="you seat" data-seat="0" aria-hidden="true">You</p>
     <div class="center"><h2 class="sr-only" aria-hidden="true">Table</h2><p id="facts" class="sr-only" aria-hidden="true"></p><p id="trump" class="sr-only" aria-hidden="true"></p><p id="upcard" class="sr-only" aria-hidden="true"></p><h2 class="sr-only">Current trick</h2><ul id="trick" class="sr-only"></ul><p id="tricks" aria-hidden="true"></p></div>
     <div class="visual-table" aria-hidden="true"><div class="suit-summary"><p id="visual-suit"></p><p id="visual-caller"></p></div><div id="visual-cards"></div><p id="visual-held"></p></div>
-    </div><h2 id="turn" tabindex="-1">Game actions</h2><div id="current-state-panel" aria-hidden="true" hidden></div><div id="result" tabindex="-1"></div><button id="next" type="button" hidden>Deal next hand</button><h2 class="hand-heading sr-only">Your hand</h2><div id="hand" class="hand"></div><div id="bids" class="actions"></div><div id="after-hand" class="actions"><button id="pass" type="button" hidden>Pass</button><button id="repeat-state" class="icon-button" aria-label="Repeat current state. Suit not called yet." type="button"><span class="sr-only">Repeat current state</span><span class="state-icon" data-glyph="◎" aria-hidden="true"></span></button><button id="review-trick" class="icon-button" aria-label="Review last trick" type="button" hidden><span class="sr-only">Review last trick</span>${rabbitHat}</button></div>`;
+    </div><h2 id="turn" tabindex="-1">Game actions</h2><div id="current-state-panel" aria-hidden="true" hidden></div><div id="result" tabindex="-1"></div><button id="next" type="button" hidden>Deal next hand</button><h2 class="hand-heading sr-only">Your hand</h2><div id="hand" class="hand"></div><p id="bid-legend" aria-hidden="true" hidden></p><div id="bids" class="actions"></div><div id="after-hand" class="actions"><button id="pass" type="button" hidden>Pass</button><button id="repeat-state" class="icon-button" aria-label="Repeat current state. Suit not called yet." type="button"><span class="sr-only">Repeat current state</span><span class="state-icon" data-glyph="◎" aria-hidden="true"></span></button><button id="review-trick" class="icon-button" aria-label="Review last trick" type="button" hidden><span class="sr-only">Review last trick</span>${rabbitHat}</button></div>`;
   root.querySelector<HTMLElement>('.partner')!.textContent = seatNames[2];
   root.querySelector<HTMLElement>('.west')!.textContent = seatNames[1];
   root.querySelector<HTMLElement>('.east')!.textContent = seatNames[3];
@@ -23,19 +23,26 @@ export function createTable(root: HTMLElement, handlers: Handlers, seatNames: Se
   let focusKey = '';
   let panelKey = '';
   const publicKey = (v: PlayerView) => JSON.stringify([v.handNumber,v.phase,v.turn,v.biddingRound,v.trump,v.caller,v.alone,v.sittingOut,v.upCardStatus,v.score,v.completedTricks,v.trick,v.result]);
-  get('repeat-state').onclick = () => {
+  function toggleSightedPanel(kind: 'state' | 'trick', text: string) {
     const panel = get('current-state-panel');
-    if (panel.hidden) {
-      panel.textContent = currentState(current, seatNames);
-      panel.hidden = false;
-      panelKey = publicKey(current);
-    } else {
+    const nextPanelKey = kind + ':' + publicKey(current);
+    if (!panel.hidden && panelKey === nextPanelKey) {
       panel.hidden = true;
       panelKey = '';
+      return;
     }
+    panel.textContent = text;
+    panel.hidden = false;
+    panelKey = nextPanelKey;
+  }
+  get('repeat-state').onclick = () => {
+    toggleSightedPanel('state', currentState(current, seatNames));
     handlers.repeat?.();
   };
-  get('review-trick').onclick = () => handlers.review?.();
+  get('review-trick').onclick = () => {
+    toggleSightedPanel('trick', lastTrick(current, seatNames));
+    handlers.review?.();
+  };
   get('next').onclick = () => handlers.next();
   function render(v: PlayerView, interactive = true) {
     if (v.seat !== 0) throw new Error('Human presentation requires seat zero');
@@ -48,6 +55,11 @@ export function createTable(root: HTMLElement, handlers: Handlers, seatNames: Se
     current = v; ready = interactive;
     renderVisualTable(root, v, seatNames);
     get('review-trick').hidden = v.completedTricks.length === 0;
+    const bidLegend = get('bid-legend');
+    bidLegend.hidden = v.phase !== 'bidding';
+    bidLegend.textContent = v.biddingRound === 1
+      ? 'Plain suit = order the dealer to pick it up. Ringed suit = order it up and go alone.'
+      : 'Plain suit = call that suit. Ringed suit = call it and go alone.';
     get('repeat-state').setAttribute('aria-label', v.trump
       ? `Repeat current state. Called suit: ${v.trump[0]!.toUpperCase()}${v.trump.slice(1)}.`
       : 'Repeat current state. Suit not called yet.');

@@ -25,7 +25,8 @@ test('start, difficulty, tracking, analysis and sound retain native semantics in
   assert.equal(start.textContent,'Start game');assert.equal(start.tagName,'BUTTON');assert.equal(start.type,'submit');
   assert.equal(d.querySelector('#difficulty')!.tagName,'SELECT');
   assert.equal(d.querySelector('label[for="difficulty"]')!.textContent,'Opponent difficulty');
-  assert.equal(d.querySelector('#human-tracking')!.getAttribute('aria-pressed'),'true');
+  assert.equal(d.querySelector('#human-tracking')!.getAttribute('aria-pressed'),'false');
+  assert.equal(d.querySelector('#human-tracking')!.textContent,'Bot data only');
   assert.equal(d.querySelector('#performance-analysis')!.textContent,'Analysis');
   assert.equal(d.querySelector('#help-button')!.getAttribute('aria-expanded'),'false');
   assert.equal(d.querySelector('#sound-cues')!.getAttribute('aria-pressed'),'false');
@@ -51,8 +52,9 @@ test('rabbit ears and top hat are decorative; review availability and name remai
   const svg=button.querySelector('svg')!;assert.equal(svg.getAttribute('aria-hidden'),'true');assert.equal(svg.getAttribute('focusable'),'false');
   assert.ok(svg.querySelector('.rabbit'));assert.ok(svg.querySelector('.hat'));assert.ok(svg.querySelector('.brim'));
   assert.equal(svg.querySelector('title'),null);
-  table.render({...v,completedTricks:[{plays:[],winner:1}]});assert.equal(button.hidden,false);button.click();assert.deepEqual(counts(),[0,1]);
-  assert.equal(button.textContent,'Review last trick');table.render({...v,handNumber:2});assert.equal(button.hidden,true);
+  table.render({...v,completedTricks:[{plays:[{seat:1,card:'clubs:A'}],winner:1}]});assert.equal(button.hidden,false);button.click();assert.deepEqual(counts(),[0,1]);
+  const panel=root.querySelector<HTMLElement>('#current-state-panel')!;assert.equal(panel.hidden,false);assert.equal(panel.getAttribute('aria-hidden'),'true');assert.match(panel.textContent!,/Last trick/);
+  assert.equal(button.textContent,'Review last trick');table.render({...v,handNumber:2});assert.equal(button.hidden,true);assert.equal(panel.hidden,true);
 });
 test('each seat can independently show dealer and active states without changing focus or spoken content',()=>{
   const v=view();const {root,table,dom}=fixture(v);const repeat=root.querySelector<HTMLButtonElement>('#repeat-state')!;repeat.focus();
@@ -110,6 +112,21 @@ test('bidding swipe order is hand then bid choices then Pass and review controls
   assert.equal(bidButtons[0]!.previousElementSibling,null);
   assert.ok(hand.lastElementChild===cards.at(-1));
 });
+test('sighted bidding legend explains plain versus ringed controls without entering accessibility navigation',()=>{
+  const v=view();const {root,table}=fixture(v);const legend=root.querySelector<HTMLElement>('#bid-legend')!;
+  assert.equal(legend.hidden,false);assert.equal(legend.getAttribute('aria-hidden'),'true');assert.match(legend.textContent!,/order the dealer to pick it up/);
+  table.render({...v,biddingRound:2,upCardStatus:'turned-down'});assert.match(legend.textContent!,/Plain suit = call that suit/);
+  table.render({...v,phase:'playing',trump:'hearts',caller:1});assert.equal(legend.hidden,true);
+});
+
+test('one and two remaining cards keep normal card width instead of stretching across the hand',()=>{
+  const css=readFileSync('web/style.css','utf8');
+  assert.match(css,/\.hand\{[^}]*justify-content:center/);assert.match(css,/\.card\{[^}]*flex:0 1 64px[^}]*max-width:64px/);
+  const v:PlayerView={...view(),phase:'playing',turn:0,trump:'hearts',caller:1,hand:['hearts:A'],legalActions:[{type:'play',card:'hearts:A'}]};
+  const {root,table}=fixture(v);assert.equal(root.querySelectorAll('#hand button').length,1);
+  table.render({...v,hand:['hearts:A','clubs:9'],legalActions:[{type:'play',card:'hearts:A'},{type:'play',card:'clubs:9'}]});assert.equal(root.querySelectorAll('#hand button').length,2);
+});
+
 test('all compact bids keep full labels and decorative alone rings through both calling rounds',()=>{
   const ref=createReferee({seed:17,dealer:3});
   for(const round of [1,2]) {

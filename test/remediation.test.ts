@@ -29,6 +29,16 @@ function clockFixture(v = playing(), messages = ['East plays ace of clubs.']) {
     ms=>{log.push(`wait:${ms}`); return new Promise<void>(release=>waits.push({ms,release}));});
   return {...ui,controller,log,waits,session,setView:(next:PlayerView)=>{current=next;}};
 }
+test('visual pacing bypasses narrator budgets and the VoiceOver guard on a human turn', async () => {
+  const v=playing();const ui=fixture(v);const messages:string[]=[];const waits:number[]=[];let focuses=0;
+  const session:Session={view:()=>v,human:()=>({view:v,messages:['East plays ace of clubs.']}),bot:()=>null,nextHand:()=>v};
+  ui.table.focus=()=>{focuses++;};
+  const controller=createController(session,ui.table,t=>messages.push(t),async ms=>{waits.push(ms);},()=>{},undefined,'visual');
+  await controller.act(v.legalActions[0]!);
+  assert.deepEqual(messages,[]);assert.deepEqual(waits,[]);assert.equal(focuses,1);
+  assert.equal(ui.root.querySelector<HTMLButtonElement>('#hand button[aria-disabled="false"]')!==null,true);
+});
+
 test('automatic event clears before the 1150 ms guard starts; first legal card focuses only after guard', async () => {
   const f=clockFixture(); const pending=f.controller.act(playing().legalActions[0]!);
   assert.deepEqual(f.log,['say:East plays ace of clubs.','wait:1600']);

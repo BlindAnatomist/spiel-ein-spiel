@@ -11,6 +11,7 @@ import {
   loadPendingArchives,
   loadPerformance,
   markPerformanceArchived,
+  removePerformanceGame,
   ownerTrend,
   performanceAnalysisText,
   performanceText,
@@ -287,6 +288,20 @@ test('other-player games retain bot evidence but never archive that human privat
   const summary = summarizePerformance(loadPerformance(storage));
   assert.equal(summary.games, 0);
   assert.equal(summary.botGames, 1);
+});
+
+test('targeted performance cleanup removes only the specified local game and pending archive', () => {
+  const storage=new MemoryStorage();
+  const accidental=game({id:'accidental',humanTracking:'owner',winner:1,score:[5,11],hands:[hand(1)]});
+  const keep=game({id:'keep',humanTracking:'owner',winner:0,score:[10,8],hands:[hand(0)]});
+  storage.setItem('spiel-ein-spiel:euchre-performance:v2',JSON.stringify({version:2,games:[accidental,keep]}));
+  storage.setItem('spiel-ein-spiel:euchre-performance-pending:v2',JSON.stringify([
+    {profileId:'EUC-test-profile-1234',game:{...accidental,seatNames:['You','West','Val','East'],hands:[]}},
+    {profileId:'EUC-test-profile-1234',game:{...keep,seatNames:['You','West','Val','East'],hands:[]}},
+  ]));
+  removePerformanceGame(storage,'accidental');
+  assert.deepEqual(loadPerformance(storage).games.map(value=>value.id),['keep']);
+  assert.deepEqual(loadPendingArchives(storage).map(value=>value.game.id),['keep']);
 });
 
 test('performance recovery profile survives reload and is not regenerated', () => {

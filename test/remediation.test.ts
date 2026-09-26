@@ -29,6 +29,16 @@ function clockFixture(v = playing(), messages = ['East plays ace of clubs.']) {
     ms=>{log.push(`wait:${ms}`); return new Promise<void>(release=>waits.push({ms,release}));});
   return {...ui,controller,log,waits,session,setView:(next:PlayerView)=>{current=next;}};
 }
+test('visual pacing bypasses narrator budgets and the VoiceOver guard on a human turn', async () => {
+  const v=playing();const ui=fixture(v);const messages:string[]=[];const waits:number[]=[];let focuses=0;
+  const session:Session={view:()=>v,human:()=>({view:v,messages:['East plays ace of clubs.']}),bot:()=>null,nextHand:()=>v};
+  ui.table.focus=()=>{focuses++;};
+  const controller=createController(session,ui.table,t=>messages.push(t),async ms=>{waits.push(ms);},()=>{},undefined,'visual');
+  await controller.act(v.legalActions[0]!);
+  assert.deepEqual(messages,[]);assert.deepEqual(waits,[]);assert.equal(focuses,1);
+  assert.equal(ui.root.querySelector<HTMLButtonElement>('#hand button[aria-disabled="false"]')!==null,true);
+});
+
 test('automatic event clears before the 1150 ms guard starts; first legal card focuses only after guard', async () => {
   const f=clockFixture(); const pending=f.controller.act(playing().legalActions[0]!);
   assert.deepEqual(f.log,['say:East plays ace of clubs.','wait:1600']);
@@ -98,10 +108,12 @@ test('play navigation follows stable hand, then state and available trick review
   table.render({...v,trick:[{seat:1,card:'clubs:A'}]});
   assert.deepEqual([...root.querySelectorAll('#hand button')],initial);
   const order=accessibleOrder(root);const start=order.indexOf('Your hand');
-  assert.deepEqual(order.slice(start),['Your hand',...initial.map(b=>b.textContent),'Repeat current state']);
+  assert.deepEqual(order.slice(start),['Your hand',...initial.map(b=>b.textContent),'Repeat current state. Called suit: Hearts.']);
   table.render({...v,completedTricks:[{plays:[{seat:1,card:'clubs:A'}],winner:1}]});
-  assert.deepEqual(accessibleOrder(root).slice(-2),['Repeat current state','Review last trick']);
-  assert.equal(root.querySelector('#hand')!.nextElementSibling?.id,'after-hand');
+  assert.deepEqual(accessibleOrder(root).slice(-2),['Repeat current state. Called suit: Hearts.','Review last trick']);
+  const legend=root.querySelector<HTMLElement>('#bid-legend')!;
+  assert.equal(root.querySelector('#hand')!.nextElementSibling,legend);assert.equal(legend.getAttribute('aria-hidden'),'true');
+  assert.equal(legend.nextElementSibling?.id,'bids');
 });
 test('both calling rounds keep stable hand first, then positive bids, Pass and reviews; stuck dealer omits Pass', () => {
   const ref=createReferee({seed:4,dealer:3});
@@ -118,7 +130,7 @@ test('both calling rounds keep stable hand first, then positive bids, Pass and r
       const pass=root.querySelector<HTMLButtonElement>('#pass')!;
       assert.equal(pass.textContent,'Pass');assert.equal(pass.hidden,false);
       const handCards=[...root.querySelectorAll('#hand button')].map(b=>b.textContent);
-      assert.deepEqual(order.slice(handIndex),['Your hand',...handCards,...bids.map(b=>b.getAttribute('aria-label')),'Pass','Repeat current state']);
+      assert.deepEqual(order.slice(handIndex),['Your hand',...handCards,...bids.map(b=>b.getAttribute('aria-label')),'Pass','Repeat current state. Suit not called yet.']);
       pass.click();assert.deepEqual(actions,[{type:'pass'}]);table.focus();assert.equal(dom.window.document.activeElement,bids[0]);
     }
     if(step<7)ref.player(v.turn!).act({type:'pass'});
@@ -127,7 +139,7 @@ test('both calling rounds keep stable hand first, then positive bids, Pass and r
   const stuck=createReferee({seed:4,dealer:0});for(let i=0;i<7;i++)stuck.player(stuck.player(0).view().turn!).act({type:'pass'});
   const v=stuck.player(0).view();const {root}=fixture(v);const order=accessibleOrder(root);
   assert.equal(root.querySelector<HTMLButtonElement>('#pass')!.hidden,true);
-  assert.deepEqual(order.slice(order.indexOf('Your hand')),['Your hand',...[...root.querySelectorAll('#hand button')].map(b=>b.textContent),...[...root.querySelectorAll('#bids button')].map(b=>b.getAttribute('aria-label')),'Repeat current state']);
+  assert.deepEqual(order.slice(order.indexOf('Your hand')),['Your hand',...[...root.querySelectorAll('#hand button')].map(b=>b.textContent),...[...root.querySelectorAll('#bids button')].map(b=>b.getAttribute('aria-label')),'Repeat current state. Suit not called yet.']);
 });
 test('compact order-up and call glyphs preserve explicit speech, legal actions and CSS touch targets', () => {
   const v=playing();
@@ -176,7 +188,7 @@ test('orientation covers score, dealer, both rounds, all current plays in order,
   assert.match(currentState({...v,phase:'discarding',upCardStatus:'ordered'}),/ordered\. You must discard/);
   const result:PlayerView={...v,phase:'game-over',turn:null,score:[10,3],result:{team:0,points:1,makerTricks:3,reason:'made'},winner:0};
   assert.ok(currentState(result).endsWith(resultText(result)));assert.equal((currentState(result).match(/Score:/g)??[]).length,1);
-  assert.match(currentState({...v,trick:[]}),/You lead\.$/);
+  assert.match(currentState({...v,trick:[]}),/You lead\./);assert.match(currentState({...v,trick:[]}),/Score: you and Val/);
 });
 test('orientation never reads private hand, actions, sampled worlds or strategy; last trick is independent', () => {
   const v={...playing(),trick:[{seat:1 as const,card:'clubs:A' as const}],completedTricks:[{plays:[{seat:2 as const,card:'spades:9' as const},{seat:3 as const,card:'spades:A' as const}],winner:3 as const}]};

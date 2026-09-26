@@ -237,6 +237,13 @@ export function markPerformanceArchived(storage: StorageLike, gameId: string): v
   savePendingArchives(storage, loadPendingArchives(storage).filter(item => item.game.id !== gameId));
 }
 
+export function removePerformanceGame(storage: StorageLike, gameId: string): void {
+  const book = loadPerformance(storage);
+  const games = book.games.filter(game => game.id !== gameId);
+  if (games.length !== book.games.length) savePerformance(storage, { version: 2, games });
+  savePendingArchives(storage, loadPendingArchives(storage).filter(item => item.game.id !== gameId));
+}
+
 function actorIdentity(seat: Seat, humanTracking: HumanTracking, meta: SessionMeta): {
   kind: ActorKind; name: string; profileId: string | null;
 } {

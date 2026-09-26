@@ -11,6 +11,7 @@ import {
   loadPendingArchives,
   loadPerformance,
   markPerformanceArchived,
+  removePerformanceGame,
   ownerTrend,
   performanceAnalysisText,
   performanceText,
@@ -32,6 +33,15 @@ soundToggle.onclick = () => {
   soundToggle.setAttribute('aria-pressed', String(enabled)); sounds.setEnabled(enabled);
 };
 
+const startButton = document.querySelector<HTMLButtonElement>('#start-game')!;
+const helpButton = document.querySelector<HTMLButtonElement>('#help-button')!;
+const helpPanel = document.querySelector<HTMLElement>('#help-panel')!;
+helpButton.onclick = () => {
+  const opening = helpPanel.hidden;
+  helpPanel.hidden = !opening;
+  helpButton.setAttribute('aria-expanded', String(opening));
+};
+
 const storage: StorageLike = {
   getItem(key) {
     try { return window.localStorage.getItem(key); } catch { return null; }
@@ -46,17 +56,27 @@ function recoveryId(): string {
     .map(value => value.toString(16).padStart(8, '0')).join('-');
 }
 
+// Remove the single owner-tracked Casual game from Cynthia's 2026-09-25 sighted test.
+removePerformanceGame(storage, '8bc51155-e8a4-4773-984a-02a7bfc536ed');
 const profileId = ensurePerformanceProfile(storage, recoveryId);
 const trackingToggle = document.querySelector<HTMLButtonElement>('#human-tracking')!;
 const analysisButton = document.querySelector<HTMLButtonElement>('#performance-analysis')!;
 const analysisPanel = document.querySelector<HTMLElement>('#analysis-panel')!;
 const analysisChart = document.querySelector<HTMLElement>('#analysis-chart')!;
 const performanceOutput = document.querySelector<HTMLElement>('#performance-output')!;
-let humanTracking: HumanTracking = 'owner';
+let humanTracking: HumanTracking = 'other';
+function updateTrackingToggle() {
+  const owner = humanTracking === 'owner';
+  trackingToggle.setAttribute('aria-pressed', String(owner));
+  trackingToggle.textContent = owner ? 'My performance' : 'Bot data only';
+  trackingToggle.setAttribute('aria-label', owner
+    ? 'My performance. VoiceOver pacing.'
+    : 'Bot data only. Faster visual pacing.');
+}
+updateTrackingToggle();
 trackingToggle.onclick = () => {
   humanTracking = humanTracking === 'owner' ? 'other' : 'owner';
-  trackingToggle.setAttribute('aria-pressed', String(humanTracking === 'owner'));
-  trackingToggle.textContent = humanTracking === 'owner' ? 'My performance' : 'Bot data only';
+  updateTrackingToggle();
 };
 
 function svgElement(name: string, attributes: Record<string, string> = {}): SVGElement {
@@ -178,9 +198,15 @@ const randomWord = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
 document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   event.preventDefault();
   controller?.stop(); live.textContent = '';
+  startButton.textContent = 'New game';
+  helpPanel.hidden = true;
+  helpButton.setAttribute('aria-expanded', 'false');
   performanceOutput.hidden = true;
   analysisPanel.hidden = true;
   analysisChart.replaceChildren();
+  const selectedHumanTracking = humanTracking;
+  humanTracking = 'other';
+  updateTrackingToggle();
   const level = document.querySelector<HTMLSelectElement>('#difficulty')!.value as Difficulty;
   // Live games use browser cryptographic randomness for the starting dealer and every shuffle.
   const dealer = (randomWord() & 3) as Seat;
@@ -193,7 +219,7 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
     observer: createPerformanceRecorder(storage, {
       profileId,
       gameId,
-      humanTracking,
+      humanTracking: selectedHumanTracking,
       buildCommit,
       rulesVersion: PERFORMANCE_RULES_VERSION,
       completedAt: () => new Date().toISOString(),
@@ -204,7 +230,8 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   });
   root.hidden = false;
   const table = createTable(root, { act: action => { void controller!.act(action); }, next: () => { void controller!.next(); }, repeat: () => { void controller!.repeat(); }, review: () => { void controller!.review(); } }, seatNames);
-  controller = createController(session, table, text => { live.textContent = text; }, undefined, cue => sounds.play(cue), seatNames);
+  controller = createController(session, table, text => { live.textContent = text; }, undefined, cue => sounds.play(cue), seatNames,
+    selectedHumanTracking === 'owner' ? 'voiceover' : 'visual');
   table.render(session.view(), false); table.park();
   void controller.start();
 };

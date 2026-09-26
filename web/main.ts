@@ -61,11 +61,19 @@ const analysisButton = document.querySelector<HTMLButtonElement>('#performance-a
 const analysisPanel = document.querySelector<HTMLElement>('#analysis-panel')!;
 const analysisChart = document.querySelector<HTMLElement>('#analysis-chart')!;
 const performanceOutput = document.querySelector<HTMLElement>('#performance-output')!;
-let humanTracking: HumanTracking = 'owner';
+let humanTracking: HumanTracking = 'other';
+function updateTrackingToggle() {
+  const owner = humanTracking === 'owner';
+  trackingToggle.setAttribute('aria-pressed', String(owner));
+  trackingToggle.textContent = owner ? 'My performance' : 'Bot data only';
+  trackingToggle.setAttribute('aria-label', owner
+    ? 'My performance. VoiceOver pacing.'
+    : 'Bot data only. Faster visual pacing.');
+}
+updateTrackingToggle();
 trackingToggle.onclick = () => {
   humanTracking = humanTracking === 'owner' ? 'other' : 'owner';
-  trackingToggle.setAttribute('aria-pressed', String(humanTracking === 'owner'));
-  trackingToggle.textContent = humanTracking === 'owner' ? 'My performance' : 'Bot data only';
+  updateTrackingToggle();
 };
 
 function svgElement(name: string, attributes: Record<string, string> = {}): SVGElement {
@@ -216,7 +224,8 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   });
   root.hidden = false;
   const table = createTable(root, { act: action => { void controller!.act(action); }, next: () => { void controller!.next(); }, repeat: () => { void controller!.repeat(); }, review: () => { void controller!.review(); } }, seatNames);
-  controller = createController(session, table, text => { live.textContent = text; }, undefined, cue => sounds.play(cue), seatNames);
+  controller = createController(session, table, text => { live.textContent = text; }, undefined, cue => sounds.play(cue), seatNames,
+    humanTracking === 'owner' ? 'voiceover' : 'visual');
   table.render(session.view(), false); table.park();
   void controller.start();
 };

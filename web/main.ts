@@ -201,6 +201,9 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   performanceOutput.hidden = true;
   analysisPanel.hidden = true;
   analysisChart.replaceChildren();
+  const selectedHumanTracking = humanTracking;
+  humanTracking = 'other';
+  updateTrackingToggle();
   const level = document.querySelector<HTMLSelectElement>('#difficulty')!.value as Difficulty;
   // Live games use browser cryptographic randomness for the starting dealer and every shuffle.
   const dealer = (randomWord() & 3) as Seat;
@@ -213,7 +216,7 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
     observer: createPerformanceRecorder(storage, {
       profileId,
       gameId,
-      humanTracking,
+      humanTracking: selectedHumanTracking,
       buildCommit,
       rulesVersion: PERFORMANCE_RULES_VERSION,
       completedAt: () => new Date().toISOString(),
@@ -225,7 +228,7 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   root.hidden = false;
   const table = createTable(root, { act: action => { void controller!.act(action); }, next: () => { void controller!.next(); }, repeat: () => { void controller!.repeat(); }, review: () => { void controller!.review(); } }, seatNames);
   controller = createController(session, table, text => { live.textContent = text; }, undefined, cue => sounds.play(cue), seatNames,
-    humanTracking === 'owner' ? 'voiceover' : 'visual');
+    selectedHumanTracking === 'owner' ? 'voiceover' : 'visual');
   table.render(session.view(), false); table.park();
   void controller.start();
 };

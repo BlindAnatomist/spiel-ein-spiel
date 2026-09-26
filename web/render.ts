@@ -48,7 +48,8 @@ export function createTable(root: HTMLElement, handlers: Handlers, seatNames: Se
     if (v.seat !== 0) throw new Error('Human presentation requires seat zero');
     if (current && current.handNumber !== v.handNumber) { hand.replaceChildren(); cards.clear(); }
     const nextKey = publicKey(v);
-    if (!get('current-state-panel').hidden && panelKey && panelKey !== nextKey) {
+    if (!get('current-state-panel').hidden && panelKey &&
+        panelKey !== 'state:' + nextKey && panelKey !== 'trick:' + nextKey) {
       get('current-state-panel').hidden = true;
       panelKey = '';
     }

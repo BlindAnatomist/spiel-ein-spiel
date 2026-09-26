@@ -111,7 +111,9 @@ test('play navigation follows stable hand, then state and available trick review
   assert.deepEqual(order.slice(start),['Your hand',...initial.map(b=>b.textContent),'Repeat current state. Called suit: Hearts.']);
   table.render({...v,completedTricks:[{plays:[{seat:1,card:'clubs:A'}],winner:1}]});
   assert.deepEqual(accessibleOrder(root).slice(-2),['Repeat current state. Called suit: Hearts.','Review last trick']);
-  assert.equal(root.querySelector('#hand')!.nextElementSibling?.id,'bids');
+  const legend=root.querySelector<HTMLElement>('#bid-legend')!;
+  assert.equal(root.querySelector('#hand')!.nextElementSibling,legend);assert.equal(legend.getAttribute('aria-hidden'),'true');
+  assert.equal(legend.nextElementSibling?.id,'bids');
 });
 test('both calling rounds keep stable hand first, then positive bids, Pass and reviews; stuck dealer omits Pass', () => {
   const ref=createReferee({seed:4,dealer:3});

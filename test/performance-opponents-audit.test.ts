@@ -74,7 +74,7 @@ function book(games: readonly GamePerformance[]): PerformanceBook {
 test('data controls stay compact: one tracking toggle and one Analysis button', () => {
   const html = readFileSync('web/index.html', 'utf8');
   assert.equal((html.match(/id="human-tracking"/g) ?? []).length, 1);
-  assert.match(html, /id="human-tracking"[^>]*aria-pressed="true"[^>]*>My performance</);
+  assert.match(html, /id="human-tracking"[^>]*aria-pressed="false"[^>]*>Bot data only</);
   assert.equal((html.match(/id="performance-analysis"/g) ?? []).length, 1);
   assert.doesNotMatch(html, /Performance summary|Performance recovery code|Human performance data/);
   assert.doesNotMatch(html, /Stick the dealer\. Maker may go alone/);

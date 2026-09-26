@@ -7,11 +7,14 @@ import type { Session, Update } from './session.ts';
 import type { createTable } from './render.ts';
 /** Quiet time after the live region clears, only before automatic focus. */
 export const FOCUS_GUARD_MS = 1150;
+export type PacingMode = 'voiceover' | 'visual';
 export function createController(session: Session, table: ReturnType<typeof createTable>, announce: (text: string) => void,
   wait: (ms: number) => Promise<void> = ms => new Promise(resolve => setTimeout(resolve, ms)),
   sound: (cue: SoundCue) => void = () => {},
-  seatNames: SeatNames = names) {
+  seatNames: SeatNames = names,
+  pacing: PacingMode = 'voiceover') {
   const speech = createAnnouncer(announce, wait);
+  const voiceoverPacing = pacing === 'voiceover';
   let busy = false;
   let stopped = false;
   let announcedHand = 0;
@@ -28,13 +31,15 @@ export function createController(session: Session, table: ReturnType<typeof crea
           messages.push(dealerAnnouncement(current.dealer, seatNames), handAnnouncement(current));
         }
         messages.push(...(update?.messages ?? []));
-        await Promise.all(messages.map(message => speech.say(message)));
-        // An explicitly requested review shares the queue and finishes before automatic focus.
-        await speech.say('');
+        if (voiceoverPacing) {
+          await Promise.all(messages.map(message => speech.say(message)));
+          // An explicitly requested review shares the queue and finishes before automatic focus.
+          await speech.say('');
+        }
         if (stopped) return;
         const view = session.view();
         if (view.turn === null || view.turn === 0) {
-          if (speech.revision() !== initialSpeech) {
+          if (voiceoverPacing && speech.revision() !== initialSpeech) {
             // Reviews arriving during the guard must also finish and clear first.
             let revision: number;
             do {
@@ -75,8 +80,8 @@ export function createController(session: Session, table: ReturnType<typeof crea
       speech.cancelReviews();
       table.park(); session.nextHand(); await settle(undefined, true);
     },
-    repeat: () => speech.say(() => currentState(session.view(), seatNames), true),
-    review: () => speech.say(() => lastTrick(session.view(), seatNames), true),
+    repeat: () => voiceoverPacing ? speech.say(() => currentState(session.view(), seatNames), true) : Promise.resolve(),
+    review: () => voiceoverPacing ? speech.say(() => lastTrick(session.view(), seatNames), true) : Promise.resolve(),
     stop: () => { stopped = true; speech.stop(); },
   };
 }

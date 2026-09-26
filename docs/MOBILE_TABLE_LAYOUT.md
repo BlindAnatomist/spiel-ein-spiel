@@ -13,13 +13,13 @@ The responsive felt table is 200–300 px tall depending on content viewport hei
 
 The central up-card shows its face in round one, its patterned back in round two, and disappears on pickup. Four public card positions form a cross. When the current trick empties, the latest completed trick's public plays remain in an aria-hidden, noninteractive visual layer until the next trick's first card is played. The original accessible Current trick list reads only v.trick and stays empty after completion.
 
-Five- and six-card hands each use one flex row, without sorting, overlap, truncating accessible names or disabling unavailable cards. Rank and suit faces are decorative; native buttons retain their exact PR #6 semantic descriptions and handlers, including bower wording. Hearts/diamonds are red and clubs/spades dark.
+Hands use one centered flex row, without sorting, overlap, truncating accessible names or disabling unavailable cards. Card buttons may shrink enough to keep five/six-card hands on one row but are capped at normal card width, so a one- or two-card hand no longer stretches across the table. Rank and suit faces are decorative; native buttons retain their exact PR #6 semantic descriptions and handlers, including bower wording. Hearts/diamonds are red and clubs/spades dark.
 
 CSS grid places all bid/action controls below the hand. VoiceOver/DOM order is hand heading/cards, positive bids, legal Pass, Repeat current state, available Review last trick. Automatic bidding focus still lands on the first positive bid, so swiping left immediately reaches the hand. Plain/ringed suit bids keep full accessible labels. Repeat uses one fixed target/bullseye visual identity; its accessible name appends only "Suit not called yet" or the current called suit for fast touch discovery. Review uses a local inline SVG of rabbit ears emerging from a top hat. There are no duplicate interactive controls.
 
 ## Protected contract
 
-Engine, policies, announcer, session/randomness, performance recording and sound behavior remain authoritative from accepted main. The controller and its 1150 ms narrator-to-focus quiet guard are unchanged by this refresh; focus selection itself is unchanged. First-legal focus selection and focus bookkeeping in render.ts remain unchanged. The intentional presentation changes are limited to decision-priority Current State wording, the compact sighted panel, explicit Start/New game wording, Help and the visual table. Existing coverage is preserved and extended with swipe-order and visual regressions. Full matches, hidden-information, performance and determinism tests remain required to stay green.
+Engine, policies, announcer, session/randomness, performance recording and sound behavior remain authoritative from accepted main. The owner/VoiceOver controller path and its 1150 ms narrator-to-focus quiet guard remain unchanged; focus selection itself is unchanged. PR #7 now also has an explicit visual pacing mode used only for Bot data only games. That mode bypasses narrator speech-budget waits and the VoiceOver quiet guard while retaining ordinary bot-turn pacing. First-legal focus selection and focus bookkeeping in render.ts remain unchanged. Existing coverage is preserved and extended with swipe-order and visual regressions. Full matches, hidden-information, performance and determinism tests remain required to stay green.
 
 Validation: npm ci --ignore-scripts; npm run check; npm run build; git diff --check. Current passing count is recorded by CI for the latest branch head.
 
@@ -79,11 +79,13 @@ This visual indicator is sighted-only presentation and should be hidden from the
 
 The initial game-start control displays explicit text, "Start game", rather than relying on an icon. After the first start it becomes "New game". The small space cost is justified by immediate recognizability.
 
-A compact Help control is included in the top area and is hidden from the active-play visual layout after a game begins. Its explanation should be short and practical, including at minimum:
-- plain suit button = call that suit;
-- ringed suit button = call that suit and go alone;
+A compact Help control is included in the top area and is hidden from the active-play visual layout after a game begins. Its explanation distinguishes the two calling rounds:
+- first round: plain shown-suit symbol = order the dealer to pick it up;
+- first round: ringed shown-suit symbol = order it up and go alone;
+- second round: plain suit symbol = call that suit;
+- second round: ringed suit symbol = call that suit and go alone;
 - target/bullseye = current state;
-- rabbit/top-hat = review last trick;
+- rabbit/top-hat = review last trick; both Current state and Last trick produce sighted text in the same temporary aria-hidden panel;
 - dealer and active-player visual indicators;
 - when a player goes alone, that player's partner sits out.
 
@@ -125,9 +127,9 @@ Implemented refinements in this refresh:
 - preservation of PR #8's Mixed opponents, performance toggle, Analysis and Netlify ledger fields;
 - visual seat labels driven by PR #8 permanent table identities.
 
-Validation completed on the refreshed implementation before this documentation cleanup:
+Validation completed on the refreshed implementation:
 - GitHub Actions npm ci --ignore-scripts: pass;
-- npm run check: pass, 149 tests after the narrator expectation repair;
+- npm run check: pass, 152 tests after the second Cynthia refinement pass;
 - npm run build: pass;
 - Netlify deploy preview generated from the validated PR head.
 
@@ -135,3 +137,22 @@ Still required before merge:
 1. deploy-preview browser layout measurements at the documented mobile viewports;
 2. owner iPhone VoiceOver acceptance, especially focus timing, cards-first swipe order, Current state touch discovery and absence of duplicate speech;
 3. sighted verification of Start game, called suit, dealer/active state, loner/sitting-out comprehension and ordinary Val-card rendering.
+
+
+## 2026-09-26 Cynthia second-test refinements
+
+The second sighted test established that the earlier apparent missing-Val problem was not a rendering defect. Cynthia had selected the ringed go-alone control without understanding its meaning, so Val correctly sat out. The interface was visually compact enough to hide the semantics from a first-time player.
+
+Changes from that test:
+
+- Help now explains first-round order-up versus second-round call behavior explicitly rather than using the generic phrase "call that suit."
+- During bidding, a small sighted-only aria-hidden legend appears immediately above the suit controls. First round: "Plain suit = order the dealer to pick it up. Ringed suit = order it up and go alone." Second round: "Plain suit = call that suit. Ringed suit = call it and go alone."
+- Current state and Last trick remain on the separate post-hand action row. This is intentional: second-round bidding can contain six positive suit controls plus Pass, so putting Current state and Last trick on that same row would crowd the touch targets. The separation is not needed to make room for the expanding state panel.
+- Last trick now displays its public summary in the same sighted-only panel used by Current state, while the existing VoiceOver narration remains the source for the owner mode.
+- One- and two-card hands keep normal card widths and remain centered rather than stretching the remaining card graphics across the entire hand row.
+- Bot data only is now the default. Each new game consumes the selected classification and immediately resets the next-game choice to Bot data only, so every My performance game requires a fresh deliberate opt-in.
+- My performance uses the protected VoiceOver pacing path, including narrator speech budgets and the 1150 ms focus guard.
+- Bot data only uses visual pacing: automatic narrator waits and the VoiceOver guard are bypassed, while the normal 350 ms bot-turn pacing remains so public card play can still be followed visually.
+- This directly addresses the sighted "dead tap" condition in which the screen could already show "Your turn" while the card buttons were still temporarily noninteractive waiting for VoiceOver narration to finish.
+
+Server-ledger check on 2026-09-26 found eight archived submissions. The latest three are owner-tracked in the sequence described by the owner: one Casual game followed by two Strong games. No submission was deleted during this refinement pass because server deletion would not remove the separate local browser summary.

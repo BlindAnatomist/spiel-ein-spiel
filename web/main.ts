@@ -3,6 +3,7 @@ import type { Seat } from '../src/index.ts';
 import { selectSeatNames } from '../src/bots/profiles.ts';
 import { createSession, type Difficulty } from './session.ts';
 import {
+  compactArchivedGame,
   createPerformanceRecorder,
   ensurePerformanceProfile,
   PERFORMANCE_DATASET_EPOCH,
@@ -11,6 +12,7 @@ import {
   loadPendingArchives,
   loadPerformance,
   markPerformanceArchived,
+  mergePerformanceIntoStorage,
   removePerformanceGame,
   ownerTrend,
   performanceAnalysisText,
@@ -18,6 +20,7 @@ import {
   summarizePerformance,
   type HumanTracking,
   type PerformanceArchiveItem,
+  type PerformanceBook,
   type StorageLike,
 } from './performance.ts';
 import { createTable } from './render.ts';
@@ -85,8 +88,8 @@ function svgElement(name: string, attributes: Record<string, string> = {}): SVGE
   return element;
 }
 
-function renderAnalysisChart(): void {
-  const trend = ownerTrend(loadPerformance(storage));
+function renderAnalysisChart(book: PerformanceBook): void {
+  const trend = ownerTrend(book);
   analysisChart.replaceChildren();
   analysisPanel.hidden = trend.length === 0;
   if (!trend.length) return;
@@ -136,17 +139,43 @@ function renderAnalysisChart(): void {
   analysisChart.append(svg);
 }
 
-analysisButton.onclick = () => {
-  const book = loadPerformance(storage);
+async function fetchPerformanceHistory(): Promise<PerformanceBook> {
+  const response = await fetch(`/api/performance-history?profile=${encodeURIComponent(profileId)}`, { cache: 'no-store' });
+  if (!response.ok) throw new Error(`Performance history failed with status ${response.status}`);
+  const value: unknown = await response.json();
+  if (!value || typeof value !== 'object') throw new Error('Invalid performance history');
+  const candidate = value as { version?: unknown; games?: unknown };
+  if (candidate.version !== 2 || !Array.isArray(candidate.games)) throw new Error('Invalid performance history');
+  return candidate as PerformanceBook;
+}
+
+analysisButton.onclick = async () => {
+  performanceOutput.textContent = 'Loading full performance history.';
+  performanceOutput.hidden = false;
+  performanceOutput.focus();
+  let book = loadPerformance(storage);
+  let historyStatus = '';
+  try {
+    book = mergePerformanceIntoStorage(storage, await fetchPerformanceHistory());
+  } catch {
+    historyStatus = ' Server history is temporarily unavailable; this result uses games stored on this device only.';
+  }
   const pending = loadPendingArchives(storage).length;
   const archive = pending
     ? ` Server archive pending: ${pending} completed ${pending === 1 ? 'game' : 'games'}.`
     : ' Server archive is current.';
-  performanceOutput.textContent = `${performanceText(summarizePerformance(book))} ${performanceAnalysisText(book)}${archive} Recovery code: ${profileId}.`;
-  performanceOutput.hidden = false;
-  renderAnalysisChart();
-  performanceOutput.focus();
+  performanceOutput.textContent = `${performanceText(summarizePerformance(book))} ${performanceAnalysisText(book)}${archive}${historyStatus} Recovery code: ${profileId}.`;
+  renderAnalysisChart(book);
 };
+
+async function submitPerformanceHistory(item: PerformanceArchiveItem): Promise<void> {
+  const response = await fetch('/api/performance-history', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ profileId: item.profileId, game: compactArchivedGame(item.game) }),
+  });
+  if (!response.ok) throw new Error(`Performance history failed with status ${response.status}`);
+}
 
 async function submitArchive(item: PerformanceArchiveItem): Promise<void> {
   const body = new URLSearchParams({
@@ -178,6 +207,7 @@ async function flushPerformanceArchive(): Promise<void> {
   try {
     for (const item of loadPendingArchives(storage)) {
       try {
+        await submitPerformanceHistory(item);
         await submitArchive(item);
         markPerformanceArchived(storage, item.game.id);
       } catch {

@@ -10,6 +10,7 @@ import {
   ensurePerformanceProfile,
   loadPendingArchives,
   loadPerformance,
+  mergePerformanceBooks,
   markPerformanceArchived,
   removePerformanceGame,
   ownerTrend,
@@ -347,6 +348,49 @@ test('other-player games feed bot analysis without contaminating owner performan
   assert.equal(trend.length, 1);
   assert.equal(trend[0]!.winRate, 100);
   assert.equal(trend[0]!.callSuccessRate, 100);
+});
+
+test('server and local performance histories merge chronologically and deduplicate by game id', () => {
+  const older = game({
+    id: 'older',
+    completedAt: '2026-09-24T00:00:00.000Z',
+    humanTracking: 'owner',
+    winner: 1,
+    score: [8, 10],
+    hands: [hand(0, 'euchred')],
+  });
+  const sharedServer = game({
+    id: 'shared',
+    completedAt: '2026-09-25T00:00:00.000Z',
+    humanTracking: 'owner',
+    winner: 1,
+    score: [7, 10],
+    hands: [hand(0, 'euchred')],
+  });
+  const sharedLocal = { ...sharedServer, winner: 0 as const, score: [10, 7] as const };
+  const newest = game({
+    id: 'newest',
+    completedAt: '2026-09-26T00:00:00.000Z',
+    humanTracking: 'owner',
+    winner: 0,
+    score: [10, 6],
+    hands: [hand(0)],
+  });
+  const merged = mergePerformanceBooks(book([older, sharedServer]), book([sharedLocal, newest]));
+  assert.deepEqual(merged.games.map(value => value.id), ['older', 'shared', 'newest']);
+  assert.equal(merged.games[1]!.winner, 0);
+  assert.equal(summarizePerformance(merged).games, 3);
+});
+
+test('Analysis requests authorized server history instead of relying only on browser storage', () => {
+  const source = readFileSync('web/main.ts', 'utf8');
+  const fn = readFileSync('netlify/functions/performance-history.mjs', 'utf8');
+  assert.match(source, /fetch\('\/api\/performance-history'/);
+  assert.match(source, /mergePerformanceBooks\(await loadServerPerformance\(\), loadPerformance\(storage\)\)/);
+  assert.match(fn, /PERFORMANCE_HISTORY_PROFILE_ALIASES/);
+  assert.match(fn, /PERFORMANCE_HISTORY_SEED/);
+  assert.match(fn, /path: '\/api\/performance-history'/);
+  assert.doesNotMatch(fn, /payload|ownerStartingHand|decisions/);
 });
 
 test('owner trend compares sequential owner-only game blocks', () => {

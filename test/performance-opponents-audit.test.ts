@@ -11,6 +11,11 @@ import {
   loadPendingArchives,
   loadPerformance,
   markPerformanceArchived,
+  mergeOwnerAnalysisGames,
+  ownerAnalysisGames,
+  ownerAnalysisText,
+  ownerAnalysisTrend,
+  parseOwnerAnalysisGames,
   removePerformanceGame,
   ownerTrend,
   performanceAnalysisText,
@@ -342,11 +347,42 @@ test('other-player games feed bot analysis without contaminating owner performan
   assert.equal(summary.botCallsBySeat[3], 1);
   assert.equal(summary.opponents[0]!.games, 2);
   assert.match(performanceText(summary), /My tracked games: 1/);
-  assert.match(performanceText(summary), /Bot observations: 2 completed games/);
+  assert.match(performanceText(summary), /Bot observations on this browser: 2 completed games/);
   const trend = ownerTrend(book([owner, other]), 1);
   assert.equal(trend.length, 1);
   assert.equal(trend[0]!.winRate, 100);
   assert.equal(trend[0]!.callSuccessRate, 100);
+});
+
+test('all-time owner analysis merges historical server metrics with local games by game ID', () => {
+  const localGames = [
+    game({id:'g-10',completedAt:'2026-09-28T01:00:00.000Z',humanTracking:'owner',winner:0,score:[10,6],hands:[hand(0)]}),
+    game({id:'g-11',completedAt:'2026-09-28T02:00:00.000Z',humanTracking:'owner',winner:1,score:[8,10],hands:[hand(0,'euchred')]}),
+  ];
+  const local = ownerAnalysisGames(book(localGames));
+  const historical = parseOwnerAnalysisGames({games:[
+    {id:'g-1',completedAt:'2026-09-24T00:00:00.000Z',winner:1,score:[4,10],hands:11,calls:1,made:0,euchred:1,marches:0,lonerAttempts:0,lonerMarches:0},
+    {id:'g-10',completedAt:'2026-09-28T01:00:00.000Z',winner:0,score:[10,6],hands:1,calls:1,made:1,euchred:0,marches:0,lonerAttempts:0,lonerMarches:0},
+  ]});
+  const merged = mergeOwnerAnalysisGames(historical, local);
+  assert.deepEqual(merged.map(value=>value.id),['g-1','g-10','g-11']);
+  assert.equal(merged.length,3);
+  assert.match(ownerAnalysisText(merged,2),/My tracked games: 3/);
+  const trend=ownerAnalysisTrend(merged,2);
+  assert.equal(trend.length,2);assert.equal(trend[0]!.label,'Games 1–2');assert.equal(trend[1]!.label,'Game 3');
+});
+
+test('owner analysis server payload parser rejects malformed records', () => {
+  assert.deepEqual(parseOwnerAnalysisGames(null),[]);
+  assert.deepEqual(parseOwnerAnalysisGames({games:[{id:'x'}]}),[]);
+  assert.equal(parseOwnerAnalysisGames({games:[{id:'ok',completedAt:'2026-09-28T00:00:00Z',winner:0,score:[10,5],hands:9,calls:2,made:2,euchred:0,marches:1,lonerAttempts:0,lonerMarches:0}]}).length,1);
+});
+
+test('browser analysis requests the cross-origin historical seed and retains a local fallback', () => {
+  const source=readFileSync('web/main.ts','utf8');
+  assert.match(source,/fetch\('\/api\/owner-analysis-seed'/);
+  assert.match(source,/mergeOwnerAnalysisGames\(server, local\)/);
+  assert.match(source,/Historical owner analysis could not be reached/);
 });
 
 test('owner trend compares sequential owner-only game blocks', () => {

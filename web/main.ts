@@ -150,7 +150,7 @@ async function historyRequest(body: Record<string, unknown>): Promise<Response> 
 
 async function loadServerPerformance(): Promise<PerformanceBook> {
   try {
-    const response = await historyRequest({ action: 'list' });
+    const response = await historyRequest({ action: 'list', profileId });
     if (!response.ok) return { version: 2, games: [] };
     const parsed: unknown = await response.json();
     if (!parsed || typeof parsed !== 'object') return { version: 2, games: [] };
@@ -163,7 +163,7 @@ async function loadServerPerformance(): Promise<PerformanceBook> {
 }
 
 async function submitAnalysisGame(item: PerformanceArchiveItem): Promise<void> {
-  const response = await historyRequest({ action: 'upsert', environment: deployContext, game: item.game });
+  const response = await historyRequest({ action: 'upsert', profileId, environment: deployContext, game: item.game });
   if (!response.ok) throw new Error(`Analysis history sync failed with status ${response.status}`);
 }
 

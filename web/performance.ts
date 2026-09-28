@@ -136,6 +136,20 @@ export interface OwnerTrendPoint {
   readonly averageScoreDifferential: number;
 }
 
+export interface OwnerAnalysisGame {
+  readonly id: string;
+  readonly completedAt: string;
+  readonly winner: Team;
+  readonly score: readonly [number, number];
+  readonly hands: number;
+  readonly calls: number;
+  readonly made: number;
+  readonly euchred: number;
+  readonly marches: number;
+  readonly lonerAttempts: number;
+  readonly lonerMarches: number;
+}
+
 export interface PerformanceSummary {
   games: number;
   wins: number;
@@ -474,6 +488,83 @@ export function summarizePerformance(book: PerformanceBook): PerformanceSummary 
   };
 }
 
+export function compactOwnerAnalysisGame(game: GamePerformance): OwnerAnalysisGame {
+  const calls = game.hands.filter(hand => hand.caller === 0);
+  return Object.freeze({
+    id: game.id,
+    completedAt: game.completedAt,
+    winner: game.winner,
+    score: Object.freeze([game.score[0], game.score[1]]) as readonly [number, number],
+    hands: game.hands.length,
+    calls: calls.length,
+    made: calls.filter(hand => hand.reason !== 'euchred').length,
+    euchred: calls.filter(hand => hand.reason === 'euchred').length,
+    marches: calls.filter(hand => hand.makerTricks === 5).length,
+    lonerAttempts: calls.filter(hand => hand.alone).length,
+    lonerMarches: calls.filter(hand => hand.alone && hand.makerTricks === 5).length,
+  });
+}
+
+export function ownerAnalysisGames(book: PerformanceBook): readonly OwnerAnalysisGame[] {
+  return currentGames(book).filter(game => game.humanTracking !== 'other').map(compactOwnerAnalysisGame);
+}
+
+export function parseOwnerAnalysisGames(value: unknown): readonly OwnerAnalysisGame[] {
+  if (!value || typeof value !== 'object' || !Array.isArray((value as {games?: unknown}).games)) return [];
+  const parsed: OwnerAnalysisGame[] = [];
+  for (const item of (value as {games: unknown[]}).games) {
+    if (!item || typeof item !== 'object') continue;
+    const g = item as Record<string, unknown>;
+    if (typeof g.id !== 'string' || typeof g.completedAt !== 'string') continue;
+    if ((g.winner !== 0 && g.winner !== 1) || !Array.isArray(g.score) || g.score.length !== 2) continue;
+    const nums = ['hands','calls','made','euchred','marches','lonerAttempts','lonerMarches'] as const;
+    if (nums.some(key => !Number.isSafeInteger(g[key]) || (g[key] as number) < 0)) continue;
+    if (!g.score.every(value => Number.isFinite(value))) continue;
+    parsed.push(Object.freeze({
+      id: g.id,
+      completedAt: g.completedAt,
+      winner: g.winner as Team,
+      score: Object.freeze([g.score[0] as number, g.score[1] as number]) as readonly [number, number],
+      hands: g.hands as number,
+      calls: g.calls as number,
+      made: g.made as number,
+      euchred: g.euchred as number,
+      marches: g.marches as number,
+      lonerAttempts: g.lonerAttempts as number,
+      lonerMarches: g.lonerMarches as number,
+    }));
+  }
+  return parsed;
+}
+
+export function mergeOwnerAnalysisGames(...collections: readonly (readonly OwnerAnalysisGame[])[]): readonly OwnerAnalysisGame[] {
+  const byId = new Map<string, OwnerAnalysisGame>();
+  for (const collection of collections) for (const game of collection) byId.set(game.id, game);
+  return [...byId.values()].sort((a, b) => a.completedAt.localeCompare(b.completedAt) || a.id.localeCompare(b.id));
+}
+
+export function ownerAnalysisTrend(games: readonly OwnerAnalysisGame[], batchSize = 10): readonly OwnerTrendPoint[] {
+  if (!Number.isSafeInteger(batchSize) || batchSize < 1) throw new RangeError('Batch size must be positive');
+  const points: OwnerTrendPoint[] = [];
+  for (let start = 0; start < games.length; start += batchSize) {
+    const batch = games.slice(start, start + batchSize);
+    const calls = batch.reduce((sum, game) => sum + game.calls, 0);
+    const made = batch.reduce((sum, game) => sum + game.made, 0);
+    const firstGame = start + 1;
+    const lastGame = start + batch.length;
+    points.push({
+      label: firstGame === lastGame ? `Game ${firstGame}` : `Games ${firstGame}–${lastGame}`,
+      firstGame,
+      lastGame,
+      games: batch.length,
+      winRate: 100 * batch.filter(game => game.winner === 0).length / batch.length,
+      callSuccessRate: calls ? 100 * made / calls : null,
+      averageScoreDifferential: batch.reduce((sum, game) => sum + game.score[0] - game.score[1], 0) / batch.length,
+    });
+  }
+  return points;
+}
+
 export function ownerTrend(book: PerformanceBook, batchSize = 10): readonly OwnerTrendPoint[] {
   if (!Number.isSafeInteger(batchSize) || batchSize < 1) throw new RangeError('Batch size must be positive');
   const games = currentGames(book).filter(game => game.humanTracking !== 'other');
@@ -499,6 +590,36 @@ export function ownerTrend(book: PerformanceBook, batchSize = 10): readonly Owne
 
 function points(value: number): string {
   return `${value >= 0 ? '+' : ''}${value.toFixed(1)}`;
+}
+
+export function ownerAnalysisText(games: readonly OwnerAnalysisGame[], batchSize = 10): string {
+  if (!games.length) return 'No games recorded for my performance yet.';
+  const wins = games.filter(game => game.winner === 0).length;
+  const losses = games.length - wins;
+  const hands = games.reduce((sum, game) => sum + game.hands, 0);
+  const calls = games.reduce((sum, game) => sum + game.calls, 0);
+  const made = games.reduce((sum, game) => sum + game.made, 0);
+  const euchred = games.reduce((sum, game) => sum + game.euchred, 0);
+  const marches = games.reduce((sum, game) => sum + game.marches, 0);
+  const lonerAttempts = games.reduce((sum, game) => sum + game.lonerAttempts, 0);
+  const lonerMarches = games.reduce((sum, game) => sum + game.lonerMarches, 0);
+  const ourScore = games.reduce((sum, game) => sum + game.score[0], 0) / games.length;
+  const theirScore = games.reduce((sum, game) => sum + game.score[1], 0) / games.length;
+  const winRate = Math.round(100 * wins / games.length);
+  const callRate = calls ? `${Math.round(100 * made / calls)} percent` : 'not available';
+  const euchreRate = calls ? `${Math.round(100 * euchred / calls)} percent` : 'not available';
+  const trend = ownerAnalysisTrend(games, batchSize);
+  const latest = trend.at(-1)!;
+  const base = `My tracked games: ${games.length}. You and Val: ${wins} wins, ${losses} losses, ${winRate} percent. Average final score: ${ourScore.toFixed(1)} to ${theirScore.toFixed(1)}. My tracked hands: ${hands}. Your calling record: ${calls} calls; made ${callRate}; euchred ${euchreRate}; ${marches} marches; ${lonerAttempts} loner attempts, ${lonerMarches} successful.`;
+  if (trend.length === 1) {
+    const latestCalls = latest.callSuccessRate === null ? 'no calls by you in this block' : `your calls succeeded ${Math.round(latest.callSuccessRate)} percent of the time`;
+    return `${base} Analysis currently includes all ${games.length} tracked ${games.length === 1 ? 'game' : 'games'}. ${latest.label}: win rate ${Math.round(latest.winRate)} percent; ${latestCalls}; average final-score differential ${points(latest.averageScoreDifferential)}. More completed games are needed for a multi-block trend.`;
+  }
+  const first = trend[0]!;
+  const callChange = first.callSuccessRate === null || latest.callSuccessRate === null
+    ? 'Calling-success comparison is not available because one comparison block contains no calls by you.'
+    : `Your calling success changed from ${Math.round(first.callSuccessRate)} to ${Math.round(latest.callSuccessRate)} percent.`;
+  return `${base} Analysis includes all ${games.length} tracked games in blocks of ${batchSize}. From ${first.label} to ${latest.label}, win rate changed from ${Math.round(first.winRate)} to ${Math.round(latest.winRate)} percent. ${callChange} Average final-score differential changed from ${points(first.averageScoreDifferential)} to ${points(latest.averageScoreDifferential)} points.`;
 }
 
 export function performanceAnalysisText(book: PerformanceBook, batchSize = 10): string {
@@ -529,6 +650,14 @@ function callLine(name: string, summary: CallerSummary): string {
   return `${name}: ${summary.calls} calls; made ${percent(madeRate)}; euchred ${percent(euchreRate)}; ${summary.marches} marches; ${summary.lonerAttempts} loner attempts, ${summary.lonerMarches} successful.`;
 }
 
+export function botPerformanceText(summary: PerformanceSummary): string {
+  if (!summary.botGames) return '';
+  const profiles = summary.opponents.length
+    ? ` Opponent profiles encountered: ${summary.opponents.map(p => `${p.label}, ${p.games} games`).join('; ')}.`
+    : '';
+  return ` Bot observations on this browser: ${summary.botGames} completed games, ${summary.botHands} hands. ${callLine('Val calling record', summary.valCaller)} Left-seat calls: ${summary.botCallsBySeat[1]}. Right-seat calls: ${summary.botCallsBySeat[3]}.${profiles}`;
+}
+
 export function performanceText(summary: PerformanceSummary): string {
   const owner = summary.games
     ? (() => {
@@ -539,9 +668,5 @@ export function performanceText(summary: PerformanceSummary): string {
         return `My tracked games: ${summary.games}. You and Val: ${summary.wins} wins, ${summary.losses} losses, ${percent(summary.winRate)}. Average final score: ${score[0].toFixed(1)} to ${score[1].toFixed(1)}.${recent} My tracked hands: ${summary.hands}. ${callLine('Your calling record', summary.ownerCaller)}`;
       })()
     : 'No games recorded for my performance yet.';
-  if (!summary.botGames) return owner;
-  const profiles = summary.opponents.length
-    ? ` Opponent profiles encountered: ${summary.opponents.map(p => `${p.label}, ${p.games} games`).join('; ')}.`
-    : '';
-  return `${owner} Bot observations: ${summary.botGames} completed games, ${summary.botHands} hands. ${callLine('Val calling record', summary.valCaller)} Left-seat calls: ${summary.botCallsBySeat[1]}. Right-seat calls: ${summary.botCallsBySeat[3]}.${profiles}`;
+  return `${owner}${botPerformanceText(summary)}`;
 }

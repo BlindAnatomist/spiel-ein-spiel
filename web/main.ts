@@ -3,6 +3,7 @@ import type { Seat } from '../src/index.ts';
 import { selectSeatNames } from '../src/bots/profiles.ts';
 import { createSession, type Difficulty } from './session.ts';
 import {
+  botPerformanceText,
   createPerformanceRecorder,
   ensurePerformanceProfile,
   PERFORMANCE_DATASET_EPOCH,
@@ -11,10 +12,12 @@ import {
   loadPendingArchives,
   loadPerformance,
   markPerformanceArchived,
+  mergeOwnerAnalysisGames,
+  ownerAnalysisGames,
+  ownerAnalysisText,
+  ownerAnalysisTrend,
+  parseOwnerAnalysisGames,
   removePerformanceGame,
-  ownerTrend,
-  performanceAnalysisText,
-  performanceText,
   summarizePerformance,
   type HumanTracking,
   type PerformanceArchiveItem,
@@ -85,8 +88,7 @@ function svgElement(name: string, attributes: Record<string, string> = {}): SVGE
   return element;
 }
 
-function renderAnalysisChart(): void {
-  const trend = ownerTrend(loadPerformance(storage));
+function renderAnalysisChart(trend: ReturnType<typeof ownerAnalysisTrend>): void {
   analysisChart.replaceChildren();
   analysisPanel.hidden = trend.length === 0;
   if (!trend.length) return;
@@ -136,15 +138,34 @@ function renderAnalysisChart(): void {
   analysisChart.append(svg);
 }
 
-analysisButton.onclick = () => {
+async function ownerHistory(book: ReturnType<typeof loadPerformance>) {
+  const local = ownerAnalysisGames(book);
+  try {
+    const response = await fetch('/api/owner-analysis-seed', {
+      headers: { Accept: 'application/json' },
+      cache: 'no-store',
+    });
+    if (!response.ok) throw new Error(`Owner history failed with status ${response.status}`);
+    const server = parseOwnerAnalysisGames(await response.json());
+    return { games: mergeOwnerAnalysisGames(server, local), complete: server.length > 0 };
+  } catch {
+    return { games: local, complete: false };
+  }
+}
+
+analysisButton.onclick = async () => {
   const book = loadPerformance(storage);
+  const history = await ownerHistory(book);
   const pending = loadPendingArchives(storage).length;
   const archive = pending
     ? ` Server archive pending: ${pending} completed ${pending === 1 ? 'game' : 'games'}.`
     : ' Server archive is current.';
-  performanceOutput.textContent = `${performanceText(summarizePerformance(book))} ${performanceAnalysisText(book)}${archive} Recovery code: ${profileId}.`;
+  const historyStatus = history.complete
+    ? ' Historical owner analysis is synchronized across the earlier preview and current production site.'
+    : ' Historical owner analysis could not be reached; this report is limited to games stored in this browser.';
+  performanceOutput.textContent = `${ownerAnalysisText(history.games)}${botPerformanceText(summarizePerformance(book))}${archive}${historyStatus} Recovery code: ${profileId}.`;
   performanceOutput.hidden = false;
-  renderAnalysisChart();
+  renderAnalysisChart(ownerAnalysisTrend(history.games));
   performanceOutput.focus();
 };
 

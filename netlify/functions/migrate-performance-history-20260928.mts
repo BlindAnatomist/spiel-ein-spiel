@@ -2,6 +2,7 @@ import { getStore } from '@netlify/blobs';
 
 declare const Netlify: { env: { get(name: string): string | undefined } };
 
+// One-time deploy-preview migration. The payload/profile exist only as Functions-scoped Netlify secrets.
 const STORE_NAME = 'euchre-performance-history-v1';
 const REASONS = { m: 'made', x: 'march', l: 'loner-march', e: 'euchred' } as const;
 

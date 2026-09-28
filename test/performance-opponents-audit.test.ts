@@ -385,12 +385,12 @@ test('server and local performance histories merge chronologically and deduplica
 test('Analysis uses durable server history and future games sync before rich archive completion', () => {
   const source = readFileSync('web/main.ts', 'utf8');
   const fn = readFileSync('netlify/functions/performance-history.mjs', 'utf8');
-  assert.match(source, /historyRequest\(\{ action: 'list' \}\)/);
+  assert.match(source, /historyRequest\(\{ action: 'list', profileId \}\)/);
   assert.match(source, /mergePerformanceBooks\(await loadServerPerformance\(\), loadPerformance\(storage\)\)/);
   assert.match(source, /await submitAnalysisGame\(item\);\s*await submitArchive\(item\);\s*markPerformanceArchived/);
   assert.match(fn, /euchre-analysis-history/);
   assert.match(source, /action: 'upsert', profileId, environment: deployContext/);
-  assert.match(fn, /body\.environment !== 'production'/);
+  assert.match(fn, /profileId: body\.profileId/);\n  assert.match(fn, /profileId: body\?\.profileId/);\n  assert.match(fn, /body\.environment !== 'production'/);
   assert.match(fn, /ownerStartingHand: null/);
   assert.match(fn, /decisions: _decisions/);
   assert.doesNotMatch(fn, /PERFORMANCE_HISTORY_SEED|PERFORMANCE_HISTORY_PROFILE_ALIASES/);

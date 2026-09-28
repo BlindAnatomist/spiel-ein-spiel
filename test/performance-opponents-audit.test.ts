@@ -11,6 +11,8 @@ import {
   loadPendingArchives,
   loadPerformance,
   markPerformanceArchived,
+  mergePerformanceBooks,
+  mergePerformanceIntoStorage,
   removePerformanceGame,
   ownerTrend,
   performanceAnalysisText,
@@ -302,6 +304,32 @@ test('targeted performance cleanup removes only the specified local game and pen
   removePerformanceGame(storage,'accidental');
   assert.deepEqual(loadPerformance(storage).games.map(value=>value.id),['keep']);
   assert.deepEqual(loadPendingArchives(storage).map(value=>value.game.id),['keep']);
+});
+
+test('server and local performance histories merge by game id and preserve chronological analysis', () => {
+  const storage=new MemoryStorage();
+  const older=game({id:'older',completedAt:'2026-09-24T12:00:00.000Z',humanTracking:'owner',winner:1,score:[6,10],hands:[hand(0,'euchred')]});
+  const shared=game({id:'shared',completedAt:'2026-09-25T12:00:00.000Z',humanTracking:'owner',winner:0,score:[10,7],hands:[hand(0,'made')]});
+  const newest=game({id:'newest',completedAt:'2026-09-28T12:00:00.000Z',humanTracking:'owner',winner:0,score:[10,4],hands:[hand(0,'made')]});
+  storage.setItem('spiel-ein-spiel:euchre-performance:v2',JSON.stringify({version:2,games:[shared,newest]}));
+  const server=book([older,shared]);
+  const merged=mergePerformanceBooks(server,loadPerformance(storage));
+  assert.deepEqual(merged.games.map(value=>value.id),['older','shared','newest']);
+  assert.equal(merged.games.length,3);
+  const persisted=mergePerformanceIntoStorage(storage,server);
+  assert.deepEqual(loadPerformance(storage),persisted);
+  assert.match(performanceAnalysisText(persisted),/Analysis currently includes 3 tracked games/);
+});
+
+test('browser Analysis hydrates server history and new archive flushes write compact history before Forms', () => {
+  const source=readFileSync('web/main.ts','utf8');
+  assert.match(source,/\/api\/performance-history\?profile=/);
+  assert.match(source,/mergePerformanceIntoStorage/);
+  assert.match(source,/await submitPerformanceHistory\(item\);[\s\S]*await submitArchive\(item\);/);
+  const fn=readFileSync('netlify/functions/performance-history.mts','utf8');
+  assert.match(fn,/getStore\(\{ name: STORE_NAME, consistency: 'strong' \}\)/);
+  assert.match(fn,/store\.list\(\{ prefix \}\)/);
+  assert.match(fn,/store\.setJSON/);
 });
 
 test('performance recovery profile survives reload and is not regenerated', () => {

@@ -266,6 +266,41 @@ function compactHand(hand: ArchivedHandRecord): HandPerformance {
   return summary;
 }
 
+export function compactArchivedGame(archive: ArchivedGameRecord): GamePerformance {
+  return Object.freeze({
+    schemaVersion: archive.schemaVersion,
+    datasetEpoch: archive.datasetEpoch,
+    buildCommit: archive.buildCommit,
+    rulesVersion: archive.rulesVersion,
+    id: archive.id,
+    completedAt: archive.completedAt,
+    humanTracking: archive.humanTracking,
+    difficulty: archive.difficulty,
+    startingDealer: archive.startingDealer,
+    opponents: archive.opponents,
+    winner: archive.winner,
+    score: archive.score,
+    hands: Object.freeze(archive.hands.map(compactHand)),
+  });
+}
+
+export function mergePerformanceBooks(...books: readonly PerformanceBook[]): PerformanceBook {
+  const byId = new Map<string, GamePerformance>();
+  for (const book of books) {
+    for (const game of currentGames(book)) byId.set(game.id, game);
+  }
+  const games = [...byId.values()]
+    .sort((a, b) => a.completedAt.localeCompare(b.completedAt))
+    .slice(-MAX_RECORDED_GAMES);
+  return { version: 2, games };
+}
+
+export function mergePerformanceIntoStorage(storage: StorageLike, remote: PerformanceBook): PerformanceBook {
+  const merged = mergePerformanceBooks(remote, loadPerformance(storage));
+  savePerformance(storage, merged);
+  return merged;
+}
+
 /**
  * Records a compact local summary plus a richer server archive.
  * The archive stores exact permitted pre-decision views for the owner and all bots.
@@ -368,21 +403,7 @@ export function createPerformanceRecorder(storage: StorageLike, options: Recorde
         score: Object.freeze([view.score[0], view.score[1]]) as readonly [number, number],
         hands,
       });
-      const game: GamePerformance = Object.freeze({
-        schemaVersion: archive.schemaVersion,
-        datasetEpoch: archive.datasetEpoch,
-        buildCommit: archive.buildCommit,
-        rulesVersion: archive.rulesVersion,
-        id: archive.id,
-        completedAt: archive.completedAt,
-        humanTracking: archive.humanTracking,
-        difficulty: archive.difficulty,
-        startingDealer: archive.startingDealer,
-        opponents: archive.opponents,
-        winner: archive.winner,
-        score: archive.score,
-        hands: Object.freeze(archive.hands.map(compactHand)),
-      });
+      const game = compactArchivedGame(archive);
       const games = [...currentGames(book).filter(value => value.id !== game.id), game].slice(-MAX_RECORDED_GAMES);
       savePerformance(storage, { version: 2, games });
       if (options.profileId) {

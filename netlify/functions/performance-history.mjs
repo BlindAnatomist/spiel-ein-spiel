@@ -1,6 +1,3 @@
-const HISTORY_ENDPOINT = 'https://uqqtwhoboopwrusbfesl.supabase.co/functions/v1/euchre-analysis-history';
-const HISTORY_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxcXR3aG9ib29wd3J1c2JmZXNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNDE3MjYsImV4cCI6MjA5OTYxNzcyNn0.7MgaYdYCHSueOnx57G6sEGOswawZAEUzYr-Wm_OR160';
-
 function compactGame(game) {
   if (!game || typeof game !== 'object' || !game.id || !Array.isArray(game.hands)) return null;
   return {
@@ -16,20 +13,26 @@ function compactGame(game) {
     opponents: Array.isArray(game.opponents) ? game.opponents : [],
     winner: game.winner,
     score: Array.isArray(game.score) ? game.score : [0, 0],
-    hands: game.hands.map(({ decisions: _decisions, ownerStartingHand: _ownerStartingHand, ...hand }) => ({
-      ...hand,
-      ownerStartingHand: null,
+    hands: game.hands.map(hand => ({
+      handNumber: hand.handNumber,
+      caller: hand.caller,
+      alone: hand.alone,
+      makerTricks: hand.makerTricks,
+      reason: hand.reason,
     })),
   };
 }
 
 async function callHistory(body) {
-  return fetch(HISTORY_ENDPOINT, {
+  const endpoint = process.env.EUCHRE_ANALYSIS_HISTORY_URL;
+  const key = process.env.EUCHRE_ANALYSIS_HISTORY_ANON_KEY;
+  if (!endpoint || !key) return Response.json({ error: 'history service unavailable' }, { status: 503 });
+  return fetch(endpoint, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      apikey: HISTORY_ANON_KEY,
-      Authorization: `Bearer ${HISTORY_ANON_KEY}`,
+      apikey: key,
+      Authorization: `Bearer ${key}`,
     },
     body: JSON.stringify(body),
   });
@@ -39,19 +42,23 @@ export default async (req) => {
   if (req.method !== 'POST') return new Response('Method not allowed', { status: 405 });
   let body;
   try { body = await req.json(); } catch { return Response.json({ version: 2, games: [] }); }
+  const profileId = typeof body?.profileId === 'string' ? body.profileId : '';
+  if (!/^EUC-[A-Za-z0-9-]{16,}$/.test(profileId)) {
+    return Response.json({ version: 2, games: [] }, { headers: { 'Cache-Control': 'no-store' } });
+  }
 
   if (body?.action === 'upsert') {
     if (body.environment !== 'production') return Response.json({ stored: false, reason: 'non-production' });
     const game = compactGame(body.game);
     if (!game) return Response.json({ error: 'invalid game summary' }, { status: 400 });
-    const response = await callHistory({ action: 'upsert', environment: 'production', game });
+    const response = await callHistory({ action: 'upsert', profileId, environment: 'production', game });
     return new Response(await response.text(), {
       status: response.status,
       headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
     });
   }
 
-  const response = await callHistory({ action: 'list' });
+  const response = await callHistory({ action: 'list', profileId });
   return new Response(await response.text(), {
     status: response.status,
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },

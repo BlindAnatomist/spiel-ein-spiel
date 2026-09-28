@@ -17,6 +17,7 @@ import {
   performanceAnalysisText,
   performanceText,
   summarizePerformance,
+  type GamePerformance,
   type HumanTracking,
   type PerformanceArchiveItem,
   type PerformanceBook,
@@ -26,7 +27,10 @@ import { createTable } from './render.ts';
 import { createController } from './controller.ts';
 
 declare const __BUILD_COMMIT__: string;
+declare const __DEPLOY_CONTEXT__: string;
 const buildCommit = typeof __BUILD_COMMIT__ === 'string' ? __BUILD_COMMIT__ : 'development';
+const deployContext = typeof __DEPLOY_CONTEXT__ === 'string' ? __DEPLOY_CONTEXT__ : 'development';
+const HISTORY_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVxcXR3aG9ib29wd3J1c2JmZXNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNDE3MjYsImV4cCI6MjA5OTYxNzcyNn0.7MgaYdYCHSueOnx57G6sEGOswawZAEUzYr-Wm_OR160';
 
 const sounds = createSoundCues();
 const soundToggle = document.querySelector<HTMLButtonElement>('#sound-cues')!;
@@ -138,22 +142,57 @@ function renderAnalysisChart(book: PerformanceBook): void {
   analysisChart.append(svg);
 }
 
+async function historyRequest(body: Record<string, unknown>): Promise<Response> {
+  return fetch('/api/performance-history', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': HISTORY_ANON_KEY,
+      'Authorization': `Bearer ${HISTORY_ANON_KEY}`,
+    },
+    body: JSON.stringify(body),
+  });
+}
+
 async function loadServerPerformance(): Promise<PerformanceBook> {
   try {
-    const response = await fetch('/api/performance-history', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ profileId }),
-    });
+    const response = await historyRequest({ action: 'list' });
     if (!response.ok) return { version: 2, games: [] };
     const parsed: unknown = await response.json();
     if (!parsed || typeof parsed !== 'object') return { version: 2, games: [] };
-    const candidate = parsed as { version?: unknown; games?: unknown };
-    if (candidate.version !== 2 || !Array.isArray(candidate.games)) return { version: 2, games: [] };
+    const candidate = parsed as { games?: unknown };
+    if (!Array.isArray(candidate.games)) return { version: 2, games: [] };
     return { version: 2, games: candidate.games as PerformanceBook['games'] };
   } catch {
     return { version: 2, games: [] };
   }
+}
+
+function compactAnalysisGame(game: PerformanceArchiveItem['game']): GamePerformance {
+  return {
+    schemaVersion: game.schemaVersion,
+    datasetEpoch: game.datasetEpoch,
+    buildCommit: game.buildCommit,
+    rulesVersion: game.rulesVersion,
+    id: game.id,
+    completedAt: game.completedAt,
+    humanTracking: game.humanTracking,
+    difficulty: game.difficulty,
+    startingDealer: game.startingDealer,
+    opponents: game.opponents,
+    winner: game.winner,
+    score: game.score,
+    hands: game.hands.map(({ decisions: _decisions, ownerStartingHand: _ownerStartingHand, ...hand }) => ({
+      ...hand,
+      ownerStartingHand: null,
+    })),
+  };
+}
+
+async function submitAnalysisGame(game: GamePerformance): Promise<void> {
+  if (deployContext !== 'production') return;
+  const response = await historyRequest({ action: 'upsert', environment: deployContext, game });
+  if (!response.ok) throw new Error(`Analysis history sync failed with status ${response.status}`);
 }
 
 analysisButton.onclick = async () => {
@@ -204,6 +243,7 @@ async function flushPerformanceArchive(): Promise<void> {
   try {
     for (const item of loadPendingArchives(storage)) {
       try {
+        await submitAnalysisGame(compactAnalysisGame(item.game));
         await submitArchive(item);
         markPerformanceArchived(storage, item.game.id);
       } catch {

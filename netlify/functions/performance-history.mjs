@@ -41,7 +41,7 @@ export default async (req) => {
   try { body = await req.json(); } catch { return Response.json({ version: 2, games: [] }); }
 
   if (body?.action === 'upsert') {
-    if (process.env.CONTEXT !== 'production') return Response.json({ stored: false, reason: 'non-production' });
+    if (body.environment !== 'production') return Response.json({ stored: false, reason: 'non-production' });
     const game = compactGame(body.game);
     if (!game) return Response.json({ error: 'invalid game summary' }, { status: 400 });
     const response = await callHistory({ action: 'upsert', environment: 'production', game });

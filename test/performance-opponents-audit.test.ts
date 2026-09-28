@@ -382,15 +382,18 @@ test('server and local performance histories merge chronologically and deduplica
   assert.equal(summarizePerformance(merged).games, 3);
 });
 
-test('Analysis requests authorized server history instead of relying only on browser storage', () => {
+test('Analysis uses durable server history and future games sync before rich archive completion', () => {
   const source = readFileSync('web/main.ts', 'utf8');
   const fn = readFileSync('netlify/functions/performance-history.mjs', 'utf8');
-  assert.match(source, /fetch\('\/api\/performance-history'/);
+  assert.match(source, /historyRequest\(\{ action: 'list' \}\)/);
   assert.match(source, /mergePerformanceBooks\(await loadServerPerformance\(\), loadPerformance\(storage\)\)/);
-  assert.match(fn, /PERFORMANCE_HISTORY_PROFILE_ALIASES/);
-  assert.match(fn, /PERFORMANCE_HISTORY_SEED/);
+  assert.match(source, /await submitAnalysisGame\(item\);\s*await submitArchive\(item\);\s*markPerformanceArchived/);
+  assert.match(fn, /euchre-analysis-history/);
+  assert.match(fn, /process\.env\.CONTEXT !== 'production'/);
+  assert.match(fn, /ownerStartingHand: null/);
+  assert.match(fn, /decisions: _decisions/);
+  assert.doesNotMatch(fn, /PERFORMANCE_HISTORY_SEED|PERFORMANCE_HISTORY_PROFILE_ALIASES/);
   assert.match(fn, /path: '\/api\/performance-history'/);
-  assert.doesNotMatch(fn, /payload|ownerStartingHand|decisions/);
 });
 
 test('owner trend compares sequential owner-only game blocks', () => {

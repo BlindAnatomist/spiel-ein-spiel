@@ -144,7 +144,7 @@ async function historyRequest(body: Record<string, unknown>): Promise<Response> 
   return fetch('/api/performance-history', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
+    body: JSON.stringify({ ...body, profileId }),
   });
 }
 

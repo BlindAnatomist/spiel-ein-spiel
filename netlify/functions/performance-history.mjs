@@ -44,14 +44,14 @@ export default async (req) => {
     if (body.environment !== 'production') return Response.json({ stored: false, reason: 'non-production' });
     const game = compactGame(body.game);
     if (!game) return Response.json({ error: 'invalid game summary' }, { status: 400 });
-    const response = await callHistory({ action: 'upsert', environment: 'production', game });
+    const response = await callHistory({ action: 'upsert', profileId: body.profileId, environment: 'production', game });
     return new Response(await response.text(), {
       status: response.status,
       headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
     });
   }
 
-  const response = await callHistory({ action: 'list' });
+  const response = await callHistory({ action: 'list', profileId: body?.profileId });
   return new Response(await response.text(), {
     status: response.status,
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },

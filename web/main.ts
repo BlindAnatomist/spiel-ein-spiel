@@ -138,22 +138,31 @@ function renderAnalysisChart(book: PerformanceBook): void {
   analysisChart.append(svg);
 }
 
+async function historyRequest(body: Record<string, unknown>): Promise<Response> {
+  return fetch('/api/performance-history', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+}
+
 async function loadServerPerformance(): Promise<PerformanceBook> {
   try {
-    const response = await fetch('/api/performance-history', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ profileId }),
-    });
+    const response = await historyRequest({ action: 'list' });
     if (!response.ok) return { version: 2, games: [] };
     const parsed: unknown = await response.json();
     if (!parsed || typeof parsed !== 'object') return { version: 2, games: [] };
-    const candidate = parsed as { version?: unknown; games?: unknown };
-    if (candidate.version !== 2 || !Array.isArray(candidate.games)) return { version: 2, games: [] };
+    const candidate = parsed as { games?: unknown };
+    if (!Array.isArray(candidate.games)) return { version: 2, games: [] };
     return { version: 2, games: candidate.games as PerformanceBook['games'] };
   } catch {
     return { version: 2, games: [] };
   }
+}
+
+async function submitAnalysisGame(item: PerformanceArchiveItem): Promise<void> {
+  const response = await historyRequest({ action: 'upsert', game: item.game });
+  if (!response.ok) throw new Error(`Analysis history sync failed with status ${response.status}`);
 }
 
 analysisButton.onclick = async () => {
@@ -204,6 +213,7 @@ async function flushPerformanceArchive(): Promise<void> {
   try {
     for (const item of loadPendingArchives(storage)) {
       try {
+        await submitAnalysisGame(item);
         await submitArchive(item);
         markPerformanceArchived(storage, item.game.id);
       } catch {

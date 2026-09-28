@@ -10,6 +10,7 @@ import {
   PERFORMANCE_SCHEMA_VERSION,
   loadPendingArchives,
   loadPerformance,
+  mergePerformanceBooks,
   markPerformanceArchived,
   removePerformanceGame,
   ownerTrend,
@@ -18,6 +19,7 @@ import {
   summarizePerformance,
   type HumanTracking,
   type PerformanceArchiveItem,
+  type PerformanceBook,
   type StorageLike,
 } from './performance.ts';
 import { createTable } from './render.ts';
@@ -85,8 +87,8 @@ function svgElement(name: string, attributes: Record<string, string> = {}): SVGE
   return element;
 }
 
-function renderAnalysisChart(): void {
-  const trend = ownerTrend(loadPerformance(storage));
+function renderAnalysisChart(book: PerformanceBook): void {
+  const trend = ownerTrend(book);
   analysisChart.replaceChildren();
   analysisPanel.hidden = trend.length === 0;
   if (!trend.length) return;
@@ -136,16 +138,40 @@ function renderAnalysisChart(): void {
   analysisChart.append(svg);
 }
 
-analysisButton.onclick = () => {
-  const book = loadPerformance(storage);
-  const pending = loadPendingArchives(storage).length;
-  const archive = pending
-    ? ` Server archive pending: ${pending} completed ${pending === 1 ? 'game' : 'games'}.`
-    : ' Server archive is current.';
-  performanceOutput.textContent = `${performanceText(summarizePerformance(book))} ${performanceAnalysisText(book)}${archive} Recovery code: ${profileId}.`;
+async function loadServerPerformance(): Promise<PerformanceBook> {
+  try {
+    const response = await fetch('/api/performance-history', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ profileId }),
+    });
+    if (!response.ok) return { version: 2, games: [] };
+    const parsed: unknown = await response.json();
+    if (!parsed || typeof parsed !== 'object') return { version: 2, games: [] };
+    const candidate = parsed as { version?: unknown; games?: unknown };
+    if (candidate.version !== 2 || !Array.isArray(candidate.games)) return { version: 2, games: [] };
+    return { version: 2, games: candidate.games as PerformanceBook['games'] };
+  } catch {
+    return { version: 2, games: [] };
+  }
+}
+
+analysisButton.onclick = async () => {
+  analysisButton.disabled = true;
+  performanceOutput.textContent = 'Loading complete performance history.';
   performanceOutput.hidden = false;
-  renderAnalysisChart();
-  performanceOutput.focus();
+  try {
+    const book = mergePerformanceBooks(await loadServerPerformance(), loadPerformance(storage));
+    const pending = loadPendingArchives(storage).length;
+    const archive = pending
+      ? ` Server archive pending: ${pending} completed ${pending === 1 ? 'game' : 'games'}.`
+      : ' Server archive is current.';
+    performanceOutput.textContent = `${performanceText(summarizePerformance(book))} ${performanceAnalysisText(book)}${archive} Recovery code: ${profileId}.`;
+    renderAnalysisChart(book);
+    performanceOutput.focus();
+  } finally {
+    analysisButton.disabled = false;
+  }
 };
 
 async function submitArchive(item: PerformanceArchiveItem): Promise<void> {

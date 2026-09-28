@@ -26,7 +26,9 @@ import { createTable } from './render.ts';
 import { createController } from './controller.ts';
 
 declare const __BUILD_COMMIT__: string;
+declare const __DEPLOY_CONTEXT__: string;
 const buildCommit = typeof __BUILD_COMMIT__ === 'string' ? __BUILD_COMMIT__ : 'development';
+const deployContext = typeof __DEPLOY_CONTEXT__ === 'string' ? __DEPLOY_CONTEXT__ : 'development';
 
 const sounds = createSoundCues();
 const soundToggle = document.querySelector<HTMLButtonElement>('#sound-cues')!;
@@ -161,7 +163,7 @@ async function loadServerPerformance(): Promise<PerformanceBook> {
 }
 
 async function submitAnalysisGame(item: PerformanceArchiveItem): Promise<void> {
-  const response = await historyRequest({ action: 'upsert', game: item.game });
+  const response = await historyRequest({ action: 'upsert', environment: deployContext, game: item.game });
   if (!response.ok) throw new Error(`Analysis history sync failed with status ${response.status}`);
 }
 

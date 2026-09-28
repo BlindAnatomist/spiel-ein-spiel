@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/api/performance-history"
+  to = "https://uqqtwhoboopwrusbfesl.supabase.co/functions/v1/euchre-analysis-history"
+  status = 200
+  force = true

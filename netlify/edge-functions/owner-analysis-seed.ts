@@ -1,3 +1,5 @@
+declare const Netlify: { env: { get(name: string): string | undefined } };
+
 type SeedTuple = readonly [
   id: string,
   completedAt: string,

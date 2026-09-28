@@ -140,11 +140,11 @@ function renderAnalysisChart(book: PerformanceBook): void {
   analysisChart.append(svg);
 }
 
-async function historyRequest(body: Record<string, unknown>): Promise<Response> {
+async function historyRequest(body: Record<string, unknown>, requestProfileId = profileId): Promise<Response> {
   return fetch('/api/performance-history', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
+    body: JSON.stringify({ ...body, profileId: requestProfileId }),
   });
 }
 
@@ -163,7 +163,7 @@ async function loadServerPerformance(): Promise<PerformanceBook> {
 }
 
 async function submitAnalysisGame(item: PerformanceArchiveItem): Promise<void> {
-  const response = await historyRequest({ action: 'upsert', environment: deployContext, game: item.game });
+  const response = await historyRequest({ action: 'upsert', environment: deployContext, game: item.game }, item.profileId);
   if (!response.ok) throw new Error(`Analysis history sync failed with status ${response.status}`);
 }
 

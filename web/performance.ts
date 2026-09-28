@@ -190,6 +190,17 @@ export function loadPerformance(storage: StorageLike): PerformanceBook {
   }
 }
 
+export function mergePerformanceBooks(...books: readonly PerformanceBook[]): PerformanceBook {
+  const byId = new Map<string, GamePerformance>();
+  for (const book of books) {
+    for (const game of currentGames(book)) byId.set(game.id, game);
+  }
+  const games = [...byId.values()]
+    .sort((a, b) => a.completedAt.localeCompare(b.completedAt))
+    .slice(-MAX_RECORDED_GAMES);
+  return { version: 2, games };
+}
+
 function savePerformance(storage: StorageLike, book: PerformanceBook): void {
   try { storage.setItem(PERFORMANCE_STORAGE_KEY, JSON.stringify(book)); } catch {}
 }

@@ -60,7 +60,7 @@ subjective character quality or real-browser timing.
 ## Diagnostics and recovery
 
 The page exposes a copy-only euchreNarratorDiagnostics snapshot containing build
-and catalog identity plus the latest 100 public narration records. Each record has
+and catalog identity, current narrator/game/audio state, build verification and the latest 100 public narration records. Each record has
 an event ID, monotonic timestamp, requested complete key, selected file IDs and
 outcome. Media-request, validated actual-playing and completion records distinguish
 selection from load/playback timing. These records never write to a live region,

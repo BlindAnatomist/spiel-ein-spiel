@@ -34,9 +34,19 @@ declare const __DEPLOY_CONTEXT__: string;
 declare const __NARRATOR_ASSETS_READY__: boolean;
 declare const __NARRATOR_CATALOG_SHA__: string;
 const buildCommit = typeof __BUILD_COMMIT__ === 'string' ? __BUILD_COMMIT__ : 'development';
+let controller: ReturnType<typeof createController> | undefined;
+let narratorOutput: ReturnType<typeof createNarratorAudio> | undefined;
 const narratorDiagnostics = { schema: 1, buildCommit, catalogSha: typeof __NARRATOR_CATALOG_SHA__ === 'string' ? __NARRATOR_CATALOG_SHA__ : 'development', mode: 'whole-sentences', events: [] as NarrationDiagnostic[] };
 let narratorEventId = 0;
-Object.defineProperty(window, 'euchreNarratorDiagnostics', { get: () => structuredClone(narratorDiagnostics) });
+Object.defineProperty(window, 'euchreNarratorDiagnostics', { get: () => ({
+  ...structuredClone(narratorDiagnostics),
+  selectedNarrator: document.querySelector<HTMLSelectElement>('#narrator')?.value ?? 'unavailable',
+  gameStarted: !!controller,
+  audioEnabled: narratorOutput?.enabled() ?? false,
+  paused: controller?.isPaused() ?? false,
+  catalogEntries: Object.keys(narrationAssets).length,
+  buildAssetsVerified: typeof __NARRATOR_ASSETS_READY__ === 'boolean' ? __NARRATOR_ASSETS_READY__ : null,
+}) });
 const deployContext = typeof __DEPLOY_CONTEXT__ === 'string' ? __DEPLOY_CONTEXT__ : 'development';
 const privatePreview = deployContext === 'narrator-preview';
 document.querySelector<HTMLElement>('#preview-notice')!.hidden = !privatePreview;
@@ -252,8 +262,6 @@ void flushPerformanceArchive();
 
 const root = document.querySelector<HTMLElement>('#game')!;
 const live = document.querySelector<HTMLElement>('#announcements')!;
-let controller: ReturnType<typeof createController> | undefined;
-let narratorOutput: ReturnType<typeof createNarratorAudio> | undefined;
 const narratorFlavorHistory = createNarratorFlavorHistory();
 const randomWord = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
 

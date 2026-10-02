@@ -227,6 +227,8 @@ test('private preview makes no performance network requests and namespaces its l
   dom.window.fetch=async()=>{requests++;throw Error('unexpected network');};
   dom.window.setTimeout=((callback:()=>void)=>{queueMicrotask(callback);return 1;}) as typeof dom.window.setTimeout;
   dom.window.eval(output.outputFiles[0]!.text);const d=dom.window.document;
+  const diagnostics=(dom.window as unknown as {euchreNarratorDiagnostics:{buildCommit:string;selectedNarrator:string;gameStarted:boolean;audioEnabled:boolean}}).euchreNarratorDiagnostics;
+  assert.equal(diagnostics.buildCommit,'test');assert.equal(diagnostics.selectedNarrator,'original');assert.equal(diagnostics.gameStarted,false);assert.equal(diagnostics.audioEnabled,false);
   d.querySelector<HTMLButtonElement>('#performance-analysis')!.click();await flush();
   assert.equal(requests,0);assert.match(d.querySelector('#performance-output')!.textContent!,/preview keeps performance on this device only/);
   assert.ok(Object.keys(dom.window.localStorage).every(k=>k.startsWith('narrator-preview:')));

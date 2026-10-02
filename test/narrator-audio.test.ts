@@ -229,6 +229,10 @@ test('private preview makes no performance network requests and namespaces its l
   dom.window.eval(output.outputFiles[0]!.text);const d=dom.window.document;
   const diagnostics=(dom.window as unknown as {euchreNarratorDiagnostics:{buildCommit:string;selectedNarrator:string;gameStarted:boolean;audioEnabled:boolean}}).euchreNarratorDiagnostics;
   assert.equal(diagnostics.buildCommit,'test');assert.equal(diagnostics.selectedNarrator,'original');assert.equal(diagnostics.gameStarted,false);assert.equal(diagnostics.audioEnabled,false);
+  d.querySelector<HTMLButtonElement>('#help-button')!.click();d.querySelector<HTMLButtonElement>('#narrator-status')!.click();
+  const status=d.querySelector<HTMLElement>('#narrator-status-output')!;
+  assert.equal(status.hidden,false);assert.match(status.textContent!,/Original VoiceOver.*version test.*No game started/);
+  assert.equal(d.activeElement,status);assert.equal(d.querySelector('#announcements')!.textContent,'');
   d.querySelector<HTMLButtonElement>('#performance-analysis')!.click();await flush();
   assert.equal(requests,0);assert.match(d.querySelector('#performance-output')!.textContent!,/preview keeps performance on this device only/);
   assert.ok(Object.keys(dom.window.localStorage).every(k=>k.startsWith('narrator-preview:')));

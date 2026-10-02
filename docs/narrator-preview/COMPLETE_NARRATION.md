@@ -1,8 +1,8 @@
 # Complete-sentence narrator repair
 
 This is the next isolated preview after the user's second naturalness test failed.
-The deployed stage-one game remains version 4 while the complete catalog is made.
-No partial new recording batch should be presented as a completed repair.
+The complete catalog is imported and final independent source/asset checks pass.
+The same owner-private preview receives this complete repair.
 
 ## What the previous preview missed
 
@@ -51,7 +51,8 @@ Interrupted attempts consume their line. Repeated abandoned New Games cannot
 advance completed-hand counts or erase an unexpired cooldown. History older than
 eight games is pruned once its cooldown has also expired.
 
-With the actual twelve new flavor recordings and planned canonical metadata,
+With the actual twelve new flavor recordings and planned canonical metadata in
+the preliminary routing review,
 independent 48-game testing selected 246 flavors, usually four to six per game,
 with five in the first game. All cooldown/family rules held and no announcement
 selected multiple files. This proves routing and opportunity frequency, not
@@ -66,10 +67,15 @@ outcome. Media-request, validated actual-playing and completion records distingu
 selection from load/playback timing. These records never write to a live region,
 change focus, include hidden hands or leave the page.
 
+For phone testing, Help also offers “Pause and read narration status.” It stops
+current playback before focusing a static, non-live readout of narrator, build
+version, completed recordings and audio failures. Resume, narrator changes and
+New Game clear the old readout. Checking status never advances the cards.
+
 The private build requires all 1,953 runtime assets with valid local URLs, ready
 status, positive durations, hashes and byte counts, plus the existing comparison
-panel. The pending canonical manifest stays empty until all 1,433 new factual files
-are verified. Canonical and flavor imports are independently complete-gated:
+panel. All 1,433 new factual files are imported after their full raw/master decode
+and hash validation. Canonical and flavor imports are independently complete-gated:
 
     node scripts/import-narrator-complete-pack.ts /path/to/euchre-whole-stage2 canonical
     node scripts/import-narrator-complete-pack.ts /path/to/euchre-whole-stage2 flavor
@@ -79,12 +85,22 @@ partial canonical catalog publishable. Detailed raw/normalized generation receip
 stay in the private audio recovery; the public code checkpoint contains runtime
 manifests and source hashes, never MP3/WAV files or credentials.
 
-The in-progress private raw/mastered pack keeps Library identity
+The private raw/mastered pack keeps Library identity
 `libfile_000be91520888191a1436563bcd95c93`. The complete playable recovery keeps
-`libfile_f0edc2c3fbd081918b4a18e10fe5ae07`; its current version 3 is the preceding
-stage-one runtime until this full repair is reviewed and published.
+`libfile_f0edc2c3fbd081918b4a18e10fe5ae07`; its preceding version 3 preserves
+the stage-one runtime. The new recovery contains this full repair and all raw originals.
 
-Current source check: strict type checking and 193 repository tests pass. The code-
-only build succeeds with Peter disabled; the private build correctly refuses the
-incomplete catalog. Final full-asset build, actual opening/trick sequence assembly,
-independent verification and listening/device acceptance remain outstanding.
+Final source check: strict type checking and 194 repository tests pass, along with
+24 independent focused tests, compiled-entry/status checks and twelve complete
+three-way game comparisons. The private build passes with all 1,953 runtime assets
+verified. The actual-manifest 48-game trace has 14,359 automatic facts, zero fragment
+sequences and 246 policy-compliant alternatives. All 1,445 raw/master pairs decode
+and match their hashes; earlier 508 runtime files remain byte-identical. Details and
+limits are recorded in the companion final review report.
+
+A 28.273-second listening sequence selects eleven complete recordings from an actual
+seeded game opening through its first trick. It retains the initial 1,150 ms guard
+and controller waits, with a fixed 750 ms human decision interval. It is assembled
+from the verified recordings, not captured from a browser; native VoiceOver prompts
+are omitted. The recipe, transcript, hashes and audio are in the private recovery.
+Subjective listening and real-device acceptance remain open.

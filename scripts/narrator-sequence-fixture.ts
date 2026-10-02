@@ -60,9 +60,9 @@ for(const event of diagnostics.filter(event=>event.outcome==='ended'&&event.even
   if(bytes.length!==clip.bytes||createHash('sha256').update(bytes).digest('hex')!==clip.sha256)throw new Error(`Unverified sequence recording ${clip.id}`);
   const playing=diagnostics.find(item=>item.eventId===event.eventId&&item.outcome==='media-playing');
   if(!playing)throw new Error('Missing playback start');
-  events.push({eventId:event.eventId,eventKey:event.requestedWhole,fact:event.fact,clip:clip.id,spokenText:clip.text,relativeFile:clip.url,sha256:clip.sha256,durationSeconds:clip.durationSeconds,gapBeforeMs:events.length?Math.max(0,playing.timeMs-previousEnd):0});
+  events.push({eventId:event.eventId,eventKey:event.requestedWhole,fact:event.fact,clip:clip.id,spokenText:clip.text,relativeFile:clip.url,sha256:clip.sha256,durationSeconds:clip.durationSeconds,gapBeforeMs:Math.max(0,playing.timeMs-previousEnd)});
   previousEnd=event.timeMs;
 }
 await mkdir(destination,{recursive:true});
-await writeFile(path.join(destination,'sequence.json'),JSON.stringify({schemaVersion:1,gameSeed:seed,dealer,seatNames,flavorSeed:20261002,initialGuardOmittedMs:FOCUS_GUARD_MS,timingBasis:'Existing controller waits plus asset durations and a 750 ms human decision interval. Not a browser audio capture; native VoiceOver prompts are omitted.',events},null,2)+'\n');
+await writeFile(path.join(destination,'sequence.json'),JSON.stringify({schemaVersion:1,gameSeed:seed,dealer,seatNames,flavorSeed:20261002,initialGuardIncludedMs:FOCUS_GUARD_MS,timingBasis:'Existing controller waits plus asset durations and a 750 ms human decision interval. Not a browser audio capture; native VoiceOver prompts are omitted.',events},null,2)+'\n');
 console.log(`Selected ${events.length} complete recordings from the actual opening through the first trick.`);

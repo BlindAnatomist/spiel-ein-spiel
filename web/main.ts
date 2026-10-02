@@ -36,7 +36,7 @@ declare const __NARRATOR_CATALOG_SHA__: string;
 const buildCommit = typeof __BUILD_COMMIT__ === 'string' ? __BUILD_COMMIT__ : 'development';
 let controller: ReturnType<typeof createController> | undefined;
 let narratorOutput: ReturnType<typeof createNarratorAudio> | undefined;
-const narratorDiagnostics = { schema: 1, buildCommit, catalogSha: typeof __NARRATOR_CATALOG_SHA__ === 'string' ? __NARRATOR_CATALOG_SHA__ : 'development', mode: 'whole-sentences', events: [] as NarrationDiagnostic[] };
+const narratorDiagnostics = { schema: 1, buildCommit, catalogSha: typeof __NARRATOR_CATALOG_SHA__ === 'string' ? __NARRATOR_CATALOG_SHA__ : 'development', mode: 'whole-sentences', totals: {completed:0, fallbacks:0}, events: [] as NarrationDiagnostic[] };
 let narratorEventId = 0;
 Object.defineProperty(window, 'euchreNarratorDiagnostics', { get: () => ({
   ...structuredClone(narratorDiagnostics),
@@ -54,6 +54,7 @@ if (privatePreview) document.querySelector<HTMLElement>('#preview-notice')!.text
 const narratorSelect = document.querySelector<HTMLSelectElement>('#narrator')!;
 const pauseButton = document.querySelector<HTMLButtonElement>('#pause-game')!;
 const narratorCaption = document.querySelector<HTMLElement>('#narrator-caption')!;
+const narratorStatusOutput = document.querySelector<HTMLElement>('#narrator-status-output')!;
 if (typeof __NARRATOR_ASSETS_READY__ === 'boolean' && !__NARRATOR_ASSETS_READY__) {
   narratorSelect.querySelector<HTMLOptionElement>('option[value="peter"]')!.disabled = true;
   document.querySelector<HTMLElement>('#voice-samples')!.hidden = true;
@@ -270,15 +271,29 @@ function pauseGame() {
   controller.pause();
   pauseButton.textContent = 'Resume game';
 }
+function hideNarratorStatus(focusTarget?: HTMLElement) {
+  if (document.activeElement === narratorStatusOutput && focusTarget) focusTarget.focus();
+  narratorStatusOutput.hidden = true;
+  narratorStatusOutput.textContent = '';
+}
+document.querySelector<HTMLButtonElement>('#narrator-status')!.onclick = () => {
+  pauseGame();
+  const who = narratorSelect.value === 'peter' ? 'Peter' : 'Original VoiceOver';
+  narratorStatusOutput.textContent = `Narrator: ${who}. Full-sentence preview, version ${buildCommit.slice(0, 7)}. ${controller ? 'Game paused.' : 'No game started.'} Since this page opened: ${narratorDiagnostics.totals.completed} recordings finished; ${narratorDiagnostics.totals.fallbacks} audio failures.`;
+  narratorStatusOutput.hidden = false;
+  narratorStatusOutput.focus();
+};
 pauseButton.onclick = () => {
   if (!controller) return;
   if (controller.isPaused()) {
+    hideNarratorStatus(pauseButton);
     pauseButton.textContent = 'Pause game';
     narratorOutput?.prime();
     void controller.resume();
   } else pauseGame();
 };
 narratorSelect.onchange = () => {
+  hideNarratorStatus(narratorSelect);
   updateTrackingToggle();
   if (controller) {
     pauseGame();
@@ -295,6 +310,7 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   controller?.stop(); live.textContent = '';
   narratorOutput?.cancel();
   narratorFlavorHistory.beginGame();
+  hideNarratorStatus();
   pauseButton.hidden = false;
   pauseButton.textContent = 'Pause game';
   startButton.textContent = 'New game';
@@ -331,7 +347,11 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   const table = createTable(root, { act: action => { void controller!.act(action); }, next: () => { void controller!.next(); }, repeat: () => { void controller!.repeat(); }, review: () => { void controller!.review(); } }, seatNames);
   narratorOutput = createNarratorAudio(narrationAssets, { enabled: narratorSelect.value === 'peter', wholeOnly: true, flavorHistory: narratorFlavorHistory,
     nextEventId: () => ++narratorEventId,
-    diagnostic: event => { narratorDiagnostics.events.push(event); if (narratorDiagnostics.events.length > 100) narratorDiagnostics.events.shift(); },
+    diagnostic: event => {
+      narratorDiagnostics.events.push(event); if (narratorDiagnostics.events.length > 100) narratorDiagnostics.events.shift();
+      if (event.outcome === 'ended') narratorDiagnostics.totals.completed++;
+      if (event.outcome === 'fallback') narratorDiagnostics.totals.fallbacks++;
+    },
     caption: text => { narratorCaption.textContent = text; } });
   narratorOutput.prime();
   controller = createController(session, table, text => { live.textContent = text; }, undefined, cue => sounds.play(cue), seatNames,

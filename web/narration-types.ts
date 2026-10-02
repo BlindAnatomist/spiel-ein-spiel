@@ -6,6 +6,7 @@ export interface NarrationMessage {
   readonly whole?: string;
   /** Complete factual alternatives, never a joke appended after successful speech. */
   readonly character?: NarrationAlternative;
+  readonly alternatives?: readonly NarrationAlternative[];
 }
 export interface NarrationAlternative {
   readonly clip: string;

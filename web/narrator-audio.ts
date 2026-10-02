@@ -8,6 +8,9 @@ export interface NarratorMedia {
   currentTime: number;
   readonly ended: boolean;
   readonly error: { readonly code: number } | null;
+  readonly readyState?: number;
+  readonly currentSrc?: string;
+  readonly paused?: boolean;
   play(): Promise<void>;
   pause(): void;
   addEventListener(type: string, callback: EventListener): void;
@@ -19,6 +22,20 @@ export interface AudioOptions {
   caption?: (text: string) => void;
   timeout?: (callback: () => void, ms: number) => () => void;
   flavorHistory?: NarratorFlavorHistory;
+  /** Complete previews must never silently fall back to stitched fragments. */
+  wholeOnly?: boolean;
+  diagnostic?: (event: NarrationDiagnostic) => void;
+  nextEventId?: () => number;
+  now?: () => number;
+}
+export interface NarrationDiagnostic {
+  readonly eventId: number;
+  readonly timeMs: number;
+  readonly fact: string;
+  readonly requestedWhole: string | undefined;
+  readonly clips: readonly string[];
+  readonly outcome: 'selected' | 'media-request' | 'media-playing' | PlaybackResult;
+  readonly reason?: 'missing-complete-recording' | 'missing-recording' | 'media-failure';
 }
 // Ten milliseconds of PCM silence, used only on an explicit user gesture to
 // authorize this same element before an asynchronous resumed bot sequence.
@@ -33,6 +50,7 @@ export function createNarratorAudio(manifest: NarrationManifest, options: AudioO
   const flavorHistory = options.flavorHistory ?? createNarratorFlavorHistory();
   let priming: Promise<PlaybackResult> | undefined;
   let unlocked = false;
+  let eventSequence = 0;
   const caption = options.caption ?? (() => {});
   const timeout = options.timeout ?? ((callback, ms) => {
     const timer = setTimeout(callback, ms); return () => clearTimeout(timer);
@@ -47,7 +65,7 @@ export function createNarratorAudio(manifest: NarrationManifest, options: AudioO
     media?.pause();
     caption('');
   }
-  function playClip(clip: NarrationClip, ownRevision: number): Promise<PlaybackResult> {
+  function playClip(clip: NarrationClip, ownRevision: number, onPlaying?: () => void): Promise<PlaybackResult> {
     if (!enabled || ownRevision !== revision) return Promise.resolve('cancelled');
     try { media ??= (options.media ?? (() => new Audio()))(); }
     catch { return Promise.resolve('fallback'); }
@@ -61,6 +79,7 @@ export function createNarratorAudio(manifest: NarrationManifest, options: AudioO
         clearTimeout();
         audio.removeEventListener('ended', ended);
         audio.removeEventListener('error', failed);
+        audio.removeEventListener('playing', playing);
         // Remove listeners before pause so cancellation cannot report a second outcome.
         audio.pause();
         if (cancelClip === cancelThis) cancelClip = undefined;
@@ -74,15 +93,21 @@ export function createNarratorAudio(manifest: NarrationManifest, options: AudioO
         // Like ended, a queued error from the previous src is irrelevant after load reset.
         if (audio.error) finish(ownRevision === revision ? 'fallback' : 'cancelled');
       };
+      const playing: EventListener = () => {
+        // Observational only. Reject a queued event for the previous media resource.
+        if (ownRevision === revision && (audio.readyState ?? 0) >= 3 && audio.paused === false && audio.currentSrc === audio.src) onPlaying?.();
+      };
       const cancelThis = () => finish('cancelled');
       cancelClip = cancelThis;
       audio.addEventListener('ended', ended);
       audio.addEventListener('error', failed);
+      audio.addEventListener('playing', playing);
       // Timeout is failure recovery, never evidence that speech finished successfully.
       clearTimeout = timeout(() => finish('fallback'), Math.max(8000, clip.durationSeconds * 1000 + 5000));
       try {
         audio.preload = 'auto';
-        audio.src = clip.url;
+        // Content identity prevents an older recording surviving a new deployment.
+        audio.src = /^[a-f0-9]{64}$/.test(clip.sha256) ? `${clip.url}?v=${clip.sha256.slice(0, 16)}` : clip.url;
         const started = audio.play();
         void started.catch(() => finish(ownRevision === revision ? 'fallback' : 'cancelled'));
       } catch { finish('fallback'); }
@@ -112,20 +137,30 @@ export function createNarratorAudio(manifest: NarrationManifest, options: AudioO
       if (!enabled || requestedRevision !== revision) return 'cancelled';
       flavorHistory.nextEvent();
       // Validate the whole fact first; never play only the fragments we happen to have.
-      const character = message.character && flavorHistory.eligible(message.character) && valid(manifest[message.character.clip]) ? message.character : undefined;
+      const alternatives = [...(message.character ? [message.character] : []), ...(message.alternatives ?? [])];
+      const character = flavorHistory.select(alternatives.filter(line => valid(manifest[line.clip])));
       const whole = message.whole && valid(manifest[message.whole]) ? message.whole : undefined;
-      const ids = character ? [character.clip] : whole ? [whole] : message.clips;
+      const ids = character ? [character.clip] : whole ? [whole] : options.wholeOnly ? [] : message.clips;
       const clips = ids.map(id => manifest[id]);
-      if (!clips.length || !clips.every(valid)) return 'fallback';
+      const eventId = options.nextEventId?.() ?? ++eventSequence;
+      const report = (outcome: NarrationDiagnostic['outcome'], reason?: NarrationDiagnostic['reason']) => {
+        try { options.diagnostic?.({eventId, timeMs:(options.now ?? (() => performance.now()))(), fact: message.text, requestedWhole: message.whole, clips: ids, outcome, ...(reason ? {reason} : {})}); } catch { /* Diagnostics cannot interfere with game narration. */ }
+      };
+      if (!clips.length || !clips.every(valid)) {
+        report('fallback', options.wholeOnly ? 'missing-complete-recording' : 'missing-recording'); return 'fallback';
+      }
       const ownRevision = revision;
       caption(character?.text ?? message.text);
       if (character) flavorHistory.used(character);
+      report('selected');
       for (const clip of clips) {
-        const result = await playClip(clip, ownRevision);
-        if (result !== 'ended') { if (ownRevision === revision) caption(''); return result; }
-        if (ownRevision !== revision || !enabled) return 'cancelled';
+        report('media-request');
+        const result = await playClip(clip, ownRevision, () => report('media-playing'));
+        if (result !== 'ended') { if (ownRevision === revision) caption(''); report(result, result === 'fallback' ? 'media-failure' : undefined); return result; }
+        if (ownRevision !== revision || !enabled) { report('cancelled'); return 'cancelled'; }
       }
       if (ownRevision === revision) caption('');
+      report('ended');
       return 'ended';
     },
   };

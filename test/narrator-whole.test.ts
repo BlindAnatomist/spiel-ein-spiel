@@ -35,6 +35,22 @@ test('abandoned New Games cannot stand in for a completed plain hand',()=>{
   h.endHand();h.beginHand();assert.equal(h.eligible(second),true);
   h.used(second);h.endHand();h.endHand();h.beginHand();assert.equal(h.eligible({...first,clip:'third',text:'A different line.',family:'different'}),false);
 });
+test('small flavor pools become eligible again after finite exact-line cooldowns',()=>{
+  const h=createNarratorFlavorHistory();h.beginGame();h.beginHand();h.used(first);h.beginGame();
+  advance(h,11,160);assert.equal(h.eligible(first),false);advance(h,1,0);assert.equal(h.eligible(first),true);
+  h.used(first);assert.equal(h.eligible(first),false);
+});
+test('flavor selection varies among fresh complete alternatives using its own RNG',()=>{
+  let calls=0;const h=createNarratorFlavorHistory(()=>{calls++;return 0.99;});h.beginGame();h.beginHand();
+  assert.equal(h.select([first,second]),second);assert.equal(calls,1);
+  h.used(second);advance(h,2,30);assert.equal(h.select([first,second]),first);
+  assert.equal(calls,2);
+});
+test('abandoning more than eight games cannot erase an unexpired exact-line cooldown',()=>{
+  const h=createNarratorFlavorHistory();h.beginGame();h.beginHand();h.used(first);
+  for(let i=0;i<10;i++){h.beginGame();h.beginHand();}
+  advance(h,1,200);assert.equal(h.eligible(first),false);
+});
 test('stage-one keys cover all379 exact named facts and exclude hidden discard identities',()=>{
   const expected=wholeEventContract();assert.equal(Object.keys(expected).length,379);
   const actual:Record<string,string>={};const before=createSession(7,'casual').view();
@@ -49,7 +65,7 @@ test('stage-one keys cover all379 exact named facts and exclude hidden discard i
     }
     add(narrationEvents(before,{...before,completedTricks:[{plays:[],winner:1}]},0,{type:'play',card:'hearts:9'},names));
     const discard=narrationEvents(before,before,1,{type:'discard',card:'clubs:A'},names);
-    assert.equal(discard[0]?.whole,undefined);assert.doesNotMatch(JSON.stringify(discard),/clubs|ace/i);
+    assert.equal(discard[0]?.whole,`full.discard.${name.toLowerCase()}`);assert.doesNotMatch(JSON.stringify(discard),/clubs|ace/i);
   }
   const human=narrationEvents(before,{...before,completedTricks:[{plays:[],winner:0}]},0,{type:'play',card:'hearts:9'}).at(-1)!;
   actual[human.whole!]=human.text;assert.deepEqual(actual,expected);

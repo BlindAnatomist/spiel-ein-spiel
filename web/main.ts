@@ -25,16 +25,22 @@ import {
 import { createTable } from './render.ts';
 import { createController } from './controller.ts';
 import { createNarratorAudio } from './narrator-audio.ts';
+import type { NarrationDiagnostic } from './narrator-audio.ts';
 import { narrationAssets } from './narrator-assets.ts';
 import { createNarratorFlavorHistory } from './narrator-flavor.ts';
 
 declare const __BUILD_COMMIT__: string;
 declare const __DEPLOY_CONTEXT__: string;
 declare const __NARRATOR_ASSETS_READY__: boolean;
+declare const __NARRATOR_CATALOG_SHA__: string;
 const buildCommit = typeof __BUILD_COMMIT__ === 'string' ? __BUILD_COMMIT__ : 'development';
+const narratorDiagnostics = { schema: 1, buildCommit, catalogSha: typeof __NARRATOR_CATALOG_SHA__ === 'string' ? __NARRATOR_CATALOG_SHA__ : 'development', mode: 'whole-sentences', events: [] as NarrationDiagnostic[] };
+let narratorEventId = 0;
+Object.defineProperty(window, 'euchreNarratorDiagnostics', { get: () => structuredClone(narratorDiagnostics) });
 const deployContext = typeof __DEPLOY_CONTEXT__ === 'string' ? __DEPLOY_CONTEXT__ : 'development';
 const privatePreview = deployContext === 'narrator-preview';
 document.querySelector<HTMLElement>('#preview-notice')!.hidden = !privatePreview;
+if (privatePreview) document.querySelector<HTMLElement>('#preview-notice')!.textContent = `Private full-sentence narrator preview. Version ${buildCommit.slice(0, 7)}. Separate game and local-only performance history.`;
 const narratorSelect = document.querySelector<HTMLSelectElement>('#narrator')!;
 const pauseButton = document.querySelector<HTMLButtonElement>('#pause-game')!;
 const narratorCaption = document.querySelector<HTMLElement>('#narrator-caption')!;
@@ -315,7 +321,10 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   });
   root.hidden = false;
   const table = createTable(root, { act: action => { void controller!.act(action); }, next: () => { void controller!.next(); }, repeat: () => { void controller!.repeat(); }, review: () => { void controller!.review(); } }, seatNames);
-  narratorOutput = createNarratorAudio(narrationAssets, { enabled: narratorSelect.value === 'peter', flavorHistory: narratorFlavorHistory, caption: text => { narratorCaption.textContent = text; } });
+  narratorOutput = createNarratorAudio(narrationAssets, { enabled: narratorSelect.value === 'peter', wholeOnly: true, flavorHistory: narratorFlavorHistory,
+    nextEventId: () => ++narratorEventId,
+    diagnostic: event => { narratorDiagnostics.events.push(event); if (narratorDiagnostics.events.length > 100) narratorDiagnostics.events.shift(); },
+    caption: text => { narratorCaption.textContent = text; } });
   narratorOutput.prime();
   controller = createController(session, table, text => { live.textContent = text; }, undefined, cue => sounds.play(cue), seatNames,
     selectedHumanTracking === 'owner' ? 'voiceover' : 'visual', narratorOutput);

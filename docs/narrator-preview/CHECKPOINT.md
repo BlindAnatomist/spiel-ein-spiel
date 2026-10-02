@@ -9,7 +9,7 @@ hand rendering has the narrow Peter-only stability repair described in
 DEVICE_REPAIR.md. The full game and all 20 permanently named opponents remain.
 
 For current full-sentence coverage, variation rules and restore commands, see
-WHOLE_STAGE_ONE.md. The checkpoints below retain the earlier implementation history.
+COMPLETE_NARRATION.md. The checkpoints below retain the earlier implementation history.
 
 ## First code checkpoint
 

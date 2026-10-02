@@ -112,6 +112,26 @@ test('missing or unready whole recording uses the complete existing fragment seq
     media.end();await flush();media.end();assert.equal(await task,'ended');assert.equal(media.plays.length,2);
   }
 });
+test('complete mode never substitutes old fragments for missing whole recordings', async () => {
+  const media=new Media();const diagnostics:unknown[]=[];
+  const output=createNarratorAudio(manifest,{enabled:true,wholeOnly:true,media:()=>media,diagnostic:d=>diagnostics.push(d)});
+  assert.equal(await output.play({...message,whole:'full.play.val.card.hearts.9'}),'fallback');
+  assert.equal(media.plays.length,0);
+  assert.equal((diagnostics[0] as {reason:string}).reason,'missing-complete-recording');
+});
+test('diagnostics distinguish media requests, actual playing and ended without changing speech', async () => {
+  const media=Object.assign(new Media(),{readyState:3,paused:false,currentSrc:''});
+  const id='full.trick.val';const full={...manifest,[id]:{id,url:`audio/${id}.mp3`,text:'Val takes the trick.',status:'ready',durationSeconds:2,sha256:'a'.repeat(64),bytes:100}};
+  const diagnostics:Array<{eventId:number;timeMs:number;outcome:string}>=[];let now=10;
+  const output=createNarratorAudio(full,{enabled:true,wholeOnly:true,media:()=>media,diagnostic:d=>diagnostics.push(d),nextEventId:()=>77,now:()=>now,timeout:()=>()=>{}});
+  const task=output.play({text:'Val takes the trick.',clips:['actor.val','event.takes-trick'],whole:id});
+  assert.match(media.src,/\.mp3\?v=a{16}$/);assert.deepEqual(diagnostics.map(d=>d.outcome),['selected','media-request']);
+  media.dispatchEvent(new Event('playing'));assert.equal(diagnostics.length,2); // stale old currentSrc
+  media.currentSrc=media.src;now=250;media.dispatchEvent(new Event('playing'));
+  now=2100;media.end();assert.equal(await task,'ended');
+  assert.deepEqual(diagnostics.map(d=>d.outcome),['selected','media-request','media-playing','ended']);
+  assert.ok(diagnostics.every(d=>d.eventId===77));assert.deepEqual(diagnostics.map(d=>d.timeMs),[10,10,250,2100]);
+});
 test('a complete character alternative replaces the whole fact and failure has one original fallback', async () => {
   const h=harness();const live:string[]=[];const waits:Array<()=>void>=[];
   const speech=createAnnouncer(t=>live.push(t),()=>new Promise<void>(r=>waits.push(r)),h.output);
@@ -146,7 +166,7 @@ test('all bower clip identifiers encode actual printed card and effective-suit v
 test('a private discard identity never appears in typed clip IDs or public caption', () => {
   const v=createSession(7,'casual').view();
   const n=narrationEvents(v,v,3,{type:'discard',card:'spades:A'});
-  assert.deepEqual(n,[{text:'East discards a card.',clips:['actor.east','event.discards']}]);
+  assert.deepEqual(n,[{text:'East discards a card.',clips:['actor.east','event.discards'],whole:'full.discard.east'}]);
 });
 test('automatic focus waits for audio completion then the existing 1150 ms quiet guard', async () => {
   const v={...createSession(17,'strong',{dealer:3}).view(),phase:'playing' as const,trump:'hearts' as const,turn:0 as const};

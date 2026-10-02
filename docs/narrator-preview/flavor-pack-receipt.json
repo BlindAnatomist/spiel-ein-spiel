@@ -1,0 +1,9 @@
+{
+  "packId": "peter-euchre-whole-stage2-20261002",
+  "revision": "whole-events-stage2-v2",
+  "count": 12,
+  "manifestSha256": "100d322e5d07b7b54e637614c70385d750fa99a7cac8c574b91d59ed26d77420",
+  "runtimeBytes": 574787,
+  "filesVerified": true,
+  "listeningAcceptance": false
+}

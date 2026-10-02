@@ -41,3 +41,17 @@ body:has(#game:not([hidden])) #top-score,body:has(#game:not([hidden])) #difficul
 #analysis-panel{margin:8px 0;padding:10px;border:1px solid #668478;border-radius:10px;background:#173f34}
 #analysis-panel h2{margin:0 0 6px}#analysis-chart svg{display:block;width:100%;height:auto;max-height:260px}.analysis-grid{stroke:#6f8c80;stroke-width:1}.analysis-axis-label{fill:#e9eee9;font-size:13px}.analysis-line{stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.win-line,.win-point{stroke:#f1dfa3;fill:#f1dfa3}.call-line,.call-point{stroke:#9ed3ff;fill:#9ed3ff}.call-line{stroke-dasharray:10 7}.chart-legend{font-size:.85rem;color:#d8e2dd}
 #human-tracking[aria-pressed=false]{background:#d7ded9}
+
+/* Additive preview controls: keep the original compact table and card rules intact. */
+header{grid-row:1}#top-score,#difficulty,#start-game,#sound-cues{grid-row:2}.setup-secondary{grid-row:3}
+.narrator-settings{grid-column:1/-1;grid-row:4;min-width:0;display:grid;gap:6px}
+#narrator{width:100%;min-width:0;background:#153b32;color:#f5f4e8;font-size:14px}
+#narrator-help{font-size:13px;line-height:1.35;color:#d7e3dc}
+#pause-game{grid-column:1/-1;grid-row:5;background:#153b32;color:#f5f4e8}
+#narrator-caption{grid-column:1/-1;grid-row:6;font-size:14px;line-height:1.35;color:#f6e8bb;overflow-wrap:anywhere}
+#narrator-caption:empty{display:none}#game{grid-row:7}
+body:has(#game:not([hidden])) .narrator-settings{grid-row:2}
+body:has(#game:not([hidden])) #pause-game{grid-row:4}
+body:has(#game:not([hidden])) #narrator-caption{grid-row:5}
+body:has(#game:not([hidden])) #game{grid-row:6}
+body:has(#game:not([hidden])) #narrator-help{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}

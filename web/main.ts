@@ -24,11 +24,23 @@ import {
 } from './performance.ts';
 import { createTable } from './render.ts';
 import { createController } from './controller.ts';
+import { createNarratorAudio } from './narrator-audio.ts';
+import { narratorManifest } from './narrator-manifest.ts';
 
 declare const __BUILD_COMMIT__: string;
 declare const __DEPLOY_CONTEXT__: string;
+declare const __NARRATOR_ASSETS_READY__: boolean;
 const buildCommit = typeof __BUILD_COMMIT__ === 'string' ? __BUILD_COMMIT__ : 'development';
 const deployContext = typeof __DEPLOY_CONTEXT__ === 'string' ? __DEPLOY_CONTEXT__ : 'development';
+const privatePreview = deployContext === 'narrator-preview';
+document.querySelector<HTMLElement>('#preview-notice')!.hidden = !privatePreview;
+const narratorSelect = document.querySelector<HTMLSelectElement>('#narrator')!;
+const pauseButton = document.querySelector<HTMLButtonElement>('#pause-game')!;
+const narratorCaption = document.querySelector<HTMLElement>('#narrator-caption')!;
+if (typeof __NARRATOR_ASSETS_READY__ === 'boolean' && !__NARRATOR_ASSETS_READY__) {
+  narratorSelect.querySelector<HTMLOptionElement>('option[value="peter"]')!.disabled = true;
+  document.querySelector<HTMLElement>('#narrator-help')!.textContent = 'This code-only checkpoint needs the private recording pack restored before Peter can be selected. Original narration is available.';
+}
 
 const sounds = createSoundCues();
 const soundToggle = document.querySelector<HTMLButtonElement>('#sound-cues')!;
@@ -48,10 +60,10 @@ helpButton.onclick = () => {
 
 const storage: StorageLike = {
   getItem(key) {
-    try { return window.localStorage.getItem(key); } catch { return null; }
+    try { return window.localStorage.getItem(`${privatePreview ? 'narrator-preview:' : ''}${key}`); } catch { return null; }
   },
   setItem(key, value) {
-    try { window.localStorage.setItem(key, value); } catch {}
+    try { window.localStorage.setItem(`${privatePreview ? 'narrator-preview:' : ''}${key}`, value); } catch {}
   },
 };
 
@@ -75,7 +87,7 @@ function updateTrackingToggle() {
   trackingToggle.textContent = owner ? 'My performance' : 'Bot data only';
   trackingToggle.setAttribute('aria-label', owner
     ? 'My performance. VoiceOver pacing.'
-    : 'Bot data only. Faster visual pacing.');
+    : narratorSelect.value === 'peter' ? 'Bot data only. Recorded narrator pacing.' : 'Bot data only. Faster visual pacing.');
 }
 updateTrackingToggle();
 trackingToggle.onclick = () => {
@@ -149,6 +161,7 @@ async function historyRequest(body: Record<string, unknown>): Promise<Response> 
 }
 
 async function loadServerPerformance(): Promise<PerformanceBook> {
+  if (privatePreview) return { version: 2, games: [] };
   try {
     const response = await historyRequest({ action: 'list', profileId });
     if (!response.ok) return { version: 2, games: [] };
@@ -174,7 +187,7 @@ analysisButton.onclick = async () => {
   try {
     const book = mergePerformanceBooks(await loadServerPerformance(), loadPerformance(storage));
     const pending = loadPendingArchives(storage).length;
-    const archive = pending
+    const archive = privatePreview ? ' This preview keeps performance on this device only; production history is separate.' : pending
       ? ` Server archive pending: ${pending} completed ${pending === 1 ? 'game' : 'games'}.`
       : ' Server archive is current.';
     performanceOutput.textContent = `${performanceText(summarizePerformance(book))} ${performanceAnalysisText(book)}${archive} Recovery code: ${profileId}.`;
@@ -210,6 +223,7 @@ async function submitArchive(item: PerformanceArchiveItem): Promise<void> {
 
 let archiveFlushing = false;
 async function flushPerformanceArchive(): Promise<void> {
+  if (privatePreview) return;
   if (archiveFlushing) return;
   archiveFlushing = true;
   try {
@@ -231,11 +245,40 @@ void flushPerformanceArchive();
 const root = document.querySelector<HTMLElement>('#game')!;
 const live = document.querySelector<HTMLElement>('#announcements')!;
 let controller: ReturnType<typeof createController> | undefined;
+let narratorOutput: ReturnType<typeof createNarratorAudio> | undefined;
 const randomWord = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
+
+function pauseGame() {
+  if (!controller) return;
+  controller.pause();
+  pauseButton.textContent = 'Resume game';
+}
+pauseButton.onclick = () => {
+  if (!controller) return;
+  if (controller.isPaused()) {
+    pauseButton.textContent = 'Pause game';
+    narratorOutput?.prime();
+    void controller.resume();
+  } else pauseGame();
+};
+narratorSelect.onchange = () => {
+  updateTrackingToggle();
+  if (controller) {
+    pauseGame();
+    narratorOutput?.setEnabled(narratorSelect.value === 'peter');
+    narratorOutput?.prime();
+  }
+};
+// Suspension cannot silently skip a sequence or leave stale audio playing behind another page.
+document.addEventListener('visibilitychange', () => { if (document.hidden && narratorOutput?.enabled()) pauseGame(); });
+window.addEventListener('pagehide', () => { if (narratorOutput?.enabled()) pauseGame(); });
 
 document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   event.preventDefault();
   controller?.stop(); live.textContent = '';
+  narratorOutput?.cancel();
+  pauseButton.hidden = false;
+  pauseButton.textContent = 'Pause game';
   startButton.textContent = 'New game';
   helpPanel.hidden = true;
   helpButton.setAttribute('aria-expanded', 'false');
@@ -268,8 +311,10 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   });
   root.hidden = false;
   const table = createTable(root, { act: action => { void controller!.act(action); }, next: () => { void controller!.next(); }, repeat: () => { void controller!.repeat(); }, review: () => { void controller!.review(); } }, seatNames);
+  narratorOutput = createNarratorAudio(narratorManifest, { enabled: narratorSelect.value === 'peter', caption: text => { narratorCaption.textContent = text; } });
+  narratorOutput.prime();
   controller = createController(session, table, text => { live.textContent = text; }, undefined, cue => sounds.play(cue), seatNames,
-    selectedHumanTracking === 'owner' ? 'voiceover' : 'visual');
+    selectedHumanTracking === 'owner' ? 'voiceover' : 'visual', narratorOutput);
   table.render(session.view(), false); table.park();
   void controller.start();
 };

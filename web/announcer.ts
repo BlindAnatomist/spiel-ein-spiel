@@ -1,48 +1,74 @@
-/** One writer and one queue for automatic events and on-demand public summaries. */
-export function createAnnouncer(write: (text: string) => void, wait: (ms: number) => Promise<void>) {
-  type Entry = { text: () => string; review: boolean; done: () => void };
+import type { NarrationMessage, NarrationOutput } from './narration-types.ts';
+/** One queue owns audio and the single live writer. Reviews keep original VoiceOver. */
+export function createAnnouncer(write: (text: string) => void, wait: (ms: number) => Promise<void>, output?: NarrationOutput) {
+  type Content = string | NarrationMessage;
+  type Entry = { content: () => Content; review: boolean; done: () => void };
   let queue: Entry[] = [];
   let active = false;
   let revision = 0;
   let stopped = false;
+  let epoch = 0;
   let interrupt: (() => void) | undefined;
+  let activeReview = false;
+  let liveWritten = false;
   async function drain() {
     if (active) return;
     active = true;
     try {
       while (!stopped && queue.length) {
         const entry = queue.shift()!;
-        const text = entry.text();
+        const content = entry.content();
+        const text = typeof content === 'string' ? content : content.text;
+        const ownEpoch = epoch;
+        activeReview = entry.review;
         if (text) {
           revision++;
-          write(text);
-          const duration = Math.max(1600, text.split(' ').length * 300);
-          if (entry.review) {
-            const cancelled = new Promise<void>(resolve => { interrupt = resolve; });
-            await Promise.race([wait(duration), cancelled]);
-          } else await wait(duration);
+          const cancelled = new Promise<void>(resolve => { interrupt = resolve; });
+          let result: 'ended' | 'fallback' | 'cancelled' = 'fallback';
+          if (!entry.review && typeof content !== 'string' && output?.enabled()) {
+            // A completed clip sequence never also enters the ARIA speech path.
+            try { result = await output.play(content); } catch { output.cancel(); result = 'fallback'; }
+          }
+          if (stopped || epoch !== ownEpoch) result = 'cancelled';
+          if (result === 'fallback') {
+            write(text); liveWritten = true;
+            const budget = wait(Math.max(1600, text.split(' ').length * 300));
+            // Preserve the original writer's exact scheduling when no audio adapter is installed.
+            if (!entry.review && !output) await budget;
+            else await Promise.race([budget, cancelled]);
+          }
           interrupt = undefined;
-          if (!stopped) write('');
+          if (!stopped && epoch === ownEpoch && liveWritten) { write(''); liveWritten = false; }
         }
+        activeReview = false;
         entry.done();
       }
     } finally { active = false; }
   }
   function cancelReviews() {
     queue = queue.filter(entry => { if (!entry.review) return true; entry.done(); return false; });
+    if (activeReview) interrupt?.();
+  }
+  function cancelPending(clear: boolean) {
+    epoch++;
+    output?.cancel();
     interrupt?.();
+    queue.splice(0).forEach(entry => entry.done());
+    if (clear && liveWritten) write('');
+    liveWritten = false;
   }
   return {
-    say(text: string | (() => string), review = false) {
+    say(content: Content | (() => Content), review = false) {
       if (stopped) return Promise.resolve();
-      if (review) cancelReviews(); // repeated requests replace stale reviews, never build a backlog
+      if (review) cancelReviews();
       return new Promise<void>(done => {
-        queue.push({text: typeof text === 'string' ? () => text : text, review, done});
+        queue.push({content: typeof content === 'function' ? content : () => content, review, done});
         void drain();
       });
     },
     revision: () => revision,
     cancelReviews,
-    stop() { stopped = true; cancelReviews(); queue.splice(0).forEach(entry => entry.done()); },
+    cancelPending: () => cancelPending(true),
+    stop() { stopped = true; cancelPending(false); },
   };
 }

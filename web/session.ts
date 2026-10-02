@@ -4,7 +4,8 @@ import { createBot, createBotWithStrategy } from '../src/bots/index.ts';
 import { baselineOpponentProfiles, seatNamesForProfiles, selectOpponentProfiles } from '../src/bots/profiles.ts';
 import type { OpponentDifficulty, OpponentLevel, OpponentProfileId } from '../src/bots/profiles.ts';
 import type { Action, PlayerView, Seat } from '../src/index.ts';
-import { events, names } from './presentation.ts';
+import { narrationEvents, names } from './presentation.ts';
+import type { NarrationMessage } from './narration-types.ts';
 import type { SeatNames } from './presentation.ts';
 
 export type Difficulty = OpponentDifficulty;
@@ -31,7 +32,7 @@ export interface SessionObserver {
   handCompleted?(view: PlayerView, meta: SessionMeta): void;
   gameCompleted?(view: PlayerView, meta: SessionMeta): void;
 }
-export interface Update { view: PlayerView; messages: readonly string[] }
+export interface Update { view: PlayerView; messages: readonly string[]; narration?: readonly NarrationMessage[] }
 export interface Session {
   view(): PlayerView;
   human(action: Action): Update | null;
@@ -94,7 +95,8 @@ export function createSession(seed: number, level: Difficulty, options: SessionO
       notify('handCompleted', after);
       if (after.phase === 'game-over') notify('gameCompleted', after);
     }
-    return { view: after, messages: events(before, after, actor, action, seatNames) };
+    const narration = narrationEvents(before, after, actor, action, seatNames);
+    return { view: after, messages: narration.map(message => message.text), narration };
   };
 
   notify('handStarted', view());

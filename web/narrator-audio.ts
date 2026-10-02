@@ -118,6 +118,21 @@ export function createNarratorAudio(manifest: NarrationManifest, options: AudioO
     setEnabled(value) { if (value !== enabled) { cancel(); enabled = value; } },
     beginHand(number) { if (number !== hand) { hand = number; flavorHistory.beginHand(number); flavorHistory.nextEvent(); flavorHistory.nextEvent(); } },
     observe(progress) { flavorHistory.observe(progress); },
+    prepareEvent(messages) {
+      const candidates = messages.flatMap(message => typeof message === 'string' ? []
+        : [...(message.character ? [message.character] : []), ...(message.alternatives ?? [])]);
+      const selected = flavorHistory.select(candidates.filter(line => valid(manifest[line.clip])));
+      let assigned = false;
+      return messages.map(message => {
+        if (typeof message === 'string') return message;
+        const {character, alternatives, ...fact} = message;
+        const own = [...(character ? [character] : []), ...(alternatives ?? [])];
+        if (!assigned && selected && own.some(line => line.clip === selected.clip)) {
+          assigned = true; return {...fact, alternatives:[selected]};
+        }
+        return fact;
+      });
+    },
     canReact(message) { return !!message.optional && !!message.alternatives?.some(line => valid(manifest[line.clip]) && flavorHistory.eligible(line)); },
     endHand() { flavorHistory.endHand(); },
     cancel,

@@ -15,36 +15,38 @@ function clock(random=()=>0) {
  hand(){while(tricks<5)this.trick();hand++;tricks=0;h.beginHand(hand);},
  game(){h.beginGame();id=0;hand=1;tricks=0;h.beginHand(hand);}};
 }
-test('flavor requires two finished tricks and six public events, without a full plain-hand ban',()=>{
- const c=clock();c.h.used(first);c.event(10);c.trick();assert.equal(c.h.eligible(second),false);c.trick();assert.equal(c.h.eligible(second),true);
- const j=clock();j.h.used(first);j.trick();j.trick();j.event(3);assert.equal(j.h.eligible(second),false);j.event();assert.equal(j.h.eligible(second),true);
+test('flavor requires one finished trick and six public events, without consecutive-turn chatter',()=>{
+ const c=clock();c.h.used(first);c.event(10);assert.equal(c.h.eligible(second),false);c.trick();assert.equal(c.h.eligible(second),true);
+ const j=clock();j.h.used(first);j.trick();j.event(4);assert.equal(j.h.eligible(second),false);j.event();assert.equal(j.h.eligible(second),true);
 });
 test('related families wait four actual tricks and twelve public events',()=>{
  const c=clock();c.h.used(first);c.event(20);for(let n=0;n<3;n++)c.trick();
  assert.equal(c.h.eligible({...second,family:first.family}),false);c.trick();assert.equal(c.h.eligible({...second,family:first.family}),true);
 });
-test('exact clip and normalized text wait four completed hands and eighty public events',()=>{
+test('elapsed hands alone cannot repeat exact wording within the same game',()=>{
  const c=clock();c.h.used(first);for(let n=0;n<3;n++)c.hand();c.event(100);
- assert.equal(c.h.eligible(first),false);c.hand();assert.equal(c.h.eligible(first),true);
- assert.equal(c.h.eligible({...second,text:'FIRST factual sentence... NICE TRY!'}),true);
- c.h.used(first);assert.equal(c.h.eligible({...second,text:'FIRST factual sentence... NICE TRY!'}),false);
+ assert.equal(c.h.eligible(first),false);c.hand();assert.equal(c.h.eligible(first),false);
+ assert.equal(c.h.eligible({...second,text:'FIRST factual sentence... NICE TRY!'}),false);
 });
 test('abandoned New Games and duplicate progress cannot manufacture cooldown',()=>{
  const c=clock();c.h.used(first);for(let n=0;n<12;n++){c.game();c.event();}
  assert.equal(c.h.eligible(second),false);c.h.observe({eventId:1,handNumber:1,completedTricks:5,handComplete:true});assert.equal(c.h.eligible(second),false);
  c.trick();c.trick();c.event(6);assert.equal(c.h.eligible(second),true);assert.equal(c.h.eligible(first),false);
 });
-test('one hand admits at most three distinct remarks even when all families differ',()=>{
- const c=clock();c.h.used(first);c.event(6);c.trick();c.trick();assert.equal(c.h.eligible(second),true);c.h.used(second);
- const third={clip:'three',text:'Third thought',family:'third'};c.event(6);c.trick();c.trick();assert.equal(c.h.eligible(third),true);c.h.used(third);
- c.event(20);c.trick();assert.equal(c.h.eligible({clip:'four',text:'Fourth thought',family:'fourth'}),false);
+test('one hand admits at most four distinct remarks even when all families differ',()=>{
+ const c=clock();
+ for(let n=0;n<4;n++){
+  const line={clip:`line.${n}`,text:`Different thought ${n}`,family:`family.${n}`};
+  assert.equal(c.h.eligible(line),true);c.h.used(line);c.event(5);c.trick();
+ }
+ assert.equal(c.h.eligible({clip:'fifth',text:'Fifth thought',family:'fifth'}),false);
 });
 test('release jitter uses independent randomness once per consumed remark',()=>{
  let calls=0;const c=clock(()=>{calls++;return .99;});assert.equal(c.h.select([first,second]),second);c.h.used(second);assert.equal(calls,2);
- c.event(6);c.trick();c.trick();assert.equal(c.h.eligible(first),false);c.event(2);assert.equal(c.h.eligible(first),false);c.event();assert.equal(c.h.eligible(first),true);assert.equal(calls,2);
+ c.event(5);c.trick();assert.equal(c.h.eligible(first),false);c.event();assert.equal(c.h.eligible(first),true);assert.equal(calls,2);
 });
 test('completed-trick spacing carries across hands and can admit a later-hand early remark',()=>{
- const c=clock();for(let n=0;n<4;n++)c.trick();c.h.used(first);c.hand();c.event(6);assert.equal(c.h.eligible(second),false);c.trick();assert.equal(c.h.eligible(second),true);
+ const c=clock();for(let n=0;n<4;n++)c.trick();c.h.used(first);c.hand();c.event(4);assert.equal(c.h.eligible(second),false);c.event();assert.equal(c.h.eligible(second),true);
 });
 test('stage-one keys cover all379 exact named facts and exclude hidden discard identities',()=>{
   const expected=wholeEventContract();assert.equal(Object.keys(expected).length,379);

@@ -11,7 +11,7 @@ import { createBot } from '../src/bots/index.ts';
 
 const destination = process.argv[2];
 if (!destination || !path.isAbsolute(destination)) throw new Error('Usage: node scripts/narrator-sequence-fixture.ts /absolute/output/directory');
-if (Object.keys(narrationAssets).length !== 1965) throw new Error('The complete verified runtime must be imported before creating an audible sequence.');
+if (Object.keys(narrationAssets).length !== 1977) throw new Error('The complete verified runtime must be imported before creating an audible sequence.');
 const seed = 73, dealer = 2 as const;
 const seatNames = selectSeatNames('strong', seed);
 const session = createSession(seed, 'strong', {dealer, seatNames, opponentMode:'varied'});

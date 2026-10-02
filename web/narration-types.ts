@@ -29,11 +29,12 @@ export interface NarrationClip {
 }
 export type NarrationManifest = Readonly<Record<string, NarrationClip>>;
 export type PlaybackResult = 'ended' | 'fallback' | 'cancelled' | 'skipped';
-export interface NarrationProgress { readonly eventId: number; readonly handNumber: number; readonly completedTricks: number; readonly handComplete: boolean }
+export interface NarrationProgress { readonly eventId: number; readonly handNumber: number; readonly completedTricks: number; readonly handComplete: boolean; readonly gameComplete?: boolean }
 export interface NarrationOutput {
   enabled(): boolean;
   play(message: NarrationMessage): Promise<PlaybackResult>;
   cancel(): void;
+  prepareEvent?(messages: readonly (string | NarrationMessage)[]): Array<string | NarrationMessage>;
   observe?(progress: NarrationProgress): void;
   canReact?(message: NarrationMessage): boolean;
   beginHand?(handNumber: number): void;

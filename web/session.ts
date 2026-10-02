@@ -100,7 +100,7 @@ export function createSession(seed: number, level: Difficulty, options: SessionO
     const narration = narrationEvents(before, after, actor, action, seatNames);
     const reaction = reactionFor(before, after, actor, action);
     return { view: after, messages: narration.map(message => message.text), narration, ...(reaction ? {reaction} : {}),
-      progress: {eventId:++eventId, handNumber:after.handNumber, completedTricks:after.completedTricks.length, handComplete:!!after.result} };
+      progress: {eventId:++eventId, handNumber:after.handNumber, completedTricks:after.completedTricks.length, handComplete:!!after.result, gameComplete:after.phase==='game-over'} };
   };
 
   notify('handStarted', view());

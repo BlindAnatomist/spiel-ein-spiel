@@ -47,15 +47,16 @@ export function createController(session: Session, table: ReturnType<typeof crea
         if (update?.progress) output?.observe?.(update.progress);
         messages.push(...(update?.narration ?? update?.messages ?? []));
         if (output?.enabled() && update?.reaction) messages.push({...update.reaction, gapMs:messages.length ? 300 : 0});
+        const prepared = output?.enabled() && output.prepareEvent ? output.prepareEvent(messages) : messages;
         if (voiceoverPacing()) {
           // Let the native control/focus-parking utterance settle before Peter.
           // This is a bounded guard, not a claim to observe VoiceOver completion.
-          if (needsAudioGuard && messages.some(message => typeof message !== 'string')) {
+          if (needsAudioGuard && prepared.some(message => typeof message !== 'string')) {
             await waitOrCancel(FOCUS_GUARD_MS);
             if (interrupted()) return;
             needsAudioGuard = false;
           }
-          await Promise.all(messages.filter(message => typeof message === 'string' || !message.optional || pendingReactionEpoch === reviewEpoch).map(message => speech.say(message)));
+          await Promise.all(prepared.filter(message => typeof message === 'string' || !message.optional || pendingReactionEpoch === reviewEpoch).map(message => speech.say(message)));
           // An explicitly requested review shares the queue and finishes before automatic focus.
           await speech.say('');
         }

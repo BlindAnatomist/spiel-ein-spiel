@@ -264,7 +264,10 @@ void flushPerformanceArchive();
 
 const root = document.querySelector<HTMLElement>('#game')!;
 const live = document.querySelector<HTMLElement>('#announcements')!;
-const narratorFlavorHistory = createNarratorFlavorHistory();
+const narratorFlavorHistory = createNarratorFlavorHistory(Math.random, privatePreview ? {
+  load: () => storage.getItem('narrator-dialogue-history-v1'),
+  save: value => storage.setItem('narrator-dialogue-history-v1',value),
+} : undefined);
 const randomWord = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
 
 function pauseGame() {

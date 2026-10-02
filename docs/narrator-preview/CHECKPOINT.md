@@ -69,3 +69,14 @@ new audio, priming, cancellation, bower, privacy, focus, full-game equivalence a
 preview-isolation tests. All original 155 tests remain green. Complete static build
 with all assets passes. The explicit user-gesture priming flow uses the same audio
 element for resumed playback; iPhone autoplay/focus coexistence remains device QA.
+
+## Resume-only follow-up correction
+
+After the first private publication, two interrupted-flow defects were independently
+reproduced against that version. Resume after the last trick could read the result
+through both the state-summary live path and focus. Resume after an already-settled
+turn could park focus on the progress heading while the renderer's unchanged key
+correctly declined a second automatic jump. Resume now omits the summary when a
+result exists and does not park unchanged turns. Native rendering remains unchanged.
+Two new regressions bring the complete suite to 174 passing tests. The same private
+Site, recovery Library file and isolated GitHub branch receive this correction.

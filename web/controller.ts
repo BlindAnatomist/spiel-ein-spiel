@@ -108,8 +108,11 @@ export function createController(session: Session, table: ReturnType<typeof crea
       await settleDone;
       if (stopped || !paused) return;
       paused = false;
-      table.park();
-      await run({ view: session.view(), messages: [currentState(session.view(), seatNames)] });
+      // Do not park an already-focused unchanged turn; its focus key correctly
+      // prevents a second automatic jump. Newly reached turns/results still focus.
+      const view = session.view();
+      // Hand/game results remain focus-only, including an interrupted final trick.
+      await run({ view, messages: view.result ? [] : [currentState(view, seatNames)] });
     },
     isPaused: () => paused,
     stop: () => { stopped = true; speech.stop(); interruptWait?.(); },

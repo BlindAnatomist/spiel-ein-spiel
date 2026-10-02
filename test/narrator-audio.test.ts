@@ -156,6 +156,22 @@ test('recorded output and original output play identical complete games and focu
     assert.equal(a.view().phase,'game-over');assert.ok(spoken.length>50);assert.ok(spoken.some(m=>m.clips.some(c=>c.startsWith('prefix.'))));
   }
 });
+test('resuming an interrupted final trick announces the result through focus only', async () => {
+  const v={...createSession(17,'strong',{dealer:3}).view(),phase:'hand-over' as const,turn:null,result:{team:0 as const,points:1,makerTricks:3,reason:'made' as const}};
+  const h=harness();const live:string[]=[];let focused=0;
+  const table={render:()=>{},park:()=>{},focus:()=>{focused++;}};
+  const session={view:()=>v,human:()=>({view:v,messages:[message.text],narration:[message]}),bot:()=>null,nextHand:()=>v};
+  const controller=createController(session,table,t=>live.push(t),async()=>{},()=>{},undefined,'voiceover',h.output);
+  const action=controller.act({type:'play',card:'hearts:9'});controller.pause();await action;
+  assert.equal(focused,0);await controller.resume();assert.equal(focused,1);assert.deepEqual(live,[]);
+});
+test('resuming an already-settled turn does not park focus on a misleading progress heading', async () => {
+  const session=createSession(17,'strong',{dealer:3});const dom=new JSDOM('<button id="resume">Resume game</button><main></main>');
+  const d=dom.window.document;const root=d.querySelector('main')!;const table=createTable(root,{act:()=>{},next:()=>{}});
+  const controller=createController(session,table,()=>{},async()=>{});await controller.start();
+  const before=structuredClone(session.view());controller.pause();const resume=d.querySelector<HTMLButtonElement>('#resume')!;resume.focus();await controller.resume();
+  assert.equal(d.activeElement,resume);assert.deepEqual(session.view(),before);assert.ok(root.querySelector('#bids button[aria-disabled="false"]'));
+});
 test('private preview makes no performance network requests and namespaces its local history', async () => {
   const output=await build({entryPoints:['web/main.ts'],bundle:true,write:false,format:'esm',target:'safari16',define:{__BUILD_COMMIT__:JSON.stringify('test'),__DEPLOY_CONTEXT__:JSON.stringify('narrator-preview')}});
   const dom=new JSDOM(readFileSync('web/index.html','utf8'),{runScripts:'outside-only',url:'https://preview.example/'});

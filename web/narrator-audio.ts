@@ -116,7 +116,9 @@ export function createNarratorAudio(manifest: NarrationManifest, options: AudioO
   return {
     enabled: () => enabled,
     setEnabled(value) { if (value !== enabled) { cancel(); enabled = value; } },
-    beginHand(number) { if (number !== hand) { hand = number; flavorHistory.beginHand(); } },
+    beginHand(number) { if (number !== hand) { hand = number; flavorHistory.beginHand(number); flavorHistory.nextEvent(); flavorHistory.nextEvent(); } },
+    observe(progress) { flavorHistory.observe(progress); },
+    canReact(message) { return !!message.optional && !!message.alternatives?.some(line => valid(manifest[line.clip]) && flavorHistory.eligible(line)); },
     endHand() { flavorHistory.endHand(); },
     cancel,
     prime() {
@@ -135,10 +137,11 @@ export function createNarratorAudio(manifest: NarrationManifest, options: AudioO
       const requestedRevision = revision;
       if (priming) await priming;
       if (!enabled || requestedRevision !== revision) return 'cancelled';
-      flavorHistory.nextEvent();
+
       // Validate the whole fact first; never play only the fragments we happen to have.
       const alternatives = [...(message.character ? [message.character] : []), ...(message.alternatives ?? [])];
       const character = flavorHistory.select(alternatives.filter(line => valid(manifest[line.clip])));
+      if (message.optional && !character) return 'skipped';
       const whole = message.whole && valid(manifest[message.whole]) ? message.whole : undefined;
       const ids = character ? [character.clip] : whole ? [whole] : options.wholeOnly ? [] : message.clips;
       const clips = ids.map(id => manifest[id]);
@@ -150,13 +153,13 @@ export function createNarratorAudio(manifest: NarrationManifest, options: AudioO
         report('fallback', options.wholeOnly ? 'missing-complete-recording' : 'missing-recording'); return 'fallback';
       }
       const ownRevision = revision;
-      caption(character?.text ?? message.text);
       if (character) flavorHistory.used(character);
+      caption(character?.text ?? message.text);
       report('selected');
       for (const clip of clips) {
         report('media-request');
         const result = await playClip(clip, ownRevision, () => report('media-playing'));
-        if (result !== 'ended') { if (ownRevision === revision) caption(''); report(result, result === 'fallback' ? 'media-failure' : undefined); return result; }
+        if (result !== 'ended') { if (ownRevision === revision) caption(''); const outcome = message.optional && result === 'fallback' ? 'skipped' : result; report(outcome, result === 'fallback' ? 'media-failure' : undefined); return outcome; }
         if (ownRevision !== revision || !enabled) { report('cancelled'); return 'cancelled'; }
       }
       if (ownRevision === revision) caption('');

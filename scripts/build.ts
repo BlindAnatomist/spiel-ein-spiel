@@ -6,6 +6,8 @@ import { narratorWholeManifest } from '../web/narrator-whole-manifest.ts';
 import { narratorCompleteManifest } from '../web/narrator-complete-manifest.ts';
 import { narratorFlavorManifest } from '../web/narrator-flavor-manifest.ts';
 import { narratorVariants } from '../web/narrator-variants.ts';
+import { narratorReactionManifest } from '../web/narrator-reaction-manifest.ts';
+import { reactionLines } from '../web/narrator-reactions.ts';
 import { narrationAssets } from '../web/narrator-assets.ts';
 import { wholeEventContract, acceptedAlternatives } from './narrator-whole-contract.ts';
 import { completeEventContract } from './narrator-complete-contract.ts';
@@ -31,10 +33,12 @@ const narratorAssetsReady = Object.keys(narratorManifest).length === 127
   && Object.entries(completeContract).every(([id, text]) => narratorCompleteManifest[id]?.text === text)
   && Object.keys(narratorFlavorManifest).length === 12
   && Object.entries(flavorContract).every(([id, text]) => narratorFlavorManifest[id]?.text === text)
-  && clips.length === 1953 && available.every(Boolean);
+  && Object.keys(narratorReactionManifest).length === 12
+  && Object.entries(reactionLines).every(([id,line]) => narratorReactionManifest[id]?.text === line.text)
+  && clips.length === 1965 && available.every(Boolean);
 if (!narratorAssetsReady) {
   const restore = 'Restore all private voice packs and run the import scripts. See docs/narrator-preview/COMPLETE_NARRATION.md.';
-  if (process.env.CONTEXT === 'narrator-preview') throw new Error(`Complete narration requires all 1,953 runtime recordings. Partial catalogs cannot be published. ${restore}`);
+  if (process.env.CONTEXT === 'narrator-preview') throw new Error(`Complete narration requires all 1,965 runtime recordings. Partial catalogs cannot be published. ${restore}`);
   console.warn(`Private recordings are not in the code checkpoint. Peter option disabled in this build. ${restore}`);
 }
 

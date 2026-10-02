@@ -40,7 +40,7 @@ const narratorDiagnostics = { schema: 1, buildCommit, catalogSha: typeof __NARRA
 let narratorEventId = 0;
 Object.defineProperty(window, 'euchreNarratorDiagnostics', { get: () => ({
   ...structuredClone(narratorDiagnostics),
-  selectedNarrator: document.querySelector<HTMLSelectElement>('#narrator')?.value ?? 'unavailable',
+  selectedNarrator: document.querySelector<HTMLButtonElement>('#narrator')?.value ?? 'unavailable',
   gameStarted: !!controller,
   audioEnabled: narratorOutput?.enabled() ?? false,
   paused: controller?.isPaused() ?? false,
@@ -50,15 +50,16 @@ Object.defineProperty(window, 'euchreNarratorDiagnostics', { get: () => ({
 const deployContext = typeof __DEPLOY_CONTEXT__ === 'string' ? __DEPLOY_CONTEXT__ : 'development';
 const privatePreview = deployContext === 'narrator-preview';
 document.querySelector<HTMLElement>('#preview-notice')!.hidden = !privatePreview;
-if (privatePreview) document.querySelector<HTMLElement>('#preview-notice')!.textContent = `Private full-sentence narrator preview. Version ${buildCommit.slice(0, 7)}. Separate game and local-only performance history.`;
-const narratorSelect = document.querySelector<HTMLSelectElement>('#narrator')!;
+if (privatePreview) document.querySelector<HTMLElement>('#preview-notice')!.textContent = `Private preview · ${buildCommit.slice(0, 7)}`;
+const narratorButton = document.querySelector<HTMLButtonElement>('#narrator')!;
 const pauseButton = document.querySelector<HTMLButtonElement>('#pause-game')!;
 const narratorCaption = document.querySelector<HTMLElement>('#narrator-caption')!;
 const narratorStatusOutput = document.querySelector<HTMLElement>('#narrator-status-output')!;
 if (typeof __NARRATOR_ASSETS_READY__ === 'boolean' && !__NARRATOR_ASSETS_READY__) {
-  narratorSelect.querySelector<HTMLOptionElement>('option[value="peter"]')!.disabled = true;
-  document.querySelector<HTMLElement>('#voice-samples')!.hidden = true;
-  document.querySelector<HTMLElement>('#narrator-help')!.textContent = 'This code-only checkpoint needs the private recording pack restored before Peter can be selected. Original narration is available.';
+  narratorButton.disabled = true;
+  const availability = document.querySelector<HTMLElement>('#narrator-availability')!;
+  availability.hidden = false;
+  availability.textContent = 'Peter narration is unavailable until the private recordings are restored.';
 }
 
 const sounds = createSoundCues();
@@ -106,7 +107,7 @@ function updateTrackingToggle() {
   trackingToggle.textContent = owner ? 'My performance' : 'Bot data only';
   trackingToggle.setAttribute('aria-label', owner
     ? 'My performance. VoiceOver pacing.'
-    : narratorSelect.value === 'peter' ? 'Bot data only. Recorded narrator pacing.' : 'Bot data only. Faster visual pacing.');
+    : narratorButton.value === 'peter' ? 'Bot data only. Recorded narrator pacing.' : 'Bot data only. Faster visual pacing.');
 }
 updateTrackingToggle();
 trackingToggle.onclick = () => {
@@ -278,7 +279,7 @@ function hideNarratorStatus(focusTarget?: HTMLElement) {
 }
 document.querySelector<HTMLButtonElement>('#narrator-status')!.onclick = () => {
   pauseGame();
-  const who = narratorSelect.value === 'peter' ? 'Peter' : 'Original VoiceOver';
+  const who = narratorButton.value === 'peter' ? 'Peter' : 'Original VoiceOver';
   narratorStatusOutput.textContent = `Narrator: ${who}. Full-sentence preview, version ${buildCommit.slice(0, 7)}. ${controller ? 'Game paused.' : 'No game started.'} Since this page opened: ${narratorDiagnostics.totals.completed} recordings finished; ${narratorDiagnostics.totals.fallbacks} audio failures.`;
   narratorStatusOutput.hidden = false;
   narratorStatusOutput.focus();
@@ -292,12 +293,14 @@ pauseButton.onclick = () => {
     void controller.resume();
   } else pauseGame();
 };
-narratorSelect.onchange = () => {
-  hideNarratorStatus(narratorSelect);
+narratorButton.onclick = () => {
+  narratorButton.value = narratorButton.value === 'peter' ? 'original' : 'peter';
+  narratorButton.textContent = narratorButton.value === 'peter' ? 'Narrator: Peter' : 'Narrator: VoiceOver';
+  hideNarratorStatus(narratorButton);
   updateTrackingToggle();
   if (controller) {
     pauseGame();
-    narratorOutput?.setEnabled(narratorSelect.value === 'peter');
+    narratorOutput?.setEnabled(narratorButton.value === 'peter');
     narratorOutput?.prime();
   }
 };
@@ -310,7 +313,7 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   controller?.stop(); live.textContent = '';
   narratorOutput?.cancel();
   narratorFlavorHistory.beginGame();
-  hideNarratorStatus();
+  hideNarratorStatus(startButton);
   pauseButton.hidden = false;
   pauseButton.textContent = 'Pause game';
   startButton.textContent = 'New game';
@@ -345,17 +348,17 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   });
   root.hidden = false;
   const table = createTable(root, { act: action => { void controller!.act(action); }, next: () => { void controller!.next(); }, repeat: () => { void controller!.repeat(); }, review: () => { void controller!.review(); } }, seatNames);
-  narratorOutput = createNarratorAudio(narrationAssets, { enabled: narratorSelect.value === 'peter', wholeOnly: true, flavorHistory: narratorFlavorHistory,
+  narratorOutput = createNarratorAudio(narrationAssets, { enabled: narratorButton.value === 'peter', wholeOnly: true, flavorHistory: narratorFlavorHistory,
     nextEventId: () => ++narratorEventId,
     diagnostic: event => {
       narratorDiagnostics.events.push(event); if (narratorDiagnostics.events.length > 100) narratorDiagnostics.events.shift();
       if (event.outcome === 'ended') narratorDiagnostics.totals.completed++;
-      if (event.outcome === 'fallback') narratorDiagnostics.totals.fallbacks++;
+      if (event.outcome === 'fallback' || event.reason === 'media-failure') narratorDiagnostics.totals.fallbacks++;
     },
     caption: text => { narratorCaption.textContent = text; } });
   narratorOutput.prime();
   controller = createController(session, table, text => { live.textContent = text; }, undefined, cue => sounds.play(cue), seatNames,
     selectedHumanTracking === 'owner' ? 'voiceover' : 'visual', narratorOutput);
-  table.render(session.view(), false); table.park();
+  table.render(session.view(), false, narratorOutput.enabled()); table.park(narratorOutput.enabled());
   void controller.start();
 };

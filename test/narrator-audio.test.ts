@@ -239,15 +239,15 @@ test('private preview makes no performance network requests and namespaces its l
   assert.equal(d.querySelector<HTMLElement>('#preview-notice')!.hidden,false);dom.window.close();
 });
 
-test('Peter busy renders do not mutate the focused parking heading or unchanged hand subtree', () => {
+test('Peter busy renders preserve unchanged native hand subtrees without focusing the progress heading', () => {
   const dom=new JSDOM('<main></main>');const root=dom.window.document.querySelector('main')!;
   const table=createTable(root,{act:()=>{},next:()=>{}});const v=createSession(17,'strong',{dealer:3}).view();
-  table.render(v,false,true);table.park();
+  table.render(v,false,true);table.park(true);
   const turn=root.querySelector('#turn')!;const headingMutations=new dom.window.MutationObserver(()=>{});headingMutations.observe(turn,{childList:true,subtree:true,characterData:true});
   const hand=root.querySelector('#hand')!;const handMutations=new dom.window.MutationObserver(()=>{});handMutations.observe(hand,{childList:true,subtree:true,attributes:true,characterData:true});
   const cardChildren=[...hand.children].map(card=>[...card.childNodes]);
   for(const seat of [1,2,3] as const) table.render({...v,turn:seat},false,true);
-  assert.equal(turn.textContent,'Game in progress');assert.equal(dom.window.document.activeElement,turn);
+  assert.equal(turn.textContent,'Game actions');assert.notEqual(dom.window.document.activeElement,turn);
   assert.equal(headingMutations.takeRecords().length,0);assert.equal(handMutations.takeRecords().length,0);
   [...hand.children].forEach((card,i)=>assert.deepEqual([...card.childNodes],cardChildren[i]));
   table.render({...v,turn:2},false);assert.match(turn.textContent!,/^Val bids/); // Original path retained.

@@ -23,13 +23,13 @@ test('phone narration status pauses before focus and clears on mode, resume and 
   const d=dom.window.document;
   const focus=dom.window.HTMLElement.prototype.focus;
   dom.window.HTMLElement.prototype.focus=function(){order.push(`focus:${this.id}`);focus.call(this);};
-  const selector=d.querySelector<HTMLSelectElement>('#narrator')!;
+  const selector=d.querySelector<HTMLButtonElement>('#narrator')!;
   const setup=d.querySelector<HTMLFormElement>('#setup')!;
   const check=d.querySelector<HTMLButtonElement>('#narrator-status')!;
   const status=d.querySelector<HTMLElement>('#narrator-status-output')!;
   const resume=d.querySelector<HTMLButtonElement>('#pause-game')!;
   const live=d.querySelector<HTMLElement>('#announcements')!;
-  selector.value='peter';selector.dispatchEvent(new dom.window.Event('change'));
+  selector.click();
   setup.dispatchEvent(new dom.window.Event('submit',{bubbles:true,cancelable:true}));await flush();
   const cards=[...d.querySelectorAll('#hand button')];assert.equal(cards.length,5);
   const labels=cards.map(card=>card.textContent);
@@ -39,7 +39,7 @@ test('phone narration status pauses before focus and clears on mode, resume and 
   assert.ok(order.indexOf('media-paused')>=0);assert.ok(order.indexOf('media-paused')<order.indexOf('focus:narrator-status-output'));
   assert.equal(live.textContent,'');assert.equal(d.activeElement,status);
   assert.deepEqual([...d.querySelectorAll('#hand button')],cards);assert.deepEqual(cards.map(card=>card.textContent),labels);
-  selector.value='original';selector.dispatchEvent(new dom.window.Event('change'));
+  selector.click();
   assert.equal(status.hidden,true);assert.equal(status.textContent,'');assert.equal(d.activeElement,selector);
   check.click();await flush();assert.match(status.textContent!,/Original VoiceOver/);
   resume.click();assert.equal(d.activeElement,resume);await flush();assert.equal(status.hidden,true);assert.equal(status.textContent,'');

@@ -1,3 +1,5 @@
+Current repair: see [DEVICE_POLISH.md](DEVICE_POLISH.md) for the compact controls, native focus retention and twelve contextual reactions. Earlier checkpoints below remain preserved history.
+
 # Optional Peter narrator preview
 
 Baseline: `776b5d755233c13adcba2c3bed8ccc6a75c50f6d` (main verified 2026-10-02).

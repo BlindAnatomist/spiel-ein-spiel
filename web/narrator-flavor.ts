@@ -1,68 +1,70 @@
-import type { NarrationAlternative } from './narration-types.ts';
+import type { NarrationAlternative, NarrationProgress } from './narration-types.ts';
 
 export const FLAVOR_POLICY = {
   recentLines: 8, retainedGames: 8,
-  exactHands: 12, exactEvents: 160,
-  familyHands: 3, familyEvents: 40,
-  betweenEvents: 12,
+  exactHands: 4, exactEvents: 80,
+  familyTricks: 4, familyEvents: 12,
+  betweenTricks: 2, betweenEvents: 6, perHand: 3,
 } as const;
-interface Stamp { game: number; completedHands: number; event: number }
-/** Flavor randomness and memory never consume the game or bot random stream. */
+interface Stamp { game: number; completedHands: number; tricks: number; event: number }
+/** Public progression and independent randomness; controls and reviews never count. */
 export function createNarratorFlavorHistory(random: () => number = Math.random) {
-  let game = 0, hand = 0, completedHands = 0, event = 0;
-  let handComplete = false, handHadFlavor = false, plainHandsSinceFlavor = 0;
-  let lastFlavor = { hand: -Infinity, event: -Infinity };
-  const clips = new Map<string, Stamp>();
-  const lines = new Map<string, Stamp>();
-  const families = new Map<string, Stamp>();
-  const gameFamilies = new Set<string>();
+  let game = 0, hand = 0, completedHands = 0, tricks = 0, event = 0;
+  let handComplete = false, handFlavorCount = 0, observedEvent = 0, observedTricks = 0;
+  let lastFlavor: Stamp | undefined;
+  let releaseEvent: number | undefined;
+  let releaseJitter = 0;
+  const clips = new Map<string, Stamp>(), lines = new Map<string, Stamp>(), families = new Map<string, Stamp>();
   const recent: string[] = [];
   const normalized = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-  const oldEnough = (stamp: Stamp | undefined, hands: number, events: number) => !stamp
-    || (completedHands - stamp.completedHands >= hands && event - stamp.event >= events);
-  const eligible = (alternative: NarrationAlternative) => {
-    const family = alternative.family ?? alternative.clip;
-    if (gameFamilies.has(family)) return false;
-    if (Number.isFinite(lastFlavor.hand) && (hand === lastFlavor.hand || plainHandsSinceFlavor < 1)) return false;
-    if (event - lastFlavor.event < FLAVOR_POLICY.betweenEvents) return false;
-    if (!oldEnough(clips.get(alternative.clip), FLAVOR_POLICY.exactHands, FLAVOR_POLICY.exactEvents)
-      || !oldEnough(lines.get(normalized(alternative.text)), FLAVOR_POLICY.exactHands, FLAVOR_POLICY.exactEvents)) return false;
-    return oldEnough(families.get(family), FLAVOR_POLICY.familyHands, FLAVOR_POLICY.familyEvents);
+  const exactReady = (stamp: Stamp | undefined) => !stamp || (completedHands - stamp.completedHands >= FLAVOR_POLICY.exactHands && event - stamp.event >= FLAVOR_POLICY.exactEvents);
+  const familyReady = (stamp: Stamp | undefined) => !stamp || (tricks - stamp.tricks >= FLAVOR_POLICY.familyTricks && event - stamp.event >= FLAVOR_POLICY.familyEvents);
+  const chooseIndex = (length: number) => {
+    const value=random(); return Number.isFinite(value) ? Math.max(0,Math.min(length-1,Math.floor(value*length))) : 0;
   };
+  function openGate() {
+    if (lastFlavor && releaseEvent === undefined && tricks-lastFlavor.tricks >= FLAVOR_POLICY.betweenTricks && event-lastFlavor.event >= FLAVOR_POLICY.betweenEvents) releaseEvent=event+releaseJitter;
+  }
+  function beginHand(number?: number) {
+    if (number !== undefined && number === hand) return;
+    hand = number ?? hand+1; observedTricks=0; handComplete=false; handFlavorCount=0;
+  }
+  function endHand() { if (hand && !handComplete) { handComplete=true; completedHands++; } }
+  const eligible = (alternative: NarrationAlternative) => handFlavorCount < FLAVOR_POLICY.perHand
+    && (!lastFlavor || (releaseEvent !== undefined && event >= releaseEvent))
+    && exactReady(clips.get(alternative.clip)) && exactReady(lines.get(normalized(alternative.text)))
+    && familyReady(families.get(alternative.family ?? alternative.clip));
   return {
     beginGame() {
-      game++; gameFamilies.clear();
-      for (const history of [clips, lines, families]) for (const [key, stamp] of history) {
-        if (game - stamp.game >= FLAVOR_POLICY.retainedGames && oldEnough(stamp, FLAVOR_POLICY.exactHands, FLAVOR_POLICY.exactEvents)) history.delete(key);
-      }
+      game++; hand=0; observedEvent=0; observedTricks=0; handComplete=false; handFlavorCount=0;
+      for (const history of [clips,lines,families]) for (const [key,stamp] of history) if(game-stamp.game>=FLAVOR_POLICY.retainedGames&&exactReady(stamp)&&familyReady(stamp))history.delete(key);
     },
-    beginHand() { hand++; handComplete = false; handHadFlavor = false; },
-    endHand() {
-      if (!hand || handComplete) return;
-      handComplete = true; completedHands++;
-      if (!handHadFlavor) plainHandsSinceFlavor++;
+    beginHand, endHand,
+    observe(progress: NarrationProgress) {
+      if (progress.eventId <= observedEvent) return;
+      if (progress.handNumber !== hand) beginHand(progress.handNumber);
+      observedEvent=progress.eventId; event++;
+      tricks+=Math.max(0,progress.completedTricks-observedTricks); observedTricks=Math.max(observedTricks,progress.completedTricks);
+      if(progress.handComplete)endHand();
+      openGate();
     },
-    nextEvent() { event++; },
+    // Kept for explicit opening public facts and isolated history tests only.
+    nextEvent() { event++; openGate(); },
     eligible,
     select(alternatives: readonly NarrationAlternative[]) {
-      const available = alternatives.filter(eligible);
-      if (!available.length) return undefined;
-      // Fresh lines first; the bounded recent list is a preference, never a permanent veto.
-      const fresh = available.filter(line => !clips.has(line.clip) && !lines.has(normalized(line.text)));
-      const lessRecent = available.filter(line => !recent.includes(line.clip));
-      const pool = fresh.length ? fresh : lessRecent.length ? lessRecent : available;
-      const value = random();
-      const index = Number.isFinite(value) ? Math.max(0, Math.min(pool.length - 1, Math.floor(value * pool.length))) : 0;
-      return pool[index];
+      const available=alternatives.filter(eligible); if(!available.length)return undefined;
+      const priority=Math.max(...available.map(line=>line.priority??1));
+      const preferred=available.filter(line=>(line.priority??1)===priority);
+      const fresh=preferred.filter(line=>!clips.has(line.clip)&&!lines.has(normalized(line.text)));
+      const lessRecent=preferred.filter(line=>!recent.includes(line.clip));
+      const pool=fresh.length?fresh:lessRecent.length?lessRecent:preferred;
+      return pool[chooseIndex(pool.length)];
     },
     used(alternative: NarrationAlternative) {
-      // Attempted lines count even if stopped midway, avoiding an immediate repeated joke.
-      const stamp = { game, completedHands, event };
-      clips.set(alternative.clip, stamp); lines.set(normalized(alternative.text), stamp);
-      const family = alternative.family ?? alternative.clip;
-      families.set(family, stamp); gameFamilies.add(family);
-      recent.push(alternative.clip); if (recent.length > FLAVOR_POLICY.recentLines) recent.shift();
-      handHadFlavor = true; plainHandsSinceFlavor = 0; lastFlavor = { hand, event };
+      const stamp={game,completedHands,tricks,event};
+      clips.set(alternative.clip,stamp);lines.set(normalized(alternative.text),stamp);families.set(alternative.family??alternative.clip,stamp);
+      recent.push(alternative.clip);if(recent.length>FLAVOR_POLICY.recentLines)recent.shift();
+      handFlavorCount++;lastFlavor=stamp;releaseEvent=undefined;releaseJitter=chooseIndex(4);
     },
   };
 }

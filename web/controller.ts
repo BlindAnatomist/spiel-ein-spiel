@@ -23,6 +23,7 @@ export function createController(session: Session, table: ReturnType<typeof crea
   let settleDone: Promise<void> = Promise.resolve();
   let interruptWait: (() => void) | undefined;
   let announcedHand = 0;
+  let reviewEpoch = 0;
   const interrupted = () => stopped || paused;
   async function waitOrCancel(ms: number) {
     await Promise.race([wait(ms), new Promise<void>(resolve => { interruptWait = resolve; })]);
@@ -34,6 +35,7 @@ export function createController(session: Session, table: ReturnType<typeof crea
     let needsAudioGuard = !!output?.enabled();
     try {
       while (!interrupted()) {
+        const pendingReactionEpoch = reviewEpoch;
         const current = session.view();
         table.render(current, false, !!output?.enabled());
         const messages: Array<string | NarrationMessage> = [];
@@ -42,7 +44,9 @@ export function createController(session: Session, table: ReturnType<typeof crea
           output?.beginHand?.(current.handNumber);
           messages.push(...handStartNarration(current, seatNames));
         }
+        if (update?.progress) output?.observe?.(update.progress);
         messages.push(...(update?.narration ?? update?.messages ?? []));
+        if (output?.enabled() && update?.reaction) messages.push({...update.reaction, gapMs:messages.length ? 300 : 0});
         if (voiceoverPacing()) {
           // Let the native control/focus-parking utterance settle before Peter.
           // This is a bounded guard, not a claim to observe VoiceOver completion.
@@ -51,7 +55,7 @@ export function createController(session: Session, table: ReturnType<typeof crea
             if (interrupted()) return;
             needsAudioGuard = false;
           }
-          await Promise.all(messages.map(message => speech.say(message)));
+          await Promise.all(messages.filter(message => typeof message === 'string' || !message.optional || pendingReactionEpoch === reviewEpoch).map(message => speech.say(message)));
           // An explicitly requested review shares the queue and finishes before automatic focus.
           await speech.say('');
         }
@@ -72,7 +76,7 @@ export function createController(session: Session, table: ReturnType<typeof crea
             } while (speech.revision() !== revision);
           }
           if (interrupted()) return;
-          table.render(view); table.focus(); return;
+          table.render(view, true, !!output?.enabled()); table.focus(); return;
         }
         await waitOrCancel(350);
         if (interrupted()) return;
@@ -98,18 +102,18 @@ export function createController(session: Session, table: ReturnType<typeof crea
       if (!update) return;
       speech.cancelReviews();
       cueEvents(before, update.view).forEach(sound);
-      table.park(); await run(update);
+      table.park(!!output?.enabled()); await run(update);
     },
     next: async () => {
       if (busy || interrupted() || session.view().phase !== 'hand-over') return;
       speech.cancelReviews();
-      table.park(); session.nextHand(); await run(undefined, true);
+      table.park(!!output?.enabled()); session.nextHand(); await run(undefined, true);
     },
-    repeat: () => !interrupted() && voiceoverPacing() ? speech.say(() => currentState(session.view(), seatNames), true) : Promise.resolve(),
-    review: () => !interrupted() && voiceoverPacing() ? speech.say(() => lastTrick(session.view(), seatNames), true) : Promise.resolve(),
+    repeat: () => { reviewEpoch++; return !interrupted() && voiceoverPacing() ? speech.say(() => currentState(session.view(), seatNames), true) : Promise.resolve(); },
+    review: () => { reviewEpoch++; return !interrupted() && voiceoverPacing() ? speech.say(() => lastTrick(session.view(), seatNames), true) : Promise.resolve(); },
     pause: () => {
       if (stopped || paused) return;
-      paused = true; speech.cancelPending(); interruptWait?.(); table.render(session.view(), false);
+      paused = true; speech.cancelPending(); interruptWait?.(); table.render(session.view(), false, !!output?.enabled());
     },
     resume: async () => {
       if (stopped || !paused) return;

@@ -1,6 +1,8 @@
 /** Public presentation facts only. No player hands, referee or decision data. */
 export interface NarrationMessage {
   readonly text: string;
+  readonly optional?: boolean;
+  readonly gapMs?: number;
   readonly clips: readonly string[];
   /** A complete performance of this public fact; fragments remain the fallback. */
   readonly whole?: string;
@@ -13,6 +15,8 @@ export interface NarrationAlternative {
   readonly text: string;
   /** Related jokes share a cooldown even when their words differ. */
   readonly family?: string;
+  readonly context?: string;
+  readonly priority?: number;
 }
 export interface NarrationClip {
   readonly id: string;
@@ -24,11 +28,14 @@ export interface NarrationClip {
   readonly bytes: number;
 }
 export type NarrationManifest = Readonly<Record<string, NarrationClip>>;
-export type PlaybackResult = 'ended' | 'fallback' | 'cancelled';
+export type PlaybackResult = 'ended' | 'fallback' | 'cancelled' | 'skipped';
+export interface NarrationProgress { readonly eventId: number; readonly handNumber: number; readonly completedTricks: number; readonly handComplete: boolean }
 export interface NarrationOutput {
   enabled(): boolean;
   play(message: NarrationMessage): Promise<PlaybackResult>;
   cancel(): void;
+  observe?(progress: NarrationProgress): void;
+  canReact?(message: NarrationMessage): boolean;
   beginHand?(handNumber: number): void;
   endHand?(): void;
 }

@@ -5,51 +5,46 @@ import { narrationEvents } from '../web/presentation.ts';
 import { createSession } from '../web/session.ts';
 import { OPPONENT_PROFILES } from '../src/bots/profiles.ts';
 import { wholeEventContract } from '../scripts/narrator-whole-contract.ts';
-
 const first={clip:'joke.one',text:'First factual sentence. Nice try.',family:'mock-strategy'};
 const second={clip:'joke.two',text:'Second factual sentence. Sure, big shot.',family:'bravado'};
-function advance(history:ReturnType<typeof createNarratorFlavorHistory>,hands=1,events=20) {
-  for(let i=0;i<hands;i++){history.endHand();history.beginHand();}
-  for(let i=0;i<events;i++)history.nextEvent();
+function clock(random=()=>0) {
+ const h=createNarratorFlavorHistory(random);let id=0,hand=1,tricks=0;
+ h.beginGame();h.beginHand(hand);
+ return {h, event(count=1){for(let n=0;n<count;n++)h.observe({eventId:++id,handNumber:hand,completedTricks:tricks,handComplete:false});},
+ trick(){tricks++;h.observe({eventId:++id,handNumber:hand,completedTricks:tricks,handComplete:tricks===5});},
+ hand(){while(tricks<5)this.trick();hand++;tricks=0;h.beginHand(hand);},
+ game(){h.beginGame();id=0;hand=1;tricks=0;h.beginHand(hand);}};
 }
-test('flavor leaves a full plain hand and twelve public events between different families',()=>{
-  const h=createNarratorFlavorHistory();h.beginGame();h.beginHand();h.nextEvent();assert.equal(h.eligible(first),true);h.used(first);
-  advance(h,1,50);assert.equal(h.eligible(second),false);advance(h,1,0);assert.equal(h.eligible(second),true);
-  const j=createNarratorFlavorHistory();j.beginHand();j.used(first);advance(j,2,11);assert.equal(j.eligible(second),false);j.nextEvent();assert.equal(j.eligible(second),true);
+test('flavor requires two finished tricks and six public events, without a full plain-hand ban',()=>{
+ const c=clock();c.h.used(first);c.event(10);c.trick();assert.equal(c.h.eligible(second),false);c.trick();assert.equal(c.h.eligible(second),true);
+ const j=clock();j.h.used(first);j.trick();j.trick();j.event(3);assert.equal(j.h.eligible(second),false);j.event();assert.equal(j.h.eligible(second),true);
 });
-test('a semantic joke family is used at most once in a match even across a long game',()=>{
-  const h=createNarratorFlavorHistory();h.beginGame();h.beginHand();h.used(first);advance(h,20,500);
-  assert.equal(h.eligible({...second,family:first.family}),false);
-  h.beginGame();assert.equal(h.eligible({...second,family:first.family}),true);
+test('related families wait four actual tricks and twelve public events',()=>{
+ const c=clock();c.h.used(first);c.event(20);for(let n=0;n<3;n++)c.trick();
+ assert.equal(c.h.eligible({...second,family:first.family}),false);c.trick();assert.equal(c.h.eligible({...second,family:first.family}),true);
 });
-test('New Game preserves exact clip and normalized-line history and cross-game cooldowns',()=>{
-  const h=createNarratorFlavorHistory();h.beginGame();h.beginHand();h.used(first);h.beginGame();
-  advance(h,2,40);assert.equal(h.eligible({...second,family:first.family}),false);
-  advance(h,1,0);assert.equal(h.eligible({...second,family:first.family}),true);
-  assert.equal(h.eligible(first),false);assert.equal(h.eligible({...second,text:'FIRST factual sentence... NICE TRY!'}),false);
+test('exact clip and normalized text wait four completed hands and eighty public events',()=>{
+ const c=clock();c.h.used(first);for(let n=0;n<3;n++)c.hand();c.event(100);
+ assert.equal(c.h.eligible(first),false);c.hand();assert.equal(c.h.eligible(first),true);
+ assert.equal(c.h.eligible({...second,text:'FIRST factual sentence... NICE TRY!'}),true);
+ c.h.used(first);assert.equal(c.h.eligible({...second,text:'FIRST factual sentence... NICE TRY!'}),false);
 });
-test('abandoned New Games cannot stand in for a completed plain hand',()=>{
-  const h=createNarratorFlavorHistory();h.beginGame();h.beginHand();h.used(first);
-  for(let i=0;i<10;i++){h.beginGame();h.beginHand();h.nextEvent();h.nextEvent();}
-  assert.equal(h.eligible(second),false);
-  h.endHand();h.beginHand();assert.equal(h.eligible(second),true);
-  h.used(second);h.endHand();h.endHand();h.beginHand();assert.equal(h.eligible({...first,clip:'third',text:'A different line.',family:'different'}),false);
+test('abandoned New Games and duplicate progress cannot manufacture cooldown',()=>{
+ const c=clock();c.h.used(first);for(let n=0;n<12;n++){c.game();c.event();}
+ assert.equal(c.h.eligible(second),false);c.h.observe({eventId:1,handNumber:1,completedTricks:5,handComplete:true});assert.equal(c.h.eligible(second),false);
+ c.trick();c.trick();c.event(6);assert.equal(c.h.eligible(second),true);assert.equal(c.h.eligible(first),false);
 });
-test('small flavor pools become eligible again after finite exact-line cooldowns',()=>{
-  const h=createNarratorFlavorHistory();h.beginGame();h.beginHand();h.used(first);h.beginGame();
-  advance(h,11,160);assert.equal(h.eligible(first),false);advance(h,1,0);assert.equal(h.eligible(first),true);
-  h.used(first);assert.equal(h.eligible(first),false);
+test('one hand admits at most three distinct remarks even when all families differ',()=>{
+ const c=clock();c.h.used(first);c.event(6);c.trick();c.trick();assert.equal(c.h.eligible(second),true);c.h.used(second);
+ const third={clip:'three',text:'Third thought',family:'third'};c.event(6);c.trick();c.trick();assert.equal(c.h.eligible(third),true);c.h.used(third);
+ c.event(20);c.trick();assert.equal(c.h.eligible({clip:'four',text:'Fourth thought',family:'fourth'}),false);
 });
-test('flavor selection varies among fresh complete alternatives using its own RNG',()=>{
-  let calls=0;const h=createNarratorFlavorHistory(()=>{calls++;return 0.99;});h.beginGame();h.beginHand();
-  assert.equal(h.select([first,second]),second);assert.equal(calls,1);
-  h.used(second);advance(h,2,30);assert.equal(h.select([first,second]),first);
-  assert.equal(calls,2);
+test('release jitter uses independent randomness once per consumed remark',()=>{
+ let calls=0;const c=clock(()=>{calls++;return .99;});assert.equal(c.h.select([first,second]),second);c.h.used(second);assert.equal(calls,2);
+ c.event(6);c.trick();c.trick();assert.equal(c.h.eligible(first),false);c.event(2);assert.equal(c.h.eligible(first),false);c.event();assert.equal(c.h.eligible(first),true);assert.equal(calls,2);
 });
-test('abandoning more than eight games cannot erase an unexpired exact-line cooldown',()=>{
-  const h=createNarratorFlavorHistory();h.beginGame();h.beginHand();h.used(first);
-  for(let i=0;i<10;i++){h.beginGame();h.beginHand();}
-  advance(h,1,200);assert.equal(h.eligible(first),false);
+test('completed-trick spacing carries across hands and can admit a later-hand early remark',()=>{
+ const c=clock();for(let n=0;n<4;n++)c.trick();c.h.used(first);c.hand();c.event(6);assert.equal(c.h.eligible(second),false);c.trick();assert.equal(c.h.eligible(second),true);
 });
 test('stage-one keys cover all379 exact named facts and exclude hidden discard identities',()=>{
   const expected=wholeEventContract();assert.equal(Object.keys(expected).length,379);

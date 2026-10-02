@@ -9,7 +9,7 @@ import { wholeEventContract } from '../scripts/narrator-whole-contract.ts';
 const first={clip:'joke.one',text:'First factual sentence. Nice try.',family:'mock-strategy'};
 const second={clip:'joke.two',text:'Second factual sentence. Sure, big shot.',family:'bravado'};
 function advance(history:ReturnType<typeof createNarratorFlavorHistory>,hands=1,events=20) {
-  for(let i=0;i<hands;i++)history.beginHand();
+  for(let i=0;i<hands;i++){history.endHand();history.beginHand();}
   for(let i=0;i<events;i++)history.nextEvent();
 }
 test('flavor leaves a full plain hand and twelve public events between different families',()=>{
@@ -27,6 +27,13 @@ test('New Game preserves exact clip and normalized-line history and cross-game c
   advance(h,2,40);assert.equal(h.eligible({...second,family:first.family}),false);
   advance(h,1,0);assert.equal(h.eligible({...second,family:first.family}),true);
   assert.equal(h.eligible(first),false);assert.equal(h.eligible({...second,text:'FIRST factual sentence... NICE TRY!'}),false);
+});
+test('abandoned New Games cannot stand in for a completed plain hand',()=>{
+  const h=createNarratorFlavorHistory();h.beginGame();h.beginHand();h.used(first);
+  for(let i=0;i<10;i++){h.beginGame();h.beginHand();h.nextEvent();h.nextEvent();}
+  assert.equal(h.eligible(second),false);
+  h.endHand();h.beginHand();assert.equal(h.eligible(second),true);
+  h.used(second);h.endHand();h.endHand();h.beginHand();assert.equal(h.eligible({...first,clip:'third',text:'A different line.',family:'different'}),false);
 });
 test('stage-one keys cover all379 exact named facts and exclude hidden discard identities',()=>{
   const expected=wholeEventContract();assert.equal(Object.keys(expected).length,379);

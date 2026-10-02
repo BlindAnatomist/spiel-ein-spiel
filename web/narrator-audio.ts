@@ -92,6 +92,7 @@ export function createNarratorAudio(manifest: NarrationManifest, options: AudioO
     enabled: () => enabled,
     setEnabled(value) { if (value !== enabled) { cancel(); enabled = value; } },
     beginHand(number) { if (number !== hand) { hand = number; flavorHistory.beginHand(); } },
+    endHand() { flavorHistory.endHand(); },
     cancel,
     prime() {
       if (!enabled || unlocked || priming) return;

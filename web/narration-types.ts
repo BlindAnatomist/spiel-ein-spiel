@@ -29,4 +29,5 @@ export interface NarrationOutput {
   play(message: NarrationMessage): Promise<PlaybackResult>;
   cancel(): void;
   beginHand?(handNumber: number): void;
+  endHand?(): void;
 }

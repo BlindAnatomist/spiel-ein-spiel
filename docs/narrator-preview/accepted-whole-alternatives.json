@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "packId": "peter-euchre-20261002",
+  "revision": "performance-repair-samples-20261002",
+  "endpoint": "https://val-voice-lab.netlify.app/api/tts",
+  "model": "s2.1-pro-free",
+  "reference_id": "d75c270eaee14c8aa1e9e980cc37cf1b",
+  "temperature": 0.85,
+  "purpose": "Four finite whole-event performance tests. Do not expand generation without listening feedback.",
+  "clips": {
+    "whole.emma.passes": {
+      "id": "whole.emma.passes",
+      "text": "Emma passes. Yeah, we'll call that strategy.",
+      "prompt": "[skeptical] Emma passes. Yeah, we'll call that strategy.",
+      "url": "samples/whole.emma.passes.mp3",
+      "status": "ready",
+      "startedAt": "2026-10-02T00:53:49.683528+00:00",
+      "endpoint": "https://val-voice-lab.netlify.app/api/tts",
+      "payload": {
+        "text": "[skeptical] Emma passes. Yeah, we'll call that strategy.",
+        "temperature": 0.85,
+        "reference_id": "d75c270eaee14c8aa1e9e980cc37cf1b"
+      },
+      "modelFromInspectedSource": "s2.1-pro-free",
+      "httpStatus": 200,
+      "contentType": "audio/mpeg",
+      "bytes": 45600,
+      "completedAt": "2026-10-02T00:53:55.646482+00:00",
+      "durationSeconds": 2.821224,
+      "sha256": "8c932c672eb0bc1697a249124f83fe86f7de2075a0fdbdb431e1d43b9186db39",
+      "decodeVerified": true,
+      "audibleQualityVerified": false,
+      "rawUrl": "raw/whole.emma.passes.mp3",
+      "sourceSha256": "d9485fe402edf402a83e6cdd3cd75b3ae8bf3d7d77f99debb07a4a5254559457",
+      "mastering": {
+        "gainDb": 11.629999999999999,
+        "method": "constant-gain-only",
+        "levelMethod": "integrated-LUFS"
+      }
+    },
+    "whole.walt.calls-spades-alone": {
+      "id": "whole.walt.calls-spades-alone",
+      "text": "Walt calls spades and goes alone. Sure, make it dramatic.",
+      "prompt": "[confident] Walt calls spades and goes alone. Sure, make it dramatic.",
+      "url": "samples/whole.walt.calls-spades-alone.mp3",
+      "status": "ready",
+      "startedAt": "2026-10-02T00:53:55.769188+00:00",
+      "endpoint": "https://val-voice-lab.netlify.app/api/tts",
+      "payload": {
+        "text": "[confident] Walt calls spades and goes alone. Sure, make it dramatic.",
+        "temperature": 0.85,
+        "reference_id": "d75c270eaee14c8aa1e9e980cc37cf1b"
+      },
+      "modelFromInspectedSource": "s2.1-pro-free",
+      "httpStatus": 200,
+      "contentType": "audio/mpeg",
+      "bytes": 54795,
+      "completedAt": "2026-10-02T00:54:01.797751+00:00",
+      "durationSeconds": 3.395918,
+      "sha256": "d2358ad8cbc98f8a9302f4f9b478fee1f6911fe2921d846200257ff4328fab0d",
+      "decodeVerified": true,
+      "audibleQualityVerified": false,
+      "rawUrl": "raw/whole.walt.calls-spades-alone.mp3",
+      "sourceSha256": "d1b24c4d88a44a5a90987d3e1b65525ee9287be616bc80722fff41e41db05b1f",
+      "mastering": {
+        "gainDb": 13.170000000000002,
+        "method": "constant-gain-only",
+        "levelMethod": "integrated-LUFS"
+      }
+    }
+  }
+}

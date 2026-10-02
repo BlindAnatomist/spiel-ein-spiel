@@ -3,9 +3,13 @@
 Baseline: `776b5d755233c13adcba2c3bed8ccc6a75c50f6d` (main verified 2026-10-02).
 Branch: `preview/peter-narrator-20261002`.
 
-This is an isolated work-in-progress preview, not a production release. No engine,
-strategy, referee, hidden-hand boundary, native hand renderer or sound-cue changes.
-The existing full game and all 20 permanently named opponent identities remain.
+This is an isolated work-in-progress preview, not a production release. The engine,
+strategies, referee, hidden-hand boundary and sound cues remain unchanged. Native
+hand rendering has the narrow Peter-only stability repair described in
+DEVICE_REPAIR.md. The full game and all 20 permanently named opponents remain.
+
+For current full-sentence coverage, variation rules and restore commands, see
+WHOLE_STAGE_ONE.md. The checkpoints below retain the earlier implementation history.
 
 ## First code checkpoint
 

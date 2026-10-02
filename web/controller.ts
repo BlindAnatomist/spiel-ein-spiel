@@ -58,6 +58,7 @@ export function createController(session: Session, table: ReturnType<typeof crea
         if (interrupted()) return;
         const view = session.view();
         if (view.turn === null || view.turn === 0) {
+          if (view.result) output?.endHand?.();
           if (voiceoverPacing() && speech.revision() !== initialSpeech) {
             // Reviews arriving during the guard must also finish and clear first.
             let revision: number;

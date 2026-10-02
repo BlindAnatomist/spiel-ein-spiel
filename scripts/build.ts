@@ -2,18 +2,25 @@ import { build } from 'esbuild';
 import { mkdir, copyFile, rm, cp, readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { narratorManifest } from '../web/narrator-manifest.ts';
+import { narratorWholeManifest } from '../web/narrator-whole-manifest.ts';
+import { narrationAssets } from '../web/narrator-assets.ts';
+import { wholeEventContract, acceptedAlternatives } from './narrator-whole-contract.ts';
 
-const clips = Object.values(narratorManifest);
+const clips = Object.values(narrationAssets);
 const available = await Promise.all(clips.map(async clip => {
   try {
     const bytes = await readFile(`web/${clip.url}`);
     return bytes.length === clip.bytes && createHash('sha256').update(bytes).digest('hex') === clip.sha256;
   } catch { return false; }
 }));
-const narratorAssetsReady = clips.length === 127 && available.every(Boolean);
+const wholeContract = { ...wholeEventContract(), ...acceptedAlternatives };
+const narratorAssetsReady = Object.keys(narratorManifest).length === 127
+  && Object.keys(narratorWholeManifest).length === 381
+  && Object.entries(wholeContract).every(([id, text]) => narratorWholeManifest[id]?.text === text)
+  && clips.length === 508 && available.every(Boolean);
 if (!narratorAssetsReady) {
-  const restore = 'Restore the private voice-pack Library ZIP and run node scripts/import-narrator-pack.ts /path/to/extracted/pack. See docs/narrator-preview/CHECKPOINT.md.';
-  if (process.env.CONTEXT === 'narrator-preview') throw new Error(`Narrator preview requires all 127 verified recordings. ${restore}`);
+  const restore = 'Restore both private voice packs and the accepted whole-line samples, then run the import scripts. See docs/narrator-preview/WHOLE_STAGE_ONE.md.';
+  if (process.env.CONTEXT === 'narrator-preview') throw new Error(`Narrator preview requires all 127 fallback recordings, 379 whole sentences and 2 accepted alternatives. ${restore}`);
   console.warn(`Private recordings are not in the code checkpoint. Peter option disabled in this build. ${restore}`);
 }
 

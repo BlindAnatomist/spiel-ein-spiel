@@ -2,7 +2,16 @@
 export interface NarrationMessage {
   readonly text: string;
   readonly clips: readonly string[];
-  readonly character?: { readonly clip: string; readonly text: string };
+  /** A complete performance of this public fact; fragments remain the fallback. */
+  readonly whole?: string;
+  /** Complete factual alternatives, never a joke appended after successful speech. */
+  readonly character?: NarrationAlternative;
+}
+export interface NarrationAlternative {
+  readonly clip: string;
+  readonly text: string;
+  /** Related jokes share a cooldown even when their words differ. */
+  readonly family?: string;
 }
 export interface NarrationClip {
   readonly id: string;

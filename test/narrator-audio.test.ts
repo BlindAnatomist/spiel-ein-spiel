@@ -89,11 +89,38 @@ test('cancelling priming cannot resurrect narration; a later gesture can prime a
   const h=harness();h.output.prime();const p=h.output.play(message);h.output.cancel();assert.equal(await p,'cancelled');
   await flush();h.output.prime();assert.equal(h.media.plays.length,2);h.output.cancel();
 });
-test('at most one eligible character aside per hand, with exact public alternatives', async () => {
+test('a character line cannot recur just because another hand starts', async () => {
   const h=harness();const win={text:'Val takes the trick.',clips:['actor.val','event.takes-trick'],character:{clip:'character.val-takes-trick',text:"Val wins the trick. Totally saw that comin'."}};
   h.output.beginHand!(1);const a=h.output.play(win);h.media.end();assert.equal(await a,'ended');assert.equal(h.media.plays[0],'audio/character.val-takes-trick.mp3');
   const b=h.output.play(win);assert.equal(h.media.plays[1],'audio/actor.val.mp3');h.media.end();await flush();h.media.end();assert.equal(await b,'ended');
-  h.output.beginHand!(2);const c=h.output.play(win);assert.equal(h.media.plays.at(-1),'audio/character.val-takes-trick.mp3');h.media.end();await c;
+  h.output.beginHand!(2);const c=h.output.play(win);assert.equal(h.media.plays.at(-1),'audio/actor.val.mp3');h.media.end();await flush();h.media.end();await c;
+});
+test('ready whole sentences replace fragments and wait for one actual ended event', async () => {
+  const media=new Media();const captions:string[]=[];
+  const id='full.trick.val';const full={...manifest,[id]:{id,url:`audio/${id}.mp3`,text:'Val takes the trick.',status:'ready',durationSeconds:2,sha256:'test',bytes:100}};
+  const output=createNarratorAudio(full,{enabled:true,media:()=>media,caption:t=>captions.push(t),timeout:()=>()=>{}});
+  let done=false;const task=output.play({text:'Val takes the trick.',clips:['actor.val','event.takes-trick'],whole:id}).then(result=>{done=true;return result;});
+  assert.deepEqual(media.plays,[`audio/${id}.mp3`]);await flush();assert.equal(done,false);
+  media.end();assert.equal(await task,'ended');assert.deepEqual(captions,['Val takes the trick.','']);assert.equal(media.plays.length,1);
+});
+test('missing or unready whole recording uses the complete existing fragment sequence', async () => {
+  for(const status of ['missing','pending']) {
+    const media=new Media();const id='full.play.val.hearts.9';
+    const full={...manifest,...(status==='pending'?{[id]:{id,url:`audio/${id}.mp3`,text:message.text,status,durationSeconds:2,sha256:'test',bytes:100}}:{})};
+    const output=createNarratorAudio(full,{enabled:true,media:()=>media,timeout:()=>()=>{}});
+    const task=output.play({...message,whole:id});assert.equal(media.plays[0],'audio/prefix.val.plays.mp3');
+    media.end();await flush();media.end();assert.equal(await task,'ended');assert.equal(media.plays.length,2);
+  }
+});
+test('a complete character alternative replaces the whole fact and failure has one original fallback', async () => {
+  const h=harness();const live:string[]=[];const waits:Array<()=>void>=[];
+  const speech=createAnnouncer(t=>live.push(t),()=>new Promise<void>(r=>waits.push(r)),h.output);
+  const win={text:'Val takes the trick.',clips:['actor.val','event.takes-trick'],whole:'full.trick.val',character:{clip:'character.val-takes-trick',text:"Val wins the trick. Totally saw that comin'.",family:'pretend-expertise'}};
+  const first=speech.say(win);assert.equal(h.media.plays.length,1);h.media.fail();await flush();
+  assert.deepEqual(live,[win.text]);assert.equal(h.media.plays.length,1);waits.shift()!();await first;
+  h.output.beginHand!(2);const next=speech.say(win);assert.equal(h.media.plays.at(-1),'audio/actor.val.mp3');
+  h.media.end();await flush();h.media.end();await next;
+  assert.deepEqual(live,[win.text,'']);assert.equal(h.media.plays.length,3);
 });
 test('successful audio never enters the live region; failed audio stops before one original fallback', async () => {
   const h=harness();const live:string[]=[];const waits:Array<()=>void>=[];

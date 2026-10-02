@@ -49,13 +49,19 @@ export function narrationEvents(before: PlayerView, after: PlayerView, actor: Se
       const verb = before.trick.length === 0 && (after.trick.some(p => p.seat === actor && p.card === action.card) || after.completedTricks.length > before.completedTricks.length) ? 'leads' : 'plays';
       messages.push({ text: `${seatNames[actor]} ${verb} ${cardName(action.card, after.trump).toLowerCase()}.`, clips: [`prefix.${seatNames[actor].toLowerCase()}.${verb}`, cardClip(action.card, after.trump)] });
     } else if (action.type === 'discard') messages.push({ text: `${seatNames[actor]} discards a card.`, clips: [who, 'event.discards'] });
-    else if (action.type === 'pass') messages.push({ text: `${seatNames[actor]} passes.`, clips: [who, 'event.passes'] });
+    else if (action.type === 'pass') messages.push({ text: `${seatNames[actor]} passes.`, clips: [who, 'event.passes'],
+      whole: `full.pass.${seatNames[actor].toLowerCase()}`,
+      ...(seatNames[actor] === 'Emma' ? { character: { clip: 'whole.emma.passes', text: "Emma passes. Yeah, we'll call that strategy.", family: 'mock-strategy' } } : {}),
+    });
     else if (action.type === 'order-up' || action.type === 'call') {
       const suit = action.type === 'order-up' ? after.trump : action.suit;
       messages.push({ text: `${seatNames[actor]} ${action.type === 'order-up' ? 'orders up' : 'calls'} ${suit}${action.alone ? ' and goes alone' : ''}.`,
         clips: [who, `${action.type === 'order-up' ? 'order' : 'call'}.${suit}`, ...(action.alone ? ['event.goes-alone'] : [])],
-        ...(actor === 2 && action.type === 'call' && suit === 'hearts' && !action.alone
-          ? { character: { clip: 'character.val-calls-hearts', text: 'Val calls hearts. Yeah, hearts. I knew that.' } } : {}),
+        whole: `full.${action.type === 'order-up' ? 'order' : 'call'}.${seatNames[actor].toLowerCase()}.${suit}.${action.alone ? 'alone' : 'team'}`,
+        ...(seatNames[actor] === 'Val' && action.type === 'call' && suit === 'hearts' && !action.alone
+          ? { character: { clip: 'character.val-calls-hearts', text: 'Val calls hearts. Yeah, hearts. I knew that.', family: 'pretend-expertise' } } : {}),
+        ...(seatNames[actor] === 'Walt' && action.type === 'call' && suit === 'spades' && action.alone
+          ? { character: { clip: 'whole.walt.calls-spades-alone', text: 'Walt calls spades and goes alone. Sure, make it dramatic.', family: 'solo-drama' } } : {}),
       });
     }
   }
@@ -66,7 +72,8 @@ export function narrationEvents(before: PlayerView, after: PlayerView, actor: Se
   if (after.completedTricks.length > before.completedTricks.length) {
     const winner = after.completedTricks.at(-1)!.winner;
     messages.push({ text: `${seatNames[winner]} ${winner === 0 ? 'take' : 'takes'} the trick.`, clips: [actorClip(seatNames[winner]), `event.${winner === 0 ? 'take-trick' : 'takes-trick'}`],
-      ...(winner === 2 ? { character: { clip: 'character.val-takes-trick', text: "Val wins the trick. Totally saw that comin'." } } : {}),
+      whole: `full.trick.${seatNames[winner].toLowerCase()}`,
+      ...(seatNames[winner] === 'Val' ? { character: { clip: 'character.val-takes-trick', text: "Val wins the trick. Totally saw that comin'.", family: 'pretend-expertise' } } : {}),
     });
   }
   // Results are spoken through focus, never duplicated in the live region.

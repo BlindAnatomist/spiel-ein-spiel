@@ -25,7 +25,8 @@ import {
 import { createTable } from './render.ts';
 import { createController } from './controller.ts';
 import { createNarratorAudio } from './narrator-audio.ts';
-import { narratorManifest } from './narrator-manifest.ts';
+import { narrationAssets } from './narrator-assets.ts';
+import { createNarratorFlavorHistory } from './narrator-flavor.ts';
 
 declare const __BUILD_COMMIT__: string;
 declare const __DEPLOY_CONTEXT__: string;
@@ -247,6 +248,7 @@ const root = document.querySelector<HTMLElement>('#game')!;
 const live = document.querySelector<HTMLElement>('#announcements')!;
 let controller: ReturnType<typeof createController> | undefined;
 let narratorOutput: ReturnType<typeof createNarratorAudio> | undefined;
+const narratorFlavorHistory = createNarratorFlavorHistory();
 const randomWord = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
 
 function pauseGame() {
@@ -278,6 +280,7 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   event.preventDefault();
   controller?.stop(); live.textContent = '';
   narratorOutput?.cancel();
+  narratorFlavorHistory.beginGame();
   pauseButton.hidden = false;
   pauseButton.textContent = 'Pause game';
   startButton.textContent = 'New game';
@@ -312,7 +315,7 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   });
   root.hidden = false;
   const table = createTable(root, { act: action => { void controller!.act(action); }, next: () => { void controller!.next(); }, repeat: () => { void controller!.repeat(); }, review: () => { void controller!.review(); } }, seatNames);
-  narratorOutput = createNarratorAudio(narratorManifest, { enabled: narratorSelect.value === 'peter', caption: text => { narratorCaption.textContent = text; } });
+  narratorOutput = createNarratorAudio(narrationAssets, { enabled: narratorSelect.value === 'peter', flavorHistory: narratorFlavorHistory, caption: text => { narratorCaption.textContent = text; } });
   narratorOutput.prime();
   controller = createController(session, table, text => { live.textContent = text; }, undefined, cue => sounds.play(cue), seatNames,
     selectedHumanTracking === 'owner' ? 'voiceover' : 'visual', narratorOutput);

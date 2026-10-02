@@ -1,4 +1,5 @@
 import type { NarrationClip, NarrationManifest, NarrationMessage, NarrationOutput, PlaybackResult } from './narration-types.ts';
+import { createNarratorFlavorHistory, type NarratorFlavorHistory } from './narrator-flavor.ts';
 
 /** The same media element is reused after the initiating user gesture (Safari). */
 export interface NarratorMedia {
@@ -17,6 +18,7 @@ export interface AudioOptions {
   media?: () => NarratorMedia;
   caption?: (text: string) => void;
   timeout?: (callback: () => void, ms: number) => () => void;
+  flavorHistory?: NarratorFlavorHistory;
 }
 // Ten milliseconds of PCM silence, used only on an explicit user gesture to
 // authorize this same element before an asynchronous resumed bot sequence.
@@ -28,7 +30,7 @@ export function createNarratorAudio(manifest: NarrationManifest, options: AudioO
   let revision = 0;
   let cancelClip: (() => void) | undefined;
   let hand = 0;
-  let characterUsed = false;
+  const flavorHistory = options.flavorHistory ?? createNarratorFlavorHistory();
   let priming: Promise<PlaybackResult> | undefined;
   let unlocked = false;
   const caption = options.caption ?? (() => {});
@@ -89,7 +91,7 @@ export function createNarratorAudio(manifest: NarrationManifest, options: AudioO
   return {
     enabled: () => enabled,
     setEnabled(value) { if (value !== enabled) { cancel(); enabled = value; } },
-    beginHand(number) { if (number !== hand) { hand = number; characterUsed = false; } },
+    beginHand(number) { if (number !== hand) { hand = number; flavorHistory.beginHand(); } },
     cancel,
     prime() {
       if (!enabled || unlocked || priming) return;
@@ -107,14 +109,16 @@ export function createNarratorAudio(manifest: NarrationManifest, options: AudioO
       const requestedRevision = revision;
       if (priming) await priming;
       if (!enabled || requestedRevision !== revision) return 'cancelled';
+      flavorHistory.nextEvent();
       // Validate the whole fact first; never play only the fragments we happen to have.
-      const character = !characterUsed && message.character && valid(manifest[message.character.clip]) ? message.character : undefined;
-      const ids = character ? [character.clip] : message.clips;
+      const character = message.character && flavorHistory.eligible(message.character) && valid(manifest[message.character.clip]) ? message.character : undefined;
+      const whole = message.whole && valid(manifest[message.whole]) ? message.whole : undefined;
+      const ids = character ? [character.clip] : whole ? [whole] : message.clips;
       const clips = ids.map(id => manifest[id]);
       if (!clips.length || !clips.every(valid)) return 'fallback';
       const ownRevision = revision;
       caption(character?.text ?? message.text);
-      if (character) characterUsed = true;
+      if (character) flavorHistory.used(character);
       for (const clip of clips) {
         const result = await playClip(clip, ownRevision);
         if (result !== 'ended') { if (ownRevision === revision) caption(''); return result; }

@@ -127,7 +127,8 @@ test('automatic focus waits for audio completion then the existing 1150 ms quiet
   const table={render:()=>{},park:()=>{},focus:()=>{focus++;}};
   const session={view:()=>v,human:()=>({view:v,messages:[message.text],narration:[message]}),bot:()=>null,nextHand:()=>v};
   const controller=createController(session,table,()=>assert.fail('successful event must not reach ARIA'),ms=>new Promise<void>(resolve=>waits.push({ms,resolve})),()=>{},undefined,'voiceover',h.output);
-  const p=controller.act({type:'play',card:'hearts:9'});assert.equal(focus,0);assert.equal(waits.length,0);
+  const p=controller.act({type:'play',card:'hearts:9'});assert.equal(focus,0);assert.equal(waits.length,1);assert.equal(h.media.plays.length,0);
+  assert.equal(waits[0]!.ms,FOCUS_GUARD_MS);waits.shift()!.resolve();await flush();
   h.media.end();await flush();assert.equal(waits.length,0);h.media.end();await flush();assert.equal(waits[0]!.ms,FOCUS_GUARD_MS);assert.equal(focus,0);
   waits.shift()!.resolve();await p;assert.equal(focus,1);
 });
@@ -138,7 +139,7 @@ test('pause cancels active event, keeps game state and native cards, resume does
   const full: NarrationManifest={...manifest,...Object.fromEntries(first.flatMap(m=>m.clips).map(id=>[id,{id,url:`audio/${id}.mp3`,text:id,status:'ready',durationSeconds:1,sha256:'test',bytes:100}]))};
   const output=createNarratorAudio(full,{enabled:true,media:()=>h.media,timeout:()=>()=>{}});
   const live:string[]=[];const controller=createController(session,table,t=>live.push(t),async()=>{},()=>{},undefined,'voiceover',output);
-  const start=controller.start();const before=structuredClone(session.view());const cards=[...root.querySelectorAll('#hand button')];
+  const start=controller.start();await flush();const before=structuredClone(session.view());const cards=[...root.querySelectorAll('#hand button')];
   controller.pause();await start;assert.deepEqual(session.view(),before);assert.deepEqual([...root.querySelectorAll('#hand button')],cards);assert.equal(controller.isPaused(),true);
   await controller.resume();assert.equal(controller.isPaused(),false);assert.deepEqual(session.view(),before);assert.equal(h.media.plays.length,1);assert.ok(live.some(t=>t.startsWith('Suit not called yet.')));
 });
@@ -183,4 +184,27 @@ test('private preview makes no performance network requests and namespaces its l
   assert.equal(requests,0);assert.match(d.querySelector('#performance-output')!.textContent!,/preview keeps performance on this device only/);
   assert.ok(Object.keys(dom.window.localStorage).every(k=>k.startsWith('narrator-preview:')));
   assert.equal(d.querySelector<HTMLElement>('#preview-notice')!.hidden,false);dom.window.close();
+});
+
+test('Peter busy renders do not mutate the focused parking heading or unchanged hand subtree', () => {
+  const dom=new JSDOM('<main></main>');const root=dom.window.document.querySelector('main')!;
+  const table=createTable(root,{act:()=>{},next:()=>{}});const v=createSession(17,'strong',{dealer:3}).view();
+  table.render(v,false,true);table.park();
+  const turn=root.querySelector('#turn')!;const headingMutations=new dom.window.MutationObserver(()=>{});headingMutations.observe(turn,{childList:true,subtree:true,characterData:true});
+  const hand=root.querySelector('#hand')!;const handMutations=new dom.window.MutationObserver(()=>{});handMutations.observe(hand,{childList:true,subtree:true,attributes:true,characterData:true});
+  const cardChildren=[...hand.children].map(card=>[...card.childNodes]);
+  for(const seat of [1,2,3] as const) table.render({...v,turn:seat},false,true);
+  assert.equal(turn.textContent,'Game in progress');assert.equal(dom.window.document.activeElement,turn);
+  assert.equal(headingMutations.takeRecords().length,0);assert.equal(handMutations.takeRecords().length,0);
+  [...hand.children].forEach((card,i)=>assert.deepEqual([...card.childNodes],cardChildren[i]));
+  table.render({...v,turn:2},false);assert.match(turn.textContent!,/^Val bids/); // Original path retained.
+});
+test('Peter busy renders retain existing public trick rows while adding the next play', () => {
+  const dom=new JSDOM('<main></main>');const root=dom.window.document.querySelector('main')!;
+  const table=createTable(root,{act:()=>{},next:()=>{}});const v={...createSession(17,'strong',{dealer:3}).view(),phase:'playing' as const,trump:'hearts' as const,trick:[{seat:1 as const,card:'clubs:9' as const}]};
+  table.render(v,false,true);const row=root.querySelector('#trick li');
+  table.render({...v,trick:[...v.trick,{seat:2,card:'diamonds:J'}]},false,true);
+  assert.equal(root.querySelector('#trick li'),row);assert.equal(root.querySelector('#trick')!.children.length,2);
+  assert.match(root.querySelector('#trick')!.lastElementChild!.textContent!,/Val: Jack of diamonds, left bower, counts as hearts/);
+  table.render({...v,trick:[]},false,true);assert.equal(root.querySelector('#trick')!.children.length,0);
 });

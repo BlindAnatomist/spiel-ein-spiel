@@ -36,6 +36,17 @@ for (const file of ['index.html', 'style.css']) await copyFile(`web/${file}`, `d
 // Only local, prerecorded assets are shipped. No voice provider is called at runtime.
 await rm('dist/audio', { recursive: true, force: true });
 await cp('web/audio', 'dist/audio', { recursive: true });
+await rm('dist/repair-audio', { recursive: true, force: true });
+if (narratorAssetsReady) {
+  const checksums = await readFile('web/repair-audio/checksums.sha256', 'utf8');
+  for (const line of checksums.trim().split('\n')) {
+    const match = /^([a-f0-9]{64})  (audio\/[a-z0-9.-]+\.(?:mp3|wav)|index\.html|measurements\.json)$/.exec(line);
+    if (!match) throw new Error('Invalid voice-comparison checksum entry');
+    const bytes = await readFile(`web/repair-audio/${match[2]}`);
+    if (createHash('sha256').update(bytes).digest('hex') !== match[1]) throw new Error(`Unverified comparison file: ${match[2]}`);
+  }
+  await cp('web/repair-audio', 'dist/repair-audio', { recursive: true });
+}
 
 
 // Browser-only regression fixtures are published only with an isolated PR preview.

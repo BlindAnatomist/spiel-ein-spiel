@@ -39,6 +39,7 @@ const pauseButton = document.querySelector<HTMLButtonElement>('#pause-game')!;
 const narratorCaption = document.querySelector<HTMLElement>('#narrator-caption')!;
 if (typeof __NARRATOR_ASSETS_READY__ === 'boolean' && !__NARRATOR_ASSETS_READY__) {
   narratorSelect.querySelector<HTMLOptionElement>('option[value="peter"]')!.disabled = true;
+  document.querySelector<HTMLElement>('#voice-samples')!.hidden = true;
   document.querySelector<HTMLElement>('#narrator-help')!.textContent = 'This code-only checkpoint needs the private recording pack restored before Peter can be selected. Original narration is available.';
 }
 

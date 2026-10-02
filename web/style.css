@@ -47,6 +47,7 @@ header{grid-row:1}#top-score,#difficulty,#start-game,#sound-cues{grid-row:2}.set
 .narrator-settings{grid-column:1/-1;grid-row:4;min-width:0;display:grid;gap:6px}
 #narrator{width:100%;min-width:0;background:#153b32;color:#f5f4e8;font-size:14px}
 #narrator-help{font-size:13px;line-height:1.35;color:#d7e3dc}
+#voice-samples{color:#bce8ff;font-size:14px;line-height:1.4;padding:4px 0}
 #pause-game{grid-column:1/-1;grid-row:5;background:#153b32;color:#f5f4e8}
 #narrator-caption{grid-column:1/-1;grid-row:6;font-size:14px;line-height:1.35;color:#f6e8bb;overflow-wrap:anywhere}
 #narrator-caption:empty{display:none}#game{grid-row:7}

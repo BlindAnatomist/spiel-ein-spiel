@@ -6,7 +6,7 @@ import type { NarrationMessage, NarrationOutput } from './narration-types.ts';
 import type { SeatNames } from './presentation.ts';
 import type { Session, Update } from './session.ts';
 import type { createTable } from './render.ts';
-/** Quiet time after the live region clears, only before automatic focus. */
+/** Quiet time before recorded narration after activation, and before automatic focus. */
 export const FOCUS_GUARD_MS = 1150;
 export type PacingMode = 'voiceover' | 'visual';
 export function createController(session: Session, table: ReturnType<typeof createTable>, announce: (text: string) => void,
@@ -31,10 +31,11 @@ export function createController(session: Session, table: ReturnType<typeof crea
   async function settle(update?: Update, handStart = false) {
     busy = true;
     const initialSpeech = speech.revision();
+    let needsAudioGuard = !!output?.enabled();
     try {
       while (!interrupted()) {
         const current = session.view();
-        table.render(current, false);
+        table.render(current, false, !!output?.enabled());
         const messages: Array<string | NarrationMessage> = [];
         if (handStart && current.handNumber !== announcedHand) {
           announcedHand = current.handNumber;
@@ -43,6 +44,13 @@ export function createController(session: Session, table: ReturnType<typeof crea
         }
         messages.push(...(update?.narration ?? update?.messages ?? []));
         if (voiceoverPacing()) {
+          // Let the native control/focus-parking utterance settle before Peter.
+          // This is a bounded guard, not a claim to observe VoiceOver completion.
+          if (needsAudioGuard && messages.some(message => typeof message !== 'string')) {
+            await waitOrCancel(FOCUS_GUARD_MS);
+            if (interrupted()) return;
+            needsAudioGuard = false;
+          }
           await Promise.all(messages.map(message => speech.say(message)));
           // An explicitly requested review shares the queue and finishes before automatic focus.
           await speech.say('');

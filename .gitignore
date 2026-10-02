@@ -7,3 +7,4 @@ reports/bot-validation-run/
 
 # Generated voice assets are preserved in private Library/Sites, not the public repo.
 web/audio/*.mp3
+web/repair-audio/audio/

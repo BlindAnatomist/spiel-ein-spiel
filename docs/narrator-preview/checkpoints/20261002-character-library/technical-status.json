@@ -1,0 +1,26 @@
+{
+  "status": "Work in progress; incomplete recording catalog; not deployed",
+  "approvedScripts": 168,
+  "integratedNewRecordings": 72,
+  "additionalCompletedRecordingsNotIntegrated": 6,
+  "remainingNewRecordings": 90,
+  "unresolvedRequestOutcomes": 1,
+  "runningRequests": 0,
+  "existingRuntimeRecordings": 1965,
+  "currentRuntimeRecordings": 2037,
+  "targetRuntimeRecordings": 2133,
+  "strictTypecheck": "passed",
+  "repositoryTestsPassed": 237,
+  "publicPredicatesCovered": 27,
+  "independentLegalTransitionsChecked": 8209,
+  "blocker": "Incomplete recording catalog; one request outcome needs reconciliation before resubmission",
+  "nextSteps": [
+    "Reconcile the single unresolved request outcome before resubmission",
+    "Finish only the remaining authorized recordings",
+    "Integrate completed verified batches",
+    "Rerun final actual-catalog cadence, whole-audio checks and independent review"
+  ],
+  "releaseReady": false,
+  "mainMergeAuthorized": false,
+  "sourceRuntimePreserved": true
+}

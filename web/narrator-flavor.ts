@@ -68,8 +68,10 @@ export function createNarratorFlavorHistory(random: () => number = Math.random, 
     eligible,
     select(alternatives: readonly NarrationAlternative[]) {
       const available=alternatives.filter(eligible); if(!available.length)return undefined;
-      const fresh=available.filter(line=>!seenClips.has(line.clip)&&!seenLines.has(normalized(line.text)));
-      const candidates=fresh.length?fresh:available;
+      const finalResults=available.filter(line=>line.eventPreference==='game-result');
+      const eventPool=finalResults.length?finalResults:available;
+      const fresh=eventPool.filter(line=>!seenClips.has(line.clip)&&!seenLines.has(normalized(line.text)));
+      const candidates=fresh.length?fresh:eventPool;
       const priority=Math.max(...candidates.map(line=>line.priority??1));
       const preferred=candidates.filter(line=>(line.priority??1)===priority);
       const lessRecent=preferred.filter(line=>!recent.includes(line.clip));

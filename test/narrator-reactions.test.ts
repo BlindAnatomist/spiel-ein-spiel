@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { reactionFor, reactionLines } from '../web/narrator-reactions.ts';
+import { reactionFor, reactionLines, baseReactionLines } from '../web/narrator-reactions.ts';
 import { createSession } from '../web/session.ts';
 import type { Session } from '../web/session.ts';
 import type { Action, PlayerView, Seat } from '../src/index.ts';
@@ -26,7 +26,7 @@ test('all twelve reaction contexts use only public actions, effective suits and 
   {id:'reaction.val.trick',actor:0,action:{type:'play',card:'clubs:9'},after:{completedTricks:[{plays:[],winner:2}]}},
   {id:'reaction.table.four-tricks',actor:3,action:{type:'play',card:'clubs:9'},before:{completedTricks:Array.from({length:3},()=>({plays:[],winner:1}))},after:{completedTricks:Array.from({length:4},()=>({plays:[],winner:1}))}},
  ];
- assert.equal(Object.keys(reactionLines).length,24);
+ assert.equal(Object.keys(baseReactionLines).length,12);
  for(const c of cases){
   const before={...base,...c.before},after={...base,...c.after};const expected=reactionFor(before,after,c.actor,c.action);
   assert.ok(expected?.alternatives?.some(line=>line.clip===c.id),c.id);assert.equal(expected?.text,'');assert.deepEqual(expected?.clips,[]);

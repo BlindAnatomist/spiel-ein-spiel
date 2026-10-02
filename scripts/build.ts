@@ -11,6 +11,7 @@ import { baseReactionLines } from '../web/narrator-reactions.ts';
 import { extraReactionLines } from '../web/narrator-extra-reactions.ts';
 import { narratorExtraReactionManifest } from '../web/narrator-extra-reaction-manifest.ts';
 import { narrationAssets } from '../web/narrator-assets.ts';
+import { CHARACTER_LIBRARY_TARGET, ORIGINAL_NARRATOR_COUNT } from '../web/narrator-reaction-triggers.ts';
 import { wholeEventContract, acceptedAlternatives } from './narrator-whole-contract.ts';
 import { completeEventContract } from './narrator-complete-contract.ts';
 
@@ -37,12 +38,13 @@ const narratorAssetsReady = Object.keys(narratorManifest).length === 127
   && Object.entries(flavorContract).every(([id, text]) => narratorFlavorManifest[id]?.text === text)
   && Object.keys(narratorReactionManifest).length === 12
   && Object.entries(baseReactionLines).every(([id,line]) => narratorReactionManifest[id]?.text === line.text)
-  && Object.keys(narratorExtraReactionManifest).length === 12
+  && Object.keys(narratorExtraReactionManifest).length === CHARACTER_LIBRARY_TARGET
+  && Object.keys(extraReactionLines).length === CHARACTER_LIBRARY_TARGET
   && Object.entries(extraReactionLines).every(([id,line]) => narratorExtraReactionManifest[id]?.text === line.text)
-  && clips.length === 1977 && available.every(Boolean);
+  && clips.length === ORIGINAL_NARRATOR_COUNT + CHARACTER_LIBRARY_TARGET && available.every(Boolean);
 if (!narratorAssetsReady) {
   const restore = 'Restore all private voice packs and run the import scripts. See docs/narrator-preview/COMPLETE_NARRATION.md.';
-  if (process.env.CONTEXT === 'narrator-preview') throw new Error(`Complete narration requires all 1,977 runtime recordings. Partial catalogs cannot be published. ${restore}`);
+  if (process.env.CONTEXT === 'narrator-preview') throw new Error(`Complete narration requires all ${ORIGINAL_NARRATOR_COUNT + CHARACTER_LIBRARY_TARGET} runtime recordings (${CHARACTER_LIBRARY_TARGET} approved character additions). Partial catalogs cannot be published. ${restore}`);
   console.warn(`Private recordings are not in the code checkpoint. Peter option disabled in this build. ${restore}`);
 }
 

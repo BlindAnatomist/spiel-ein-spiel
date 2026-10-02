@@ -1,0 +1,228 @@
+{
+  "packId": "peter-euchre-library-batch06-20261002",
+  "model": "s2.1-pro-free",
+  "reference_id": "d75c270eaee14c8aa1e9e980cc37cf1b",
+  "temperature": 0.85,
+  "maxConcurrentRequests": 2,
+  "maxRequestsPerLine": 2,
+  "retryRule": "Only documented mechanical failure, not unheard subjective retakes",
+  "status": "Parent-approved",
+  "scripts": [
+    {
+      "id": "reaction.you.follow-suit.shirt-in",
+      "trigger": "reaction.you.follow-suit",
+      "context": "Human has publicly played a non-trump card matching the effective led suit. The narrator is a fictional spectator. No hidden cards, unplayed options, strategic intent, or future result are inferred.",
+      "family": "rule-resistance",
+      "text": "Same suit. Fine. But I'm not tuckin' my shirt in.",
+      "direction": "Grudging agreement, then defend the completely unnecessary clothing boundary as a matter of principle.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.you.follow-suit.jury-duty",
+      "trigger": "reaction.you.follow-suit",
+      "context": "Human has publicly played a non-trump card matching the effective led suit. The narrator is a fictional spectator. No hidden cards, unplayed options, strategic intent, or future result are inferred.",
+      "family": "civic-incompetence",
+      "text": "Same suit. Nice. You'd be great at jury duty. I got thrown out for tryin' to buy the gavel.",
+      "direction": "Recognize basic rule-following, then remember the courtroom incident as an ordinary shopping misunderstanding.",
+      "deliveryTag": "matter-of-fact"
+    },
+    {
+      "id": "reaction.you.follow-suit.brians-podcast",
+      "trigger": "reaction.you.follow-suit",
+      "context": "Human has publicly played a non-trump card matching the effective led suit. The narrator is a fictional spectator. No hidden cards, unplayed options, strategic intent, or future result are inferred.",
+      "family": "irrelevant-vindication",
+      "text": "Same suit! See, Brian? We don't need your goddamn podcast.",
+      "direction": "Bright recognition, then turn the ordinary match into an unwarranted victory over Brian.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.you.follow-suit.half-a-grill",
+      "trigger": "reaction.you.follow-suit",
+      "context": "Human has publicly played a non-trump card matching the effective led suit. The narrator is a fictional spectator. No hidden cards, unplayed options, strategic intent, or future result are inferred.",
+      "family": "instructional-disaster",
+      "text": "Same suit. Good. Last time I didn't follow instructions, I built half a grill and a pretty convincing place for a raccoon to die.",
+      "direction": "Start approvingly; recall the failed grill with the odd pride of a man who thinks the alternative use counts.",
+      "deliveryTag": "matter-of-fact"
+    },
+    {
+      "id": "reaction.val.follow-suit.real-fork",
+      "trigger": "reaction.val.follow-suit",
+      "context": "Val has publicly played a non-trump card matching the effective led suit. Praise and imagined social privileges express the fictional spectator’s affection, not strategic evaluation or a completed win.",
+      "family": "selective-appreciation",
+      "text": "Nice, Val. You're gettin' a real fork at my house.",
+      "direction": "Warm and quietly generous, as though this is a considerable upgrade.",
+      "deliveryTag": "pleased"
+    },
+    {
+      "id": "reaction.val.follow-suit.restaurant-scene",
+      "trigger": "reaction.val.follow-suit",
+      "context": "Val has publicly played a non-trump card matching the effective led suit. Praise and imagined social privileges express the fictional spectator’s affection, not strategic evaluation or a completed win.",
+      "family": "overcompensating-support",
+      "text": "Val, if you ever need somebody to make a scene at a restaurant, I'm your guy.",
+      "direction": "A sincere offer of friendship; be proud of the specific skill.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.val.follow-suit.shoes-off",
+      "trigger": "reaction.val.follow-suit",
+      "context": "Val has publicly played a non-trump card matching the effective led suit. Praise and imagined social privileges express the fictional spectator’s affection, not strategic evaluation or a completed win.",
+      "family": "compulsive-disruption",
+      "text": "Val, you're makin' this look respectable. I'm gonna have to take my shoes off.",
+      "direction": "Notice respectability as a problem, then matter-of-factly announce the remedy.",
+      "deliveryTag": "matter-of-fact"
+    },
+    {
+      "id": "reaction.val.follow-suit.follow-up-questions",
+      "trigger": "reaction.val.follow-suit",
+      "context": "Val has publicly played a non-trump card matching the effective led suit. Praise and imagined social privileges express the fictional spectator’s affection, not strategic evaluation or a completed win.",
+      "family": "undeserved-credit",
+      "text": "That's it, Val. Just like I taught you. Nobody ask either of us any follow-up questions.",
+      "direction": "Claim credit confidently; shut down scrutiny with hurried firmness, not a sheepish confession.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.opponent.follow-suit.microwaving-fish",
+      "trigger": "reaction.opponent.follow-suit",
+      "context": "An opposing seat has publicly played a non-trump card matching the effective led suit. The fictional spectator’s petty reaction does not allege cheating or an illegal move. Any imagined action is character banter, not an actual communication or app action.",
+      "family": "compliance-double-standard",
+      "text": "Yep, that's legal. So's microwavin' fish, ya prick.",
+      "direction": "Concede the legal play flatly; deliver the comparison with immediate personal disgust.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.follow-suit.shopping-carts",
+      "trigger": "reaction.opponent.follow-suit",
+      "context": "An opposing seat has publicly played a non-trump card matching the effective led suit. The fictional spectator’s petty reaction does not allege cheating or an illegal move. Any imagined action is character banter, not an actual communication or app action.",
+      "family": "mocking-conformity",
+      "text": "Same suit. Look at you, returnin' shopping carts and shit.",
+      "direction": "Treat ordinary civic consideration as an embarrassing character defect.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.follow-suit.already-dialed",
+      "trigger": "reaction.opponent.follow-suit",
+      "context": "An opposing seat has publicly played a non-trump card matching the effective led suit. The fictional spectator’s petty reaction does not allege cheating or an illegal move. Any imagined action is character banter, not an actual communication or app action.",
+      "family": "unused-tantrum",
+      "text": "Oh, you matched? Aw, crap. I already dialed nine-one-one.",
+      "direction": "Brief surprise, then regret having prematurely escalated such a tiny concern. No phone sound effects.",
+      "deliveryTag": "disappointed"
+    },
+    {
+      "id": "reaction.opponent.follow-suit.jerk-off-motion",
+      "trigger": "reaction.opponent.follow-suit",
+      "context": "An opposing seat has publicly played a non-trump card matching the effective led suit. The fictional spectator’s petty reaction does not allege cheating or an illegal move. Any imagined action is character banter, not an actual communication or app action.",
+      "family": "impotent-retaliation",
+      "text": "All right, same suit. I'm still doin' the jerk-off motion.",
+      "direction": "Accept the visible play while stubbornly maintaining the childish insult.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.you.trump.expensive-to-break",
+      "trigger": "reaction.you.trump",
+      "context": "Human has publicly played ordinary trump, excluding both bowers. The fictional spectator reacts to the public card; no current trick winner, future outcome, or hidden card is claimed. Family and physical anecdotes belong to the fictional narrator.",
+      "family": "physical-celebration",
+      "text": "Ah, hell yeah! Gimme somethin' expensive to break!",
+      "direction": "Sudden delighted surge; request the costly object eagerly, with no actual breaking sound.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you.trump.kids-soccer",
+      "trigger": "reaction.you.trump",
+      "context": "Human has publicly played ordinary trump, excluding both bowers. The fictional spectator reacts to the public card; no current trick winner, future outcome, or hidden card is claimed. Family and physical anecdotes belong to the fictional narrator.",
+      "family": "unrestrained-hype",
+      "text": "Trump! That's the kind of shit that gets me banned from watchin' kids' soccer.",
+      "direction": "Loud recognition, then pleased recognition of his own history of overenthusiastic spectating.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you.trump.be-a-father",
+      "trigger": "reaction.you.trump",
+      "context": "Human has publicly played ordinary trump, excluding both bowers. The fictional spectator reacts to the public card; no current trick winner, future outcome, or hidden card is claimed. Family and physical anecdotes belong to the fictional narrator.",
+      "family": "distorted-priorities",
+      "text": "Oh-ho-ho! That's more like it. I was about to go be a father.",
+      "direction": "Delighted to be reengaged; treat the near miss with parental responsibility as genuine relief.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you.trump.foam-finger",
+      "trigger": "reaction.you.trump",
+      "context": "Human has publicly played ordinary trump, excluding both bowers. The fictional spectator reacts to the public card; no current trick winner, future outcome, or hidden card is claimed. Family and physical anecdotes belong to the fictional narrator.",
+      "family": "unrestrained-hype",
+      "text": "Trump! Get me a foam finger. I wanna be an asshole people can see from space.",
+      "direction": "Eagerly escalate from spectator excitement to the ridiculous scale of his desired visibility.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.val.trump.emergency-pants",
+      "trigger": "reaction.val.trump",
+      "context": "Val has publicly played ordinary trump, excluding both bowers. The fictional spectator’s affection and fanciful promises do not claim a trick win, infer hidden information, or authorize any real-world action.",
+      "family": "manufactured-obligation",
+      "text": "Val! You're my emergency contact now. If they call, bring pants.",
+      "direction": "Enthusiastic appointment, then one entirely practical instruction delivered without explanation.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.val.trump.zoo-animal",
+      "trigger": "reaction.val.trump",
+      "context": "Val has publicly played ordinary trump, excluding both bowers. The fictional spectator’s affection and fanciful promises do not claim a trick win, infer hidden information, or authorize any real-world action.",
+      "family": "unauthorized-honors",
+      "text": "Holy crap, Val! I'm namin' a zoo animal after you. I'll just start callin' it Val until the sign guy gives up.",
+      "direction": "Make a grand affectionate promise, then confidently explain the stubborn homemade process as though it is official.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.val.trump.need-a-boat",
+      "trigger": "reaction.val.trump",
+      "context": "Val has publicly played ordinary trump, excluding both bowers. The fictional spectator’s affection and fanciful promises do not claim a trick win, infer hidden information, or authorize any real-world action.",
+      "family": "impulsive-bonding",
+      "text": "Val, you and me need a boat. We'll figure out the rest on the boat.",
+      "direction": "A sudden, heartfelt conviction about friendship; the second sentence dismisses every practical question.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.val.trump.park-ranger",
+      "trigger": "reaction.val.trump",
+      "context": "Val has publicly played ordinary trump, excluding both bowers. The fictional spectator’s affection and fanciful promises do not claim a trick win, infer hidden information, or authorize any real-world action.",
+      "family": "unfiltered-gratitude",
+      "text": "Val, I would lie to a park ranger for you.",
+      "direction": "Plain, sincere loyalty; do not explain why the ranger might be involved.",
+      "deliveryTag": "pleased"
+    },
+    {
+      "id": "reaction.table.left-bower.birthday-space",
+      "trigger": "reaction.table.left-bower",
+      "context": "Any seat has publicly played the left bower: the jack whose printed suit is the other suit of trump’s color and whose effective suit is trump. The reaction concerns that public rule, without identifying an unplayed card or predicting a trick winner. Personal and family anecdotes belong to the fictional spectator.",
+      "family": "distorted-priorities",
+      "text": "That jack's trump too? Fine. I'll just forget a kid's birthday to make room.",
+      "direction": "Take in the extra rule, then casually choose an awful thing to discard from memory.",
+      "deliveryTag": "matter-of-fact"
+    },
+    {
+      "id": "reaction.table.left-bower.hot-dog-sandwich",
+      "trigger": "reaction.table.left-bower",
+      "context": "Any seat has publicly played the left bower: the jack whose printed suit is the other suit of trump’s color and whose effective suit is trump. The reaction concerns that public rule, without identifying an unplayed card or predicting a trick winner. Personal and family anecdotes belong to the fictional spectator.",
+      "family": "rule-resistance",
+      "text": "Different suit, still trump? Fine. The hot dog's a sandwich.",
+      "direction": "Small baffled protest; abruptly surrender to another disputed classification and stop cleanly after sandwich.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.table.left-bower.teach-it-wrong",
+      "trigger": "reaction.table.left-bower",
+      "context": "Any seat has publicly played the left bower: the jack whose printed suit is the other suit of trump’s color and whose effective suit is trump. The reaction concerns that public rule, without identifying an unplayed card or predicting a trick winner. Personal and family anecdotes belong to the fictional spectator.",
+      "family": "confident-misinstruction",
+      "text": "Left bower. Got it. I can't wait to explain that wrong to somebody.",
+      "direction": "Receive the rule with breezy certainty; be genuinely eager to pass along a confidently mangled version.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.table.left-bower.thanksgiving-uncle",
+      "trigger": "reaction.table.left-bower",
+      "context": "Any seat has publicly played the left bower: the jack whose printed suit is the other suit of trump’s color and whose effective suit is trump. The reaction concerns that public rule, without identifying an unplayed card or predicting a trick winner. Personal and family anecdotes belong to the fictional spectator.",
+      "family": "family-table-tension",
+      "text": "The left bower. That's the card you explain to a drunk uncle three times before he ruins Thanksgiving.",
+      "direction": "Recognize an old family hazard with weary certainty; keep the escalation casual rather than ominous.",
+      "deliveryTag": "matter-of-fact"
+    }
+  ]
+}

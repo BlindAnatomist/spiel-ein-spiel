@@ -58,3 +58,24 @@ test('one shared public-event choice preserves canonical facts and defers old jo
  assert.deepEqual(prepared[0],{text:fact.text,clips:[],whole:fact.whole});assert.deepEqual((prepared[1] as NarrationMessage).alternatives,[b]);
  assert.equal(history.eligible(b),true,'planning does not consume unheard material before playback');
 });
+test('eligible final-game payoff precedes fresh hand jokes, with freshness within final results',()=>{
+ const final={clip:'game-result',text:'A completed game payoff.',family:'game-family',priority:3,eventPreference:'game-result' as const};
+ const freshFinal={clip:'fresh-game-result',text:'Another completed game payoff.',family:'other-game-family',priority:3,eventPreference:'game-result' as const};
+ const h=createNarratorFlavorHistory(()=>0),d=drive(h);d.game();h.used(final);d.event(100);d.finish(true);
+ for(let i=0;i<4;i++){d.game();d.finish(true);}d.game();
+ assert.equal(h.eligible(final),true);assert.equal(h.select([b,final])?.clip,final.clip);
+ assert.equal(h.select([b,final,freshFinal])?.clip,freshFinal.clip);
+});
+test('cooldown-ineligible game result falls back normally and shared event preparation keeps one quip',()=>{
+ const final={clip:'game-result',text:'A completed game payoff.',family:'game-family',priority:3,eventPreference:'game-result' as const};
+ const h=createNarratorFlavorHistory(()=>0),d=drive(h);d.game();h.used(final);d.event(100);d.finish();d.hand();d.event(10);
+ assert.equal(h.eligible(final),false);assert.equal(h.eligible(b),true);assert.equal(h.select([final,b])?.clip,b.clip);
+ const make=(history:NarratorFlavorHistory)=>createNarratorAudio(Object.fromEntries([a,b,final].map(line=>[line.clip,{id:line.clip,text:line.text,url:`audio/${line.clip}.mp3`,status:'ready',durationSeconds:1,sha256:'test',bytes:10}])),{enabled:true,flavorHistory:history});
+ const messages:NarrationMessage[]=[{text:'Val takes the trick.',clips:[],whole:'full.trick.val',character:a},{text:'',clips:[],optional:true,alternatives:[b,final]}];
+ const fresh=createNarratorFlavorHistory(()=>0),f=drive(fresh);f.game();
+ const prepared=make(fresh).prepareEvent!(messages) as NarrationMessage[];
+ assert.equal(prepared.flatMap(m=>m.alternatives??[]).length,1);assert.equal(prepared[1]!.alternatives![0]!.clip,final.clip);
+ assert.equal(prepared[0]!.whole,'full.trick.val');assert.equal(prepared[0]!.text,'Val takes the trick.');
+ const fallback=make(h).prepareEvent!(messages) as NarrationMessage[];
+ assert.equal(fallback.flatMap(m=>m.alternatives??[]).length,1);assert.equal(fallback[0]!.alternatives![0]!.clip,a.clip);
+});

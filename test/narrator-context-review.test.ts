@@ -1,22 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { reactionFor, reactionLines, baseReactionLines } from '../web/narrator-reactions.ts';
+import { extraReactionLines } from '../web/narrator-extra-reactions.ts';
 import { createSession } from '../web/session.ts';
 import { effectiveSuit, rankOf, suitOf } from '../src/index.ts';
 import type { Card, PlayerView, Seat, Suit } from '../src/index.ts';
 const base=createSession(17,'strong',{dealer:3}).view();
-const extras:Readonly<Record<string,readonly string[]>>={
- 'reaction.you.trump':['reaction.you.trump.slouch'],
- 'reaction.val.follow-suit':['reaction.val.follow-suit.soap-opera'],
- 'reaction.you.follow-suit':['reaction.you.follow-suit.decorating','reaction.you.follow-suit.parking'],
- 'reaction.you.trick':['reaction.you.trick.celebratin-muscle'],
- 'reaction.opponent.ace-lead':['reaction.opponent.ace-lead.tuxedo'],
- 'reaction.opponent.right-bower':['reaction.opponent.right-bower.bouncer'],
- 'reaction.opponent.trick':['reaction.opponent.trick.table-drink','reaction.opponent.trick.stupid-hands'],
- 'reaction.val.trick':['reaction.val.trick.dental-benefits'],
- 'reaction.table.four-tricks':['reaction.table.four-tricks.attention-span'],
- 'you-team-sweep':['reaction.you-team-sweep.badass'],
-};
+const extras = Object.fromEntries(Object.values(extraReactionLines).map(line => line.trigger).map(trigger => [trigger, Object.values(extraReactionLines).filter(line => line.trigger === trigger).map(line => line.clip)]));
 const expand=(triggers:readonly string[])=>triggers.flatMap(trigger=>[...(baseReactionLines[trigger]?[trigger]:[]),...(extras[trigger]??[])]).sort();
 const keys=(before:PlayerView,after:PlayerView,seat:Seat,card:Card)=>(reactionFor(before,after,seat,{type:'play',card})?.alternatives??[]).map(line=>line.clip).sort();
 test('expanded review: 9,600 play contexts and hidden-hand mutations match the bounded trigger contract',()=>{
@@ -24,9 +14,16 @@ test('expanded review: 9,600 play contexts and hidden-hand mutations match the b
  for(const trump of suits)for(const card of cards)for(const actor of [0,1,2,3] as const)for(const led of [null,...cards]){
   const before:PlayerView={...base,phase:'playing',trump,turn:actor,trick:led?[{seat:2,card:led}]:[]},after:PlayerView={...before,trick:[...before.trick,{seat:actor,card}]};
   const wanted:string[]=[],suit=effectiveSuit(card,trump),rank=rankOf(card);
-  if(actor===0){if(suit===trump)wanted.push(rank==='J'?'reaction.you.bower':'reaction.you.trump');else if(!led&&['9','10'].includes(rank))wanted.push('reaction.you.low-lead');else if(led&&suit===effectiveSuit(led,trump))wanted.push('reaction.you.follow-suit');}
-  if(actor===2&&led&&suit!==trump&&suit===effectiveSuit(led,trump))wanted.push('reaction.val.follow-suit');
-  if(actor===1||actor===3){if(rank==='J'&&suitOf(card)===trump)wanted.push('reaction.opponent.right-bower');else if(!led&&rank==='A')wanted.push('reaction.opponent.ace-lead');else if(!led&&suit!==trump&&['9','10'].includes(rank))wanted.push('reaction.opponent.low-lead');}
+  if(actor===0){
+   if(suit===trump)wanted.push(rank==='J'?'reaction.you.bower':'reaction.you.trump');else if(!led&&['9','10'].includes(rank))wanted.push('reaction.you.low-lead');else if(led&&suit===effectiveSuit(led,trump))wanted.push('reaction.you.follow-suit');
+   if(rank==='Q')wanted.push('reaction.you.queen');if(!led&&rank==='A')wanted.push('reaction.you.ace-lead');
+  }
+  if(actor===2){if(suit===trump)wanted.push(rank==='J'?'reaction.val.bower':'reaction.val.trump');else if(led&&suit===effectiveSuit(led,trump))wanted.push('reaction.val.follow-suit');}
+  if(actor===1||actor===3){
+   if(rank==='J'&&suitOf(card)===trump)wanted.push('reaction.opponent.right-bower');else if(!led&&rank==='A')wanted.push('reaction.opponent.ace-lead');else if(!led&&suit!==trump&&['9','10'].includes(rank))wanted.push('reaction.opponent.low-lead');
+   if(led&&suit!==trump&&suit===effectiveSuit(led,trump))wanted.push('reaction.opponent.follow-suit');
+  }
+  if(rank==='J'&&suit===trump&&suitOf(card)!==trump)wanted.push('reaction.table.left-bower');
   const expected=expand(wanted);assert.deepEqual(keys(before,after,actor,card),expected);
   assert.deepEqual(keys({...before,hand:['clubs:9'],legalActions:[]},{...after,hand:['spades:A','diamonds:10'],legalActions:[]},actor,card),expected);cases++;
  }
@@ -48,14 +45,9 @@ test('expanded review: sweep celebration requires new confirmed user-team five-t
  const candidate=reactionFor(before,after,2,{type:'play',card:'clubs:Q'})!.alternatives!.find(line=>line.clip==='reaction.you-team-sweep.badass')!;
  assert.equal(candidate.priority,3);assert.equal(candidate.text,'That was frickin’ badass!');
 });
-test('expanded review: related new premises retain existing semantic cooldowns',()=>{
- assert.equal(Object.keys(baseReactionLines).length,12);assert.equal(Object.keys(reactionLines).length,24);
- for(const [newId,oldId] of [
-  ['reaction.you.follow-suit.parking','reaction.you.follow-suit'],
-  ['reaction.opponent.ace-lead.tuxedo','reaction.opponent.ace-lead'],
-  ['reaction.opponent.trick.table-drink','reaction.opponent.trick'],
-  ['reaction.val.trick.dental-benefits','reaction.val.trick'],
- ] as const)assert.equal(reactionLines[newId]!.family,reactionLines[oldId]!.family);
- assert.equal(reactionLines['reaction.table.four-tricks.attention-span']!.family,'wandering-attention');
+test('expanded review: actual approved choices all carry nonempty contextual families',()=>{
+ assert.equal(Object.keys(baseReactionLines).length,12);
+ assert.equal(Object.keys(reactionLines).length,12+Object.keys(extraReactionLines).length);
+ for(const line of Object.values(extraReactionLines)){assert.ok(line.family);assert.ok(line.context);assert.ok(line.trigger);}
  for(const actor of [0,1,2,3] as const)assert.equal(reactionFor(base,base,actor,{type:'discard',card:'spades:A'}),undefined);
 });

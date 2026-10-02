@@ -1,0 +1,228 @@
+{
+  "packId": "peter-euchre-library-batch04-20261002",
+  "model": "s2.1-pro-free",
+  "reference_id": "d75c270eaee14c8aa1e9e980cc37cf1b",
+  "temperature": 0.85,
+  "maxConcurrentRequests": 2,
+  "maxRequestsPerLine": 2,
+  "retryRule": "Only documented mechanical failure, not unheard subjective retakes",
+  "status": "Parent-approved",
+  "scripts": [
+    {
+      "id": "reaction.you-team.euchred.already-smug",
+      "trigger": "reaction.you-team.euchred",
+      "context": "Newly confirmed public hand result with reason=euchred, result.team=1, and public caller seat0 or2. Human/Val called trump and were set; opponents receive the points. result.team is the scoring team, not the caller. Never infer a game loss from a hand result.",
+      "family": "premature-celebration",
+      "text": "Aw, crap. I was already bein' smug about that.",
+      "direction": "Deflate mid-gloat; be honestly annoyed at the wasted smugness.",
+      "deliveryTag": "disappointed"
+    },
+    {
+      "id": "reaction.you-team.euchred.having-a-face",
+      "trigger": "reaction.you-team.euchred",
+      "context": "Newly confirmed public hand result with reason=euchred, result.team=1, and public caller seat0 or2. Human/Val called trump and were set; opponents receive the points. result.team is the scoring team, not the caller. Never infer a game loss from a hand result. The spectator describes his own embarrassment; this does not ask the user to look at the screen.",
+      "family": "embarrassed-exposure",
+      "text": "Nobody look at me. I hate havin' a face right now.",
+      "direction": "Immediate embarrassed retreat, then sincere resentment toward his own face.",
+      "deliveryTag": "embarrassed"
+    },
+    {
+      "id": "reaction.you-team.euchred.vals-fault",
+      "trigger": "reaction.you-team.euchred",
+      "context": "Newly confirmed public hand result with reason=euchred, result.team=1, and public caller seat0 or2. Human/Val called trump and were set; opponents receive the points. result.team is the scoring team, not the caller. Never infer a game loss from a hand result. The narrator invents a transparently baseless excuse; no actual mistake or private intention is asserted.",
+      "family": "outsourced-blame",
+      "text": "Aw, crap. Val, gimme a second. I'm tryin' to remember why this is your fault.",
+      "direction": "Deflated opening, then earnestly rummage for a way to blame the partner. Do not sound like a real accusation.",
+      "deliveryTag": "concerned"
+    },
+    {
+      "id": "reaction.you-team.euchred.buyin-groceries",
+      "trigger": "reaction.you-team.euchred",
+      "context": "Newly confirmed public hand result with reason=euchred, result.team=1, and public caller seat0 or2. Human/Val called trump and were set; opponents receive the points. result.team is the scoring team, not the caller. Never infer a game loss from a hand result. Lois and the cover story are fictional character banter, not a real communication request.",
+      "family": "domestic-cover-story",
+      "text": "We got euchred? Val, if Lois asks, we were buyin' groceries.",
+      "direction": "Take in the result, then urgently recruit Val into a transparently stupid cover story.",
+      "deliveryTag": "concerned"
+    },
+    {
+      "id": "reaction.you-team.euchres-opponents.like-rule",
+      "trigger": "reaction.you-team.euchres-opponents",
+      "context": "Newly confirmed public hand result with reason=euchred, result.team=0, and public caller seat1 or3. Opponents called trump and were set; human/Val receive the points. result.team is the scoring team, not the caller. Never infer a game victory from a hand result.",
+      "family": "selective-fairness",
+      "text": "Ha! I like this rule now!",
+      "direction": "Delighted conversion. Stop on now.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you-team.euchres-opponents.you-guys-are-sweet",
+      "trigger": "reaction.you-team.euchres-opponents",
+      "context": "Newly confirmed public hand result with reason=euchred, result.team=0, and public caller seat1 or3. Opponents called trump and were set; human/Val receive the points. result.team is the scoring team, not the caller. Never infer a game victory from a hand result.",
+      "family": "accidental-benefactors",
+      "text": "You picked trump and we got the points? Aw, you guys are sweet.",
+      "direction": "Pleased surprise, then absurdly sincere gratitude toward the opponents.",
+      "deliveryTag": "amused"
+    },
+    {
+      "id": "reaction.you-team.euchres-opponents.beautiful-dumbasses",
+      "trigger": "reaction.you-team.euchres-opponents",
+      "context": "Newly confirmed public hand result with reason=euchred, result.team=0, and public caller seat1 or3. Opponents called trump and were set; human/Val receive the points. result.team is the scoring team, not the caller. Never infer a game victory from a hand result.",
+      "family": "malicious-praise",
+      "text": "You called it! You beautiful dumbasses!",
+      "direction": "Marvel at the opponents having volunteered for their own embarrassment.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you-team.euchres-opponents.get-comfortable",
+      "trigger": "reaction.you-team.euchres-opponents",
+      "context": "Newly confirmed public hand result with reason=euchred, result.team=0, and public caller seat1 or3. Opponents called trump and were set; human/Val receive the points. result.team is the scoring team, not the caller. Never infer a game victory from a hand result.",
+      "family": "savoring-gloat",
+      "text": "Ha! Lemme get comfortable. I wanna enjoy you bein' wrong.",
+      "direction": "First laugh, then settle into leisurely, selfish pleasure.",
+      "deliveryTag": "smug"
+    },
+    {
+      "id": "reaction.val.alone.big-balls",
+      "trigger": "reaction.val.alone",
+      "context": "Newly accepted public order-up or round-two call by seat2 with action.alone=true, after.caller=2 and after.alone=true. Val publicly declares alone; human partner sits out. Narrator remains a spectator; no private hand or outcome is inferred. The crude physical image is an absurd metaphor for a bold public declaration, not a claim about Val's body or hand strength.",
+      "family": "misplaced-decency",
+      "text": "All right, Val. Big balls. Keep 'em off the table.",
+      "direction": "Respectful recognition, followed by one mundane house rule. No elaboration.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.val.alone.home-depot",
+      "trigger": "reaction.val.alone",
+      "context": "Newly accepted public order-up or round-two call by seat2 with action.alone=true, after.caller=2 and after.alone=true. Val publicly declares alone; human partner sits out. Narrator remains a spectator; no private hand or outcome is inferred.",
+      "family": "solo-drama",
+      "text": "Alone? Val, I won't even go to Home Depot without an adult.",
+      "direction": "Receive the declaration, then state the embarrassing comparison with complete sincerity.",
+      "deliveryTag": "concerned"
+    },
+    {
+      "id": "reaction.val.alone.answer-my-calls",
+      "trigger": "reaction.val.alone",
+      "context": "Newly accepted public order-up or round-two call by seat2 with action.alone=true, after.caller=2 and after.alone=true. Val publicly declares alone; human partner sits out. Narrator remains a spectator; no private hand or outcome is inferred.",
+      "family": "fear-of-abandonment",
+      "text": "Val, you better not get famous and stop answerin' my calls.",
+      "direction": "Warmly possessive, with a worried edge. Fame remains hypothetical.",
+      "deliveryTag": "concerned"
+    },
+    {
+      "id": "reaction.val.alone.shut-up",
+      "trigger": "reaction.val.alone",
+      "context": "Newly accepted public order-up or round-two call by seat2 with action.alone=true, after.caller=2 and after.alone=true. Val publicly declares alone; human partner sits out. Narrator remains a spectator; no private hand or outcome is inferred. The narrator is a spectator, not the partner sitting out.",
+      "family": "unrestrained-hype",
+      "text": "Alone? All right, Val. I'm gonna shut up for... okay, that was enough.",
+      "direction": "Supportively promise quiet, pause briefly, then decide that was a heroic amount of restraint.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.you-team.game-win.everybody-like-me",
+      "trigger": "reaction.you-team.game-win",
+      "context": "Newly confirmed public game winner transition from null to team0, with after.phase=game-over. The entire game, not merely a hand, has ended with human/Val winning.",
+      "family": "manufactured-obligation",
+      "text": "We won! Now everybody has to like me!",
+      "direction": "Childlike joy and total belief in the entitlement.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you-team.game-win.buyin-a-cape",
+      "trigger": "reaction.you-team.game-win",
+      "context": "Newly confirmed public game winner transition from null to team0, with after.phase=game-over. The entire game, not merely a hand, has ended with human/Val winning. The cape is fictional boastful banter, not a shopping instruction.",
+      "family": "main-character",
+      "text": "We won! I'm buyin' a cape.",
+      "direction": "Joyful, abrupt certainty that his next step is a cape. Finish there.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.you-team.game-win.family-dinner",
+      "trigger": "reaction.you-team.game-win",
+      "context": "Newly confirmed public game winner transition from null to team0, with after.phase=game-over. The entire game, not merely a hand, has ended with human/Val winning. The dinner and relatives belong to the fictional narrator, not the user.",
+      "family": "savoring-gloat",
+      "text": "Yes! I am gonna be such a dick at the next family dinner.",
+      "direction": "Savor the prospect of inflicting this success on unrelated relatives.",
+      "deliveryTag": "smug"
+    },
+    {
+      "id": "reaction.you-team.game-win.brian-anyway",
+      "trigger": "reaction.you-team.game-win",
+      "context": "Newly confirmed public game winner transition from null to team0, with after.phase=game-over. The entire game, not merely a hand, has ended with human/Val winning. Brian is an absent fictional character; no claim about anyone actually in the room.",
+      "family": "misdirected-taunt",
+      "text": "We won! Ha! Suck it, Brian. You're not even here and you can suck it.",
+      "direction": "Overflowing joy spills into an unnecessary grudge against absent fictional Brian.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.opponent.game-win.congratulations",
+      "trigger": "reaction.opponent.game-win",
+      "context": "Newly confirmed public game winner transition from null to team1, with after.phase=game-over. The entire game, not merely a hand, has ended with opponents winning.",
+      "family": "reluctant-applause",
+      "text": "Well, congratulations, ya bunch of pricks.",
+      "direction": "A stiff attempt at good sportsmanship that arrives already spoiled.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.game-win.learned-nothing",
+      "trigger": "reaction.opponent.game-win",
+      "context": "Newly confirmed public game winner transition from null to team1, with after.phase=game-over. The entire game, not merely a hand, has ended with opponents winning.",
+      "family": "rejected-growth",
+      "text": "Well, I learned nothin', and I'm still mad.",
+      "direction": "Flat, stubborn and unembarrassed.",
+      "deliveryTag": "matter-of-fact"
+    },
+    {
+      "id": "reaction.opponent.game-win.takin-somethin",
+      "trigger": "reaction.opponent.game-win",
+      "context": "Newly confirmed public game winner transition from null to team1, with after.phase=game-over. The entire game, not merely a hand, has ended with opponents winning. A fictional childish tantrum by the spectator; no instruction to take an actual object or change game data.",
+      "family": "impotent-retaliation",
+      "text": "Fine. You win. I'm takin' my ball. I don't have a ball. I'm takin' somethin'.",
+      "direction": "Start with an established tantrum, discover the missing prop, and stubbornly keep the tantrum.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.game-win.bitch-in-car",
+      "trigger": "reaction.opponent.game-win",
+      "context": "Newly confirmed public game winner transition from null to team1, with after.phase=game-over. The entire game, not merely a hand, has ended with opponents winning. The drive is fictional narrator background, not a claim about the user's plans.",
+      "family": "cope-with-loss",
+      "text": "They won? Oh, I am gonna be such a bitch in the car.",
+      "direction": "Small incredulous beat, then openly look forward to sulking.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.you-team-sweep.we-are-assholes",
+      "trigger": "you-team-sweep",
+      "context": "Newly confirmed hand result: team0 march or loner-march, exactly five completed tricks, all winners seats0/2. Never an ordinary make, four tricks or opponent sweep.",
+      "family": "admiring-obnoxiousness",
+      "text": "Five outta five. Holy crap, we're assholes!",
+      "direction": "Amazed delight; assholes is an affectionate celebration of the complete sweep.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you-team-sweep.cigarette",
+      "trigger": "you-team-sweep",
+      "context": "Newly confirmed hand result: team0 march or loner-march, exactly five completed tricks, all winners seats0/2. Never an ordinary make, four tricks or opponent sweep.",
+      "family": "inappropriate-admiration",
+      "text": "All five! Oh, I need a cigarette.",
+      "direction": "Burst of triumph followed by a breathy, satisfied realization.",
+      "deliveryTag": "pleased"
+    },
+    {
+      "id": "reaction.you-team-sweep.sympathy-trick",
+      "trigger": "you-team-sweep",
+      "context": "Newly confirmed hand result: team0 march or loner-march, exactly five completed tricks, all winners seats0/2. Never an ordinary make, four tricks or opponent sweep. Sympathy trick is a rhetorical description of the zero tricks won by opponents, not a claim about deliberate strategy.",
+      "family": "admiring-obnoxiousness",
+      "text": "All five! Goddamn, you didn't even leave 'em a sympathy trick.",
+      "direction": "Amazed admiration at the completed clean sweep, with no pity in the delivery.",
+      "deliveryTag": "amused"
+    },
+    {
+      "id": "reaction.you-team-sweep.self-high-five",
+      "trigger": "you-team-sweep",
+      "context": "Newly confirmed hand result: team0 march or loner-march, exactly five completed tricks, all winners seats0/2. Never an ordinary make, four tricks or opponent sweep. The high-five is an invented action by the fictional spectator, not the user or UI.",
+      "family": "physical-celebration",
+      "text": "A clean sweep! I just tried to high-five my other hand. It sucked.",
+      "direction": "Celebrate, try the foolish self-celebration in the imagination, and report its disappointing result plainly.",
+      "deliveryTag": "excited"
+    }
+  ]
+}

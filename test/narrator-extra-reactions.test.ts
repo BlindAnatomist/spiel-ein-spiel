@@ -20,7 +20,7 @@ test('new Val context follows only the public non-trump led suit',()=>{
  const before:PlayerView={...base,trick:[{seat:1,card:'clubs:9'}]};
  for(const card of ['clubs:Q','spades:Q','hearts:Q','diamonds:J'] as const){
   const get=(v:PlayerView)=>reactionFor(v,{...v,trick:[...v.trick,{seat:2,card}]},2,{type:'play',card})?.alternatives?.map(line=>line.clip)??[];
-  assert.equal(get(before).includes('reaction.val.follow-suit.soap-opera'),card==='clubs:Q');
+  assert.equal(get(before).includes('reaction.val.follow-suit.finish-it'),card==='clubs:Q');
   assert.deepEqual(get({...before,hand:[],legalActions:[]}),get(before));
  }
 });

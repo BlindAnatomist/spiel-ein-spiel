@@ -1,0 +1,228 @@
+{
+  "packId": "peter-euchre-library-batch03-20261002",
+  "model": "s2.1-pro-free",
+  "reference_id": "d75c270eaee14c8aa1e9e980cc37cf1b",
+  "temperature": 0.85,
+  "maxConcurrentRequests": 2,
+  "maxRequestsPerLine": 2,
+  "retryRule": "Only documented mechanical failure, not unheard subjective retakes",
+  "status": "Parent-approved",
+  "scripts": [
+    {
+      "id": "reaction.val.trump.make-it-fun",
+      "trigger": "reaction.val.trump",
+      "context": "NEW PUBLIC PREDICATE: accepted play by seat2 whose actual revealed effective suit equals current public trump, excluding both bowers. No private hand, alternate legal choices, intention or future winner is read.",
+      "family": "unfiltered-gratitude",
+      "text": "Yeah, Val. You make this shit fun.",
+      "direction": "Open, genuinely pleased; let the last word land without a wink.",
+      "deliveryTag": "pleased"
+    },
+    {
+      "id": "reaction.val.trump.kinda-hot",
+      "trigger": "reaction.val.trump",
+      "context": "NEW PUBLIC PREDICATE: accepted play by seat2 whose actual revealed effective suit equals current public trump, excluding both bowers. No private hand, alternate legal choices, intention or future winner is read.",
+      "family": "inappropriate-admiration",
+      "text": "Val, why the hell was that kinda hot?",
+      "direction": "Surprised and a little puzzled by his own reaction; do not leer or overplay it.",
+      "deliveryTag": "surprised"
+    },
+    {
+      "id": "reaction.val.trump.your-fault",
+      "trigger": "reaction.val.trump",
+      "context": "NEW PUBLIC PREDICATE: accepted play by seat2 whose actual revealed effective suit equals current public trump, excluding both bowers. No private hand, alternate legal choices, intention or future winner is read.",
+      "family": "outsourced-blame",
+      "text": "Eat shit, everybody! Val started it.",
+      "direction": "A delighted rude outburst, then a quick shameless assignment of blame. No explanatory tail.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.val.bower.less-of-a-dick",
+      "trigger": "reaction.val.bower",
+      "context": "NEW PUBLIC PREDICATE: accepted play by seat2 of a jack whose effective suit is current public trump, identifying either bower solely from the played card and trump. No held card or outcome is inferred.",
+      "family": "reluctant-self-improvement",
+      "text": "Val, you make me wanna be less of a dick.",
+      "direction": "Warm and almost thoughtful, without adding a sarcastic finish.",
+      "deliveryTag": "pleased"
+    },
+    {
+      "id": "reaction.val.bower.trust-with-meg",
+      "trigger": "reaction.val.bower",
+      "context": "NEW PUBLIC PREDICATE: accepted play by seat2 of a jack whose effective suit is current public trump, identifying either bower solely from the played card and trump. No held card or outcome is inferred.",
+      "family": "distorted-priorities",
+      "text": "Val, I trust you with Meg. Work your way up.",
+      "direction": "Make the first sentence sound generous; treat the last instruction as perfectly reasonable.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.table.left-bower.naked-problem",
+      "trigger": "reaction.table.left-bower",
+      "context": "NEW PUBLIC PREDICATE: any seat legally plays a jack with a printed suit different from current public trump but effective suit equal to trump. This identifies the publicly revealed left bower; it never inspects unplayed cards or treats the right bower as left.",
+      "family": "self-declared-exception",
+      "text": "He changes suits and he's a genius. I get naked and I'm the problem.",
+      "direction": "Resentful comparison, with real conviction that his own behavior should receive the same approval.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.table.left-bower.double-life",
+      "trigger": "reaction.table.left-bower",
+      "context": "NEW PUBLIC PREDICATE: any seat legally plays a jack with a printed suit different from current public trump but effective suit equal to trump. This identifies the publicly revealed left bower; it never inspects unplayed cards or treats the right bower as left.",
+      "family": "self-declared-exception",
+      "text": "That jack's livin' a double life. I want in.",
+      "direction": "First a conspiratorial discovery, then a quick, eager request; no sinister flourish.",
+      "deliveryTag": "interested"
+    },
+    {
+      "id": "reaction.opponent.alone.sounds-like-lois",
+      "trigger": "reaction.opponent.alone",
+      "context": "NEW PUBLIC PREDICATE: seat1 or3 makes an accepted public order-up or round-two call with action.alone true. The decision itself is public; no hidden strength or future success is inferred.",
+      "family": "solo-drama",
+      "text": "Fine, do it yourself. Christ, you sound like Lois.",
+      "direction": "Give up the argument immediately; let the familiar name fall out as a mutter.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.alone.need-this",
+      "trigger": "reaction.opponent.alone",
+      "context": "NEW PUBLIC PREDICATE: seat1 or3 makes an accepted public order-up or round-two call with action.alone true. The decision itself is public; no hidden strength or future success is inferred.",
+      "family": "malicious-hope",
+      "text": "Alone? Oh, please screw this up. I need this.",
+      "direction": "Brief interest, then hopeful pleading; make the last beat smaller and sincerely needy.",
+      "deliveryTag": "hopeful"
+    },
+    {
+      "id": "reaction.table.turned-down.part-of-something",
+      "trigger": "reaction.table.turned-down",
+      "context": "NEW SHARED PUBLIC PREDICATE: an accepted pass changes public upCardStatus from face-up to turned-down, with four round1 pass bids from distinct seats in the current hand. The historical upCard identity remains public but does not establish its current location. Never trigger on partial passes, round2 passes, replay, review or an abandoned hand.",
+      "family": "herd-belonging",
+      "text": "All right. Screw that card. I wanna be part of somethin'.",
+      "direction": "A decisive attempt to join in, then an unexpectedly earnest admission; no long pause.",
+      "deliveryTag": "matter-of-fact"
+    },
+    {
+      "id": "reaction.you.trick.be-obnoxious",
+      "trigger": "reaction.you.trick",
+      "context": "A newly completed public trick was won by the human at seat0. Only the completed trick is established; no hand or game result is inferred.",
+      "family": "contempt-for-humility",
+      "text": "Yes! Be obnoxious. You earned it.",
+      "direction": "A short happy burst followed by warm, terrible encouragement.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.val.trick.take-back-one",
+      "trigger": "reaction.val.trick",
+      "context": "A newly completed public trick was won by Val at seat2. Only the completed trick is established; no hand or game result is inferred.",
+      "family": "conditional-grudge",
+      "text": "Val, I take back one bad thing I said about you.",
+      "direction": "Appreciative, matter-of-fact and unembarrassed by the quota; do not add a knowing laugh.",
+      "deliveryTag": "pleased"
+    },
+    {
+      "id": "reaction.you.ace-lead.hello",
+      "trigger": "reaction.you.ace-lead",
+      "context": "PROPOSED PUBLIC PREDICATE: human leads an ace, read solely from the actual public played card and empty prior trick. No claim that it wins.",
+      "family": "aggressive-greeting",
+      "text": "An ace! That's a hell of a way to say hello.",
+      "direction": "Genuinely delighted at the entrance; no extra tail.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you.alone.fitted-sheet",
+      "trigger": "reaction.you.alone",
+      "context": "Human has publicly called or ordered alone. The sheet/Lois story is original fictional character background, not anything about the user or a prediction of the hand.",
+      "family": "solo-drama",
+      "text": "Alone? I tried that with a fitted sheet. Lois had to cut me out.",
+      "direction": "Receive the decision, recall the mundane disaster with complete sincerity.",
+      "deliveryTag": "matter-of-fact"
+    },
+    {
+      "id": "reaction.you.low-lead.with-us",
+      "trigger": "reaction.you.low-lead",
+      "context": "Human publicly leads a non-trump nine or ten. The card is personified; no winning prediction or unplayed alternative is described. The spoken address explicitly names the card so it cannot be mistaken for an insult directed at the human.",
+      "family": "ragtag-adoption",
+      "text": "Hey, little card. You're with us, ya little shit.",
+      "direction": "Address the little card fondly and directly, not the human player; the insult is affectionate.",
+      "deliveryTag": "amused"
+    },
+    {
+      "id": "reaction.you.bower.nepotism",
+      "trigger": "reaction.you.bower",
+      "context": "Human publicly plays either bower. Nepotism is a fictional metaphor for the jack’s special game rank/rule, not a claim of cheating.",
+      "family": "selective-fairness",
+      "text": "Ha! Nepotism finally works for us.",
+      "direction": "Delighted discovery of an unfair principle he suddenly likes.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you.bower.god-complex",
+      "trigger": "reaction.you.bower",
+      "context": "Human publicly plays either bower. The card is personified; no mental-health claim about any person or future result is made.",
+      "family": "admiring-obnoxiousness",
+      "text": "Oh, that's a jack with a god complex. I love him.",
+      "direction": "Recognize the excessive ego, then offer sincere affection.",
+      "deliveryTag": "amused"
+    },
+    {
+      "id": "reaction.you.trick.obituary",
+      "trigger": "reaction.you.trick",
+      "context": "Human won a newly completed public trick. The obituary is the fictional character’s absurd legacy joke, not a real instruction or a claim of game victory.",
+      "family": "distorted-priorities",
+      "text": "Yes! Somebody put that in my obituary. Near the top.",
+      "direction": "Immediate triumph, then practical insistence on prominence.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you.trick.compliment",
+      "trigger": "reaction.you.trick",
+      "context": "Human won a completed public trick. This is a rhetorical taunt, not an inference about an actual opponent’s private thoughts or an app interaction request.",
+      "family": "malicious-praise",
+      "text": "Ha! Say something nice. I wanna hear it hurt.",
+      "direction": "Gloat, then savor the imagined reluctant compliment.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.opponent.low-lead.adorable",
+      "trigger": "reaction.opponent.low-lead",
+      "context": "Either opponent publicly leads a non-trump nine or ten. The rank is personified as small; no strategic judgment or winning prediction.",
+      "family": "disarmed-irritation",
+      "text": "Oh, that's adorable. I can't even get mad at that little bastard.",
+      "direction": "Unexpected warmth mixed with mild frustration at being charmed.",
+      "deliveryTag": "amused"
+    },
+    {
+      "id": "reaction.opponent.low-lead.not-a-narc",
+      "trigger": "reaction.opponent.low-lead",
+      "context": "Either opponent publicly leads a non-trump nine or ten. This is impossible card personification; no actual child or player age is described.",
+      "family": "bad-influence",
+      "text": "Aww, little guy. You can say 'shit' around me. I'm not a narc.",
+      "direction": "Friendly, conspiratorial encouragement addressed to the card.",
+      "deliveryTag": "amused"
+    },
+    {
+      "id": "reaction.opponent.ace-lead.invented-it",
+      "trigger": "reaction.opponent.ace-lead",
+      "context": "Either opponent publicly leads an ace. The instruction is character banter, not a claim about their actual intent, skill, or future success.",
+      "family": "main-character",
+      "text": "Oh, an ace. Don't act like you invented it.",
+      "direction": "Dry, unfair dismissal; finish after the rebuke.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.table.four-tricks.piss",
+      "trigger": "reaction.table.four-tricks",
+      "context": "Exactly four public tricks are complete and the hand remains playing. One trick remains. The bodily need belongs to the fictional narrator.",
+      "family": "badly-timed-bathroom",
+      "text": "One more? Great. I gotta take a piss.",
+      "direction": "Relieved and blunt; no explanatory follow-up.",
+      "deliveryTag": "matter-of-fact"
+    },
+    {
+      "id": "reaction.table.turned-down.spite",
+      "trigger": "reaction.table.turned-down",
+      "context": "NEW SHARED PUBLIC PREDICATE: an accepted pass changes public upCardStatus from face-up to turned-down, with four round1 pass bids from distinct seats in the current hand. The historical upCard identity remains public but does not establish its current location. Never trigger on partial passes, round2 passes, replay, review or an abandoned hand.",
+      "family": "contrarian-loyalty",
+      "text": "Everybody passed? Oh, screw you guys. I like that card.",
+      "direction": "Notice the unanimity, then deliberately choose the opposite side.",
+      "deliveryTag": "annoyed"
+    }
+  ]
+}

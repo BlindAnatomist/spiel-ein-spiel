@@ -17,6 +17,8 @@ export interface NarrationAlternative {
   readonly family?: string;
   readonly context?: string;
   readonly priority?: number;
+  /** A final-game payoff wins only among already cooldown-eligible candidates. */
+  readonly eventPreference?: 'game-result';
 }
 export interface NarrationClip {
   readonly id: string;

@@ -2,6 +2,9 @@
 
 A repository for accessible game experiments. The first active project is a VoiceOver-first four-player Euchre game.
 
+For repository work, start with [AGENTS.md](AGENTS.md) for source identity,
+the relevant contracts, verification and publication boundaries.
+
 ## Current project: Euchre
 
 The initial table is:
@@ -109,5 +112,7 @@ backend, or cloud database is needed. `npm run build` produces the portable
 static `dist/` directory for any HTTPS static host.
 
 See `docs/INTERFACE_CHECKPOINT_3.md` for architecture, tests, review findings,
-and the short real-device VoiceOver acceptance procedure. Automated DOM tests do
-not establish iPhone VoiceOver acceptance; that device check remains outstanding.
+and the short real-device VoiceOver acceptance procedure. Its acceptance notes
+describe that historical checkpoint; use the exact revision and later acceptance
+evidence for the current task. Automated DOM tests alone do not establish iPhone
+VoiceOver acceptance.

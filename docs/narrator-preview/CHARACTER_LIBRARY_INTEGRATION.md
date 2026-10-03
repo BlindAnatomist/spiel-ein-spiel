@@ -1,8 +1,8 @@
 # Character library integration checkpoint
 
 October 3, 2026. This source checkpoint includes 168 approved contextual scripts in
-seven batches of 24. Runtime metadata currently includes 96 new recordings, for
-2,061 total recording references. The target is 2,133 runtime recordings.
+seven batches of 24. Runtime metadata currently includes 120 new recordings, for
+2,085 total recording references. The target is 2,133 runtime recordings.
 The incomplete catalog remains publication-blocked.
 
 ## Implemented behavior
@@ -66,5 +66,5 @@ certify listening, spoken wording, pronunciation, likeness or device behavior.
 Cross-pack raw/master hashes and browser blob identities must be unique. Every
 input is validated before writes; new files use the validated in-memory bytes and
 exclusive creation, while matching existing audio files are left untouched.
-The 168-addition strict preview build guard is unchanged. The local 96-addition
+The 168-addition strict preview build guard is unchanged. The local 120-addition
 catalog is preparation only, not a release or deployment.

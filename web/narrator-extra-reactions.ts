@@ -777,5 +777,197 @@ export const extraReactionLines: Readonly<Record<string, NarrationAlternative & 
     "context": "table",
     "priority": 3,
     "trigger": "you-team-sweep"
+  },
+  "reaction.you.alone.slow-clap": {
+    "clip": "reaction.you.alone.slow-clap",
+    "text": "Just you? Oh, man. I know how to do the slow clap, but I don't know when.",
+    "family": "misapplied-ceremony",
+    "context": "you",
+    "priority": 2,
+    "trigger": "reaction.you.alone"
+  },
+  "reaction.you.alone.entire-ham": {
+    "clip": "reaction.you.alone.entire-ham",
+    "text": "Alone? I tried eatin' an entire ham alone. Woke up with a priest next to me.",
+    "family": "solo-drama",
+    "context": "you",
+    "priority": 2,
+    "trigger": "reaction.you.alone"
+  },
+  "reaction.you.alone.my-moment": {
+    "clip": "reaction.you.alone.my-moment",
+    "text": "All right. This is your moment. Mine involves a sandwich, but yours looks good too.",
+    "family": "distorted-priorities",
+    "context": "you",
+    "priority": 2,
+    "trigger": "reaction.you.alone"
+  },
+  "reaction.opponent.alone.little-sash": {
+    "clip": "reaction.opponent.alone.little-sash",
+    "text": "Alone? Do you get a little sash, or are you a pain in the ass for free?",
+    "family": "main-character",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.alone"
+  },
+  "reaction.opponent.alone.still-boo": {
+    "clip": "reaction.opponent.alone.still-boo",
+    "text": "You're goin' alone? Okay. I'm gonna practice bein' supportive. Boo. Nope. Still boo.",
+    "family": "finite-courtesy",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.alone"
+  },
+  "reaction.opponent.alone.your-movie": {
+    "clip": "reaction.opponent.alone.your-movie",
+    "text": "Alone? Oh, this is your movie now? Fine. I'm talkin' through it.",
+    "family": "main-character",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.alone"
+  },
+  "reaction.you.low-lead.kings-are-weird": {
+    "clip": "reaction.you.low-lead.kings-are-weird",
+    "text": "Okay, little card. Don't make eye contact with the kings. They're weird about that.",
+    "family": "ragtag-adoption",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.low-lead"
+  },
+  "reaction.you.low-lead.explain-to-dog": {
+    "clip": "reaction.you.low-lead.explain-to-dog",
+    "text": "Low card. Ah, finally, somethin' I can explain to a dog.",
+    "family": "accidental-adult",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.low-lead"
+  },
+  "reaction.opponent.low-lead.put-air-back": {
+    "clip": "reaction.opponent.low-lead.put-air-back",
+    "text": "A low card? I was all ready to gasp. Now I gotta put the air back.",
+    "family": "unused-tantrum",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.low-lead"
+  },
+  "reaction.opponent.low-lead.erection": {
+    "clip": "reaction.opponent.low-lead.erection",
+    "text": "Well, that took the erection right outta the room.",
+    "family": "inappropriate-admiration",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.low-lead"
+  },
+  "reaction.you.ace-lead.revolving-door": {
+    "clip": "reaction.you.ace-lead.revolving-door",
+    "text": "An ace! I like an entrance. I got stuck in a revolving door once and still took a bow.",
+    "family": "main-character",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.ace-lead"
+  },
+  "reaction.you.ace-lead.cocky": {
+    "clip": "reaction.you.ace-lead.cocky",
+    "text": "An ace. Oh, you cocky son of a bitch. I love it.",
+    "family": "admiring-obnoxiousness",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.ace-lead"
+  },
+  "reaction.opponent.ace-lead.uncle-trampoline": {
+    "clip": "reaction.opponent.ace-lead.uncle-trampoline",
+    "text": "An ace? Yeah, well, my uncle owns a trampoline.",
+    "family": "irrelevant-vindication",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.ace-lead"
+  },
+  "reaction.opponent.ace-lead.chewin-ice": {
+    "clip": "reaction.opponent.ace-lead.chewin-ice",
+    "text": "Oh, an ace. Fine. I'm chewin' my ice right in your ear.",
+    "family": "impotent-retaliation",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.ace-lead"
+  },
+  "reaction.table.four-tricks.clench": {
+    "clip": "reaction.table.four-tricks.clench",
+    "text": "One more. Everybody clench.",
+    "family": "physical-celebration",
+    "context": "table",
+    "priority": 2,
+    "trigger": "reaction.table.four-tricks"
+  },
+  "reaction.table.four-tricks.peanut-bowl": {
+    "clip": "reaction.table.four-tricks.peanut-bowl",
+    "text": "One trick left. I should've rationed my peanuts. I ate the bowl.",
+    "family": "eat-the-obstacle",
+    "context": "table",
+    "priority": 2,
+    "trigger": "reaction.table.four-tricks"
+  },
+  "reaction.table.four-tricks.pants-hang-in": {
+    "clip": "reaction.table.four-tricks.pants-hang-in",
+    "text": "One more trick. All right, pants, hang in there.",
+    "family": "physical-celebration",
+    "context": "table",
+    "priority": 2,
+    "trigger": "reaction.table.four-tricks"
+  },
+  "reaction.table.four-tricks.stop-blinkin": {
+    "clip": "reaction.table.four-tricks.stop-blinkin",
+    "text": "One trick left. This is the part where I stop blinkin' and everybody gets uncomfortable.",
+    "family": "unrestrained-hype",
+    "context": "table",
+    "priority": 2,
+    "trigger": "reaction.table.four-tricks"
+  },
+  "reaction.table.turned-down.my-stuff": {
+    "clip": "reaction.table.turned-down.my-stuff",
+    "text": "Nobody wants that card? I got a drawer full of crap nobody wants. It's called my stuff.",
+    "family": "ragtag-adoption",
+    "context": "table",
+    "priority": 1,
+    "trigger": "reaction.table.turned-down"
+  },
+  "reaction.table.turned-down.ask-your-mother": {
+    "clip": "reaction.table.turned-down.ask-your-mother",
+    "text": "Four passes. Look at us. A whole room full of 'ask your mother.'",
+    "family": "collective-buck-passing",
+    "context": "table",
+    "priority": 1,
+    "trigger": "reaction.table.turned-down"
+  },
+  "reaction.table.turned-down.one-bad-decision": {
+    "clip": "reaction.table.turned-down.one-bad-decision",
+    "text": "Everybody passed? Come on. This table needs one bad decision we can all get behind.",
+    "family": "contrarian-loyalty",
+    "context": "table",
+    "priority": 1,
+    "trigger": "reaction.table.turned-down"
+  },
+  "reaction.table.turned-down.speed-date": {
+    "clip": "reaction.table.turned-down.speed-date",
+    "text": "Nobody wants it? Oh, that is a rough speed date.",
+    "family": "rejected-romance",
+    "context": "table",
+    "priority": 1,
+    "trigger": "reaction.table.turned-down"
+  },
+  "reaction.you.queen.pardon-me": {
+    "clip": "reaction.you.queen.pardon-me",
+    "text": "Your Majesty. Quick question. Can you pardon me for somethin' I haven't done yet?",
+    "family": "premeditated-absolution",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.queen"
+  },
+  "reaction.you.queen.just-announcin": {
+    "clip": "reaction.you.queen.just-announcin",
+    "text": "A queen. Lois, I'm just announcin' the card. Jesus.",
+    "family": "domestic-cover-story",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.queen"
   }
 };

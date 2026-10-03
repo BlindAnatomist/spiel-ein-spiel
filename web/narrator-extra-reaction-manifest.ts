@@ -863,5 +863,221 @@ export const narratorExtraReactionManifest: NarrationManifest = {
     "durationSeconds": 3.84,
     "sha256": "28be24b91f538d48bff0f5421e2fc68bceea18242061ed0021967b75da9eefca",
     "bytes": 61901
+  },
+  "reaction.you.alone.slow-clap": {
+    "id": "reaction.you.alone.slow-clap",
+    "url": "audio/reaction.you.alone.slow-clap.mp3",
+    "text": "Just you? Oh, man. I know how to do the slow clap, but I don't know when.",
+    "status": "ready",
+    "durationSeconds": 4.493061,
+    "sha256": "0ec3b6f0ea7668eb88a41e106c72d04908a2543860b5535802929cfaeeaa1197",
+    "bytes": 72350
+  },
+  "reaction.you.alone.entire-ham": {
+    "id": "reaction.you.alone.entire-ham",
+    "url": "audio/reaction.you.alone.entire-ham.mp3",
+    "text": "Alone? I tried eatin' an entire ham alone. Woke up with a priest next to me.",
+    "status": "ready",
+    "durationSeconds": 4.310204,
+    "sha256": "32db0edb57d51639600daa822aed658a3f7967fe8a9fc3a4a591a0c9143b731a",
+    "bytes": 69424
+  },
+  "reaction.you.alone.my-moment": {
+    "id": "reaction.you.alone.my-moment",
+    "url": "audio/reaction.you.alone.my-moment.mp3",
+    "text": "All right. This is your moment. Mine involves a sandwich, but yours looks good too.",
+    "status": "ready",
+    "durationSeconds": 4.780408,
+    "sha256": "a53603d675d9b71917fd4b54bd14f938455ab9186efefb0befd2f2f547535840",
+    "bytes": 76947
+  },
+  "reaction.opponent.alone.little-sash": {
+    "id": "reaction.opponent.alone.little-sash",
+    "url": "audio/reaction.opponent.alone.little-sash.mp3",
+    "text": "Alone? Do you get a little sash, or are you a pain in the ass for free?",
+    "status": "ready",
+    "durationSeconds": 3.813878,
+    "sha256": "dccac458d21635261f8bbb970e661a6e8f4cddb58c1209e24e6e39fe21d5131d",
+    "bytes": 61483
+  },
+  "reaction.opponent.alone.still-boo": {
+    "id": "reaction.opponent.alone.still-boo",
+    "url": "audio/reaction.opponent.alone.still-boo.mp3",
+    "text": "You're goin' alone? Okay. I'm gonna practice bein' supportive. Boo. Nope. Still boo.",
+    "status": "ready",
+    "durationSeconds": 4.963265,
+    "sha256": "53057c04aab5ea4a9a5f24ddd1057e7f73b208bd9be7101cca00b03811d233c8",
+    "bytes": 79873
+  },
+  "reaction.opponent.alone.your-movie": {
+    "id": "reaction.opponent.alone.your-movie",
+    "url": "audio/reaction.opponent.alone.your-movie.mp3",
+    "text": "Alone? Oh, this is your movie now? Fine. I'm talkin' through it.",
+    "status": "ready",
+    "durationSeconds": 4.257959,
+    "sha256": "e726899e3ed07b3bcc4a3a524bcd01a6101b8895b86f462badb93703e39c093f",
+    "bytes": 68588
+  },
+  "reaction.you.low-lead.kings-are-weird": {
+    "id": "reaction.you.low-lead.kings-are-weird",
+    "url": "audio/reaction.you.low-lead.kings-are-weird.mp3",
+    "text": "Okay, little card. Don't make eye contact with the kings. They're weird about that.",
+    "status": "ready",
+    "durationSeconds": 4.649796,
+    "sha256": "93fd840fb4ebf825aa293fd1cc420debd262883932be53a0a9bc2751f89af6ff",
+    "bytes": 74857
+  },
+  "reaction.you.low-lead.explain-to-dog": {
+    "id": "reaction.you.low-lead.explain-to-dog",
+    "url": "audio/reaction.you.low-lead.explain-to-dog.mp3",
+    "text": "Low card. Ah, finally, somethin' I can explain to a dog.",
+    "status": "ready",
+    "durationSeconds": 4.310204,
+    "sha256": "2078c886ebbea25b0fe918f6f5868411ef3ff6455e1d6861ab7a88890c313e79",
+    "bytes": 69424
+  },
+  "reaction.opponent.low-lead.put-air-back": {
+    "id": "reaction.opponent.low-lead.put-air-back",
+    "url": "audio/reaction.opponent.low-lead.put-air-back.mp3",
+    "text": "A low card? I was all ready to gasp. Now I gotta put the air back.",
+    "status": "ready",
+    "durationSeconds": 4.414694,
+    "sha256": "d4307fe6a3af45a1d552e2215679ee4ec04d6d632ad5d5f5b5df202ffc44db3b",
+    "bytes": 71096
+  },
+  "reaction.opponent.low-lead.erection": {
+    "id": "reaction.opponent.low-lead.erection",
+    "url": "audio/reaction.opponent.low-lead.erection.mp3",
+    "text": "Well, that took the erection right outta the room.",
+    "status": "ready",
+    "durationSeconds": 2.377143,
+    "sha256": "bae664a7b72069c965e75ea791bf77c045dafc16082b52d30b5ac6b9f001069b",
+    "bytes": 38495
+  },
+  "reaction.you.ace-lead.revolving-door": {
+    "id": "reaction.you.ace-lead.revolving-door",
+    "url": "audio/reaction.you.ace-lead.revolving-door.mp3",
+    "text": "An ace! I like an entrance. I got stuck in a revolving door once and still took a bow.",
+    "status": "ready",
+    "durationSeconds": 5.067755,
+    "sha256": "efc6611abb88de99bb7696dda0191dc63d31eeb8fab57a52c47863e92797c317",
+    "bytes": 81545
+  },
+  "reaction.you.ace-lead.cocky": {
+    "id": "reaction.you.ace-lead.cocky",
+    "url": "audio/reaction.you.ace-lead.cocky.mp3",
+    "text": "An ace. Oh, you cocky son of a bitch. I love it.",
+    "status": "ready",
+    "durationSeconds": 3.343673,
+    "sha256": "e88084012c22b454454415e84e88dbafcccd7363b13dbeabb311e10994079a8f",
+    "bytes": 53959
+  },
+  "reaction.opponent.ace-lead.uncle-trampoline": {
+    "id": "reaction.opponent.ace-lead.uncle-trampoline",
+    "url": "audio/reaction.opponent.ace-lead.uncle-trampoline.mp3",
+    "text": "An ace? Yeah, well, my uncle owns a trampoline.",
+    "status": "ready",
+    "durationSeconds": 3.213061,
+    "sha256": "db20fbf5b3e1d1425c2c9cf17f39d4a83b87e512395fbc3f85b5c5b9b2f97c20",
+    "bytes": 51870
+  },
+  "reaction.opponent.ace-lead.chewin-ice": {
+    "id": "reaction.opponent.ace-lead.chewin-ice",
+    "url": "audio/reaction.opponent.ace-lead.chewin-ice.mp3",
+    "text": "Oh, an ace. Fine. I'm chewin' my ice right in your ear.",
+    "status": "ready",
+    "durationSeconds": 3.474286,
+    "sha256": "b9992ea7830f823a918b0514a6ce41a04f801588f7e628fc1d32ed1b2601fde8",
+    "bytes": 56049
+  },
+  "reaction.table.four-tricks.clench": {
+    "id": "reaction.table.four-tricks.clench",
+    "url": "audio/reaction.table.four-tricks.clench.mp3",
+    "text": "One more. Everybody clench.",
+    "status": "ready",
+    "durationSeconds": 1.854694,
+    "sha256": "38a5ea043d5bf0dcbc57d93a24dd166fd4a11530e4dc7156b61340b9dd242b5f",
+    "bytes": 30136
+  },
+  "reaction.table.four-tricks.peanut-bowl": {
+    "id": "reaction.table.four-tricks.peanut-bowl",
+    "url": "audio/reaction.table.four-tricks.peanut-bowl.mp3",
+    "text": "One trick left. I should've rationed my peanuts. I ate the bowl.",
+    "status": "ready",
+    "durationSeconds": 3.996735,
+    "sha256": "c9b337dc7604606b8183f9991fe0a04dc2cf684612525eefc1752fcf0f42dbc6",
+    "bytes": 64408
+  },
+  "reaction.table.four-tricks.pants-hang-in": {
+    "id": "reaction.table.four-tricks.pants-hang-in",
+    "url": "audio/reaction.table.four-tricks.pants-hang-in.mp3",
+    "text": "One more trick. All right, pants, hang in there.",
+    "status": "ready",
+    "durationSeconds": 2.742857,
+    "sha256": "943bf0cbd5af77c6ffc77b34f3f3d58392071ee01601b6ebd23cb710bbff2c67",
+    "bytes": 44346
+  },
+  "reaction.table.four-tricks.stop-blinkin": {
+    "id": "reaction.table.four-tricks.stop-blinkin",
+    "url": "audio/reaction.table.four-tricks.stop-blinkin.mp3",
+    "text": "One trick left. This is the part where I stop blinkin' and everybody gets uncomfortable.",
+    "status": "ready",
+    "durationSeconds": 4.310204,
+    "sha256": "d31378346d3ef393d316192a4942688a761a6fbc65a8802b55ed99bee95d16f4",
+    "bytes": 69424
+  },
+  "reaction.table.turned-down.my-stuff": {
+    "id": "reaction.table.turned-down.my-stuff",
+    "url": "audio/reaction.table.turned-down.my-stuff.mp3",
+    "text": "Nobody wants that card? I got a drawer full of crap nobody wants. It's called my stuff.",
+    "status": "ready",
+    "durationSeconds": 4.675918,
+    "sha256": "304c67313fb2492ce4e583040de00391188dca6cd9cf2cbeaf21db5fd003dd2f",
+    "bytes": 75275
+  },
+  "reaction.table.turned-down.ask-your-mother": {
+    "id": "reaction.table.turned-down.ask-your-mother",
+    "url": "audio/reaction.table.turned-down.ask-your-mother.mp3",
+    "text": "Four passes. Look at us. A whole room full of 'ask your mother.'",
+    "status": "ready",
+    "durationSeconds": 3.63102,
+    "sha256": "532870094405d2d131c2adf476b049ed8d0d44a12cdbc75975c905e52916cbf1",
+    "bytes": 58557
+  },
+  "reaction.table.turned-down.one-bad-decision": {
+    "id": "reaction.table.turned-down.one-bad-decision",
+    "url": "audio/reaction.table.turned-down.one-bad-decision.mp3",
+    "text": "Everybody passed? Come on. This table needs one bad decision we can all get behind.",
+    "status": "ready",
+    "durationSeconds": 5.093878,
+    "sha256": "6ed17aaae655b48ff9894a7a6e11672f30aa813d8c8e1d230aeccd4972ebf067",
+    "bytes": 81963
+  },
+  "reaction.table.turned-down.speed-date": {
+    "id": "reaction.table.turned-down.speed-date",
+    "url": "audio/reaction.table.turned-down.speed-date.mp3",
+    "text": "Nobody wants it? Oh, that is a rough speed date.",
+    "status": "ready",
+    "durationSeconds": 3.422041,
+    "sha256": "c726d5676423f5a3ff96aae9d12967ae122d445a1809c0d57c291ff7f55f9e4b",
+    "bytes": 55213
+  },
+  "reaction.you.queen.pardon-me": {
+    "id": "reaction.you.queen.pardon-me",
+    "url": "audio/reaction.you.queen.pardon-me.mp3",
+    "text": "Your Majesty. Quick question. Can you pardon me for somethin' I haven't done yet?",
+    "status": "ready",
+    "durationSeconds": 4.597551,
+    "sha256": "396fbcafe19ba5601353800cb3ef4b09929e0ce36c12ba43bef8982b2706e0da",
+    "bytes": 74021
+  },
+  "reaction.you.queen.just-announcin": {
+    "id": "reaction.you.queen.just-announcin",
+    "url": "audio/reaction.you.queen.just-announcin.mp3",
+    "text": "A queen. Lois, I'm just announcin' the card. Jesus.",
+    "status": "ready",
+    "durationSeconds": 3.996735,
+    "sha256": "895c78599eec65842278c67bd2a4559c3a744ee61a823033df603eb948ea8976",
+    "bytes": 64408
   }
 };

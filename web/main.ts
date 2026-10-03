@@ -1,3 +1,5 @@
+import { createHandReportStore, createHandReportRecorder } from './hand-report.ts';
+import { createHandReportPanel } from './hand-report-panel.ts';
 import { createSoundCues } from './sound.ts';
 import type { Seat } from '../src/index.ts';
 import { selectSeatNames } from '../src/bots/profiles.ts';
@@ -51,6 +53,12 @@ const deployContext = typeof __DEPLOY_CONTEXT__ === 'string' ? __DEPLOY_CONTEXT_
 const privatePreview = deployContext === 'narrator-preview';
 document.querySelector<HTMLElement>('#preview-notice')!.hidden = !privatePreview;
 if (privatePreview) document.querySelector<HTMLElement>('#preview-notice')!.textContent = `Private preview · ${buildCommit.slice(0, 7)}`;
+// Unlike the legacy performance adapter, this adapter must let storage failures surface.
+const handReports = createHandReportStore({
+  getItem: key => window.localStorage.getItem(key),
+  setItem: (key,value) => window.localStorage.setItem(key,value),
+}, `${privatePreview ? 'narrator-preview:' : ''}euchre-hand-reports-v1`);
+const handReportPanel = createHandReportPanel(document, handReports, pauseGame);
 const narratorButton = document.querySelector<HTMLButtonElement>('#narrator')!;
 const pauseButton = document.querySelector<HTMLButtonElement>('#pause-game')!;
 const narratorCaption = document.querySelector<HTMLElement>('#narrator-caption')!;
@@ -74,6 +82,7 @@ const helpButton = document.querySelector<HTMLButtonElement>('#help-button')!;
 const helpPanel = document.querySelector<HTMLElement>('#help-panel')!;
 helpButton.onclick = () => {
   const opening = helpPanel.hidden;
+  if (!opening) handReportPanel.hide(helpButton);
   helpPanel.hidden = !opening;
   helpButton.setAttribute('aria-expanded', String(opening));
 };
@@ -290,6 +299,7 @@ document.querySelector<HTMLButtonElement>('#narrator-status')!.onclick = () => {
 pauseButton.onclick = () => {
   if (!controller) return;
   if (controller.isPaused()) {
+    handReportPanel.hide(pauseButton);
     hideNarratorStatus(pauseButton);
     pauseButton.textContent = 'Pause game';
     narratorOutput?.prime();
@@ -316,6 +326,7 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   controller?.stop(); live.textContent = '';
   narratorOutput?.cancel();
   narratorFlavorHistory.beginGame();
+  handReportPanel.hide(startButton);
   hideNarratorStatus(startButton);
   pauseButton.hidden = false;
   pauseButton.textContent = 'Pause game';
@@ -334,6 +345,7 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   const seed = randomWord();
   const seatNames = selectSeatNames(level, seed);
   const gameId = crypto.randomUUID();
+  const handRecorder = createHandReportRecorder(handReports, {gameId,buildCommit,catalogSha:narratorDiagnostics.catalogSha,seatNames}, narrationAssets);
   const session = createSession(seed, level, {
     dealer,
     randomWord,
@@ -354,14 +366,15 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   narratorOutput = createNarratorAudio(narrationAssets, { enabled: narratorButton.value === 'peter', wholeOnly: true, flavorHistory: narratorFlavorHistory,
     nextEventId: () => ++narratorEventId,
     diagnostic: event => {
+      handRecorder.diagnostic(event);
       narratorDiagnostics.events.push(event); if (narratorDiagnostics.events.length > 100) narratorDiagnostics.events.shift();
       if (event.outcome === 'ended') narratorDiagnostics.totals.completed++;
       if (event.outcome === 'fallback' || event.reason === 'media-failure') narratorDiagnostics.totals.fallbacks++;
     },
     caption: text => { narratorCaption.textContent = text; } });
   narratorOutput.prime();
-  controller = createController(session, table, text => { live.textContent = text; }, undefined, cue => sounds.play(cue), seatNames,
-    selectedHumanTracking === 'owner' ? 'voiceover' : 'visual', narratorOutput);
+  controller = createController(session, table, text => { live.textContent = text; try { handRecorder.liveText(text); } catch { /* Evidence must never block narration. */ } }, undefined, cue => sounds.play(cue), seatNames,
+    selectedHumanTracking === 'owner' ? 'voiceover' : 'visual', narratorOutput, handRecorder.observe);
   table.render(session.view(), false, narratorOutput.enabled()); table.park(narratorOutput.enabled());
   void controller.start();
 };

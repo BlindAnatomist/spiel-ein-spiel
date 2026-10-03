@@ -1,4 +1,4 @@
-import type { Action } from '../src/index.ts';
+import type { Action, PlayerView } from '../src/index.ts';
 import { createAnnouncer } from './announcer.ts';
 import { cueEvents, type SoundCue } from './sound.ts';
 import { currentState, lastTrick, handStartNarration, names } from './presentation.ts';
@@ -9,12 +9,19 @@ import type { createTable } from './render.ts';
 /** Quiet time before recorded narration after activation, and before automatic focus. */
 export const FOCUS_GUARD_MS = 1150;
 export type PacingMode = 'voiceover' | 'visual';
+/** Observational public checkpoints only; observers cannot affect play or speech. */
+export interface ControllerObservation {
+  kind: 'checkpoint' | 'narration-plan' | 'pause' | 'resume' | 'stop' | 'review-state' | 'review-trick';
+  view: PlayerView; pacing: PacingMode; audioEnabled: boolean; gameEventId?: number;
+  messages?: readonly (string | NarrationMessage)[];
+}
 export function createController(session: Session, table: ReturnType<typeof createTable>, announce: (text: string) => void,
   wait: (ms: number) => Promise<void> = ms => new Promise(resolve => setTimeout(resolve, ms)),
   sound: (cue: SoundCue) => void = () => {},
   seatNames: SeatNames = names,
   pacing: PacingMode = 'voiceover',
-  output?: NarrationOutput) {
+  output?: NarrationOutput,
+  observer?: (event: ControllerObservation) => void) {
   const speech = createAnnouncer(announce, wait, output);
   const voiceoverPacing = () => pacing === 'voiceover' || !!output?.enabled();
   let busy = false;
@@ -25,6 +32,10 @@ export function createController(session: Session, table: ReturnType<typeof crea
   let announcedHand = 0;
   let reviewEpoch = 0;
   const interrupted = () => stopped || paused;
+  function observe(kind: ControllerObservation['kind'], update?: Update, messages?: readonly (string | NarrationMessage)[]) {
+    try { observer?.({kind,view:session.view(),pacing,audioEnabled:!!output?.enabled(),
+      ...(update?.progress ? {gameEventId:update.progress.eventId} : {}), ...(messages ? {messages} : {})}); } catch { /* Reports must never interrupt the game. */ }
+  }
   async function waitOrCancel(ms: number) {
     await Promise.race([wait(ms), new Promise<void>(resolve => { interruptWait = resolve; })]);
     interruptWait = undefined;
@@ -37,6 +48,7 @@ export function createController(session: Session, table: ReturnType<typeof crea
       while (!interrupted()) {
         const pendingReactionEpoch = reviewEpoch;
         const current = session.view();
+        observe('checkpoint', update);
         table.render(current, false, !!output?.enabled());
         const messages: Array<string | NarrationMessage> = [];
         if (handStart && current.handNumber !== announcedHand) {
@@ -48,6 +60,7 @@ export function createController(session: Session, table: ReturnType<typeof crea
         messages.push(...(update?.narration ?? update?.messages ?? []));
         if (output?.enabled() && update?.reaction) messages.push({...update.reaction, gapMs:messages.length ? 300 : 0});
         const prepared = output?.enabled() && output.prepareEvent ? output.prepareEvent(messages) : messages;
+        observe('narration-plan', update, prepared);
         if (voiceoverPacing()) {
           // Let the native control/focus-parking utterance settle before Peter.
           // This is a bounded guard, not a claim to observe VoiceOver completion.
@@ -110,18 +123,18 @@ export function createController(session: Session, table: ReturnType<typeof crea
       speech.cancelReviews();
       table.park(!!output?.enabled()); session.nextHand(); await run(undefined, true);
     },
-    repeat: () => { reviewEpoch++; return !interrupted() && voiceoverPacing() ? speech.say(() => currentState(session.view(), seatNames), true) : Promise.resolve(); },
-    review: () => { reviewEpoch++; return !interrupted() && voiceoverPacing() ? speech.say(() => lastTrick(session.view(), seatNames), true) : Promise.resolve(); },
+    repeat: () => { if (!interrupted()) observe('review-state'); reviewEpoch++; return !interrupted() && voiceoverPacing() ? speech.say(() => currentState(session.view(), seatNames), true) : Promise.resolve(); },
+    review: () => { if (!interrupted()) observe('review-trick'); reviewEpoch++; return !interrupted() && voiceoverPacing() ? speech.say(() => lastTrick(session.view(), seatNames), true) : Promise.resolve(); },
     pause: () => {
       if (stopped || paused) return;
-      paused = true; speech.cancelPending(); interruptWait?.(); table.render(session.view(), false, !!output?.enabled());
+      paused = true; observe('pause'); speech.cancelPending(); interruptWait?.(); table.render(session.view(), false, !!output?.enabled());
     },
     resume: async () => {
       if (stopped || !paused) return;
       // Keep paused until the abandoned loop fully exits; repeated Resume is harmless.
       await settleDone;
       if (stopped || !paused) return;
-      paused = false;
+      paused = false; observe('resume');
       // Do not park an already-focused unchanged turn; its focus key correctly
       // prevents a second automatic jump. Newly reached turns/results still focus.
       const view = session.view();
@@ -129,6 +142,6 @@ export function createController(session: Session, table: ReturnType<typeof crea
       await run({ view, messages: view.result ? [] : [currentState(view, seatNames)] });
     },
     isPaused: () => paused,
-    stop: () => { stopped = true; speech.stop(); interruptWait?.(); },
+    stop: () => { stopped = true; observe('stop'); speech.stop(); interruptWait?.(); },
   };
 }

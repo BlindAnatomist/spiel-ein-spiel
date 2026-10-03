@@ -55,3 +55,5 @@ body:has(#game:not([hidden])) #game{grid-row:4}
 #preview-notice{font-size:14px;color:#c8d8cf;margin-bottom:8px!important}
 #narrator-status{margin-top:12px;font-size:14px}
 @media(max-width:350px){main{grid-template-columns:minmax(80px,1fr) minmax(70px,82px) minmax(72px,auto) 48px}}
+
+#saved-hand-report{margin-top:12px;font-size:14px}#hand-report-panel{margin-top:12px;display:grid;gap:10px}#hand-report-selection,#hand-report-text{width:100%;min-width:0}#hand-report-text{font:inherit;line-height:1.5;padding:10px;border:1px solid #94aea5;border-radius:8px;background:#0a211e;color:#f3f4e9}#hand-report-text:focus{outline:3px solid #ffca66;outline-offset:3px}

@@ -1,9 +1,9 @@
-# Character library integration checkpoint
+# Complete character library integration checkpoint
 
-October 3, 2026. This source checkpoint includes 168 approved contextual scripts in
-seven batches of 24. Runtime metadata currently includes 144 new recordings, for
-2,109 total recording references. The target is 2,133 runtime recordings.
-The incomplete catalog remains publication-blocked.
+October 3, 2026. All 168 approved contextual additions are recorded and integrated
+in seven complete batches of 24. The local runtime contains 2,133 primary
+recordings, plus the six preserved repair MP3s. Strict local preview builds pass.
+Publication and the owner-private preview update are separately coordinated.
 
 ## Implemented behavior
 
@@ -18,53 +18,92 @@ The incomplete catalog remains publication-blocked.
   without bypassing cooldowns or factual narration.
 - The importer validates approved text, trigger, family, delivery instructions,
   audio integrity and mechanical QA. It rejects missing or altered prior entries.
-- Strict narrator-preview builds reject incomplete recording catalogs.
+- Strict narrator-preview builds still require all 168 additions and 2,133 assets.
 
-The original 1,965 recording references and game rules are unchanged. Audio is
-excluded from this repository checkpoint. Approved script contracts are under
-checkpoints/20261002-character-library/approved-scripts.
+The original 1,965 recording references, selector and game rules are unchanged.
+All 2,109 pre-final-import primary MP3s and six repair MP3s retain exact hashes,
+byte lengths and modification times. The prior 144 addition metadata entries and
+ordering are unchanged. All 24 final additions match their independently reviewed
+complete pack. Audio remains excluded from this repository.
 
-## Verification and remaining work
+## Actual-catalog verification
 
-Strict typecheck and 240 tests passed. Coverage includes 9,600 card/lead/trump
-contexts, hidden-hand mutation checks, trigger/result boundaries, importer
-corruption and content drift, and final-game selection precedence/fallback.
-Independent review exercised 8,209 accepted actions and all 27 predicates.
+Strict typecheck, all 244 tests and the strict narrator-preview build pass.
+All 2,133 actual primary recordings passed exact hash/size checks, FFprobe duration
+checks and full FFmpeg decoding. Their contents and modification times stayed
+unchanged; there are no duplicate primary audio hashes.
 
-The 72-line imported pool averaged 2.39 remarks per hand in simulation. A separate
-feasibility experiment using all 168 approved scripts with synthetic metadata for
-unfinished recordings projected 3.15–3.17 remarks per hand and 92–93% of hands with
-three or four remarks. Distinctness among the first 350 remarks was 44–45%, below
-the earlier 50% projection. These simulations do not establish audio acceptance.
+Two actual-catalog controller/session/history audits ran 48 complete games,
+520 hands and 12,973 accepted actions. Each audit verified all actual asset hashes
+before simulating metadata-driven media completion. No unfinished recordings or
+synthetic clip identities were substituted.
 
-Remaining work: finish the recording catalog;
-integrate verified batches; rerun aggregate tests, actual-catalog cadence/novelty
-audits, strict build and audio integrity checks; complete independent final review.
-This is work in progress, not release approval or a deployment.
+| Metric | Baseline | Disjoint-game-seed holdout |
+| --- | ---: | ---: |
+| Games / hands | 24 / 266 | 24 / 254 |
+| Remarks per hand | 3.150 | 3.177 |
+| Hands with three or four remarks | 91.7% | 94.5% |
+| Maximum remarks per hand | 4 | 4 |
+| Minimum trick / public-event gap | 1 / 6 | 1 / 6 |
+| Distinct wording in first 75 remarks | 100% | 100% |
+| Distinct wording in first 180 remarks | 78.9% | 76.1% |
+| Distinct wording in first 350 remarks | 44.3% | 44.9% |
+| Exact/family cooldown violations | 0 | 0 |
+| Fallback, stitching or unintended live-output errors | 0 | 0 |
+
+All 27 predicates selected an actual contextual recording across the combined
+runs. The holdout also changed the selection seed and human policy. The earlier
+50% first-350 distinctness projection remains unmet; the measured result is
+44.3–44.9%. No cooldown or cadence constraint was relaxed to improve that number.
+
+The tests include 9,600 play contexts with hidden-hand mutations, effective-suit
+and result boundaries, focus lifecycle, history persistence/malformed storage,
+repeat limits and final-game precedence/fallback. Earlier independent context
+review exercised 8,209 accepted actions and all 27 predicates.
+
+Reproducible audit commands:
+
+```sh
+node scripts/audit-narrator-variety.ts REPORT_DIR 2171876889 strong
+node scripts/audit-narrator-variety.ts HOLDOUT_DIR 1597463007 casual 1201,1607,2017,3001,4001,5039
+```
+
+See checkpoints/20261003-character-library-complete/actual-catalog-validation.json
+for sanitized measured results. Full private provenance and audio stay in the
+private recovery artifact.
 
 ## Reviewed browser-evidence imports
 
-The importer retains the first three previously imported packs only when the
-approved proposal, manifest and final QA have their exact preserved SHA-256
-identities. Every new or changed pack must include the pinned private evidence
-validators and complete final QA. Those private validators and receipts are not
-copied into this source repository.
+The first three legacy packs retain their original route only for their exact
+proposal, manifest and final-QA identities. Completed batches04–06 retain their
+original three-validator hash tuple. The new batch07 tuple is available only for
+its exact reviewed pack ID and approved-proposal, final-manifest and final-QA
+hashes. Rewritten or mismatched identities cannot select it.
 
 The local adapter needs Python 3, NumPy, FFmpeg and FFprobe. It starts Python in
-isolated, no-bytecode mode and executes only the hash-pinned validator bytes;
-it never adds an input pack to Python's import path. A fresh mechanical audio
-audit and read-only evidence check must pass, with the explicit approved proposal
-matching the audited proposal exactly. Saved QA must agree with that fresh audit.
+isolated, no-bytecode mode and executes only pinned validator bytes, never adding
+an input pack to Python's import path. The explicit approved proposal must match
+the embedded audited proposal exactly. Fresh complete mechanical audio audit and
+read-only evidence validation must agree with saved final QA.
 
-Historical HTTP and visible-browser evidence remain distinct. Browser evidence
+All 41 retained production-route evidence probes and five deep mechanical/JSON
+probes pass. Ten additional final07 production-route probes cover exact acceptance,
+rewritten identities, tuple scope, missing history and altered audio. Untrusted
+neighboring Python modules, missing/corrupt evidence, unsafe paths, invented HTTP
+or provider totals and unsupported listening claims remain rejected.
+
+Historical HTTP and visible-browser evidence stay distinct. Browser evidence
 does not invent HTTP status or provider request totals. Approved replacements
-retain their original history. Validation requires exact prompt/settings/source,
-active-result binding where applicable, raw/export byte identity, strict receipt
-schemas, hashes, decoding, gain-only consistency and peak limits. It cannot
-certify listening, spoken wording, pronunciation, likeness or device behavior.
-
+preserve their original histories, and unknown earlier outcomes remain unknown.
 Cross-pack raw/master hashes and browser blob identities must be unique. Every
-input is validated before writes; new files use the validated in-memory bytes and
+input is validated before writes; new files use validated in-memory bytes with
 exclusive creation, while matching existing audio files are left untouched.
-The 168-addition strict preview build guard is unchanged. The local 144-addition
-catalog is preparation only, not a release or deployment.
+
+## Acceptance limits
+
+Mechanical decoding and simulated media completion do not establish spoken
+wording, unspoken tags, pronunciation, voice likeness, comic timing or listening
+acceptance. Automated focus and DOM checks do not establish real iPhone Safari or
+VoiceOver acceptance. Those claims remain explicitly unverified.
+
+This checkpoint does not merge main, change sharing or publish a public app.

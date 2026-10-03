@@ -1,26 +1,20 @@
-# Character variety work in progress
+# Character variety checkpoint
 
-October 2, 2026. See CHARACTER_LIBRARY_INTEGRATION.md and
-checkpoints/20261002-character-library/technical-status.json for current progress.
+October 3, 2026. The complete 168-addition local catalog is integrated and verified.
+See CHARACTER_LIBRARY_INTEGRATION.md for current results and acceptance limits.
+Earlier work-in-progress documents remain historical checkpoints.
 
-## Selection behavior
+Selection retains the four-per-hand cap, one completed trick and six public
+events between remarks, same/previous-two-completed-game exact exclusion,
+four-hand/eighty-event exact and four-trick/twelve-event family cooldowns.
+Bounded exposure history stays separate from game randomness and state.
 
-One public event considers complete humorous facts and optional reactions together.
-Eligible never-heard wording has priority within exact contextual triggers.
-Wording cannot recur in the same match or either of the two preceding completed
-matches. Abandoned matches do not advance that clock. Four-hand/eighty-event exact
-and four-trick/twelve-event family cooldowns remain, with one completed trick and
-six public events between remarks. The per-hand cap is four.
+Actual full-catalog baseline and disjoint-seed holdout runs average 3.15–3.18
+remarks per hand. Three or four remarks occur in 91.7–94.5% of hands. The first 75
+remarks are distinct; first 350 distinctness is 44.3–44.9%, below the earlier 50%
+projection. Neither audit reports cooldown, cadence or fallback violations.
 
-Bounded, versioned exposure history survives reloads, tolerates malformed or
-unavailable storage, and remains separate from game randomness and state.
-
-## Catalog and validation
-
-The approved expansion contains 168 contextual scripts in seven 24-line batches.
-Seventy-two recording entries are integrated. The target catalog is incomplete,
-so strict narrator-preview builds are blocked. Factual narration remains available
-when no optional line is eligible.
-
-Current strict typecheck and 237 tests pass. Final recorded-catalog cadence,
-novelty, audio integrity and independent review remain required before release.
+Strict typecheck, 244 tests and the strict 2,133-recording build pass. All primary
+recordings pass hashes, sizes, duration checks and full decoding. These mechanical
+checks do not establish listening or real iPhone/VoiceOver acceptance. Publication
+and the owner-private preview update remain separately coordinated.

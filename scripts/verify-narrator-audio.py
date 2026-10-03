@@ -16,6 +16,34 @@ PINS = {
 }
 
 
+# The conditional replacement validator is exclusive to the independently
+# reviewed, complete batch07 identity. Only digests belong in public source.
+# Final manifest and QA are pinned after independent fresh-extraction review.
+REVIEWED07_IDENTITY = (
+    "peter-euchre-library-batch07-20261002",
+    "37e11314d2359bcb9492144b93f054612654656d03a198f1be7c8f68dac470fe",
+    "a67e1dd4db59ff1c79a626c7d5635469f7bce7f35387f564f98c04cf9d7cdc75",
+    "b5b2902b307d633a0186ba69498bcb83b8b91ec74504beace0ac7387db196521",
+)
+REVIEWED07_PINS = {
+    "audio_provenance.py": "ad49af9da1cc13413cf0f53c54453e1e47141851fb2e46a1602298f794d2ffa9",
+    "audit_audio.py": "81fa0c537f27164a19c20748c45225f5a5b3bdec7ceec16675f1f2e80d4d5521",
+    "finalize_recovery.py": "2f3a9e14f0ea69593970d18a4c90fe6b456ffab19cb101e5fb5956cc3ea9f636",
+}
+
+
+def validator_pins(pack_id, proposal_sha256, manifest_sha256, final_qa_sha256):
+    identity = (pack_id, proposal_sha256, manifest_sha256, final_qa_sha256)
+    if pack_id == REVIEWED07_IDENTITY[0] or proposal_sha256 == REVIEWED07_IDENTITY[1]:
+        require(all(isinstance(value, str) and len(value) == 64
+                    and all(c in "0123456789abcdef" for c in value)
+                    for value in REVIEWED07_IDENTITY[1:]),
+                "Complete batch07 independent final review is pending")
+        require(identity == REVIEWED07_IDENTITY, "Unreviewed complete batch07 identity")
+        return REVIEWED07_PINS
+    return PINS
+
+
 def digest(data):
     return hashlib.sha256(data).hexdigest()
 
@@ -36,9 +64,17 @@ def main():
     require(sys.flags.isolated and sys.dont_write_bytecode, "Use isolated Python with -I -B")
     root, proposal_path = Path(sys.argv[1]).resolve(), Path(sys.argv[2])
     require(root.is_dir(), "Missing complete recovery directory")
+    require(proposal_path.is_file() and not proposal_path.is_symlink(), "Unsafe explicit proposal")
+    proposal_bytes = proposal_path.read_bytes()
+    manifest_bytes = regular(root, "manifest.json").read_bytes()
+    qa_bytes = regular(root, "final-qa.json").read_bytes()
+    # Identity selection runs before executing any private validator. The strict
+    # provenance parser below still validates complete JSON and all pack data.
+    pack_id = json.loads(manifest_bytes).get("packId")
+    pins = validator_pins(pack_id, digest(proposal_bytes), digest(manifest_bytes), digest(qa_bytes))
     # Load bytes once, hash before execution, and never import from the pack directory.
     code = {}
-    for name, expected in PINS.items():
+    for name, expected in pins.items():
         code[name] = regular(root, name).read_bytes()
         require(digest(code[name]) == expected, f"Unreviewed audio validator: {name}")
     for name in ("audio_provenance.py", "audit_audio.py"):
@@ -48,14 +84,10 @@ def main():
         sys.modules[module_name] = module
         exec(compile(code[name], module.__file__, "exec"), module.__dict__)
     provenance, audit = sys.modules["audio_provenance"], sys.modules["audit_audio"]
-    require(proposal_path.is_file() and not proposal_path.is_symlink(), "Unsafe explicit proposal")
-    proposal_bytes = proposal_path.read_bytes()
     proposal_files = list((root / "sources").glob("batch*-approved-proposal.json"))
     require(len(proposal_files) == 1, "Expected exactly one audited approved proposal")
     embedded = regular(root, str(proposal_files[0].relative_to(root)))
     require(embedded.read_bytes() == proposal_bytes, "Explicit proposal differs from audited proposal")
-    manifest_bytes = regular(root, "manifest.json").read_bytes()
-    qa_bytes = regular(root, "final-qa.json").read_bytes()
     plan_bytes = regular(root, "plan.json").read_bytes()
     plan, manifest = provenance.load_json(root / "plan.json"), provenance.load_json(root / "manifest.json")
     qa = provenance.load_json(root / "final-qa.json")
@@ -95,7 +127,7 @@ def main():
                 "Historical provider request count differs from preserved receipts")
     print(json.dumps({"summary": summary, "resume": resume,
         "proposalSha256": digest(proposal_bytes), "manifestSha256": digest(manifest_bytes),
-        "finalQaSha256": digest(qa_bytes), "planSha256": digest(plan_bytes), "scriptSha256": PINS}))
+        "finalQaSha256": digest(qa_bytes), "planSha256": digest(plan_bytes), "scriptSha256": pins}))
 
 
 if __name__ == "__main__":

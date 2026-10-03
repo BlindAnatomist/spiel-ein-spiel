@@ -1,0 +1,299 @@
+{
+  "status": "Complete local catalog; automated verification passed; publication is separately coordinated",
+  "checkpointDate": "2026-10-03",
+  "runtimeRecordings": 2133,
+  "approvedAdditions": 168,
+  "repositoryTestsPassed": 244,
+  "strictTypecheck": "passed",
+  "strictNarratorPreviewBuild": "passed",
+  "finalPrimaryAudioIntegrity": {
+    "basis": "All actual runtime primary MP3 bytes, exact metadata hashes/sizes, FFprobe duration, full FFmpeg decoding and read-only preservation.",
+    "primaryRecordings": 2133,
+    "passed": 2133,
+    "failed": [],
+    "manifestSha256": "9a7954f411b794ffd80d69cbe3624f586a4c501e9b34ce137c117c72b01b4aab",
+    "speechContentVerified": false,
+    "audibleQualityVerified": false,
+    "iphoneVoiceOverVerified": false,
+    "generationCalls": 0,
+    "networkCalls": 0
+  },
+  "all27PredicatesObservedAcrossAudits": true,
+  "prior2115PrimaryAndRepairMp3FilesPreserved": true,
+  "prior144MetadataEntriesAndOrderPreserved": true,
+  "new24EntriesMatchReviewedPack": true,
+  "importerRetainedProductionRouteProbesPassed": 41,
+  "importerRetainedDeepMechanicalProbesPassed": 5,
+  "final07IdentityProbesPassed": 10,
+  "diversityCaveat": "First350 remarks had44.3\u201344.9% distinct wording, below the earlier 50% projection. All cooldown and cadence guards passed.",
+  "audits": [
+    {
+      "basis": "Actual approved runtime catalog, real controller/session/history and metadata-driven fake media completion. No placeholder identities; not audible or device acceptance.",
+      "randomSeed": 2171876889,
+      "scenarioSeeds": [
+        17,
+        73,
+        92,
+        318,
+        400,
+        711
+      ],
+      "humanPolicy": "strong",
+      "runtimeAssets": 2133,
+      "approvedNewChoices": 168,
+      "catalogHashesVerified": true,
+      "games": 24,
+      "hands": 266,
+      "actions": 6771,
+      "remarks": 838,
+      "remarksPerHand": 3.1503759398496243,
+      "handsByRemarkCount": {
+        "2": 22,
+        "3": 182,
+        "4": 62
+      },
+      "handsAtThreeOrFourFraction": 0.9172932330827067,
+      "maxPerHand": 4,
+      "minimumTrickGap": 1,
+      "minimumPublicEventGap": 6,
+      "exactAndFamilyViolations": [],
+      "errors": [],
+      "gameExposure": {
+        "2": {
+          "remarks": 81,
+          "unique": 81,
+          "fraction": 1
+        },
+        "5": {
+          "remarks": 197,
+          "unique": 144,
+          "fraction": 0.7309644670050761
+        },
+        "10": {
+          "remarks": 373,
+          "unique": 157,
+          "fraction": 0.42091152815013405
+        },
+        "20": {
+          "remarks": 692,
+          "unique": 172,
+          "fraction": 0.24855491329479767
+        },
+        "24": {
+          "remarks": 838,
+          "unique": 175,
+          "fraction": 0.20883054892601433
+        }
+      },
+      "remarkExposure": {
+        "75": {
+          "remarks": 75,
+          "unique": 75,
+          "fraction": 1
+        },
+        "180": {
+          "remarks": 180,
+          "unique": 142,
+          "fraction": 0.7888888888888889
+        },
+        "350": {
+          "remarks": 350,
+          "unique": 155,
+          "fraction": 0.44285714285714284
+        }
+      },
+      "availableByTrigger": {
+        "reaction.you.follow-suit": 8,
+        "reaction.you.bower": 7,
+        "reaction.you.trump": 10,
+        "reaction.you.trick": 13,
+        "reaction.opponent.trick": 12,
+        "reaction.opponent.ace-lead": 5,
+        "reaction.opponent.right-bower": 6,
+        "reaction.val.follow-suit": 10,
+        "reaction.val.trick": 9,
+        "you-team-sweep": 6,
+        "reaction.you.alone": 5,
+        "reaction.you.low-lead": 4,
+        "reaction.you.queen": 3,
+        "reaction.opponent.follow-suit": 6,
+        "reaction.opponent.low-lead": 5,
+        "reaction.table.four-tricks": 6,
+        "reaction.val.trump": 7,
+        "reaction.val.bower": 6,
+        "reaction.table.left-bower": 6,
+        "reaction.opponent.alone": 5,
+        "reaction.table.turned-down": 6,
+        "reaction.you.ace-lead": 3,
+        "reaction.you-team.euchred": 4,
+        "reaction.you-team.euchres-opponents": 4,
+        "reaction.val.alone": 4,
+        "reaction.you-team.game-win": 4,
+        "reaction.opponent.game-win": 4
+      },
+      "selectedByTrigger": {
+        "reaction.you.follow-suit": 57,
+        "reaction.you.bower": 16,
+        "reaction.you.trump": 34,
+        "reaction.you.trick": 59,
+        "reaction.opponent.trick": 95,
+        "reaction.opponent.ace-lead": 37,
+        "reaction.opponent.right-bower": 29,
+        "reaction.val.follow-suit": 63,
+        "reaction.val.trick": 52,
+        "you-team-sweep": 3,
+        "reaction.you.alone": 3,
+        "reaction.you.low-lead": 4,
+        "reaction.you.queen": 22,
+        "reaction.opponent.follow-suit": 48,
+        "reaction.opponent.low-lead": 10,
+        "reaction.table.four-tricks": 36,
+        "reaction.val.trump": 43,
+        "reaction.val.bower": 23,
+        "reaction.table.left-bower": 26,
+        "reaction.opponent.alone": 1,
+        "reaction.table.turned-down": 48,
+        "reaction.you.ace-lead": 15,
+        "reaction.you-team.euchred": 6,
+        "reaction.you-team.euchres-opponents": 2,
+        "reaction.val.alone": 0,
+        "reaction.you-team.game-win": 0,
+        "reaction.opponent.game-win": 8
+      }
+    },
+    {
+      "basis": "Actual approved runtime catalog, real controller/session/history and metadata-driven fake media completion. No placeholder identities; not audible or device acceptance.",
+      "randomSeed": 1597463007,
+      "scenarioSeeds": [
+        1201,
+        1607,
+        2017,
+        3001,
+        4001,
+        5039
+      ],
+      "humanPolicy": "casual",
+      "runtimeAssets": 2133,
+      "approvedNewChoices": 168,
+      "catalogHashesVerified": true,
+      "games": 24,
+      "hands": 254,
+      "actions": 6202,
+      "remarks": 807,
+      "remarksPerHand": 3.177165354330709,
+      "handsByRemarkCount": {
+        "2": 14,
+        "3": 181,
+        "4": 59
+      },
+      "handsAtThreeOrFourFraction": 0.9448818897637795,
+      "maxPerHand": 4,
+      "minimumTrickGap": 1,
+      "minimumPublicEventGap": 6,
+      "exactAndFamilyViolations": [],
+      "errors": [],
+      "gameExposure": {
+        "2": {
+          "remarks": 51,
+          "unique": 51,
+          "fraction": 1
+        },
+        "5": {
+          "remarks": 161,
+          "unique": 133,
+          "fraction": 0.8260869565217391
+        },
+        "10": {
+          "remarks": 318,
+          "unique": 153,
+          "fraction": 0.4811320754716981
+        },
+        "20": {
+          "remarks": 648,
+          "unique": 172,
+          "fraction": 0.2654320987654321
+        },
+        "24": {
+          "remarks": 807,
+          "unique": 176,
+          "fraction": 0.218091697645601
+        }
+      },
+      "remarkExposure": {
+        "75": {
+          "remarks": 75,
+          "unique": 75,
+          "fraction": 1
+        },
+        "180": {
+          "remarks": 180,
+          "unique": 137,
+          "fraction": 0.7611111111111111
+        },
+        "350": {
+          "remarks": 350,
+          "unique": 157,
+          "fraction": 0.44857142857142857
+        }
+      },
+      "availableByTrigger": {
+        "reaction.you.follow-suit": 8,
+        "reaction.you.bower": 7,
+        "reaction.you.trump": 10,
+        "reaction.you.trick": 13,
+        "reaction.opponent.trick": 12,
+        "reaction.opponent.ace-lead": 5,
+        "reaction.opponent.right-bower": 6,
+        "reaction.val.follow-suit": 10,
+        "reaction.val.trick": 9,
+        "you-team-sweep": 6,
+        "reaction.you.alone": 5,
+        "reaction.you.low-lead": 4,
+        "reaction.you.queen": 3,
+        "reaction.opponent.follow-suit": 6,
+        "reaction.opponent.low-lead": 5,
+        "reaction.table.four-tricks": 6,
+        "reaction.val.trump": 7,
+        "reaction.val.bower": 6,
+        "reaction.table.left-bower": 6,
+        "reaction.opponent.alone": 5,
+        "reaction.table.turned-down": 6,
+        "reaction.you.ace-lead": 3,
+        "reaction.you-team.euchred": 4,
+        "reaction.you-team.euchres-opponents": 4,
+        "reaction.val.alone": 4,
+        "reaction.you-team.game-win": 4,
+        "reaction.opponent.game-win": 4
+      },
+      "selectedByTrigger": {
+        "reaction.you.follow-suit": 47,
+        "reaction.you.bower": 28,
+        "reaction.you.trump": 30,
+        "reaction.you.trick": 67,
+        "reaction.opponent.trick": 88,
+        "reaction.opponent.ace-lead": 32,
+        "reaction.opponent.right-bower": 20,
+        "reaction.val.follow-suit": 42,
+        "reaction.val.trick": 63,
+        "you-team-sweep": 5,
+        "reaction.you.alone": 0,
+        "reaction.you.low-lead": 0,
+        "reaction.you.queen": 15,
+        "reaction.opponent.follow-suit": 44,
+        "reaction.opponent.low-lead": 6,
+        "reaction.table.four-tricks": 35,
+        "reaction.val.trump": 43,
+        "reaction.val.bower": 32,
+        "reaction.table.left-bower": 34,
+        "reaction.opponent.alone": 3,
+        "reaction.table.turned-down": 38,
+        "reaction.you.ace-lead": 17,
+        "reaction.you-team.euchred": 6,
+        "reaction.you-team.euchres-opponents": 1,
+        "reaction.val.alone": 7,
+        "reaction.you-team.game-win": 3,
+        "reaction.opponent.game-win": 5
+      }
+    }
+  ]
+}

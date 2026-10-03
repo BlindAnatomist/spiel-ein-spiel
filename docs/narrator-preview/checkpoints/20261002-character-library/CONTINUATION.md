@@ -1,30 +1,30 @@
 # Character narration continuation
 
-This is source and script work in progress. It is not a new game deployment.
+The October 3, 2026 local checkpoint now contains all 168 approved contextual
+additions in seven complete 24-line batches, for 2,133 primary runtime recordings.
+Audio is excluded from Git. The same owner-private preview update and private
+recovery artifact are coordinated separately; main is not merged.
 
-All 168 contextual scripts are included in approved-scripts, in seven 24-line
-batches. The implementation contains runtime metadata for 144 new recordings,
-including the complete sixth batch, for 2,109 total recordings. The remaining
-24 approved scripts are not yet integrated. Audio is excluded from Git.
+Strict typecheck, 244 tests and the strict narrator-preview build pass. All 2,133
+primary recordings passed exact hashes/sizes, duration checks and full decoding.
+The 2,109 prior primary recordings and six repair MP3s retain exact bytes/hashes/
+modification times; the earlier 144 metadata entries and ordering are unchanged.
+Selectors, game rules and the original 1,965 recording references remain unchanged.
 
-Strict typecheck and 240 tests pass. Earlier independent context review checked
-27 public predicates over 8,209 accepted game transitions. Independent importer
-review passed 41 production-route probes and five deeper mechanical/JSON probes.
-The original 1,965 recording references, earlier 120 additions, selectors and game
-rules are unchanged. All 2,085 prior audio files retain their bytes and timestamps.
+The importer retains exact legacy identities and the reviewed 04–06 validator
+hashes. The new 07 tuple is restricted to its independently reviewed complete
+proposal/manifest/final-QA identity. All 41 production-route and five deep
+mechanical/JSON regression probes, plus ten final 07 identity probes, pass.
+Browser observations never invent HTTP status or resolve unknown prior outcomes.
 
-The importer accepts preserved legacy evidence or freshly validated complete
-browser evidence. It verifies pinned offline validation code, exact approved
-text/settings, complete audio and immutable history. Neighboring input files
-cannot become Python imports. Browser observations never invent HTTP status.
-It rejects missing or altered prior entries and incomplete mechanical QA.
+Actual-catalog baseline and disjoint-game-seed holdout audits cover 48 games,
+520 hands and 12,973 accepted actions. Cadence is 3.15–3.18 remarks per hand with
+zero exact/family cooldown violations. First 350 distinctness is 44.3–44.9%, below
+the earlier 50% projection. See ../../CHARACTER_LIBRARY_INTEGRATION.md and
+../20261003-character-library-complete/actual-catalog-validation.json.
 
-Finish and independently verify the remaining batches, then integrate each
-complete batch through the importer while retaining every prior batch. Strict
-narrator-preview builds continue to require all 168 additions and 2,133 total
-recordings. Do not lower the completeness guard.
-
-The final catalog still needs actual-catalog cadence/novelty audits, full audio
-integrity checks and independent final review. Script feasibility projected about
-3.15–3.17 remarks per hand; this is not audible acceptance. Mechanical checks
-cannot establish spoken wording, likeness, delivery or iPhone/VoiceOver behavior.
+Complete the independent final source/audit review, coordinate publication of
+this same owner-private preview, and refresh the same integrated recovery item
+with independent extraction/restoration verification. No public app deployment,
+main merge or expanded sharing is authorized by this technical checkpoint.
+Listening, wording, likeness and real iPhone/VoiceOver acceptance remain unverified.

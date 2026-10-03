@@ -1161,5 +1161,197 @@ export const extraReactionLines: Readonly<Record<string, NarrationAlternative & 
     "context": "table",
     "priority": 2,
     "trigger": "reaction.table.left-bower"
+  },
+  "reaction.you.trick.entire-ass": {
+    "clip": "reaction.you.trick.entire-ass",
+    "text": "Ha! Eat my entire ass!",
+    "family": "unrestrained-hype",
+    "context": "you",
+    "priority": 2,
+    "trigger": "reaction.you.trick"
+  },
+  "reaction.you.trick.brian-write-it": {
+    "clip": "reaction.you.trick.brian-write-it",
+    "text": "Yes! Brian, write that down. Use your fancy words for 'suck it.'",
+    "family": "outsourced-gloating",
+    "context": "you",
+    "priority": 2,
+    "trigger": "reaction.you.trick"
+  },
+  "reaction.you.trick.remote-scratch": {
+    "clip": "reaction.you.trick.remote-scratch",
+    "text": "Oh, that felt good. Like scratchin' your ass with a remote and the TV still works.",
+    "family": "grotesque-satisfaction",
+    "context": "you",
+    "priority": 2,
+    "trigger": "reaction.you.trick"
+  },
+  "reaction.you.trick.air-horn": {
+    "clip": "reaction.you.trick.air-horn",
+    "text": "Yes! Lois took my air horn, so I'm just gonna be an air horn.",
+    "family": "unrestrained-hype",
+    "context": "you",
+    "priority": 2,
+    "trigger": "reaction.you.trick"
+  },
+  "reaction.val.trick.magnificent": {
+    "clip": "reaction.val.trick.magnificent",
+    "text": "Val! You magnificent son of a bitch!",
+    "family": "unfiltered-gratitude",
+    "context": "val",
+    "priority": 2,
+    "trigger": "reaction.val.trick"
+  },
+  "reaction.val.trick.body-and-stairs": {
+    "clip": "reaction.val.trick.body-and-stairs",
+    "text": "Val, I'd help you hide a body. But if there's stairs, I'm callin' the cops.",
+    "family": "effort-avoidance",
+    "context": "val",
+    "priority": 2,
+    "trigger": "reaction.val.trick"
+  },
+  "reaction.val.trick.good-lawn-chair": {
+    "clip": "reaction.val.trick.good-lawn-chair",
+    "text": "Val, you get the good lawn chair. The one that doesn't slowly eat your balls.",
+    "family": "dubious-reward",
+    "context": "val",
+    "priority": 2,
+    "trigger": "reaction.val.trick"
+  },
+  "reaction.val.trick.my-fries": {
+    "clip": "reaction.val.trick.my-fries",
+    "text": "Val, I love you. You still can't have any of my fries.",
+    "family": "withheld-affection",
+    "context": "val",
+    "priority": 2,
+    "trigger": "reaction.val.trick"
+  },
+  "reaction.opponent.trick.go-fuck-yourself": {
+    "clip": "reaction.opponent.trick.go-fuck-yourself",
+    "text": "Oh, go fuck yourself.",
+    "family": "sore-loser-protest",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.trick"
+  },
+  "reaction.opponent.trick.little-paper": {
+    "clip": "reaction.opponent.trick.little-paper",
+    "text": "Great. Now Lois is gonna ask why I'm mad, and I gotta say 'little pieces of paper.'",
+    "family": "embarrassed-exposure",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.trick"
+  },
+  "reaction.opponent.trick.elevator-fart": {
+    "clip": "reaction.opponent.trick.elevator-fart",
+    "text": "I hope you fart in an elevator and it stops.",
+    "family": "malicious-hope",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.trick"
+  },
+  "reaction.opponent.trick.sandcastles": {
+    "clip": "reaction.opponent.trick.sandcastles",
+    "text": "Oh, that's nice. Do you kick sandcastles too, ya prick?",
+    "family": "spoiled-victimhood",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.trick"
+  },
+  "reaction.opponent.right-bower.piss-off-jack": {
+    "clip": "reaction.opponent.right-bower.piss-off-jack",
+    "text": "Oh, piss off, Jack.",
+    "family": "sore-loser-protest",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.right-bower"
+  },
+  "reaction.opponent.right-bower.fold-you": {
+    "clip": "reaction.opponent.right-bower.fold-you",
+    "text": "Okay, Jack. Real tough for a guy I could fold in half.",
+    "family": "card-sized-courage",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.right-bower"
+  },
+  "reaction.opponent.right-bower.copy-shop": {
+    "clip": "reaction.opponent.right-bower.copy-shop",
+    "text": "The big jack? I know a guy at the copy shop. I can make a bigger one.",
+    "family": "literal-rank-threat",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.right-bower"
+  },
+  "reaction.opponent.right-bower.call-him-sir": {
+    "clip": "reaction.opponent.right-bower.call-him-sir",
+    "text": "Ugh. The right bower. You know that prick makes waitresses call him 'sir.'",
+    "family": "main-character",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.right-bower"
+  },
+  "reaction.you.bower.cheese-stick": {
+    "clip": "reaction.you.bower.cheese-stick",
+    "text": "Oh, you brought a bower! I brought a cheese stick. Mine's gone.",
+    "family": "useless-contribution",
+    "context": "you",
+    "priority": 2,
+    "trigger": "reaction.you.bower"
+  },
+  "reaction.you.bower.card-prison": {
+    "clip": "reaction.you.bower.card-prison",
+    "text": "Hell yes. That's the jack they warn the other cards about in prison.",
+    "family": "admiring-obnoxiousness",
+    "context": "you",
+    "priority": 2,
+    "trigger": "reaction.you.bower"
+  },
+  "reaction.you.bower.buffet-ban": {
+    "clip": "reaction.you.bower.buffet-ban",
+    "text": "That jack's got pull. Ask if he can get me unbanned from the buffet.",
+    "family": "borrowed-influence",
+    "context": "you",
+    "priority": 2,
+    "trigger": "reaction.you.bower"
+  },
+  "reaction.you.bower.motel-photos": {
+    "clip": "reaction.you.bower.motel-photos",
+    "text": "Oh, a bower. That jack's got pictures of a king at a motel.",
+    "family": "rank-by-blackmail",
+    "context": "you",
+    "priority": 2,
+    "trigger": "reaction.you.bower"
+  },
+  "reaction.val.bower.pringles-fist": {
+    "clip": "reaction.val.bower.pringles-fist",
+    "text": "Val, I'd clap, but my fist's stuck in the Pringles can. I'm not droppin' the chip.",
+    "family": "distorted-priorities",
+    "context": "val",
+    "priority": 2,
+    "trigger": "reaction.val.bower"
+  },
+  "reaction.val.bower.explain-with-nuggets": {
+    "clip": "reaction.val.bower.explain-with-nuggets",
+    "text": "Val, I'm gonna need you to explain that later, using nuggets.",
+    "family": "food-based-learning",
+    "context": "val",
+    "priority": 2,
+    "trigger": "reaction.val.bower"
+  },
+  "reaction.val.bower.call-first": {
+    "clip": "reaction.val.bower.call-first",
+    "text": "Val, you and that jack are welcome at my house. Call first. Sometimes I'm just naked and angry.",
+    "family": "misplaced-decency",
+    "context": "val",
+    "priority": 2,
+    "trigger": "reaction.val.bower"
+  },
+  "reaction.val.bower.shotgun": {
+    "clip": "reaction.val.bower.shotgun",
+    "text": "Val, that jack gets shotgun. Brian can take the goddamn bus.",
+    "family": "selective-appreciation",
+    "context": "val",
+    "priority": 2,
+    "trigger": "reaction.val.bower"
   }
 };

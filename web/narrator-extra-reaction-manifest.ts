@@ -1295,5 +1295,221 @@ export const narratorExtraReactionManifest: NarrationManifest = {
     "durationSeconds": 5.250612,
     "sha256": "827339f18f24be755e75f748db0ff91b0280f3233aecd907095cc0fafbeb5385",
     "bytes": 84470
+  },
+  "reaction.you.trick.entire-ass": {
+    "id": "reaction.you.trick.entire-ass",
+    "url": "audio/reaction.you.trick.entire-ass.mp3",
+    "text": "Ha! Eat my entire ass!",
+    "status": "ready",
+    "durationSeconds": 2.403265,
+    "sha256": "6f06a18565749fd0217d82cbc8231efa4ca7aa327cead572d4723030886d34de",
+    "bytes": 38913
+  },
+  "reaction.you.trick.brian-write-it": {
+    "id": "reaction.you.trick.brian-write-it",
+    "url": "audio/reaction.you.trick.brian-write-it.mp3",
+    "text": "Yes! Brian, write that down. Use your fancy words for 'suck it.'",
+    "status": "ready",
+    "durationSeconds": 4.466939,
+    "sha256": "35b03bf73da9a18d778831606a6300b2f9985855e4b9dfdc5c19c6e9b78d7cef",
+    "bytes": 71932
+  },
+  "reaction.you.trick.remote-scratch": {
+    "id": "reaction.you.trick.remote-scratch",
+    "url": "audio/reaction.you.trick.remote-scratch.mp3",
+    "text": "Oh, that felt good. Like scratchin' your ass with a remote and the TV still works.",
+    "status": "ready",
+    "durationSeconds": 5.485714,
+    "sha256": "f3caa536e3b684cb3581a406df6676a6e7f019a8ef56577b0c9c4d4c11f95c80",
+    "bytes": 88232
+  },
+  "reaction.you.trick.air-horn": {
+    "id": "reaction.you.trick.air-horn",
+    "url": "audio/reaction.you.trick.air-horn.mp3",
+    "text": "Yes! Lois took my air horn, so I'm just gonna be an air horn.",
+    "status": "ready",
+    "durationSeconds": 3.578776,
+    "sha256": "d80f0a8fa9b0d6121e58f74c62180aa2f7d84470369e5445e17f330f5f3f67bc",
+    "bytes": 57721
+  },
+  "reaction.val.trick.magnificent": {
+    "id": "reaction.val.trick.magnificent",
+    "url": "audio/reaction.val.trick.magnificent.mp3",
+    "text": "Val! You magnificent son of a bitch!",
+    "status": "ready",
+    "durationSeconds": 2.586122,
+    "sha256": "74142b87e7f141cff3edcddf126250f615e1ae51d21aa272adb37cf35d782d74",
+    "bytes": 41838
+  },
+  "reaction.val.trick.body-and-stairs": {
+    "id": "reaction.val.trick.body-and-stairs",
+    "url": "audio/reaction.val.trick.body-and-stairs.mp3",
+    "text": "Val, I'd help you hide a body. But if there's stairs, I'm callin' the cops.",
+    "status": "ready",
+    "durationSeconds": 4.675918,
+    "sha256": "00752b05199e643e03764122b802d68f555bd67d7a832542b21a33fb635887a9",
+    "bytes": 75275
+  },
+  "reaction.val.trick.good-lawn-chair": {
+    "id": "reaction.val.trick.good-lawn-chair",
+    "url": "audio/reaction.val.trick.good-lawn-chair.mp3",
+    "text": "Val, you get the good lawn chair. The one that doesn't slowly eat your balls.",
+    "status": "ready",
+    "durationSeconds": 4.466939,
+    "sha256": "4ea3a1a7272e93b553e926eedb7fe84153992ea8f8a7a8d1eea7dc75277049d4",
+    "bytes": 71932
+  },
+  "reaction.val.trick.my-fries": {
+    "id": "reaction.val.trick.my-fries",
+    "url": "audio/reaction.val.trick.my-fries.mp3",
+    "text": "Val, I love you. You still can't have any of my fries.",
+    "status": "ready",
+    "durationSeconds": 3.239184,
+    "sha256": "75aad9f347fb2a77a619ea599f20b28dbe218439db335ac6cc1892a5e24e40d7",
+    "bytes": 52287
+  },
+  "reaction.opponent.trick.go-fuck-yourself": {
+    "id": "reaction.opponent.trick.go-fuck-yourself",
+    "url": "audio/reaction.opponent.trick.go-fuck-yourself.mp3",
+    "text": "Oh, go fuck yourself.",
+    "status": "ready",
+    "durationSeconds": 1.567347,
+    "sha256": "e45dc27a7e12d500fdae95a7f3d4600c5335dd6cef7f88dff350602e00341d01",
+    "bytes": 25538
+  },
+  "reaction.opponent.trick.little-paper": {
+    "id": "reaction.opponent.trick.little-paper",
+    "url": "audio/reaction.opponent.trick.little-paper.mp3",
+    "text": "Great. Now Lois is gonna ask why I'm mad, and I gotta say 'little pieces of paper.'",
+    "status": "ready",
+    "durationSeconds": 5.01551,
+    "sha256": "f2a2fa745a48f00af9fa9f4a54065ffd365a8774655b04f06f2d4a1b66da6274",
+    "bytes": 80709
+  },
+  "reaction.opponent.trick.elevator-fart": {
+    "id": "reaction.opponent.trick.elevator-fart",
+    "url": "audio/reaction.opponent.trick.elevator-fart.mp3",
+    "text": "I hope you fart in an elevator and it stops.",
+    "status": "ready",
+    "durationSeconds": 2.507755,
+    "sha256": "7c1419f6d6dc2d4d8b24863343340bff96b853e148dad1ecfb9c17bbc82218f3",
+    "bytes": 40585
+  },
+  "reaction.opponent.trick.sandcastles": {
+    "id": "reaction.opponent.trick.sandcastles",
+    "url": "audio/reaction.opponent.trick.sandcastles.mp3",
+    "text": "Oh, that's nice. Do you kick sandcastles too, ya prick?",
+    "status": "ready",
+    "durationSeconds": 3.474286,
+    "sha256": "3681891c9b625c9633dd1f0fb10fc786acc5bf5b5a78e49fb5e9cb9a7360f0f2",
+    "bytes": 56049
+  },
+  "reaction.opponent.right-bower.piss-off-jack": {
+    "id": "reaction.opponent.right-bower.piss-off-jack",
+    "url": "audio/reaction.opponent.right-bower.piss-off-jack.mp3",
+    "text": "Oh, piss off, Jack.",
+    "status": "ready",
+    "durationSeconds": 1.332245,
+    "sha256": "d35f37d9f1da35365825b3dcc243a58055c6f573a1bfb1be0bc9f3067d607abd",
+    "bytes": 21776
+  },
+  "reaction.opponent.right-bower.fold-you": {
+    "id": "reaction.opponent.right-bower.fold-you",
+    "url": "audio/reaction.opponent.right-bower.fold-you.mp3",
+    "text": "Okay, Jack. Real tough for a guy I could fold in half.",
+    "status": "ready",
+    "durationSeconds": 3.160816,
+    "sha256": "4b8676bafdebfa2ffdffa8bf2f2cd00c04b52301d98509d7bc2832c37ca5fe96",
+    "bytes": 51034
+  },
+  "reaction.opponent.right-bower.copy-shop": {
+    "id": "reaction.opponent.right-bower.copy-shop",
+    "url": "audio/reaction.opponent.right-bower.copy-shop.mp3",
+    "text": "The big jack? I know a guy at the copy shop. I can make a bigger one.",
+    "status": "ready",
+    "durationSeconds": 3.761633,
+    "sha256": "e90ed615b3fdabd61a3c457d7be41cd90ea9ae704c5ecb26c9a94c6021e338f8",
+    "bytes": 60647
+  },
+  "reaction.opponent.right-bower.call-him-sir": {
+    "id": "reaction.opponent.right-bower.call-him-sir",
+    "url": "audio/reaction.opponent.right-bower.call-him-sir.mp3",
+    "text": "Ugh. The right bower. You know that prick makes waitresses call him 'sir.'",
+    "status": "ready",
+    "durationSeconds": 4.310204,
+    "sha256": "b9ae08a1fd7442122a48fd4487000b29ef54ba3e1599f7f574736f213b5c4c16",
+    "bytes": 69424
+  },
+  "reaction.you.bower.cheese-stick": {
+    "id": "reaction.you.bower.cheese-stick",
+    "url": "audio/reaction.you.bower.cheese-stick.mp3",
+    "text": "Oh, you brought a bower! I brought a cheese stick. Mine's gone.",
+    "status": "ready",
+    "durationSeconds": 3.422041,
+    "sha256": "cbd2ff816cc4072616d853444fefbb32f8f35b64c0042645126952fb5e0e5dd8",
+    "bytes": 55213
+  },
+  "reaction.you.bower.card-prison": {
+    "id": "reaction.you.bower.card-prison",
+    "url": "audio/reaction.you.bower.card-prison.mp3",
+    "text": "Hell yes. That's the jack they warn the other cards about in prison.",
+    "status": "ready",
+    "durationSeconds": 3.813878,
+    "sha256": "965ab1adabac463cc9c03306bfe4713440cba308a34852268aa856ff96e1aa12",
+    "bytes": 61483
+  },
+  "reaction.you.bower.buffet-ban": {
+    "id": "reaction.you.bower.buffet-ban",
+    "url": "audio/reaction.you.bower.buffet-ban.mp3",
+    "text": "That jack's got pull. Ask if he can get me unbanned from the buffet.",
+    "status": "ready",
+    "durationSeconds": 3.84,
+    "sha256": "c428c18642e341428347da8ec4e0ffe5fa08ae5179eb91ca5c6903f61a70b698",
+    "bytes": 61901
+  },
+  "reaction.you.bower.motel-photos": {
+    "id": "reaction.you.bower.motel-photos",
+    "url": "audio/reaction.you.bower.motel-photos.mp3",
+    "text": "Oh, a bower. That jack's got pictures of a king at a motel.",
+    "status": "ready",
+    "durationSeconds": 3.63102,
+    "sha256": "635ea627a7f8849bad8e0cc282669021709cff7496032c3bb373b40e52feda60",
+    "bytes": 58557
+  },
+  "reaction.val.bower.pringles-fist": {
+    "id": "reaction.val.bower.pringles-fist",
+    "url": "audio/reaction.val.bower.pringles-fist.mp3",
+    "text": "Val, I'd clap, but my fist's stuck in the Pringles can. I'm not droppin' the chip.",
+    "status": "ready",
+    "durationSeconds": 4.675918,
+    "sha256": "0acf41855d44015a7367a0d447037f4efdacb6d124084e39377e0c3aaa4adb7d",
+    "bytes": 75275
+  },
+  "reaction.val.bower.explain-with-nuggets": {
+    "id": "reaction.val.bower.explain-with-nuggets",
+    "url": "audio/reaction.val.bower.explain-with-nuggets.mp3",
+    "text": "Val, I'm gonna need you to explain that later, using nuggets.",
+    "status": "ready",
+    "durationSeconds": 3.892245,
+    "sha256": "9c90d3b8d0c3ba52515182e7f887f7863f4aaa3298e8110b02ae26d4fadea9e9",
+    "bytes": 62736
+  },
+  "reaction.val.bower.call-first": {
+    "id": "reaction.val.bower.call-first",
+    "url": "audio/reaction.val.bower.call-first.mp3",
+    "text": "Val, you and that jack are welcome at my house. Call first. Sometimes I'm just naked and angry.",
+    "status": "ready",
+    "durationSeconds": 5.485714,
+    "sha256": "c868ad03f810a524db6b931b42b03c9b4f9a5340249a7278cfa8f0b4cdb3fcde",
+    "bytes": 88232
+  },
+  "reaction.val.bower.shotgun": {
+    "id": "reaction.val.bower.shotgun",
+    "url": "audio/reaction.val.bower.shotgun.mp3",
+    "text": "Val, that jack gets shotgun. Brian can take the goddamn bus.",
+    "status": "ready",
+    "durationSeconds": 3.996735,
+    "sha256": "c2e8c60c22e5adb4d2fbfc856cc7b1042f2b00251f46abb1a101f1b229d13b19",
+    "bytes": 64408
   }
 };

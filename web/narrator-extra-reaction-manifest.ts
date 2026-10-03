@@ -1079,5 +1079,221 @@ export const narratorExtraReactionManifest: NarrationManifest = {
     "durationSeconds": 3.996735,
     "sha256": "895c78599eec65842278c67bd2a4559c3a744ee61a823033df603eb948ea8976",
     "bytes": 64408
+  },
+  "reaction.you.follow-suit.shirt-in": {
+    "id": "reaction.you.follow-suit.shirt-in",
+    "url": "audio/reaction.you.follow-suit.shirt-in.mp3",
+    "text": "Same suit. Fine. But I'm not tuckin' my shirt in.",
+    "status": "ready",
+    "durationSeconds": 3.395918,
+    "sha256": "e2587df6d2189b4f1234ae99bfaf052c990b3f665920ca5dac8a4b7260624e3b",
+    "bytes": 54795
+  },
+  "reaction.you.follow-suit.jury-duty": {
+    "id": "reaction.you.follow-suit.jury-duty",
+    "url": "audio/reaction.you.follow-suit.jury-duty.mp3",
+    "text": "Same suit. Nice. You'd be great at jury duty. I got thrown out for tryin' to buy the gavel.",
+    "status": "ready",
+    "durationSeconds": 5.01551,
+    "sha256": "f8c4a8bd1a4532ce6a76c6c74546e266293bf022a2839e25f029989f81cd51e4",
+    "bytes": 80709
+  },
+  "reaction.you.follow-suit.brians-podcast": {
+    "id": "reaction.you.follow-suit.brians-podcast",
+    "url": "audio/reaction.you.follow-suit.brians-podcast.mp3",
+    "text": "Same suit! See, Brian? We don't need your goddamn podcast.",
+    "status": "ready",
+    "durationSeconds": 4.075102,
+    "sha256": "2df7cc73bf6bede4769601b153962f32d33fabe7cfcedce7f18164dc1e249339",
+    "bytes": 65662
+  },
+  "reaction.you.follow-suit.half-a-grill": {
+    "id": "reaction.you.follow-suit.half-a-grill",
+    "url": "audio/reaction.you.follow-suit.half-a-grill.mp3",
+    "text": "Same suit. Good. Last time I didn't follow instructions, I built half a grill and a pretty convincing place for a raccoon to die.",
+    "status": "ready",
+    "durationSeconds": 7.340408,
+    "sha256": "7729598bb8a524abdf36e1cb1c0e9de4a646c8d8aa54c7203ced17cd66c33adb",
+    "bytes": 117907
+  },
+  "reaction.val.follow-suit.real-fork": {
+    "id": "reaction.val.follow-suit.real-fork",
+    "url": "audio/reaction.val.follow-suit.real-fork.mp3",
+    "text": "Nice, Val. You're gettin' a real fork at my house.",
+    "status": "ready",
+    "durationSeconds": 2.977959,
+    "sha256": "5ff86fd1ae40755c70a2d0dfa995c7e7c05986a6709e34e494cd13a1071bcdf3",
+    "bytes": 48108
+  },
+  "reaction.val.follow-suit.restaurant-scene": {
+    "id": "reaction.val.follow-suit.restaurant-scene",
+    "url": "audio/reaction.val.follow-suit.restaurant-scene.mp3",
+    "text": "Val, if you ever need somebody to make a scene at a restaurant, I'm your guy.",
+    "status": "ready",
+    "durationSeconds": 4.127347,
+    "sha256": "b02708aa7957ad3ed486f5919cd2c42785c73b03e97e4f9f82c54d44da34ed32",
+    "bytes": 66498
+  },
+  "reaction.val.follow-suit.shoes-off": {
+    "id": "reaction.val.follow-suit.shoes-off",
+    "url": "audio/reaction.val.follow-suit.shoes-off.mp3",
+    "text": "Val, you're makin' this look respectable. I'm gonna have to take my shoes off.",
+    "status": "ready",
+    "durationSeconds": 3.94449,
+    "sha256": "7d5af7ae08c8159213f1d1f8728cc3a96e58593c4cc10d20dc721956a63addd3",
+    "bytes": 63572
+  },
+  "reaction.val.follow-suit.follow-up-questions": {
+    "id": "reaction.val.follow-suit.follow-up-questions",
+    "url": "audio/reaction.val.follow-suit.follow-up-questions.mp3",
+    "text": "That's it, Val. Just like I taught you. Nobody ask either of us any follow-up questions.",
+    "status": "ready",
+    "durationSeconds": 4.597551,
+    "sha256": "a3cdfbcb4957b3b49150146e8a519d161c940bfb0bd1bd36064550a2b16d6dde",
+    "bytes": 74021
+  },
+  "reaction.opponent.follow-suit.microwaving-fish": {
+    "id": "reaction.opponent.follow-suit.microwaving-fish",
+    "url": "audio/reaction.opponent.follow-suit.microwaving-fish.mp3",
+    "text": "Yep, that's legal. So's microwavin' fish, ya prick.",
+    "status": "ready",
+    "durationSeconds": 3.291429,
+    "sha256": "68cc9f2303d9fd857f85bd857059cf97234a957d1d497337f071d03c1770d6f7",
+    "bytes": 53123
+  },
+  "reaction.opponent.follow-suit.shopping-carts": {
+    "id": "reaction.opponent.follow-suit.shopping-carts",
+    "url": "audio/reaction.opponent.follow-suit.shopping-carts.mp3",
+    "text": "Same suit. Look at you, returnin' shopping carts and shit.",
+    "status": "ready",
+    "durationSeconds": 3.343673,
+    "sha256": "ecc67b0516ab2b04b1295fae078126b631d2f2eaf0e2f1d036af296f32148309",
+    "bytes": 53959
+  },
+  "reaction.opponent.follow-suit.already-dialed": {
+    "id": "reaction.opponent.follow-suit.already-dialed",
+    "url": "audio/reaction.opponent.follow-suit.already-dialed.mp3",
+    "text": "Oh, you matched? Aw, crap. I already dialed nine-one-one.",
+    "status": "ready",
+    "durationSeconds": 3.892245,
+    "sha256": "8c3986789cfeb8bb1b2417a5e743c252067dcaf6a25e088748d80af7ee22f8fb",
+    "bytes": 62736
+  },
+  "reaction.opponent.follow-suit.jerk-off-motion": {
+    "id": "reaction.opponent.follow-suit.jerk-off-motion",
+    "url": "audio/reaction.opponent.follow-suit.jerk-off-motion.mp3",
+    "text": "All right, same suit. I'm still doin' the jerk-off motion.",
+    "status": "ready",
+    "durationSeconds": 3.291429,
+    "sha256": "43036511d651859f78af1cd32334b0d3d58f3449ac478eb040f05d74c1e567a1",
+    "bytes": 53123
+  },
+  "reaction.you.trump.expensive-to-break": {
+    "id": "reaction.you.trump.expensive-to-break",
+    "url": "audio/reaction.you.trump.expensive-to-break.mp3",
+    "text": "Ah, hell yeah! Gimme somethin' expensive to break!",
+    "status": "ready",
+    "durationSeconds": 3.213061,
+    "sha256": "4bb9f4fc262b2d0fc7ea3842e57ac93039e32c9d11fa2a2efa54b0cbb5d8d8aa",
+    "bytes": 51870
+  },
+  "reaction.you.trump.kids-soccer": {
+    "id": "reaction.you.trump.kids-soccer",
+    "url": "audio/reaction.you.trump.kids-soccer.mp3",
+    "text": "Trump! That's the kind of shit that gets me banned from watchin' kids' soccer.",
+    "status": "ready",
+    "durationSeconds": 3.761633,
+    "sha256": "e750d2d6ea34d664169025c460bac753ffc11b43b87450f5f0436aadbacc5cd1",
+    "bytes": 60647
+  },
+  "reaction.you.trump.be-a-father": {
+    "id": "reaction.you.trump.be-a-father",
+    "url": "audio/reaction.you.trump.be-a-father.mp3",
+    "text": "Oh-ho-ho! That's more like it. I was about to go be a father.",
+    "status": "ready",
+    "durationSeconds": 4.231837,
+    "sha256": "a4d20393c7d7215614cbdf5dd686cc7d2a549a6d9f1dd34bd803888eeb5d0fc6",
+    "bytes": 68170
+  },
+  "reaction.you.trump.foam-finger": {
+    "id": "reaction.you.trump.foam-finger",
+    "url": "audio/reaction.you.trump.foam-finger.mp3",
+    "text": "Trump! Get me a foam finger. I wanna be an asshole people can see from space.",
+    "status": "ready",
+    "durationSeconds": 4.649796,
+    "sha256": "89fe43f7a9d8a0e722151144c523601c6edf376cab6cbe849442b2254867f618",
+    "bytes": 74857
+  },
+  "reaction.val.trump.emergency-pants": {
+    "id": "reaction.val.trump.emergency-pants",
+    "url": "audio/reaction.val.trump.emergency-pants.mp3",
+    "text": "Val! You're my emergency contact now. If they call, bring pants.",
+    "status": "ready",
+    "durationSeconds": 4.362449,
+    "sha256": "d4ac77b307b4982516e9756ba95563e77d17004348f963382997c2da4320033d",
+    "bytes": 70260
+  },
+  "reaction.val.trump.zoo-animal": {
+    "id": "reaction.val.trump.zoo-animal",
+    "url": "audio/reaction.val.trump.zoo-animal.mp3",
+    "text": "Holy crap, Val! I'm namin' a zoo animal after you. I'll just start callin' it Val until the sign guy gives up.",
+    "status": "ready",
+    "durationSeconds": 6.321633,
+    "sha256": "c04138666e3975fa01202986864422b303050e9083cf461a0d626a76c1a3fdbe",
+    "bytes": 101607
+  },
+  "reaction.val.trump.need-a-boat": {
+    "id": "reaction.val.trump.need-a-boat",
+    "url": "audio/reaction.val.trump.need-a-boat.mp3",
+    "text": "Val, you and me need a boat. We'll figure out the rest on the boat.",
+    "status": "ready",
+    "durationSeconds": 3.474286,
+    "sha256": "bc08fdfb9033f031c74cf5053d121c458b7071c4a505543abe10eae4649d1cb2",
+    "bytes": 56049
+  },
+  "reaction.val.trump.park-ranger": {
+    "id": "reaction.val.trump.park-ranger",
+    "url": "audio/reaction.val.trump.park-ranger.mp3",
+    "text": "Val, I would lie to a park ranger for you.",
+    "status": "ready",
+    "durationSeconds": 2.873469,
+    "sha256": "8a1e440751aad433afc60a8c4ccc4fc1e9a22ece510456144ba68e4efcd4f78f",
+    "bytes": 46436
+  },
+  "reaction.table.left-bower.birthday-space": {
+    "id": "reaction.table.left-bower.birthday-space",
+    "url": "audio/reaction.table.left-bower.birthday-space.mp3",
+    "text": "That jack's trump too? Fine. I'll just forget a kid's birthday to make room.",
+    "status": "ready",
+    "durationSeconds": 4.414694,
+    "sha256": "5674284107a3ad4a7b8516b20f0a44c1ba7be869396752b7302fad0b3d687589",
+    "bytes": 71096
+  },
+  "reaction.table.left-bower.hot-dog-sandwich": {
+    "id": "reaction.table.left-bower.hot-dog-sandwich",
+    "url": "audio/reaction.table.left-bower.hot-dog-sandwich.mp3",
+    "text": "Different suit, still trump? Fine. The hot dog's a sandwich.",
+    "status": "ready",
+    "durationSeconds": 3.813878,
+    "sha256": "4a35e65310bd8600cc9fa07c14c2bf1232225db9744cba0cb3fa72a63539051d",
+    "bytes": 61483
+  },
+  "reaction.table.left-bower.teach-it-wrong": {
+    "id": "reaction.table.left-bower.teach-it-wrong",
+    "url": "audio/reaction.table.left-bower.teach-it-wrong.mp3",
+    "text": "Left bower. Got it. I can't wait to explain that wrong to somebody.",
+    "status": "ready",
+    "durationSeconds": 3.422041,
+    "sha256": "38f46992244f96955f4f6f65f0b57de58c1f6054adbbbd7ba7876e32a4de6a9a",
+    "bytes": 55213
+  },
+  "reaction.table.left-bower.thanksgiving-uncle": {
+    "id": "reaction.table.left-bower.thanksgiving-uncle",
+    "url": "audio/reaction.table.left-bower.thanksgiving-uncle.mp3",
+    "text": "The left bower. That's the card you explain to a drunk uncle three times before he ruins Thanksgiving.",
+    "status": "ready",
+    "durationSeconds": 5.250612,
+    "sha256": "827339f18f24be755e75f748db0ff91b0280f3233aecd907095cc0fafbeb5385",
+    "bytes": 84470
   }
 };

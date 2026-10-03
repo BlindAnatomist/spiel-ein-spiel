@@ -3,15 +3,15 @@
 This is source and script work in progress. It is not a new game deployment.
 
 All 168 contextual scripts are included in approved-scripts, in seven 24-line
-batches. The implementation contains runtime metadata for 120 new recordings,
-including the complete fifth batch, for 2,085 total recordings. The remaining
-48 approved scripts are not yet integrated. Audio is excluded from Git.
+batches. The implementation contains runtime metadata for 144 new recordings,
+including the complete sixth batch, for 2,109 total recordings. The remaining
+24 approved scripts are not yet integrated. Audio is excluded from Git.
 
 Strict typecheck and 240 tests pass. Earlier independent context review checked
 27 public predicates over 8,209 accepted game transitions. Independent importer
 review passed 41 production-route probes and five deeper mechanical/JSON probes.
-The original 1,965 recording references, earlier 96 additions, selectors and game
-rules are unchanged. All 2,061 prior audio files retain their bytes and timestamps.
+The original 1,965 recording references, earlier 120 additions, selectors and game
+rules are unchanged. All 2,085 prior audio files retain their bytes and timestamps.
 
 The importer accepts preserved legacy evidence or freshly validated complete
 browser evidence. It verifies pinned offline validation code, exact approved

@@ -969,5 +969,197 @@ export const extraReactionLines: Readonly<Record<string, NarrationAlternative & 
     "context": "you",
     "priority": 1,
     "trigger": "reaction.you.queen"
+  },
+  "reaction.you.follow-suit.shirt-in": {
+    "clip": "reaction.you.follow-suit.shirt-in",
+    "text": "Same suit. Fine. But I'm not tuckin' my shirt in.",
+    "family": "rule-resistance",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.follow-suit"
+  },
+  "reaction.you.follow-suit.jury-duty": {
+    "clip": "reaction.you.follow-suit.jury-duty",
+    "text": "Same suit. Nice. You'd be great at jury duty. I got thrown out for tryin' to buy the gavel.",
+    "family": "civic-incompetence",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.follow-suit"
+  },
+  "reaction.you.follow-suit.brians-podcast": {
+    "clip": "reaction.you.follow-suit.brians-podcast",
+    "text": "Same suit! See, Brian? We don't need your goddamn podcast.",
+    "family": "irrelevant-vindication",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.follow-suit"
+  },
+  "reaction.you.follow-suit.half-a-grill": {
+    "clip": "reaction.you.follow-suit.half-a-grill",
+    "text": "Same suit. Good. Last time I didn't follow instructions, I built half a grill and a pretty convincing place for a raccoon to die.",
+    "family": "instructional-disaster",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.follow-suit"
+  },
+  "reaction.val.follow-suit.real-fork": {
+    "clip": "reaction.val.follow-suit.real-fork",
+    "text": "Nice, Val. You're gettin' a real fork at my house.",
+    "family": "selective-appreciation",
+    "context": "val",
+    "priority": 1,
+    "trigger": "reaction.val.follow-suit"
+  },
+  "reaction.val.follow-suit.restaurant-scene": {
+    "clip": "reaction.val.follow-suit.restaurant-scene",
+    "text": "Val, if you ever need somebody to make a scene at a restaurant, I'm your guy.",
+    "family": "overcompensating-support",
+    "context": "val",
+    "priority": 1,
+    "trigger": "reaction.val.follow-suit"
+  },
+  "reaction.val.follow-suit.shoes-off": {
+    "clip": "reaction.val.follow-suit.shoes-off",
+    "text": "Val, you're makin' this look respectable. I'm gonna have to take my shoes off.",
+    "family": "compulsive-disruption",
+    "context": "val",
+    "priority": 1,
+    "trigger": "reaction.val.follow-suit"
+  },
+  "reaction.val.follow-suit.follow-up-questions": {
+    "clip": "reaction.val.follow-suit.follow-up-questions",
+    "text": "That's it, Val. Just like I taught you. Nobody ask either of us any follow-up questions.",
+    "family": "undeserved-credit",
+    "context": "val",
+    "priority": 1,
+    "trigger": "reaction.val.follow-suit"
+  },
+  "reaction.opponent.follow-suit.microwaving-fish": {
+    "clip": "reaction.opponent.follow-suit.microwaving-fish",
+    "text": "Yep, that's legal. So's microwavin' fish, ya prick.",
+    "family": "compliance-double-standard",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.follow-suit"
+  },
+  "reaction.opponent.follow-suit.shopping-carts": {
+    "clip": "reaction.opponent.follow-suit.shopping-carts",
+    "text": "Same suit. Look at you, returnin' shopping carts and shit.",
+    "family": "mocking-conformity",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.follow-suit"
+  },
+  "reaction.opponent.follow-suit.already-dialed": {
+    "clip": "reaction.opponent.follow-suit.already-dialed",
+    "text": "Oh, you matched? Aw, crap. I already dialed nine-one-one.",
+    "family": "unused-tantrum",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.follow-suit"
+  },
+  "reaction.opponent.follow-suit.jerk-off-motion": {
+    "clip": "reaction.opponent.follow-suit.jerk-off-motion",
+    "text": "All right, same suit. I'm still doin' the jerk-off motion.",
+    "family": "impotent-retaliation",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.follow-suit"
+  },
+  "reaction.you.trump.expensive-to-break": {
+    "clip": "reaction.you.trump.expensive-to-break",
+    "text": "Ah, hell yeah! Gimme somethin' expensive to break!",
+    "family": "physical-celebration",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.trump"
+  },
+  "reaction.you.trump.kids-soccer": {
+    "clip": "reaction.you.trump.kids-soccer",
+    "text": "Trump! That's the kind of shit that gets me banned from watchin' kids' soccer.",
+    "family": "unrestrained-hype",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.trump"
+  },
+  "reaction.you.trump.be-a-father": {
+    "clip": "reaction.you.trump.be-a-father",
+    "text": "Oh-ho-ho! That's more like it. I was about to go be a father.",
+    "family": "distorted-priorities",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.trump"
+  },
+  "reaction.you.trump.foam-finger": {
+    "clip": "reaction.you.trump.foam-finger",
+    "text": "Trump! Get me a foam finger. I wanna be an asshole people can see from space.",
+    "family": "unrestrained-hype",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.trump"
+  },
+  "reaction.val.trump.emergency-pants": {
+    "clip": "reaction.val.trump.emergency-pants",
+    "text": "Val! You're my emergency contact now. If they call, bring pants.",
+    "family": "manufactured-obligation",
+    "context": "val",
+    "priority": 1,
+    "trigger": "reaction.val.trump"
+  },
+  "reaction.val.trump.zoo-animal": {
+    "clip": "reaction.val.trump.zoo-animal",
+    "text": "Holy crap, Val! I'm namin' a zoo animal after you. I'll just start callin' it Val until the sign guy gives up.",
+    "family": "unauthorized-honors",
+    "context": "val",
+    "priority": 1,
+    "trigger": "reaction.val.trump"
+  },
+  "reaction.val.trump.need-a-boat": {
+    "clip": "reaction.val.trump.need-a-boat",
+    "text": "Val, you and me need a boat. We'll figure out the rest on the boat.",
+    "family": "impulsive-bonding",
+    "context": "val",
+    "priority": 1,
+    "trigger": "reaction.val.trump"
+  },
+  "reaction.val.trump.park-ranger": {
+    "clip": "reaction.val.trump.park-ranger",
+    "text": "Val, I would lie to a park ranger for you.",
+    "family": "unfiltered-gratitude",
+    "context": "val",
+    "priority": 1,
+    "trigger": "reaction.val.trump"
+  },
+  "reaction.table.left-bower.birthday-space": {
+    "clip": "reaction.table.left-bower.birthday-space",
+    "text": "That jack's trump too? Fine. I'll just forget a kid's birthday to make room.",
+    "family": "distorted-priorities",
+    "context": "table",
+    "priority": 2,
+    "trigger": "reaction.table.left-bower"
+  },
+  "reaction.table.left-bower.hot-dog-sandwich": {
+    "clip": "reaction.table.left-bower.hot-dog-sandwich",
+    "text": "Different suit, still trump? Fine. The hot dog's a sandwich.",
+    "family": "rule-resistance",
+    "context": "table",
+    "priority": 2,
+    "trigger": "reaction.table.left-bower"
+  },
+  "reaction.table.left-bower.teach-it-wrong": {
+    "clip": "reaction.table.left-bower.teach-it-wrong",
+    "text": "Left bower. Got it. I can't wait to explain that wrong to somebody.",
+    "family": "confident-misinstruction",
+    "context": "table",
+    "priority": 2,
+    "trigger": "reaction.table.left-bower"
+  },
+  "reaction.table.left-bower.thanksgiving-uncle": {
+    "clip": "reaction.table.left-bower.thanksgiving-uncle",
+    "text": "The left bower. That's the card you explain to a drunk uncle three times before he ruins Thanksgiving.",
+    "family": "family-table-tension",
+    "context": "table",
+    "priority": 2,
+    "trigger": "reaction.table.left-bower"
   }
 };

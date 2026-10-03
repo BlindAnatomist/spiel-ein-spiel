@@ -1,23 +1,28 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, readFile, rm, symlink } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { validateReactionBatches } from '../scripts/narrator-extra-contract.ts';
+import { validateReactionBatches as validateWithEvidence } from '../scripts/narrator-extra-contract.ts';
 import { extraReactionLines } from '../web/narrator-extra-reactions.ts';
 import { narratorExtraReactionManifest } from '../web/narrator-extra-reaction-manifest.ts';
 import { CHARACTER_LIBRARY_TARGET } from '../web/narrator-reaction-triggers.ts';
 
+// These fixtures deliberately are not audio. Keep the mechanical contract unit
+// separate from the production evidence route, which has no CLI bypass.
+const validateReactionBatches = (inputs: Parameters<typeof validateWithEvidence>[0]) =>
+ validateWithEvidence(inputs, async () => ({ mode: 'non-audio-unit-test-fixture' }));
+
 async function fixture() {
  const directory = await mkdtemp(path.join(tmpdir(), 'narrator-import-test-'));
  await mkdir(path.join(directory, 'audio'));await mkdir(path.join(directory, 'raw'));
- const data = Buffer.from('mechanical-contract-fixture-not-a-playable-recording'), sha = createHash('sha256').update(data).digest('hex');
+ const fixtureData = (id: string) => Buffer.from(`mechanical-contract-fixture-not-a-playable-recording-${id}`);
  const scripts = Array.from({length:24}, (_,i)=>({id:`reaction.you.trick.fixture-${i}`,trigger:'reaction.you.trick',family:`fixture-${i}`,context:'Public human trick win',text:`Fixture wording ${i}`,direction:'Testing only',deliveryTag:'excited'}));
  const proposal = {status:'Parent-approved fixture',packId:'test-pack',model:'s2.1-pro-free',reference_id:'d75c270eaee14c8aa1e9e980cc37cf1b',temperature:0.85,scripts};
- const clips = Object.fromEntries(scripts.map(line=>[line.id,{...line,prompt:`[${line.deliveryTag}] ${line.text}`,payload:{text:`[${line.deliveryTag}] ${line.text}`,temperature:0.85,reference_id:proposal.reference_id},status:'ready',decodeVerified:true,url:`audio/${line.id}.mp3`,rawUrl:`raw/${line.id}.mp3`,durationSeconds:1,bytes:data.length,rawBytes:data.length,sha256:sha,rawSha256:sha}]));
+ const clips = Object.fromEntries(scripts.map(line=>{const data=fixtureData(line.id), sha=createHash('sha256').update(data).digest('hex');return [line.id,{...line,prompt:`[${line.deliveryTag}] ${line.text}`,payload:{text:`[${line.deliveryTag}] ${line.text}`,temperature:0.85,reference_id:proposal.reference_id},status:'ready',decodeVerified:true,url:`audio/${line.id}.mp3`,rawUrl:`raw/${line.id}.mp3`,durationSeconds:1,bytes:data.length,rawBytes:data.length,sha256:sha,rawSha256:sha}];}));
  const manifest={...proposal,clips,readyCount:24,plannedCount:24};
- for(const clip of Object.values(clips)){await writeFile(path.join(directory,clip.url),data);await writeFile(path.join(directory,clip.rawUrl),data);}
+ for(const clip of Object.values(clips)){await writeFile(path.join(directory,clip.url),fixtureData(clip.id));await writeFile(path.join(directory,clip.rawUrl),fixtureData(clip.id));}
  const input = {directory, proposal:path.join(directory,'approved.json')};
  const save = async()=>{await writeFile(input.proposal,JSON.stringify(proposal));await writeFile(path.join(directory,'manifest.json'),JSON.stringify(manifest));};
  await writeFile(path.join(directory,'final-qa.json'),JSON.stringify({readyCount:24,exactApprovedContractMapping:true,audioSummary:{count:24,partial:false,rawHashesVerified:true,equalDecodedSampleCounts:true}}));
@@ -50,4 +55,30 @@ test('approved runtime contains only matching ready metadata and corrected whole
  assert.equal(extraReactionLines['reaction.opponent.trick.pissed']!.text,'That’s bullshit!');
  assert.equal(extraReactionLines['reaction.val.trick.beer']!.text,'Val, I owe you a beer.');
  for(const id of ['reaction.you.trump.slouch','reaction.val.follow-suit.soap-opera','reaction.opponent.ace-lead.tuxedo'])assert.equal(extraReactionLines[id],undefined,'unrecorded speculative line must be absent');
+});
+
+test('production importer cannot treat arbitrary QA as a legacy provenance exemption',async()=>{
+ const f=await fixture();try{
+  await assert.rejects(()=>validateWithEvidence([f.input]),/provenance failed/);
+  f.proposal.packId='peter-euchre-library-batch01-20261002';f.manifest.packId=f.proposal.packId;await f.save();
+  await assert.rejects(()=>validateWithEvidence([f.input]),/provenance failed/);
+ }finally{await f.clean();}
+});
+test('batch import rejects reused raw/master identity and symlinked audio',async()=>{
+ const f=await fixture();try{
+  const first=f.manifest.clips[f.proposal.scripts[0]!.id]!,second=f.manifest.clips[f.proposal.scripts[1]!.id]!;
+  const original=second.rawSha256;second.rawSha256=first.rawSha256;await f.save();
+  await assert.rejects(()=>validateReactionBatches([f.input]),/Duplicate.*audio identity/);
+  second.rawSha256=original;await f.save();
+  await rm(path.join(f.directory,first.rawUrl));await symlink(path.join(f.directory,first.url),path.join(f.directory,first.rawUrl));
+  await assert.rejects(()=>validateReactionBatches([f.input]),/Unsafe audio evidence path/);
+ }finally{await f.clean();}
+});
+test('verified master bytes are retained for import rather than rereading mutable input paths',async()=>{
+ const f=await fixture();try{
+  const v=await validateReactionBatches([f.input]),id=f.proposal.scripts[0]!.id,clip=f.manifest.clips[id]!;
+  const expected=await readFile(path.join(f.directory,clip.url));
+  await writeFile(path.join(f.directory,clip.url),'changed after validation');
+  assert.deepEqual(v.audioBytes.get(id),expected);
+ }finally{await f.clean();}
 });

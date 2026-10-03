@@ -1,10 +1,9 @@
 # Character library integration checkpoint
 
-October 2, 2026. This source checkpoint includes 168 approved contextual scripts in
-seven batches of 24. Runtime metadata currently includes 72 new recordings, for
-2,037 total recording references. Six more recordings are complete but not yet
-integrated; 90 remain. One request outcome must be reconciled before resubmission.
-No generation requests are running. The target is 2,133 runtime recordings.
+October 3, 2026. This source checkpoint includes 168 approved contextual scripts in
+seven batches of 24. Runtime metadata currently includes 96 new recordings, for
+2,061 total recording references. The target is 2,133 runtime recordings.
+The incomplete catalog remains publication-blocked.
 
 ## Implemented behavior
 
@@ -27,7 +26,7 @@ checkpoints/20261002-character-library/approved-scripts.
 
 ## Verification and remaining work
 
-Strict typecheck and 237 tests passed. Coverage includes 9,600 card/lead/trump
+Strict typecheck and 240 tests passed. Coverage includes 9,600 card/lead/trump
 contexts, hidden-hand mutation checks, trigger/result boundaries, importer
 corruption and content drift, and final-game selection precedence/fallback.
 Independent review exercised 8,209 accepted actions and all 27 predicates.
@@ -38,7 +37,34 @@ unfinished recordings projected 3.15–3.17 remarks per hand and 92–93% of han
 three or four remarks. Distinctness among the first 350 remarks was 44–45%, below
 the earlier 50% projection. These simulations do not establish audio acceptance.
 
-Remaining work: reconcile the unresolved request; finish the recording catalog;
+Remaining work: finish the recording catalog;
 integrate verified batches; rerun aggregate tests, actual-catalog cadence/novelty
 audits, strict build and audio integrity checks; complete independent final review.
 This is work in progress, not release approval or a deployment.
+
+## Reviewed browser-evidence imports
+
+The importer retains the first three previously imported packs only when the
+approved proposal, manifest and final QA have their exact preserved SHA-256
+identities. Every new or changed pack must include the pinned private evidence
+validators and complete final QA. Those private validators and receipts are not
+copied into this source repository.
+
+The local adapter needs Python 3, NumPy, FFmpeg and FFprobe. It starts Python in
+isolated, no-bytecode mode and executes only the hash-pinned validator bytes;
+it never adds an input pack to Python's import path. A fresh mechanical audio
+audit and read-only evidence check must pass, with the explicit approved proposal
+matching the audited proposal exactly. Saved QA must agree with that fresh audit.
+
+Historical HTTP and visible-browser evidence remain distinct. Browser evidence
+does not invent HTTP status or provider request totals. Approved replacements
+retain their original history. Validation requires exact prompt/settings/source,
+active-result binding where applicable, raw/export byte identity, strict receipt
+schemas, hashes, decoding, gain-only consistency and peak limits. It cannot
+certify listening, spoken wording, pronunciation, likeness or device behavior.
+
+Cross-pack raw/master hashes and browser blob identities must be unique. Every
+input is validated before writes; new files use the validated in-memory bytes and
+exclusive creation, while matching existing audio files are left untouched.
+The 168-addition strict preview build guard is unchanged. The local 96-addition
+catalog is preparation only, not a release or deployment.

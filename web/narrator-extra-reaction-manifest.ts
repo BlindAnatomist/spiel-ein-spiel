@@ -647,5 +647,221 @@ export const narratorExtraReactionManifest: NarrationManifest = {
     "durationSeconds": 3.709388,
     "sha256": "484477f0eac00d088c284a61c770129daee9962fc150b1921c77d721b588f169",
     "bytes": 59811
+  },
+  "reaction.you-team.euchred.already-smug": {
+    "id": "reaction.you-team.euchred.already-smug",
+    "url": "audio/reaction.you-team.euchred.already-smug.mp3",
+    "text": "Aw, crap. I was already bein' smug about that.",
+    "status": "ready",
+    "durationSeconds": 2.977959,
+    "sha256": "f11f803d363414aa9f847d20cc19731b4c7150009e06708e3665c151d22112c5",
+    "bytes": 48108
+  },
+  "reaction.you-team.euchred.having-a-face": {
+    "id": "reaction.you-team.euchred.having-a-face",
+    "url": "audio/reaction.you-team.euchred.having-a-face.mp3",
+    "text": "Nobody look at me. I hate havin' a face right now.",
+    "status": "ready",
+    "durationSeconds": 2.742857,
+    "sha256": "2e5e8559a588c58d9ee09a81e506aadaa41751ac539c976fab7f6ab80e767ca1",
+    "bytes": 44346
+  },
+  "reaction.you-team.euchred.vals-fault": {
+    "id": "reaction.you-team.euchred.vals-fault",
+    "url": "audio/reaction.you-team.euchred.vals-fault.mp3",
+    "text": "Aw, crap. Val, gimme a second. I'm tryin' to remember why this is your fault.",
+    "status": "ready",
+    "durationSeconds": 4.884898,
+    "sha256": "54446415be92dabb5fa68f4c59faa5da96eb758b62ced64bbffa962bc3affaa7",
+    "bytes": 78619
+  },
+  "reaction.you-team.euchred.buyin-groceries": {
+    "id": "reaction.you-team.euchred.buyin-groceries",
+    "url": "audio/reaction.you-team.euchred.buyin-groceries.mp3",
+    "text": "We got euchred? Val, if Lois asks, we were buyin' groceries.",
+    "status": "ready",
+    "durationSeconds": 4.075102,
+    "sha256": "7de3cc7b83b5f28ee20babbaadfcbd25b8daef6d17205407490e73fde5cc474d",
+    "bytes": 65662
+  },
+  "reaction.you-team.euchres-opponents.like-rule": {
+    "id": "reaction.you-team.euchres-opponents.like-rule",
+    "url": "audio/reaction.you-team.euchres-opponents.like-rule.mp3",
+    "text": "Ha! I like this rule now!",
+    "status": "ready",
+    "durationSeconds": 2.037551,
+    "sha256": "88fceacdf2e4cd0723cf1408689a4098d5e51381ddadb09ec3bf0e5c3b5d9032",
+    "bytes": 33061
+  },
+  "reaction.you-team.euchres-opponents.you-guys-are-sweet": {
+    "id": "reaction.you-team.euchres-opponents.you-guys-are-sweet",
+    "url": "audio/reaction.you-team.euchres-opponents.you-guys-are-sweet.mp3",
+    "text": "You picked trump and we got the points? Aw, you guys are sweet.",
+    "status": "ready",
+    "durationSeconds": 3.892245,
+    "sha256": "827dedc035d5f17350f878602f0e7b9bba714469c6bc79f6683db7350e4d2694",
+    "bytes": 62736
+  },
+  "reaction.you-team.euchres-opponents.beautiful-dumbasses": {
+    "id": "reaction.you-team.euchres-opponents.beautiful-dumbasses",
+    "url": "audio/reaction.you-team.euchres-opponents.beautiful-dumbasses.mp3",
+    "text": "You called it! You beautiful dumbasses!",
+    "status": "ready",
+    "durationSeconds": 2.742857,
+    "sha256": "3a1d0c5093fad05c838641fd6b4630aa1e5d346df8b5e00128e207b7c560a64c",
+    "bytes": 44346
+  },
+  "reaction.you-team.euchres-opponents.get-comfortable": {
+    "id": "reaction.you-team.euchres-opponents.get-comfortable",
+    "url": "audio/reaction.you-team.euchres-opponents.get-comfortable.mp3",
+    "text": "Ha! Lemme get comfortable. I wanna enjoy you bein' wrong.",
+    "status": "ready",
+    "durationSeconds": 3.709388,
+    "sha256": "d04616d242e50365d08d0d6a9fd3c0458a51bcc24bcb6405aaf2866b65203b28",
+    "bytes": 59811
+  },
+  "reaction.val.alone.big-balls": {
+    "id": "reaction.val.alone.big-balls",
+    "url": "audio/reaction.val.alone.big-balls.mp3",
+    "text": "All right, Val. Big balls. Keep 'em off the table.",
+    "status": "ready",
+    "durationSeconds": 2.56,
+    "sha256": "6b6c9cd39bd5768d7b55cb7951cb9e8b55ff2f4697db3188b6619923201700e4",
+    "bytes": 41421
+  },
+  "reaction.val.alone.home-depot": {
+    "id": "reaction.val.alone.home-depot",
+    "url": "audio/reaction.val.alone.home-depot.mp3",
+    "text": "Alone? Val, I won't even go to Home Depot without an adult.",
+    "status": "ready",
+    "durationSeconds": 3.813878,
+    "sha256": "5f95481b6b6b6599dbdff7e44c26dd4dd2dfdbc18b7a7a33f979cd4958cae40e",
+    "bytes": 61483
+  },
+  "reaction.val.alone.answer-my-calls": {
+    "id": "reaction.val.alone.answer-my-calls",
+    "url": "audio/reaction.val.alone.answer-my-calls.mp3",
+    "text": "Val, you better not get famous and stop answerin' my calls.",
+    "status": "ready",
+    "durationSeconds": 3.395918,
+    "sha256": "ddfd16369558fc0efe21e80d8ae6d6304ca8528259c605cddc5b0d9ea144b378",
+    "bytes": 54795
+  },
+  "reaction.val.alone.shut-up": {
+    "id": "reaction.val.alone.shut-up",
+    "url": "audio/reaction.val.alone.shut-up.mp3",
+    "text": "Alone? All right, Val. I'm gonna shut up for... okay, that was enough.",
+    "status": "ready",
+    "durationSeconds": 4.362449,
+    "sha256": "f6d1139b33fa1882d41f7332e9f2ff74e431384e06879ea025d4cfabe313c1bf",
+    "bytes": 70260
+  },
+  "reaction.you-team.game-win.everybody-like-me": {
+    "id": "reaction.you-team.game-win.everybody-like-me",
+    "url": "audio/reaction.you-team.game-win.everybody-like-me.mp3",
+    "text": "We won! Now everybody has to like me!",
+    "status": "ready",
+    "durationSeconds": 2.638367,
+    "sha256": "16916a601a7b5f2b02cdc5174b370a16495fdab4e4a02d768ea740e7b4b2ec12",
+    "bytes": 42674
+  },
+  "reaction.you-team.game-win.buyin-a-cape": {
+    "id": "reaction.you-team.game-win.buyin-a-cape",
+    "url": "audio/reaction.you-team.game-win.buyin-a-cape.mp3",
+    "text": "We won! I'm buyin' a cape.",
+    "status": "ready",
+    "durationSeconds": 1.802449,
+    "sha256": "5931c2506ae3c86e68ab9c2fcd8f780902d1fd0048e98da9660e6aa2d849b336",
+    "bytes": 29300
+  },
+  "reaction.you-team.game-win.family-dinner": {
+    "id": "reaction.you-team.game-win.family-dinner",
+    "url": "audio/reaction.you-team.game-win.family-dinner.mp3",
+    "text": "Yes! I am gonna be such a dick at the next family dinner.",
+    "status": "ready",
+    "durationSeconds": 3.474286,
+    "sha256": "bc2cb98a8ebf9d7fb68a17801bbe58efe05434f4e4fbe715bce072f7393cd799",
+    "bytes": 56049
+  },
+  "reaction.you-team.game-win.brian-anyway": {
+    "id": "reaction.you-team.game-win.brian-anyway",
+    "url": "audio/reaction.you-team.game-win.brian-anyway.mp3",
+    "text": "We won! Ha! Suck it, Brian. You're not even here and you can suck it.",
+    "status": "ready",
+    "durationSeconds": 4.127347,
+    "sha256": "aca4d6397dcf00e5ff569b4d4243700f94a0ce154f92676a1d3b5f439a1e5d19",
+    "bytes": 66498
+  },
+  "reaction.opponent.game-win.congratulations": {
+    "id": "reaction.opponent.game-win.congratulations",
+    "url": "audio/reaction.opponent.game-win.congratulations.mp3",
+    "text": "Well, congratulations, ya bunch of pricks.",
+    "status": "ready",
+    "durationSeconds": 2.507755,
+    "sha256": "9319676589b8d01d357aa3616cca2022f9ad7d430f321e78dfa0c1d5c908d355",
+    "bytes": 40585
+  },
+  "reaction.opponent.game-win.learned-nothing": {
+    "id": "reaction.opponent.game-win.learned-nothing",
+    "url": "audio/reaction.opponent.game-win.learned-nothing.mp3",
+    "text": "Well, I learned nothin', and I'm still mad.",
+    "status": "ready",
+    "durationSeconds": 2.220408,
+    "sha256": "f016381047af870862a8dda1f98b1215b9383a3ab48ac167c5745cf2de5f3b0b",
+    "bytes": 35987
+  },
+  "reaction.opponent.game-win.takin-somethin": {
+    "id": "reaction.opponent.game-win.takin-somethin",
+    "url": "audio/reaction.opponent.game-win.takin-somethin.mp3",
+    "text": "Fine. You win. I'm takin' my ball. I don't have a ball. I'm takin' somethin'.",
+    "status": "ready",
+    "durationSeconds": 5.250612,
+    "sha256": "cee0df1a082c867ab3a25d5d8172a31ba821978a6fc0f407bcf6d4edca64d9e9",
+    "bytes": 84470
+  },
+  "reaction.opponent.game-win.bitch-in-car": {
+    "id": "reaction.opponent.game-win.bitch-in-car",
+    "url": "audio/reaction.opponent.game-win.bitch-in-car.mp3",
+    "text": "They won? Oh, I am gonna be such a bitch in the car.",
+    "status": "ready",
+    "durationSeconds": 3.813878,
+    "sha256": "6ceb7dfba1c45a88ed96dc5126af8bf24e1c1708234250ac875c9f03153f597a",
+    "bytes": 61483
+  },
+  "reaction.you-team-sweep.we-are-assholes": {
+    "id": "reaction.you-team-sweep.we-are-assholes",
+    "url": "audio/reaction.you-team-sweep.we-are-assholes.mp3",
+    "text": "Five outta five. Holy crap, we're assholes!",
+    "status": "ready",
+    "durationSeconds": 2.638367,
+    "sha256": "a72787720eec57966e93e25d4e243034b254598dadcbf703f292389834df3049",
+    "bytes": 42674
+  },
+  "reaction.you-team-sweep.cigarette": {
+    "id": "reaction.you-team-sweep.cigarette",
+    "url": "audio/reaction.you-team-sweep.cigarette.mp3",
+    "text": "All five! Oh, I need a cigarette.",
+    "status": "ready",
+    "durationSeconds": 2.377143,
+    "sha256": "52e38dc4df24bc45969b1d5d9721fcc0fd8389fadbceb859f2f4a822c0bb8251",
+    "bytes": 38495
+  },
+  "reaction.you-team-sweep.sympathy-trick": {
+    "id": "reaction.you-team-sweep.sympathy-trick",
+    "url": "audio/reaction.you-team-sweep.sympathy-trick.mp3",
+    "text": "All five! Goddamn, you didn't even leave 'em a sympathy trick.",
+    "status": "ready",
+    "durationSeconds": 3.84,
+    "sha256": "e152bb17b1e770e0fdf6f70ff4aa9e2b75ce2dccd63b1588f8a49d10aa6fa859",
+    "bytes": 61901
+  },
+  "reaction.you-team-sweep.self-high-five": {
+    "id": "reaction.you-team-sweep.self-high-five",
+    "url": "audio/reaction.you-team-sweep.self-high-five.mp3",
+    "text": "A clean sweep! I just tried to high-five my other hand. It sucked.",
+    "status": "ready",
+    "durationSeconds": 3.84,
+    "sha256": "28be24b91f538d48bff0f5421e2fc68bceea18242061ed0021967b75da9eefca",
+    "bytes": 61901
   }
 };

@@ -577,5 +577,205 @@ export const extraReactionLines: Readonly<Record<string, NarrationAlternative & 
     "context": "table",
     "priority": 1,
     "trigger": "reaction.table.turned-down"
+  },
+  "reaction.you-team.euchred.already-smug": {
+    "clip": "reaction.you-team.euchred.already-smug",
+    "text": "Aw, crap. I was already bein' smug about that.",
+    "family": "premature-celebration",
+    "context": "table",
+    "priority": 3,
+    "trigger": "reaction.you-team.euchred"
+  },
+  "reaction.you-team.euchred.having-a-face": {
+    "clip": "reaction.you-team.euchred.having-a-face",
+    "text": "Nobody look at me. I hate havin' a face right now.",
+    "family": "embarrassed-exposure",
+    "context": "table",
+    "priority": 3,
+    "trigger": "reaction.you-team.euchred"
+  },
+  "reaction.you-team.euchred.vals-fault": {
+    "clip": "reaction.you-team.euchred.vals-fault",
+    "text": "Aw, crap. Val, gimme a second. I'm tryin' to remember why this is your fault.",
+    "family": "outsourced-blame",
+    "context": "table",
+    "priority": 3,
+    "trigger": "reaction.you-team.euchred"
+  },
+  "reaction.you-team.euchred.buyin-groceries": {
+    "clip": "reaction.you-team.euchred.buyin-groceries",
+    "text": "We got euchred? Val, if Lois asks, we were buyin' groceries.",
+    "family": "domestic-cover-story",
+    "context": "table",
+    "priority": 3,
+    "trigger": "reaction.you-team.euchred"
+  },
+  "reaction.you-team.euchres-opponents.like-rule": {
+    "clip": "reaction.you-team.euchres-opponents.like-rule",
+    "text": "Ha! I like this rule now!",
+    "family": "selective-fairness",
+    "context": "table",
+    "priority": 3,
+    "trigger": "reaction.you-team.euchres-opponents"
+  },
+  "reaction.you-team.euchres-opponents.you-guys-are-sweet": {
+    "clip": "reaction.you-team.euchres-opponents.you-guys-are-sweet",
+    "text": "You picked trump and we got the points? Aw, you guys are sweet.",
+    "family": "accidental-benefactors",
+    "context": "table",
+    "priority": 3,
+    "trigger": "reaction.you-team.euchres-opponents"
+  },
+  "reaction.you-team.euchres-opponents.beautiful-dumbasses": {
+    "clip": "reaction.you-team.euchres-opponents.beautiful-dumbasses",
+    "text": "You called it! You beautiful dumbasses!",
+    "family": "malicious-praise",
+    "context": "table",
+    "priority": 3,
+    "trigger": "reaction.you-team.euchres-opponents"
+  },
+  "reaction.you-team.euchres-opponents.get-comfortable": {
+    "clip": "reaction.you-team.euchres-opponents.get-comfortable",
+    "text": "Ha! Lemme get comfortable. I wanna enjoy you bein' wrong.",
+    "family": "savoring-gloat",
+    "context": "table",
+    "priority": 3,
+    "trigger": "reaction.you-team.euchres-opponents"
+  },
+  "reaction.val.alone.big-balls": {
+    "clip": "reaction.val.alone.big-balls",
+    "text": "All right, Val. Big balls. Keep 'em off the table.",
+    "family": "misplaced-decency",
+    "context": "val",
+    "priority": 2,
+    "trigger": "reaction.val.alone"
+  },
+  "reaction.val.alone.home-depot": {
+    "clip": "reaction.val.alone.home-depot",
+    "text": "Alone? Val, I won't even go to Home Depot without an adult.",
+    "family": "solo-drama",
+    "context": "val",
+    "priority": 2,
+    "trigger": "reaction.val.alone"
+  },
+  "reaction.val.alone.answer-my-calls": {
+    "clip": "reaction.val.alone.answer-my-calls",
+    "text": "Val, you better not get famous and stop answerin' my calls.",
+    "family": "fear-of-abandonment",
+    "context": "val",
+    "priority": 2,
+    "trigger": "reaction.val.alone"
+  },
+  "reaction.val.alone.shut-up": {
+    "clip": "reaction.val.alone.shut-up",
+    "text": "Alone? All right, Val. I'm gonna shut up for... okay, that was enough.",
+    "family": "unrestrained-hype",
+    "context": "val",
+    "priority": 2,
+    "trigger": "reaction.val.alone"
+  },
+  "reaction.you-team.game-win.everybody-like-me": {
+    "clip": "reaction.you-team.game-win.everybody-like-me",
+    "text": "We won! Now everybody has to like me!",
+    "family": "manufactured-obligation",
+    "context": "table",
+    "priority": 3,
+    "eventPreference": "game-result",
+    "trigger": "reaction.you-team.game-win"
+  },
+  "reaction.you-team.game-win.buyin-a-cape": {
+    "clip": "reaction.you-team.game-win.buyin-a-cape",
+    "text": "We won! I'm buyin' a cape.",
+    "family": "main-character",
+    "context": "table",
+    "priority": 3,
+    "eventPreference": "game-result",
+    "trigger": "reaction.you-team.game-win"
+  },
+  "reaction.you-team.game-win.family-dinner": {
+    "clip": "reaction.you-team.game-win.family-dinner",
+    "text": "Yes! I am gonna be such a dick at the next family dinner.",
+    "family": "savoring-gloat",
+    "context": "table",
+    "priority": 3,
+    "eventPreference": "game-result",
+    "trigger": "reaction.you-team.game-win"
+  },
+  "reaction.you-team.game-win.brian-anyway": {
+    "clip": "reaction.you-team.game-win.brian-anyway",
+    "text": "We won! Ha! Suck it, Brian. You're not even here and you can suck it.",
+    "family": "misdirected-taunt",
+    "context": "table",
+    "priority": 3,
+    "eventPreference": "game-result",
+    "trigger": "reaction.you-team.game-win"
+  },
+  "reaction.opponent.game-win.congratulations": {
+    "clip": "reaction.opponent.game-win.congratulations",
+    "text": "Well, congratulations, ya bunch of pricks.",
+    "family": "reluctant-applause",
+    "context": "opponent",
+    "priority": 3,
+    "eventPreference": "game-result",
+    "trigger": "reaction.opponent.game-win"
+  },
+  "reaction.opponent.game-win.learned-nothing": {
+    "clip": "reaction.opponent.game-win.learned-nothing",
+    "text": "Well, I learned nothin', and I'm still mad.",
+    "family": "rejected-growth",
+    "context": "opponent",
+    "priority": 3,
+    "eventPreference": "game-result",
+    "trigger": "reaction.opponent.game-win"
+  },
+  "reaction.opponent.game-win.takin-somethin": {
+    "clip": "reaction.opponent.game-win.takin-somethin",
+    "text": "Fine. You win. I'm takin' my ball. I don't have a ball. I'm takin' somethin'.",
+    "family": "impotent-retaliation",
+    "context": "opponent",
+    "priority": 3,
+    "eventPreference": "game-result",
+    "trigger": "reaction.opponent.game-win"
+  },
+  "reaction.opponent.game-win.bitch-in-car": {
+    "clip": "reaction.opponent.game-win.bitch-in-car",
+    "text": "They won? Oh, I am gonna be such a bitch in the car.",
+    "family": "cope-with-loss",
+    "context": "opponent",
+    "priority": 3,
+    "eventPreference": "game-result",
+    "trigger": "reaction.opponent.game-win"
+  },
+  "reaction.you-team-sweep.we-are-assholes": {
+    "clip": "reaction.you-team-sweep.we-are-assholes",
+    "text": "Five outta five. Holy crap, we're assholes!",
+    "family": "admiring-obnoxiousness",
+    "context": "table",
+    "priority": 3,
+    "trigger": "you-team-sweep"
+  },
+  "reaction.you-team-sweep.cigarette": {
+    "clip": "reaction.you-team-sweep.cigarette",
+    "text": "All five! Oh, I need a cigarette.",
+    "family": "inappropriate-admiration",
+    "context": "table",
+    "priority": 3,
+    "trigger": "you-team-sweep"
+  },
+  "reaction.you-team-sweep.sympathy-trick": {
+    "clip": "reaction.you-team-sweep.sympathy-trick",
+    "text": "All five! Goddamn, you didn't even leave 'em a sympathy trick.",
+    "family": "admiring-obnoxiousness",
+    "context": "table",
+    "priority": 3,
+    "trigger": "you-team-sweep"
+  },
+  "reaction.you-team-sweep.self-high-five": {
+    "clip": "reaction.you-team-sweep.self-high-five",
+    "text": "A clean sweep! I just tried to high-five my other hand. It sucked.",
+    "family": "physical-celebration",
+    "context": "table",
+    "priority": 3,
+    "trigger": "you-team-sweep"
   }
 };

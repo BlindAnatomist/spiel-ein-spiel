@@ -1,6 +1,7 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, lstat, realpath } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
+import { verifyAudioEvidence, type AudioEvidenceVerifier } from './narrator-audio-provenance.ts';
 import type { NarrationAlternative, NarrationClip } from '../web/narration-types.ts';
 import { CHARACTER_LIBRARY_TARGET, reactionTriggerMetadata, type ReactionTrigger } from '../web/narrator-reaction-triggers.ts';
 
@@ -11,18 +12,27 @@ const idPattern = /^reaction\.[a-z0-9]+(?:[.-][a-z0-9]+)*$/;
 const digestPattern = /^[a-f0-9]{64}$/;
 const nonempty = (value: unknown): value is string => typeof value === 'string' && value.trim().length > 0;
 
+async function localFile(root: string, name: string) {
+  const file = path.join(root, name), resolved = await realpath(file), base = await realpath(root);
+  if (!(await lstat(file)).isFile() || !resolved.startsWith(base + path.sep)) throw new Error(`Unsafe audio evidence path: ${name}`);
+  return readFile(file);
+}
+
 /** Pure validation: every supplied pack is checked before any runtime file changes. */
-export async function validateReactionBatches(inputs: readonly ReactionBatchInput[]) {
+export async function validateReactionBatches(inputs: readonly ReactionBatchInput[], evidenceVerifier: AudioEvidenceVerifier = verifyAudioEvidence) {
   if (!inputs.length || inputs.length > CHARACTER_LIBRARY_TARGET / 24) throw new Error('Provide one to seven complete approved 24-line batches');
   const lines: Record<string, ApprovedReaction> = {}, runtime: Record<string, NarrationClip> = {};
   const sources = new Map<string, string>(), packs: Array<Record<string, unknown>> = [];
   const packIds = new Set<string>(), texts = new Set<string>();
+  const rawHashes = new Set<string>(), masterHashes = new Set<string>(), blobs = new Set<string>();
+  const audioBytes = new Map<string, Buffer>();
   for (const input of inputs) {
+    if (!(await lstat(input.proposal)).isFile()) throw new Error('Unsafe explicit approved proposal');
     const rawProposal = await readFile(input.proposal, 'utf8');
     const proposal = JSON.parse(rawProposal);
-    const rawManifest = await readFile(path.join(input.directory, 'manifest.json'), 'utf8');
+    const rawManifest = (await localFile(input.directory, 'manifest.json')).toString('utf8');
     const pack = JSON.parse(rawManifest);
-    const rawQa = await readFile(path.join(input.directory, 'final-qa.json'), 'utf8');
+    const rawQa = (await localFile(input.directory, 'final-qa.json')).toString('utf8');
     const qa = JSON.parse(rawQa);
     if (!nonempty(proposal.status) || !/^(?:Parent-approved\b|Parent editorial approval and independent review passed\b)/.test(proposal.status)
       || !nonempty(proposal.packId) || packIds.has(proposal.packId) || pack.packId !== proposal.packId
@@ -36,6 +46,8 @@ export async function validateReactionBatches(inputs: readonly ReactionBatchInpu
       throw new Error(`Incomplete or mismatched approved batch: ${input.directory}`);
     }
     packIds.add(proposal.packId);
+    const identities = { proposalSha256: sha256(rawProposal), manifestSha256: sha256(rawManifest), finalQaSha256: sha256(rawQa) };
+    const evidence = await evidenceVerifier({ ...input, packId: proposal.packId, ...identities });
     for (const line of proposal.scripts) {
       const id = line.id, clip = pack.clips[id];
       const trigger = line.trigger as ReactionTrigger;
@@ -49,18 +61,26 @@ export async function validateReactionBatches(inputs: readonly ReactionBatchInpu
         || !Number.isFinite(clip.durationSeconds) || clip.durationSeconds <= 0
         || !Number.isInteger(clip.bytes) || clip.bytes <= 0 || !Number.isInteger(clip.rawBytes) || clip.rawBytes <= 0
         || !digestPattern.test(clip.sha256) || !digestPattern.test(clip.rawSha256)) throw new Error(`Invalid approved recording: ${id}`);
+      if (rawHashes.has(clip.rawSha256) || masterHashes.has(clip.sha256)) throw new Error(`Duplicate/cross-batch audio identity: ${id}`);
+      rawHashes.add(clip.rawSha256); masterHashes.add(clip.sha256);
+      const blob = clip.afterUiObservation?.downloadHref;
+      if (blob !== undefined) {
+        if (typeof blob !== 'string' || !blob.startsWith('blob:') || blobs.has(blob)) throw new Error(`Duplicate/invalid browser blob identity: ${id}`);
+        blobs.add(blob);
+      }
       const normalized = line.text.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
       if (texts.has(normalized)) throw new Error(`Duplicate normalized wording: ${id}`);
       texts.add(normalized);
       for (const [url, digest, size] of [[clip.url, clip.sha256, clip.bytes], [clip.rawUrl, clip.rawSha256, clip.rawBytes]]) {
-        const bytes = await readFile(path.join(input.directory, url));
+        const bytes = await localFile(input.directory, url);
         if (bytes.length !== size || sha256(bytes) !== digest) throw new Error(`Corrupt raw/master recording: ${id}`);
+        if (url === clip.url) audioBytes.set(id, bytes);
       }
       lines[id] = { clip: id, text: line.text, family: line.family, ...reactionTriggerMetadata[trigger], trigger };
       runtime[id] = { id, url: clip.url, text: clip.text, status: 'ready', durationSeconds: clip.durationSeconds, sha256: clip.sha256, bytes: clip.bytes };
       sources.set(id, path.join(input.directory, clip.url));
     }
-    packs.push({ packId: pack.packId, count: 24, proposalSha256: sha256(rawProposal), manifestSha256: sha256(rawManifest), finalQaSha256: sha256(rawQa) });
+    packs.push({ packId: pack.packId, count: 24, ...identities, evidence });
   }
-  return { lines, runtime, sources, packs };
+  return { lines, runtime, sources, packs, audioBytes };
 }

@@ -1,5 +1,6 @@
 import { createHandReportStore, createHandReportRecorder } from './hand-report.ts';
 import { createHandReportPanel } from './hand-report-panel.ts';
+import { readCompletedGameExports } from './game-export.ts';
 import { createSoundCues } from './sound.ts';
 import type { Seat } from '../src/index.ts';
 import { selectSeatNames } from '../src/bots/profiles.ts';
@@ -58,7 +59,9 @@ const handReports = createHandReportStore({
   getItem: key => window.localStorage.getItem(key),
   setItem: (key,value) => window.localStorage.setItem(key,value),
 }, `${privatePreview ? 'narrator-preview:' : ''}euchre-hand-reports-v1`);
-const handReportPanel = createHandReportPanel(document, handReports, pauseGame);
+const handReportPanel = createHandReportPanel(document, handReports, pauseGame, () => readCompletedGameExports({
+  getItem: key => window.localStorage.getItem(`${privatePreview ? 'narrator-preview:' : ''}${key}`),
+}, handReports));
 const narratorButton = document.querySelector<HTMLButtonElement>('#narrator')!;
 const pauseButton = document.querySelector<HTMLButtonElement>('#pause-game')!;
 const narratorCaption = document.querySelector<HTMLElement>('#narrator-caption')!;

@@ -43,8 +43,8 @@ const narratorAssetsReady = Object.keys(narratorManifest).length === 127
   && Object.entries(extraReactionLines).every(([id,line]) => narratorExtraReactionManifest[id]?.text === line.text)
   && clips.length === ORIGINAL_NARRATOR_COUNT + CHARACTER_LIBRARY_TARGET && available.every(Boolean);
 if (!narratorAssetsReady) {
-  const restore = 'Restore all private voice packs and run the import scripts. See docs/narrator-preview/COMPLETE_NARRATION.md.';
-  if (process.env.CONTEXT === 'narrator-preview') throw new Error(`Complete narration requires all ${ORIGINAL_NARRATOR_COUNT + CHARACTER_LIBRARY_TARGET} runtime recordings (${CHARACTER_LIBRARY_TARGET} approved character additions). Partial catalogs cannot be published. ${restore}`);
+  const restore = 'Restore the verified private recordings with scripts/restore-narrator-assets.ts. See docs/narrator-preview/PRODUCTION_PROMOTION.md.';
+  if (['narrator-preview', 'production'].includes(process.env.CONTEXT ?? '')) throw new Error(`Complete narration requires all ${ORIGINAL_NARRATOR_COUNT + CHARACTER_LIBRARY_TARGET} runtime recordings (${CHARACTER_LIBRARY_TARGET} approved character additions). Partial catalogs cannot be published. ${restore}`);
   console.warn(`Private recordings are not in the code checkpoint. Peter option disabled in this build. ${restore}`);
 }
 
@@ -73,11 +73,13 @@ await copyFile('dist/app.js', `dist/${versionedApp}`);
 const html = await readFile('dist/index.html', 'utf8');
 if (!html.includes('src="app.js"')) throw new Error('Missing versionable app script');
 await writeFile('dist/index.html', html.replace('src="app.js"', `src="${versionedApp}"`));
-// Only local, prerecorded assets are shipped. No voice provider is called at runtime.
+// Only verified, allowlisted recordings are shipped. Unrelated local files stay private.
 await rm('dist/audio', { recursive: true, force: true });
-await cp('web/audio', 'dist/audio', { recursive: true });
+await mkdir('dist/audio', { recursive: true });
+if (narratorAssetsReady) for (const clip of clips) await copyFile(`web/${clip.url}`, `dist/${clip.url}`);
 await rm('dist/repair-audio', { recursive: true, force: true });
-if (narratorAssetsReady) {
+// Voice-comparison originals are private preview QA assets, not production game media.
+if (narratorAssetsReady && process.env.CONTEXT !== 'production') {
   const checksums = await readFile('web/repair-audio/checksums.sha256', 'utf8');
   for (const line of checksums.trim().split('\n')) {
     const match = /^([a-f0-9]{64})  (audio\/[a-z0-9.-]+\.(?:mp3|wav)|index\.html|measurements\.json)$/.exec(line);

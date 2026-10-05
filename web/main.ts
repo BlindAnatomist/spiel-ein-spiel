@@ -276,10 +276,12 @@ void flushPerformanceArchive();
 
 const root = document.querySelector<HTMLElement>('#game')!;
 const live = document.querySelector<HTMLElement>('#announcements')!;
-const narratorFlavorHistory = createNarratorFlavorHistory(Math.random, privatePreview ? {
+// The storage adapter already separates preview and production keys. Keep exposure
+// across reloads in both contexts without moving or rewriting either game's data.
+const narratorFlavorHistory = createNarratorFlavorHistory(Math.random, {
   load: () => storage.getItem('narrator-dialogue-history-v1'),
   save: value => storage.setItem('narrator-dialogue-history-v1',value),
-} : undefined);
+});
 const randomWord = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
 
 function pauseGame() {

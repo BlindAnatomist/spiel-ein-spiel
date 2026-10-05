@@ -1,4 +1,5 @@
 import type { NarrationAlternative, NarrationProgress } from './narration-types.ts';
+import { isRetiredNarratorClip } from './narrator-retired.ts';
 import { HISTORY_LIMIT, loadNarratorHistory, saveNarratorHistory, type NarratorHistoryStorage, type NarratorStamp } from './narrator-history-storage.ts';
 
 export const FLAVOR_POLICY = {
@@ -43,7 +44,8 @@ export function createNarratorFlavorHistory(random: () => number = Math.random, 
     hand = number ?? hand+1; observedTricks=0; handComplete=false; handFlavorCount=0;
   }
   function endHand() { if (hand && !handComplete) { handComplete=true; completedHands++; persist(); } }
-  const eligible = (alternative: NarrationAlternative) => handFlavorCount < FLAVOR_POLICY.perHand
+  const eligible = (alternative: NarrationAlternative) => !isRetiredNarratorClip(alternative.clip)
+    && handFlavorCount < FLAVOR_POLICY.perHand
     && (!lastFlavor || (releaseEvent !== undefined && event >= releaseEvent))
     && exactReady(clips.get(alternative.clip)) && exactReady(lines.get(normalized(alternative.text)))
     && familyReady(families.get(alternative.family ?? alternative.clip));

@@ -1,0 +1,67 @@
+Complete narration: final independent technical review
+2026-10-02 06:07 UTC
+
+Decision
+The frozen complete-catalog candidate passes the technical checks below. No remaining source, mapping, lifecycle or file-integrity blocker was found. This is not audible-performance or iPhone/VoiceOver acceptance.
+
+Source identity
+The candidate is based on e9ad5aa7004be24cc94a24c13772089688fb8208, with the final canonical manifest import and compact receipts. Functional source and manifest hashes are recorded in phase-two-final-source-sha256.txt for comparison with the final committed checkpoint. Documentation may be finalized without changing those files.
+Catalog fingerprint: f760792c9053cbc544625aa167e26ed2a1206e5971575487524850a2da66772a
+Producer combined manifest SHA256: cdc522679d55370200ad694dc3b2ea723bbf7c6a1e0dca77f557b90dc0fdd12a
+Producer canonical manifest SHA256: 782ecbbdf91c624af331db208361d881e48ae50c2a937e865ec76e69c641ff97
+Producer flavor manifest SHA256: c002f03232e244631fb48d4155480adc10aa0d8a045abf84bfe9179cd6449da1
+No files under src differ from protected main 776b5d755233c13adcba2c3bed8ccc6a75c50f6d.
+
+Aggregate and asset checks
+- Strict typecheck and all 194 repository tests pass
+- All 24 independent focused plan/lifecycle/governor tests pass
+- The complete private-preview build succeeds; the earlier incomplete-catalog build was independently shown to reject publication
+- All 1,953 runtime source files and built files match their manifest sizes and SHA256 hashes, totaling 64,301,413 bytes
+- All prior 508 runtime records and recording bytes remain unchanged, including the accepted complete Emma and Walt alternatives
+- New records are exactly 1,433 canonical facts plus 12 complete character alternatives
+- The generated HTML references its exact content-hashed app file. The script hash and embedded catalog fingerprint match. Audio URLs include each recording's content identity
+
+Public coverage and gameplay
+- All 1,812 full.* canonical keys plus the existing one-file turned-down event are covered. All 16 complete character alternatives are correctly associated with their factual event
+- Independent matrix and full-game corpus: 9,450 synthetic cases, 48 games, 529 hands and 13,130 actions; 22,413 factual messages match the protected presentation text. Every automatic fact has one complete ready recording
+- A separate 48-game actual-manifest playback-selection trace covers 538 hands and 14,359 automatic facts: zero stitched utterances, zero missing-recording fallbacks and 246 complete character alternatives
+- Twelve complete three-way games compare protected baseline controller/renderer, new Original and new Peter: 332 human turns, 56 requested reviews and 1,385 automatic recordings. States, complete native hand DOM, legal labels and focus match at every human boundary. Original transcript and pacing are byte-equivalent
+- Missing/unready complete clips produce one full Original factual fallback before any fragment starts. Actual error/rejection/timeout stops media before one fallback; it never retries a successful fact or appends a separate joke. Successful playback never also enters the live region
+- Results remain focus-only; requested summaries/reviews remain Original. Dealer, named actor, calling/ordering, alone, up-card, lead/play, printed suit, effective suit and left/right bower facts are preserved. Discard identity and other hidden information are not exposed
+
+Interruption, status and diagnostics
+The actual compiled complete bundle passes independent entry tests for no autoplay, same-element gesture priming, pause mid-recording, stale promise/media suppression, Original switching, resume, New Game isolation, page hiding, pagehide, same native hand nodes, no scripted performance/provider network requests with media mocked, and namespaced local storage.
+The optional phone-status control pauses media before focusing a static non-live readout, without advancing cards or duplicating live speech. An independently reproduced stale-readout defect was fixed: Resume, narrator changes and New Game clear it; focus is safely returned only when the hidden status paragraph held focus.
+Diagnostic snapshots are detached from internal state and report build/catalog identity, selected narrator, actual enabled/paused state, cumulative completions/failures and timed event outcomes. A valid media-playing event is distinct from a request; stale playing events are ignored. Diagnostics do not change scheduling.
+
+Variety policy
+The parent-approved finite policy is verified: semantic family once per game; one completed plain hand and at least 12 automatic events between character lines; exact clip and normalized full-text reuse only after 12 completed hands AND 160 automatic events; cross-game semantic-family spacing of 3 completed hands AND 40 events. New Games and mode switches preserve cooldown history. Abandoned games cannot manufacture completed plain hands. Attempted interrupted/failed character lines are recorded. The last-eight list is a preference, not a permanent veto; eight-game pruning requires cooldown expiry. Selection uses separate randomness and does not consume the game/bot stream.
+The actual 48-game trace produces character lines in 1.7% of automatic facts, typically 4–6 per game, range 3–8; the first game has five. Every selected repeat independently satisfied those constraints. Walt's exact spades-alone opportunity did not arise in these sampled full games, but its mapping is covered by the exhaustive matrix.
+
+Independent audio audit
+All 1,445 new raw/master pairs pass exact plan/payload checks, raw and mastered hashes, complete decoding, equal decoded sample counts and gain-only correlation. Minimum correlation is .999648; maximum independently measured four-times oversampled peak is −2.327 dBFS. Total new mastered bytes: 50,487,546; declared duration: 3,113.874411 seconds.
+Measured declared loudness is median −20.95 LUFS and minimum −23.88 LUFS. Fifty-one peak-limited recordings are below −22 LUFS; they remain unchanged to respect the peak ceiling and gain-only requirement. Uniform perceived loudness is not claimed.
+Using 10 ms RMS windows at −45 dBFS, no canonical recording crosses the conservative flags of 300 ms edge quiet or 400 ms internal quiet. Two longer alternatives have internal intervals of 420 ms (up-card rejected) and 440 ms (Ward trick wages). These may be intentional sentence pauses and were not trimmed. Numeric silence checks do not establish natural performance.
+
+Controller-driven listening sequence
+The 11-event recipe independently matches protected-baseline facts from seed 73, dealer Val, through nine actual actions and Erin winning the first trick. Each event selects exactly one complete file. Its WAV is byte-for-byte the independently decoded source PCM plus the specified quiet gaps, including the initial 1,150 ms guard.
+WAV SHA256: a6132cc6f0103a848dc2106c3152ff8fc5123e72c76aace4d1e992df4c8b74f8
+Bytes: 1,357,154; format: 24 kHz mono 16-bit PCM; duration: 28.273125 seconds
+Total inserted quiet: 9.7 seconds, preserving controller guards and a simulated 750 ms human-decision interval. MP3 container duration sum differs because of encoder padding; no intended inter-event gap is missing.
+This is an assembled listening sample, not a browser recording. It omits native VoiceOver prompts and network loading delays.
+
+Limits and deployment boundary
+- No direct served-byte capture or user Safari-cache inspection has been completed. Previous v4 native deployment identity was verified by the integrator, but that does not establish what the phone cached or heard
+- The reviewer cannot hear audio in this runtime: an attempted local audio-input inspection explicitly returned that audio input is unsupported. No external audio was uploaded for transcription
+- Submitted factual strings, waveform properties and decoded timing are verified. Audible word accuracy, character delivery, subjective volume and real iPhone/VoiceOver behavior remain listening/device acceptance items
+- No production/main publication was performed or authorized by this review. The same private preview may be updated within the parent's existing authority after final committed source identity is checked
+
+Reproducible evidence
+phase2-final-audio-audit.json and phase2-audio-audit.py
+phase2-runtime-audit.json and phase2-runtime-audit.mjs
+phase2-final-mapping.json and phase2-final-mapping.mjs
+phase2-new-governor-trace.json and phase2-new-governor-trace.mjs --actual
+phase2-final-focused.log; phase2-final-check.log; phase2-final-build.log
+phase2-actual-full-games.log; phase2-actual-entry.log; phase2-actual-status.log
+phase2-sequence-audit.json and phase2-sequence-audit.py
+phase2-sequence-facts.mjs

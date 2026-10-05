@@ -1,0 +1,228 @@
+{
+  "packId": "peter-euchre-library-batch05-20261002",
+  "model": "s2.1-pro-free",
+  "reference_id": "d75c270eaee14c8aa1e9e980cc37cf1b",
+  "temperature": 0.85,
+  "maxConcurrentRequests": 2,
+  "maxRequestsPerLine": 2,
+  "retryRule": "Only documented mechanical failure, not unheard subjective retakes",
+  "status": "Parent-approved",
+  "scripts": [
+    {
+      "id": "reaction.you.alone.slow-clap",
+      "trigger": "reaction.you.alone",
+      "context": "Human has just publicly made an accepted call or order-up alone. The human's partner sits out; the narrator remains a spectator. No hidden cards, alternate legal options or predicted outcome are inferred.",
+      "family": "misapplied-ceremony",
+      "text": "Just you? Oh, man. I know how to do the slow clap, but I don't know when.",
+      "direction": "Excited by the declaration; sincerely unsure of the correct dramatic timing for his contribution.",
+      "deliveryTag": "concerned"
+    },
+    {
+      "id": "reaction.you.alone.entire-ham",
+      "trigger": "reaction.you.alone",
+      "context": "Human has just publicly made an accepted call or order-up alone. The human's partner sits out; the narrator remains a spectator. No hidden cards, alternate legal options or predicted outcome are inferred. The ham and priest are an invented anecdote about the fictional narrator, not the user or game outcome.",
+      "family": "solo-drama",
+      "text": "Alone? I tried eatin' an entire ham alone. Woke up with a priest next to me.",
+      "direction": "Remember the absurd food disaster as a relevant, entirely ordinary comparison.",
+      "deliveryTag": "matter-of-fact"
+    },
+    {
+      "id": "reaction.you.alone.my-moment",
+      "trigger": "reaction.you.alone",
+      "context": "Human has just publicly made an accepted call or order-up alone. The human's partner sits out; the narrator remains a spectator. No hidden cards, alternate legal options or predicted outcome are inferred.",
+      "family": "distorted-priorities",
+      "text": "All right. This is your moment. Mine involves a sandwich, but yours looks good too.",
+      "direction": "Genuine encouragement, then equally sincere consideration of his own trivial milestone.",
+      "deliveryTag": "pleased"
+    },
+    {
+      "id": "reaction.opponent.alone.little-sash",
+      "trigger": "reaction.opponent.alone",
+      "context": "Opponent seat1 or3 has just made an accepted public order-up or round-two call with action.alone=true. No hidden hand strength, actual private motive or future outcome is inferred. Rhetorical teasing about the public solo declaration; no actual clothing or private intention is inferred.",
+      "family": "main-character",
+      "text": "Alone? Do you get a little sash, or are you a pain in the ass for free?",
+      "direction": "Ask the first question with interest, then make the second question sound equally practical.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.alone.still-boo",
+      "trigger": "reaction.opponent.alone",
+      "context": "Opponent seat1 or3 has just made an accepted public order-up or round-two call with action.alone=true. No hidden hand strength, actual private motive or future outcome is inferred.",
+      "family": "finite-courtesy",
+      "text": "You're goin' alone? Okay. I'm gonna practice bein' supportive. Boo. Nope. Still boo.",
+      "direction": "Start as though he means to improve; discover that boo is the only thing coming out.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.alone.your-movie",
+      "trigger": "reaction.opponent.alone",
+      "context": "Opponent seat1 or3 has just made an accepted public order-up or round-two call with action.alone=true. No hidden hand strength, actual private motive or future outcome is inferred.",
+      "family": "main-character",
+      "text": "Alone? Oh, this is your movie now? Fine. I'm talkin' through it.",
+      "direction": "Resent the imaginary spotlight, then settle on an obnoxious way to participate anyway.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.you.low-lead.kings-are-weird",
+      "trigger": "reaction.you.low-lead",
+      "context": "Human has just legally led a publicly revealed non-trump nine or ten. No claim about unplayed alternatives or the future winner. Impossible card personification only; does not claim any king has been played, held, illustrated or located.",
+      "family": "ragtag-adoption",
+      "text": "Okay, little card. Don't make eye contact with the kings. They're weird about that.",
+      "direction": "Quiet advice to a card entering a ridiculous royal social hierarchy.",
+      "deliveryTag": "concerned"
+    },
+    {
+      "id": "reaction.you.low-lead.explain-to-dog",
+      "trigger": "reaction.you.low-lead",
+      "context": "Human has just legally led a publicly revealed non-trump nine or ten. No claim about unplayed alternatives or the future winner. The dog is hypothetical; low refers only to the revealed non-trump nine or ten, not tactical value.",
+      "family": "accidental-adult",
+      "text": "Low card. Ah, finally, somethin' I can explain to a dog.",
+      "direction": "Relief at finding a subject just within his teaching ability.",
+      "deliveryTag": "pleased"
+    },
+    {
+      "id": "reaction.opponent.low-lead.put-air-back",
+      "trigger": "reaction.opponent.low-lead",
+      "context": "Opponent seat1 or3 has just legally led a publicly revealed non-trump nine or ten. No claim about unplayed alternatives or the future winner. Low describes the printed nine or ten only. No winning chance or legal alternative is inferred.",
+      "family": "unused-tantrum",
+      "text": "A low card? I was all ready to gasp. Now I gotta put the air back.",
+      "direction": "Build toward drama, then worry about the physical logistics of an unused breath.",
+      "deliveryTag": "disappointed"
+    },
+    {
+      "id": "reaction.opponent.low-lead.erection",
+      "trigger": "reaction.opponent.low-lead",
+      "context": "Opponent seat1 or3 has just legally led a publicly revealed non-trump nine or ten. No claim about unplayed alternatives or the future winner. Absurd metaphor for the narrator's anticlimax, not a claim about any player's actual body or arousal.",
+      "family": "inappropriate-admiration",
+      "text": "Well, that took the erection right outta the room.",
+      "direction": "Deliver the crude description of his deflated excitement as an ordinary observation.",
+      "deliveryTag": "matter-of-fact"
+    },
+    {
+      "id": "reaction.you.ace-lead.revolving-door",
+      "trigger": "reaction.you.ace-lead",
+      "context": "Human has just legally led an ace, determined only from the publicly revealed action.card and empty prior trick. No claim that the ace wins. The doorway anecdote is fictional narrator background, not a description of game animation or a predicted result.",
+      "family": "main-character",
+      "text": "An ace! I like an entrance. I got stuck in a revolving door once and still took a bow.",
+      "direction": "Admire the public entrance, then proudly remember an entrance that did not deserve admiration.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.you.ace-lead.cocky",
+      "trigger": "reaction.you.ace-lead",
+      "context": "Human has just legally led an ace, determined only from the publicly revealed action.card and empty prior trick. No claim that the ace wins.",
+      "family": "admiring-obnoxiousness",
+      "text": "An ace. Oh, you cocky son of a bitch. I love it.",
+      "direction": "Warm, delighted admiration of the public play, without sarcasm.",
+      "deliveryTag": "pleased"
+    },
+    {
+      "id": "reaction.opponent.ace-lead.uncle-trampoline",
+      "trigger": "reaction.opponent.ace-lead",
+      "context": "Opponent seat1 or3 has just legally led an ace, determined only from the publicly revealed action.card and empty prior trick. No claim that the ace wins. An invented fictional uncle; no inference about the opponent or future winner.",
+      "family": "irrelevant-vindication",
+      "text": "An ace? Yeah, well, my uncle owns a trampoline.",
+      "direction": "Counter the impressive card with a completely unrelated boast he believes is decisive.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.opponent.ace-lead.chewin-ice",
+      "trigger": "reaction.opponent.ace-lead",
+      "context": "Opponent seat1 or3 has just legally led an ace, determined only from the publicly revealed action.card and empty prior trick. No claim that the ace wins. The ice-chewing is fictional spectator banter, not a real instruction or audio effect requirement.",
+      "family": "impotent-retaliation",
+      "text": "Oh, an ace. Fine. I'm chewin' my ice right in your ear.",
+      "direction": "Resentfully accept the card and announce one petty, physically annoying response.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.table.four-tricks.clench",
+      "trigger": "reaction.table.four-tricks",
+      "context": "Exactly four public tricks have just completed and the hand remains in the playing phase. One trick remains; this does not mean the game is ending. Clench is narrator banter, not an accessibility instruction or required app action.",
+      "family": "physical-celebration",
+      "text": "One more. Everybody clench.",
+      "direction": "Brief solemn preparation for an absurdly physical finale.",
+      "deliveryTag": "serious"
+    },
+    {
+      "id": "reaction.table.four-tricks.peanut-bowl",
+      "trigger": "reaction.table.four-tricks",
+      "context": "Exactly four public tricks have just completed and the hand remains in the playing phase. One trick remains; this does not mean the game is ending. The bowl is an invented impossible food gag about the narrator.",
+      "family": "eat-the-obstacle",
+      "text": "One trick left. I should've rationed my peanuts. I ate the bowl.",
+      "direction": "Notice the hand nearing its end, then calmly report the consequence of uncontrolled snacking.",
+      "deliveryTag": "matter-of-fact"
+    },
+    {
+      "id": "reaction.table.four-tricks.pants-hang-in",
+      "trigger": "reaction.table.four-tricks",
+      "context": "Exactly four public tricks have just completed and the hand remains in the playing phase. One trick remains; this does not mean the game is ending. A fictional narrator clothing gag, not a statement about the human player.",
+      "family": "physical-celebration",
+      "text": "One more trick. All right, pants, hang in there.",
+      "direction": "Talk quietly to his own overworked waistband.",
+      "deliveryTag": "concerned"
+    },
+    {
+      "id": "reaction.table.four-tricks.stop-blinkin",
+      "trigger": "reaction.table.four-tricks",
+      "context": "Exactly four public tricks have just completed and the hand remains in the playing phase. One trick remains; this does not mean the game is ending. Fictional narrator expression only; no request for the user to watch, blink or look at the screen.",
+      "family": "unrestrained-hype",
+      "text": "One trick left. This is the part where I stop blinkin' and everybody gets uncomfortable.",
+      "direction": "Intensely eager, unaware that his plan makes him the problem.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.table.turned-down.my-stuff",
+      "trigger": "reaction.table.turned-down",
+      "context": "An accepted pass changes public upCardStatus from face-up to turned-down, with four round1 pass bids from distinct seats in this hand. The historical upcard identity remains public but does not establish its current location. Never partial passes, round2 passes, review/replay or an abandoned hand. Nobody wants refers humorously to the unanimously declined round1 trump offer; no future/current location of the turned-down card is asserted.",
+      "family": "ragtag-adoption",
+      "text": "Nobody wants that card? I got a drawer full of crap nobody wants. It's called my stuff.",
+      "direction": "Recognize a kindred spirit, then identify his own belongings without embarrassment.",
+      "deliveryTag": "matter-of-fact"
+    },
+    {
+      "id": "reaction.table.turned-down.ask-your-mother",
+      "trigger": "reaction.table.turned-down",
+      "context": "An accepted pass changes public upCardStatus from face-up to turned-down, with four round1 pass bids from distinct seats in this hand. The historical upcard identity remains public but does not establish its current location. Never partial passes, round2 passes, review/replay or an abandoned hand. The quoted parent phrase is a metaphor; no actual parent, child or private decision-making motive is inferred.",
+      "family": "collective-buck-passing",
+      "text": "Four passes. Look at us. A whole room full of 'ask your mother.'",
+      "direction": "Briefly admire the group's shared talent for not being the one to decide.",
+      "deliveryTag": "amused"
+    },
+    {
+      "id": "reaction.table.turned-down.one-bad-decision",
+      "trigger": "reaction.table.turned-down",
+      "context": "An accepted pass changes public upCardStatus from face-up to turned-down, with four round1 pass bids from distinct seats in this hand. The historical upcard identity remains public but does not establish its current location. Never partial passes, round2 passes, review/replay or an abandoned hand. Hypothetical desire for reckless camaraderie, not strategic advice or a claim that a legal call would have been wrong.",
+      "family": "contrarian-loyalty",
+      "text": "Everybody passed? Come on. This table needs one bad decision we can all get behind.",
+      "direction": "Disappointed by the absence of a shared reckless adventure.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.table.turned-down.speed-date",
+      "trigger": "reaction.table.turned-down",
+      "context": "An accepted pass changes public upCardStatus from face-up to turned-down, with four round1 pass bids from distinct seats in this hand. The historical upcard identity remains public but does not establish its current location. Never partial passes, round2 passes, review/replay or an abandoned hand. The turned-down trump offer is personified; no actual relationship or card location is described.",
+      "family": "rejected-romance",
+      "text": "Nobody wants it? Oh, that is a rough speed date.",
+      "direction": "Sympathize with a personified trump offer being rejected by the entire table.",
+      "deliveryTag": "concerned"
+    },
+    {
+      "id": "reaction.you.queen.pardon-me",
+      "trigger": "reaction.you.queen",
+      "context": "Human seat0 has just legally played a publicly revealed card with printed rankQ. No hidden card, artwork or future result is inferred. Address the publicly revealed queen rank as impossible royalty; no actual person, illustration or legal authority is implied.",
+      "family": "premeditated-absolution",
+      "text": "Your Majesty. Quick question. Can you pardon me for somethin' I haven't done yet?",
+      "direction": "Make an abrupt, respectful royal petition; be genuinely practical about advance permission.",
+      "deliveryTag": "concerned"
+    },
+    {
+      "id": "reaction.you.queen.just-announcin",
+      "trigger": "reaction.you.queen",
+      "context": "Human seat0 has just legally played a publicly revealed card with printed rankQ. No hidden card, artwork or future result is inferred. Lois is an imagined fictional character, not a real player or listener; no appearance of the card is inferred.",
+      "family": "domestic-cover-story",
+      "text": "A queen. Lois, I'm just announcin' the card. Jesus.",
+      "direction": "Announce the rank normally, then become defensive toward an imagined absent spouse.",
+      "deliveryTag": "annoyed"
+    }
+  ]
+}

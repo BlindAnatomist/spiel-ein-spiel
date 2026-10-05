@@ -1,0 +1,47 @@
+{
+  "status": "Complete local recording catalog; automated verification passed; not deployed",
+  "checkpointDate": "2026-10-03",
+  "approvedScripts": 168,
+  "integratedNewRecordings": 168,
+  "remainingUnintegratedApprovedScripts": 0,
+  "existingRuntimeRecordings": 1965,
+  "currentRuntimeRecordings": 2133,
+  "targetRuntimeRecordings": 2133,
+  "strictTypecheck": "passed",
+  "repositoryTestsPassed": 244,
+  "strictPreviewBuild": "passed",
+  "publicPredicatesCovered": 27,
+  "independentLegalTransitionsChecked": 8209,
+  "actualCatalogGames": 48,
+  "actualCatalogHands": 520,
+  "actualCatalogAcceptedActions": 12973,
+  "actualCatalogRemarks": 1645,
+  "actualCatalogCadencePerHand": [
+    3.1503759398496243,
+    3.177165354330709
+  ],
+  "actualCatalogFirst350DistinctFraction": [
+    0.44285714285714284,
+    0.44857142857142857
+  ],
+  "earlier50PercentDistinctProjectionMet": false,
+  "actualCatalogCooldownViolations": 0,
+  "primaryAudioFullyDecodedAndVerified": 2133,
+  "importerProductionRouteProbesPassed": 41,
+  "importerDeepMechanicalAndJsonProbesPassed": 5,
+  "final07IdentityProbesPassed": 10,
+  "priorRuntimeFilesPreserved": 2109,
+  "priorRepairMp3FilesPreserved": 6,
+  "priorRuntimeHashesSizesAndTimestampsPreserved": true,
+  "nextSteps": [
+    "Complete independent final source and audit review",
+    "Coordinate same owner-private preview update and sanitized source checkpoint",
+    "Refresh the same integrated private recovery artifact and verify independent restoration"
+  ],
+  "releaseReady": false,
+  "mainMergeAuthorized": false,
+  "sourceRuntimePreserved": true,
+  "audibleQualityVerified": false,
+  "speechContentVerified": false,
+  "iphoneVoiceOverVerified": false
+}

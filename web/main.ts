@@ -1,3 +1,6 @@
+import { createHandReportStore, createHandReportRecorder } from './hand-report.ts';
+import { createHandReportPanel } from './hand-report-panel.ts';
+import { readCompletedGameExports } from './game-export.ts';
 import { createSoundCues } from './sound.ts';
 import type { Seat } from '../src/index.ts';
 import { selectSeatNames } from '../src/bots/profiles.ts';
@@ -24,11 +27,51 @@ import {
 } from './performance.ts';
 import { createTable } from './render.ts';
 import { createController } from './controller.ts';
+import { createNarratorAudio } from './narrator-audio.ts';
+import type { NarrationDiagnostic } from './narrator-audio.ts';
+import { narrationAssets } from './narrator-assets.ts';
+import { createNarratorFlavorHistory } from './narrator-flavor.ts';
 
 declare const __BUILD_COMMIT__: string;
 declare const __DEPLOY_CONTEXT__: string;
+declare const __NARRATOR_ASSETS_READY__: boolean;
+declare const __NARRATOR_CATALOG_SHA__: string;
 const buildCommit = typeof __BUILD_COMMIT__ === 'string' ? __BUILD_COMMIT__ : 'development';
+let controller: ReturnType<typeof createController> | undefined;
+let narratorOutput: ReturnType<typeof createNarratorAudio> | undefined;
+const narratorDiagnostics = { schema: 1, buildCommit, catalogSha: typeof __NARRATOR_CATALOG_SHA__ === 'string' ? __NARRATOR_CATALOG_SHA__ : 'development', mode: 'whole-sentences', totals: {completed:0, fallbacks:0}, events: [] as NarrationDiagnostic[] };
+let narratorEventId = 0;
+Object.defineProperty(window, 'euchreNarratorDiagnostics', { get: () => ({
+  ...structuredClone(narratorDiagnostics),
+  selectedNarrator: document.querySelector<HTMLButtonElement>('#narrator')?.value ?? 'unavailable',
+  gameStarted: !!controller,
+  audioEnabled: narratorOutput?.enabled() ?? false,
+  paused: controller?.isPaused() ?? false,
+  catalogEntries: Object.keys(narrationAssets).length,
+  buildAssetsVerified: typeof __NARRATOR_ASSETS_READY__ === 'boolean' ? __NARRATOR_ASSETS_READY__ : null,
+}) });
 const deployContext = typeof __DEPLOY_CONTEXT__ === 'string' ? __DEPLOY_CONTEXT__ : 'development';
+const privatePreview = deployContext === 'narrator-preview';
+document.querySelector<HTMLElement>('#preview-notice')!.hidden = !privatePreview;
+if (privatePreview) document.querySelector<HTMLElement>('#preview-notice')!.textContent = `Private preview · ${buildCommit.slice(0, 7)}`;
+// Unlike the legacy performance adapter, this adapter must let storage failures surface.
+const handReports = createHandReportStore({
+  getItem: key => window.localStorage.getItem(key),
+  setItem: (key,value) => window.localStorage.setItem(key,value),
+}, `${privatePreview ? 'narrator-preview:' : ''}euchre-hand-reports-v1`);
+const handReportPanel = createHandReportPanel(document, handReports, pauseGame, () => readCompletedGameExports({
+  getItem: key => window.localStorage.getItem(`${privatePreview ? 'narrator-preview:' : ''}${key}`),
+}, handReports));
+const narratorButton = document.querySelector<HTMLButtonElement>('#narrator')!;
+const pauseButton = document.querySelector<HTMLButtonElement>('#pause-game')!;
+const narratorCaption = document.querySelector<HTMLElement>('#narrator-caption')!;
+const narratorStatusOutput = document.querySelector<HTMLElement>('#narrator-status-output')!;
+if (typeof __NARRATOR_ASSETS_READY__ === 'boolean' && !__NARRATOR_ASSETS_READY__) {
+  narratorButton.disabled = true;
+  const availability = document.querySelector<HTMLElement>('#narrator-availability')!;
+  availability.hidden = false;
+  availability.textContent = 'Peter narration is unavailable until the private recordings are restored.';
+}
 
 const sounds = createSoundCues();
 const soundToggle = document.querySelector<HTMLButtonElement>('#sound-cues')!;
@@ -42,16 +85,17 @@ const helpButton = document.querySelector<HTMLButtonElement>('#help-button')!;
 const helpPanel = document.querySelector<HTMLElement>('#help-panel')!;
 helpButton.onclick = () => {
   const opening = helpPanel.hidden;
+  if (!opening) handReportPanel.hide(helpButton);
   helpPanel.hidden = !opening;
   helpButton.setAttribute('aria-expanded', String(opening));
 };
 
 const storage: StorageLike = {
   getItem(key) {
-    try { return window.localStorage.getItem(key); } catch { return null; }
+    try { return window.localStorage.getItem(`${privatePreview ? 'narrator-preview:' : ''}${key}`); } catch { return null; }
   },
   setItem(key, value) {
-    try { window.localStorage.setItem(key, value); } catch {}
+    try { window.localStorage.setItem(`${privatePreview ? 'narrator-preview:' : ''}${key}`, value); } catch {}
   },
 };
 
@@ -75,7 +119,7 @@ function updateTrackingToggle() {
   trackingToggle.textContent = owner ? 'My performance' : 'Bot data only';
   trackingToggle.setAttribute('aria-label', owner
     ? 'My performance. VoiceOver pacing.'
-    : 'Bot data only. Faster visual pacing.');
+    : narratorButton.value === 'peter' ? 'Bot data only. Recorded narrator pacing.' : 'Bot data only. Faster visual pacing.');
 }
 updateTrackingToggle();
 trackingToggle.onclick = () => {
@@ -149,6 +193,7 @@ async function historyRequest(body: Record<string, unknown>): Promise<Response> 
 }
 
 async function loadServerPerformance(): Promise<PerformanceBook> {
+  if (privatePreview) return { version: 2, games: [] };
   try {
     const response = await historyRequest({ action: 'list', profileId });
     if (!response.ok) return { version: 2, games: [] };
@@ -174,7 +219,7 @@ analysisButton.onclick = async () => {
   try {
     const book = mergePerformanceBooks(await loadServerPerformance(), loadPerformance(storage));
     const pending = loadPendingArchives(storage).length;
-    const archive = pending
+    const archive = privatePreview ? ' This preview keeps performance on this device only; production history is separate.' : pending
       ? ` Server archive pending: ${pending} completed ${pending === 1 ? 'game' : 'games'}.`
       : ' Server archive is current.';
     performanceOutput.textContent = `${performanceText(summarizePerformance(book))} ${performanceAnalysisText(book)}${archive} Recovery code: ${profileId}.`;
@@ -210,6 +255,7 @@ async function submitArchive(item: PerformanceArchiveItem): Promise<void> {
 
 let archiveFlushing = false;
 async function flushPerformanceArchive(): Promise<void> {
+  if (privatePreview) return;
   if (archiveFlushing) return;
   archiveFlushing = true;
   try {
@@ -230,12 +276,65 @@ void flushPerformanceArchive();
 
 const root = document.querySelector<HTMLElement>('#game')!;
 const live = document.querySelector<HTMLElement>('#announcements')!;
-let controller: ReturnType<typeof createController> | undefined;
+// The storage adapter already separates preview and production keys. Keep exposure
+// across reloads in both contexts without moving or rewriting either game's data.
+const narratorFlavorHistory = createNarratorFlavorHistory(Math.random, {
+  load: () => storage.getItem('narrator-dialogue-history-v1'),
+  save: value => storage.setItem('narrator-dialogue-history-v1',value),
+});
 const randomWord = () => crypto.getRandomValues(new Uint32Array(1))[0]!;
+
+function pauseGame() {
+  if (!controller) return;
+  controller.pause();
+  pauseButton.textContent = 'Resume game';
+}
+function hideNarratorStatus(focusTarget?: HTMLElement) {
+  if (document.activeElement === narratorStatusOutput && focusTarget) focusTarget.focus();
+  narratorStatusOutput.hidden = true;
+  narratorStatusOutput.textContent = '';
+}
+document.querySelector<HTMLButtonElement>('#narrator-status')!.onclick = () => {
+  pauseGame();
+  const who = narratorButton.value === 'peter' ? 'Peter' : 'Original VoiceOver';
+  narratorStatusOutput.textContent = `Narrator: ${who}. Full-sentence preview, version ${buildCommit.slice(0, 7)}. ${controller ? 'Game paused.' : 'No game started.'} Since this page opened: ${narratorDiagnostics.totals.completed} recordings finished; ${narratorDiagnostics.totals.fallbacks} audio failures.`;
+  narratorStatusOutput.hidden = false;
+  narratorStatusOutput.focus();
+};
+pauseButton.onclick = () => {
+  if (!controller) return;
+  if (controller.isPaused()) {
+    handReportPanel.hide(pauseButton);
+    hideNarratorStatus(pauseButton);
+    pauseButton.textContent = 'Pause game';
+    narratorOutput?.prime();
+    void controller.resume();
+  } else pauseGame();
+};
+narratorButton.onclick = () => {
+  narratorButton.value = narratorButton.value === 'peter' ? 'original' : 'peter';
+  narratorButton.textContent = narratorButton.value === 'peter' ? 'Narrator: Peter' : 'Narrator: VoiceOver';
+  hideNarratorStatus(narratorButton);
+  updateTrackingToggle();
+  if (controller) {
+    pauseGame();
+    narratorOutput?.setEnabled(narratorButton.value === 'peter');
+    narratorOutput?.prime();
+  }
+};
+// Suspension cannot silently skip a sequence or leave stale audio playing behind another page.
+document.addEventListener('visibilitychange', () => { if (document.hidden && narratorOutput?.enabled()) pauseGame(); });
+window.addEventListener('pagehide', () => { if (narratorOutput?.enabled()) pauseGame(); });
 
 document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   event.preventDefault();
   controller?.stop(); live.textContent = '';
+  narratorOutput?.cancel();
+  narratorFlavorHistory.beginGame();
+  handReportPanel.hide(startButton);
+  hideNarratorStatus(startButton);
+  pauseButton.hidden = false;
+  pauseButton.textContent = 'Pause game';
   startButton.textContent = 'New game';
   helpPanel.hidden = true;
   helpButton.setAttribute('aria-expanded', 'false');
@@ -251,6 +350,7 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   const seed = randomWord();
   const seatNames = selectSeatNames(level, seed);
   const gameId = crypto.randomUUID();
+  const handRecorder = createHandReportRecorder(handReports, {gameId,buildCommit,catalogSha:narratorDiagnostics.catalogSha,seatNames}, narrationAssets);
   const session = createSession(seed, level, {
     dealer,
     randomWord,
@@ -268,8 +368,18 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
   });
   root.hidden = false;
   const table = createTable(root, { act: action => { void controller!.act(action); }, next: () => { void controller!.next(); }, repeat: () => { void controller!.repeat(); }, review: () => { void controller!.review(); } }, seatNames);
-  controller = createController(session, table, text => { live.textContent = text; }, undefined, cue => sounds.play(cue), seatNames,
-    selectedHumanTracking === 'owner' ? 'voiceover' : 'visual');
-  table.render(session.view(), false); table.park();
+  narratorOutput = createNarratorAudio(narrationAssets, { enabled: narratorButton.value === 'peter', wholeOnly: true, flavorHistory: narratorFlavorHistory,
+    nextEventId: () => ++narratorEventId,
+    diagnostic: event => {
+      handRecorder.diagnostic(event);
+      narratorDiagnostics.events.push(event); if (narratorDiagnostics.events.length > 100) narratorDiagnostics.events.shift();
+      if (event.outcome === 'ended') narratorDiagnostics.totals.completed++;
+      if (event.outcome === 'fallback' || event.reason === 'media-failure') narratorDiagnostics.totals.fallbacks++;
+    },
+    caption: text => { narratorCaption.textContent = text; } });
+  narratorOutput.prime();
+  controller = createController(session, table, text => { live.textContent = text; try { handRecorder.liveText(text); } catch { /* Evidence must never block narration. */ } }, undefined, cue => sounds.play(cue), seatNames,
+    selectedHumanTracking === 'owner' ? 'voiceover' : 'visual', narratorOutput, handRecorder.observe);
+  table.render(session.view(), false, narratorOutput.enabled()); table.park(narratorOutput.enabled());
   void controller.start();
 };

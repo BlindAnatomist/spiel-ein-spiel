@@ -1,0 +1,228 @@
+{
+  "packId": "peter-euchre-library-batch02-20261002",
+  "model": "s2.1-pro-free",
+  "reference_id": "d75c270eaee14c8aa1e9e980cc37cf1b",
+  "temperature": 0.85,
+  "maxConcurrentRequests": 2,
+  "maxRequestsPerLine": 2,
+  "retryRule": "Only documented mechanical failure, not unheard subjective retakes",
+  "status": "Parent-approved",
+  "scripts": [
+    {
+      "id": "reaction.you.alone.behind-you",
+      "trigger": "reaction.you.alone",
+      "context": "Human has publicly called or ordered alone. The human’s partner sits out; the narrator remains a spectator.",
+      "family": "cowardly-support",
+      "text": "Just you? I'll be right behind you. They gotta get through you first.",
+      "direction": "Sincere support at first; unbothered about the selfish last beat.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.opponent.right-bower.eat-it",
+      "trigger": "reaction.opponent.right-bower",
+      "context": "An opposing seat has publicly played the right bower. The eating proposal is a fictional impossible reaction, not a game action.",
+      "family": "eat-the-obstacle",
+      "text": "Aw, the big jack. Can I eat it? I'm serious.",
+      "direction": "Mild despair, absurd earnest question, then plain insistence.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.you.low-lead.little-guy",
+      "trigger": "reaction.you.low-lead",
+      "context": "Human leads a public non-trump nine or ten. The anthropomorphism is fictional and does not describe a moving UI element.",
+      "family": "startled-personification",
+      "text": "Aw, little guy. Come here. No, don't actually come here. That would scare the shit outta me.",
+      "direction": "Warm invitation, sudden alarm, then honest apprehension.",
+      "deliveryTag": "amused"
+    },
+    {
+      "id": "reaction.opponent.trick.nice-words",
+      "trigger": "reaction.opponent.trick",
+      "context": "Either opponent won a newly completed public trick. Complaints are character attitude, not evidence of a bug or illegal move.",
+      "family": "finite-courtesy",
+      "text": "Good. Great. Fantastic. There. You used up all my nice words, you greedy prick.",
+      "direction": "Spend each polite word grudgingly; accuse without a big theatrical flourish.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.you-team-sweep.sorry-kids",
+      "trigger": "you-team-sweep",
+      "context": "Newly completed team0 march/loner-march with all five public tricks won by the human/Val team. The mentioned kids belong to the fictional character, not the user.",
+      "family": "distorted-priorities",
+      "text": "This is the best day of my life. Sorry, kids.",
+      "direction": "Unqualified delight, then one quick apology to the fictional kids. Stop there.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.val.follow-suit.probation",
+      "trigger": "reaction.val.follow-suit",
+      "context": "Val publicly follows the effective led suit with a non-trump card. No private intention or strategic quality is inferred.",
+      "family": "arbitrary-probation",
+      "text": "Val, you're all right. Everybody else is on probation. I don't know for what yet, but I'm workin' on it.",
+      "direction": "Warm first sentence, suddenly bureaucratic authority, then busy conviction.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.val.follow-suit.finish-it",
+      "trigger": "reaction.val.follow-suit",
+      "context": "Val publicly follows the effective led suit with a non-trump card. No private intention or strategic quality is inferred.",
+      "family": "withheld-affection",
+      "text": "Val, I know I don't say this enough, but... yeah. You know. Don't make me finish it.",
+      "direction": "Try to say something sincere; lose confidence and leave it unfinished.",
+      "deliveryTag": "hesitant"
+    },
+    {
+      "id": "reaction.val.trick.kiss-you",
+      "trigger": "reaction.val.trick",
+      "context": "Val, the human’s partner, won a newly completed public trick. The narrator does not occupy a playing seat.",
+      "family": "unfiltered-gratitude",
+      "text": "Val, I could kiss you.",
+      "direction": "Warm, impulsive and immediate; stop there.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you.trump.furniture",
+      "trigger": "reaction.you.trump",
+      "context": "Human publicly plays ordinary trump, excluding bowers. The narration does not predict a winner or describe unplayed choices.",
+      "family": "misplaced-decency",
+      "text": "Oh-ho-ho! My pants are still on, but only because I respect the furniture.",
+      "direction": "Delighted but perversely proud of the wrong boundary.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you.trump.pain-in-the-ass",
+      "trigger": "reaction.you.trump",
+      "context": "Human publicly plays ordinary trump, excluding bowers. The narration does not predict a winner or describe unplayed choices.",
+      "family": "admiring-obnoxiousness",
+      "text": "Ha! Look at that card bein' a pain in everybody's ass.",
+      "direction": "One continuous burst of admiration for obnoxiousness. No explanatory tag.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you.trump.high-five",
+      "trigger": "reaction.you.trump",
+      "context": "Human publicly plays ordinary trump, excluding bowers. The narration does not predict a winner or describe unplayed choices.",
+      "family": "overpowered-affection",
+      "text": "Oh, hell yeah! I'd high-five you, but I'd hit way too hard.",
+      "direction": "Genuine burst, then a matter-of-fact reason to keep his hands to himself.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you.follow-suit.vote",
+      "trigger": "reaction.you.follow-suit",
+      "context": "Human publicly followed the effective led suit with a non-trump card. The narrator proposes an absurd objection to the public matching rule; no actual voting control, new rule, unplayed card or legal alternative is asserted. Voting is the narrator’s absurd proposal, not an available app action or a change to the rules.",
+      "family": "loudness-as-authority",
+      "text": "Same suit. Can we vote on that? I can yell way louder than those other assholes.",
+      "direction": "Question the rule, then confidently explain the advantage he thinks he has. Do not actually prolong or raise the last phrase into a shout.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.you.trick.humble",
+      "trigger": "reaction.you.trick",
+      "context": "The human won a newly completed public trick. Humility advice is fictional character banter, not card strategy or a claim that the hand/game is won.",
+      "family": "contempt-for-humility",
+      "text": "Ha! Don't be humble. Humble's what losers call bein' quiet.",
+      "direction": "Enjoy the win, then deliver the false little principle as if it is obvious. Finish without a second tag.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.you.queen.card",
+      "trigger": "reaction.you.queen",
+      "context": "NEW REQUIRED PUBLIC PREDICATE: actor seat0 legally plays a card whose printed rank isQ. Read only the actual revealed action.card. No card-face illustration, private hand, sexual orientation or future result is inferred.",
+      "family": "card-crush",
+      "text": "Easy, Peter. It's a card. It's a card.",
+      "direction": "Quiet self-control, with the second reminder more necessary than the first.",
+      "deliveryTag": "flustered"
+    },
+    {
+      "id": "reaction.you.trick.other-argument",
+      "trigger": "reaction.you.trick",
+      "context": "The human won a newly completed public trick; only that result is established.",
+      "family": "irrelevant-vindication",
+      "text": "Yeah! And that's why I get to be right about the other thing.",
+      "direction": "Immediate triumph and wholly unjustified certainty.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.you.trick.noise-again",
+      "trigger": "reaction.you.trick",
+      "context": "The human won a newly completed public trick; only that result is established.",
+      "family": "unrestrained-hype",
+      "text": "Yes! I'm gonna make that noise again. YEAH!",
+      "direction": "Brief spontaneous cheer, then perform the second cheer; no long shout.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.opponent.trick.letting-it",
+      "trigger": "reaction.opponent.trick",
+      "context": "Either opponent won a newly completed public trick. Complaints are character attitude, not evidence of a bug or illegal move.",
+      "family": "sore-loser-protest",
+      "text": "Oh, okay. So we're just lettin' that happen now?",
+      "direction": "Petulant disbelief, clearly a complaint rather than a rules explanation.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.trick.fine",
+      "trigger": "reaction.opponent.trick",
+      "context": "Either opponent won a newly completed public trick. Complaints are character attitude, not evidence of a bug or illegal move.",
+      "family": "failed-composure",
+      "text": "Fine. I'm fine. I'M FINE.",
+      "direction": "Start restrained and let the last insistence expose the strain, without excessive volume.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.val.trick.elsewhere",
+      "trigger": "reaction.val.trick",
+      "context": "Val, the human’s partner, won a newly completed public trick. The narrator does not occupy a playing seat.",
+      "family": "selective-appreciation",
+      "text": "That's our Val! The other two can go be impressive somewhere else.",
+      "direction": "Warm cheer followed by an effortless dismissal of the opponents.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.val.follow-suit.help-me-move",
+      "trigger": "reaction.val.follow-suit",
+      "context": "Val publicly followed the effective led suit with a non-trump card. The narrator absurdly invents a friendship obligation; he does not claim that Val matched his nonexistent card, infer hidden intent, or establish that the play was strategically best.",
+      "family": "manufactured-obligation",
+      "text": "Val, you matched. We're friends now. You gotta help me move.",
+      "direction": "Recognize the match, declare friendship, then take the favor for granted. Stop after move.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.opponent.follow-suit.own-idea",
+      "trigger": "reaction.opponent.follow-suit",
+      "context": "NEW REQUIRED PUBLIC PREDICATE: actor seat1 or3 legally plays after a public lead; actual played effective suit equals the lead’s effective suit and differs from trump. Both bowers use effectiveSuit. No private hand, legal-action alternatives or intended strategy is read.",
+      "family": "mocking-conformity",
+      "text": "Same suit? Get your own idea!",
+      "direction": "A short immediate accusation. No retraction, rules explanation, or added apology.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.follow-suit.respect",
+      "trigger": "reaction.opponent.follow-suit",
+      "context": "NEW REQUIRED PUBLIC PREDICATE: actor seat1 or3 legally plays after a public lead; actual played effective suit equals the lead’s effective suit and differs from trump. Both bowers use effectiveSuit. No private hand, legal-action alternatives or intended strategy is read.",
+      "family": "compliance-double-standard",
+      "text": "Fine, that was legal. Doesn't mean I gotta respect you as a person.",
+      "direction": "Concede legality without conceding anything gracious.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.low-lead.fight-it",
+      "trigger": "reaction.opponent.low-lead",
+      "context": "Either opponent publicly leads a non-trump nine or ten. The imagined fight targets the inanimate card, not a player, and says nothing about who will win.",
+      "family": "card-sized-courage",
+      "text": "That card? Yeah, I'd fight that one.",
+      "direction": "Size up the small threat, then decide with misplaced confidence. Clearly address the card.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.table.four-tricks.like-you",
+      "trigger": "reaction.table.four-tricks",
+      "context": "Exactly four public tricks have completed and the hand remains in the playing phase; one trick remains.",
+      "family": "reluctant-attachment",
+      "text": "One more? Aw, crap. I was just startin' to like you people.",
+      "direction": "Unexpected warmth at the hand nearing its end. No goodbye, farewell delivery, or added implication that the whole game ends now.",
+      "deliveryTag": "disappointed"
+    }
+  ]
+}

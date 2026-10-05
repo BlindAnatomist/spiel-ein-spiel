@@ -1,0 +1,12 @@
+{
+  "scope": "Instrumented real bundled entry, controller, renderer and audio adapter; start plus four moves",
+  "mediaCompletion": "simulated",
+  "beforeBusyFocusedHeadingChanges": 20,
+  "afterBusyFocusedHeadingChanges": 0,
+  "beforeFirstPeterSpeechMs": 10,
+  "afterFirstPeterSpeechMs": 1150,
+  "settledHumanBoundaryUpdatesRemain": 5,
+  "postAudioFocusGuardMs": 1150,
+  "actualIPhoneVoiceOverValidated": false,
+  "rawTraceLocation": "Complete private recovery ZIP, verification folder"
+}

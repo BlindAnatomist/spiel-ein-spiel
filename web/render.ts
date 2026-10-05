@@ -22,6 +22,19 @@ export function createTable(root: HTMLElement, handlers: Handlers, seatNames: Se
   let ready = false;
   let focusKey = '';
   let panelKey = '';
+  let heldFocus: HTMLElement | undefined;
+  let retirement = false;
+  let retiredCardVerb = 'played';
+  let activatedControl: HTMLElement | undefined;
+  const heldControls = new Set<HTMLElement>();
+  const held = (element: Element) => retirement && heldControls.has(element as HTMLElement);
+  const retiredBids = new Set<HTMLElement>();
+  function releaseRetired() {
+    for (const [card, button] of cards) if (!current.hand.includes(card) && d.activeElement !== button) { button.remove(); cards.delete(card); }
+    for (const button of retiredBids) if (d.activeElement !== button) { button.remove(); retiredBids.delete(button); }
+    if (d.activeElement !== get('pass')) get('pass').hidden = !current.legalActions.some(a => a.type === 'pass');
+    if (d.activeElement !== get('next')) get('next').hidden = current.phase !== 'hand-over';
+  }
   const publicKey = (v: PlayerView) => JSON.stringify([v.handNumber,v.phase,v.turn,v.biddingRound,v.trump,v.caller,v.alone,v.sittingOut,v.upCardStatus,v.score,v.completedTricks,v.trick,v.result]);
   function toggleSightedPanel(kind: 'state' | 'trick', text: string) {
     const panel = get('current-state-panel');
@@ -43,8 +56,8 @@ export function createTable(root: HTMLElement, handlers: Handlers, seatNames: Se
     toggleSightedPanel('trick', lastTrick(current, seatNames));
     handlers.review?.();
   };
-  get('next').onclick = () => handlers.next();
-  function render(v: PlayerView, interactive = true) {
+  get('next').onclick = () => { activatedControl = get('next'); handlers.next(); };
+  function render(v: PlayerView, interactive = true, quietNarration = false) {
     if (v.seat !== 0) throw new Error('Human presentation requires seat zero');
     if (current && current.handNumber !== v.handNumber) { hand.replaceChildren(); cards.clear(); }
     const nextKey = publicKey(v);
@@ -61,9 +74,10 @@ export function createTable(root: HTMLElement, handlers: Handlers, seatNames: Se
     bidLegend.textContent = v.biddingRound === 1
       ? 'Plain suit = order the dealer to pick it up. Ringed suit = order it up and go alone.'
       : 'Plain suit = call that suit. Ringed suit = call it and go alone.';
-    get('repeat-state').setAttribute('aria-label', v.trump
+    const reviewLabel = v.trump
       ? `Repeat current state. Called suit: ${v.trump[0]!.toUpperCase()}${v.trump.slice(1)}.`
-      : 'Repeat current state. Suit not called yet.');
+      : 'Repeat current state. Suit not called yet.';
+    if (!quietNarration || get('repeat-state').getAttribute('aria-label') !== reviewLabel) get('repeat-state').setAttribute('aria-label', reviewLabel);
     get('score').textContent = `You & Val ${v.score[0]} — Opponents ${v.score[1]} · First to 10`;
     get('facts').textContent = `Hand ${v.handNumber}. Dealer: ${seatNames[v.dealer]}.`;
     get('trump').textContent = `Called suit: ${v.trump ?? 'not yet called'}.${v.caller !== null ? ` Caller: ${seatNames[v.caller]}.${v.alone ? ' Going alone.' : ''}` : ''}`;
@@ -75,13 +89,30 @@ export function createTable(root: HTMLElement, handlers: Handlers, seatNames: Se
     get('tricks').innerHTML = '<span class="sr-only"></span><span class="trick-tally" aria-hidden="true"></span>';
     get('tricks').firstElementChild!.textContent = trickText;
     (get('tricks').lastElementChild as HTMLElement).dataset.tally = `${ourTricks} – ${v.completedTricks.length - ourTricks}`;
-    get('trick').replaceChildren(...v.trick.map(p => { const li = d.createElement('li'); li.textContent = `${seatNames[p.seat]}: ${cardName(p.card, v.trump)}`; return li; }));
-    get('turn').textContent = v.result ? 'Hand complete' : v.turn === 0 ? v.phase === 'bidding' ? `Your bid — round ${v.biddingRound}` : v.phase === 'discarding' ? 'Discard one card' : 'Your turn to play' : `${seatNames[v.turn!]}${v.phase === 'bidding' ? ` bids — round ${v.biddingRound}` : v.phase === 'discarding' ? ' must discard' : ' to play'}`;
+    const trick = get('trick');
+    const trickLines = v.trick.map(p => `${seatNames[p.seat]}: ${cardName(p.card, v.trump)}`);
+    if (quietNarration) {
+      // Preserve already-present public rows under VoiceOver's virtual cursor.
+      trickLines.forEach((text, index) => {
+        let row = trick.children[index];
+        if (!row) { row = d.createElement('li'); trick.append(row); }
+        if (row.textContent !== text) row.textContent = text;
+      });
+      while (trick.children.length > trickLines.length) trick.lastElementChild!.remove();
+    } else trick.replaceChildren(...trickLines.map(text => { const li = d.createElement('li'); li.textContent = text; return li; }));
+    const turnText = quietNarration && !interactive ? get('turn').textContent! : v.result ? 'Hand complete' : v.turn === 0 ? v.phase === 'bidding' ? `Your bid — round ${v.biddingRound}` : v.phase === 'discarding' ? 'Discard one card' : 'Your turn to play' : `${seatNames[v.turn!]}${v.phase === 'bidding' ? ` bids — round ${v.biddingRound}` : v.phase === 'discarding' ? ' must discard' : ' to play'}`;
+    // VoiceOver can speak changes to its focused element even outside a live
+    // region. Keep the heading and any existing control description unchanged while busy.
+    if (!quietNarration || get('turn').textContent !== turnText) get('turn').textContent = turnText;
     const pass = v.legalActions.find(a => a.type === 'pass');
-    get('pass').hidden = !pass;
+    get('pass').hidden = !pass && !held(get('pass'));
     get('pass').setAttribute('aria-disabled', String(!interactive));
-    get('pass').onclick = () => { if (ready && pass) handlers.act(pass); };
-    const bids = get('bids'); bids.replaceChildren();
+    get('pass').onclick = () => { if (ready && pass) { activatedControl = get('pass'); handlers.act(pass); } };
+    const bids = get('bids');
+    for (const button of [...bids.children]) {
+      if (held(button)) { button.setAttribute('aria-disabled', 'true'); button.setAttribute('tabindex', '-1'); retiredBids.add(button as HTMLElement); }
+      else { retiredBids.delete(button as HTMLElement); button.remove(); }
+    }
     for (const action of v.legalActions.filter(a => a.type === 'order-up' || a.type === 'call')) {
       const button = d.createElement('button'); button.type = 'button'; button.setAttribute('aria-label', actionName(action, v.upCard));
       const suit = action.type === 'call' ? action.suit : suitOf(v.upCard);
@@ -92,31 +123,41 @@ export function createTable(root: HTMLElement, handlers: Handlers, seatNames: Se
       symbol.textContent = {hearts: '♥', diamonds: '♦', clubs: '♣', spades: '♠'}[suit];
       button.append(symbol);
       button.setAttribute('aria-disabled', String(!interactive));
-      button.onclick = () => { if (ready) handlers.act(action); };
-      if (!bids.childElementCount) button.setAttribute('aria-describedby', 'turn');
+      button.onclick = () => { if (ready) { activatedControl = button; handlers.act(action); } };
+      if (![...bids.children].some(child => !retiredBids.has(child as HTMLElement))) button.setAttribute('aria-describedby', 'turn');
       bids.append(button);
     }
     get('result').textContent = resultText(v);
     get('result').hidden = !v.result;
-    get('next').hidden = v.phase !== 'hand-over';
+    get('next').hidden = v.phase !== 'hand-over' && !held(get('next'));
     get('next').setAttribute('aria-disabled', String(!interactive));
-    for (const [card, button] of cards) if (!v.hand.includes(card)) { button.remove(); cards.delete(card); }
+    for (const [card, button] of cards) if (!v.hand.includes(card)) {
+      if (held(button)) {
+        const label = `${cardName(card, v.trump)}, ${retiredCardVerb}`;
+        if (button.getAttribute('aria-label') !== label) button.setAttribute('aria-label', label);
+        button.setAttribute('aria-disabled', 'true'); button.tabIndex = -1; button.className = 'card unavailable';
+      } else { button.remove(); cards.delete(card); }
+    }
     for (const card of v.hand) {
       let button = cards.get(card);
       if (!button) {
         button = d.createElement('button'); button.type = 'button'; cards.set(card, button); hand.append(button);
         button.onclick = () => {
           const action = current.legalActions.find(a => (a.type === 'play' || a.type === 'discard') && a.card === card);
-          if (ready && action) handlers.act(action);
+          if (ready && action) { activatedControl = button; handlers.act(action); }
         };
       }
       const legal = v.legalActions.some(a => (a.type === 'play' || a.type === 'discard') && a.card === card);
       const label = v.phase === 'discarding' && v.turn === 0 ? `Discard ${cardName(card, v.trump)}` : `${cardName(card, v.trump)}, ${legal && interactive ? 'playable' : 'not playable'}`;
-      const spoken = d.createElement('span'); spoken.className = 'sr-only'; spoken.textContent = label;
-      button.replaceChildren(spoken, cardFace(d, card));
-      button.setAttribute('aria-label', label);
-      button.setAttribute('aria-disabled', String(!legal || !interactive));
-      button.className = legal && interactive ? 'card playable' : 'card unavailable';
+      if (!quietNarration || button.getAttribute('aria-label') !== label) {
+        const spoken = d.createElement('span'); spoken.className = 'sr-only'; spoken.textContent = label;
+        button.replaceChildren(spoken, cardFace(d, card));
+        button.setAttribute('aria-label', label);
+      }
+      const disabled = String(!legal || !interactive);
+      if (!quietNarration || button.getAttribute('aria-disabled') !== disabled) button.setAttribute('aria-disabled', disabled);
+      const className = legal && interactive ? 'card playable' : 'card unavailable';
+      if (!quietNarration || button.className !== className) button.className = className;
     }
   }
   function focus() {
@@ -124,14 +165,32 @@ export function createTable(root: HTMLElement, handlers: Handlers, seatNames: Se
     const key = `${v.handNumber}/${v.phase}/${v.turn}/${v.bids.length}/${v.completedTricks.length}/${v.trick.length}`;
     if (focusKey === key) return;
     focusKey = key;
+    // An explicit move to another control during speech belongs to the user.
+    const preserveUserFocus = retirement && heldFocus && d.activeElement !== heldFocus && !heldControls.has(d.activeElement as HTMLElement) && d.activeElement !== d.body;
+    if (preserveUserFocus) { retirement = false; heldFocus = undefined; heldControls.clear(); releaseRetired(); return; }
     if (v.result) get('result').focus();
     else if (v.turn === 0) {
       const cardAction = v.legalActions.find(a => a.type === 'play' || a.type === 'discard');
       if (cardAction && 'card' in cardAction) cards.get(cardAction.card)!.focus();
-      else get('bids').querySelector('button')?.focus();
+      else [...get('bids').querySelectorAll<HTMLButtonElement>('button')].find(button => !retiredBids.has(button))?.focus();
     }
+    retirement = false; heldFocus = undefined; heldControls.clear(); releaseRetired();
   }
   // Move away from an activated control before it can be removed. This is not live text.
-  function park() { get('turn').textContent = 'Game in progress'; get('turn').focus(); }
+  function park(quietNarration = false) {
+    if (quietNarration) {
+      // Keep the actual activated native control alive until the next legal focus.
+      // No empty, hidden or synthetic element receives focus during narration.
+      heldFocus = d.activeElement instanceof d.defaultView!.HTMLElement ? d.activeElement : undefined;
+      heldControls.clear();
+      if (activatedControl?.isConnected) heldControls.add(activatedControl);
+      if (heldFocus && root.contains(heldFocus)) heldControls.add(heldFocus);
+      activatedControl = undefined;
+      retiredCardVerb = current.phase === 'discarding' ? 'discarded' : 'played';
+      retirement = true; return;
+    }
+    retirement = false; heldFocus = undefined; heldControls.clear(); releaseRetired();
+    get('turn').textContent = 'Game in progress'; get('turn').focus();
+  }
   return { render, focus, park };
 }

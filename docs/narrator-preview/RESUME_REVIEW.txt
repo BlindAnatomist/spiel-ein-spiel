@@ -1,0 +1,12 @@
+2026-10-02 independent follow-up review
+
+Both defects were reproduced against the first private-preview controller and
+confirmed fixed. Interrupted hand-over and game-over previously put the result
+in the live region and then focused it; the patch delivers the result by focus
+only. Settled bidding, playing, discarding, hand-over and game-over previously
+stranded focus on the turn heading; the patch preserves Resume-button focus and
+state. No native renderer changes were made. Full repository check: 174 passing.
+
+The reproduction script is supplied as evidence and needs its original review
+fixture paths adjusted if run outside the original validation environment.
+No new human-listening or iPhone/VoiceOver claim is made.

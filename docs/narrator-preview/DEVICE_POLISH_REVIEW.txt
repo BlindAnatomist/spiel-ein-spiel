@@ -1,0 +1,65 @@
+Independent review: Euchre narrator polish
+Reviewed 2026-10-02. Baseline: exact recovered checkpoint 0945f552. Reviewer did not modify application source, generate audio, or deploy. Test additions were prepared in the review folder and adopted by the integrator.
+
+RESULT
+The frozen source passes source-level, deterministic gameplay, DOM, recording-integrity, and optional-speech lifecycle review. No unresolved implementation defect was found in this scope. Actual iPhone VoiceOver speech and subjective voice delivery remain device/listening acceptance items; the tests below do not simulate or prove those experiences.
+
+FINAL VALIDATION
+- npm run check: TypeScript plus all 217 repository tests passed, zero failures
+- Independent focused controls/retirement/lifecycle/classifier suite: 17 tests passed with strict TypeScript checking
+- Additional independent optional-audio probes: 5 passed, including actual media failure, missing recording, and both 1150ms guards for an optional-only human event
+- git diff --check passed
+- src/ and web/presentation.ts are byte-unchanged relative to 0945f552: engine, bot logic, card legality, and original public factual mapping remain protected
+- Repository full-game test verifies Original and recorded narration produce identical game views and settled focus at human boundaries
+- All 1,965 runtime files matched manifest byte counts and SHA256; the 1,953 prior asset records remain unchanged and all 12 new files independently decoded successfully
+
+MEASURED COMMENTARY
+Using 24 complete actual varied-opponent games across Casual, Strong, Expert, and Mixed settings, covering 266 hands, 6,771 legal actions and all 20 named opponents:
+- Baseline: 121 humorous moments, 0.45 per hand; 145 entirely plain hands; only 8 moments at completed trick counts 4-5; no individual-card-play candidates
+- New candidate, narration RNG seed A: 516 moments, 1.94 per hand; 55 hands with 1, 172 with 2, 39 with 3
+- New candidate, independent narration RNG seed B: 512 moments, 1.92 per hand; 3 plain hands, 58 with 1, 161 with 2, 44 with 3
+- Seed A new reaction contexts: 124 human, 114 opposing-player, 7 Val, 29 late-hand/table
+- Seed A all humor including preserved alternatives: 172 human, 167 Val, 135 opposing-player, 42 table
+- Both seeds include substantial individual-play commentary and late-hand remarks, rather than always taking the first available trick winner
+- Both traces have minimum 2 completed tricks and 6 public events between character moments, no more than 3 per hand, and no exact-clip cooldown violations
+- Seed A also independently passed semantic-family 4-trick/12-event and normalized-text 4-hand/80-event checks
+- No missing factual recordings, live fallback facts, or media-selection failures in either complete-game simulation
+These are selection/lifecycle simulations using the actual imported manifest, not audible browser playback captures. The two runs reuse the same 24 game scenarios with different independent narration RNG seeds.
+
+FOCUS AND CONTROL REVIEW
+- Native Narrator button clearly alternates VoiceOver/Peter without an explanatory aria-describedby block
+- Comparison link and top-level narration explanation removed; optional diagnostics remain in Help
+- Peter actions no longer explicitly focus the Game in progress heading
+- Actual activated native card/bid/Next controls are retained through busy speech, including activation whose DOM focus remains on another control
+- Legal settled focus transfers before retired controls are removed; discard labels are accurate
+- First-bid description remains stable during the busy sequence
+- Pause/resume cleanup, explicit user focus movement, Next across hands, mode switches, pagehide, and hidden-document hooks passed
+- No empty or aria-hidden synthetic focus target introduced
+- Native label/state changes may still be spoken by real screen readers; real-device validation remains necessary
+
+REACTION SAFETY AND LIFECYCLE
+- 9,600 independent card/actor/trump/led-suit cases passed; changing own hand and legal-action data does not change classifications
+- All scripts match public events; discard identities are excluded; no strategy, intent, forecast, hidden-card access, or action advice was added
+- Opponent low-lead script no longer implies sneakiness/intent; human taking-credit script shares the existing undeserved-credit cooldown family
+- Optional reaction failure is silent; canonical factual narration stays complete and retains its original fallback behavior
+- Review during activation guard, Review during the inter-sentence gap, pause, mode switch, and stop/replacement queue cancel pending reactions; stale media completion does not replay them
+- Standalone human reactions get both activation and settled-focus guards
+
+REPAIRED REVIEW FINDINGS
+1. Focus retention originally relied only on document.activeElement. Native activation without focus moved the wrong retained control. Integrator now captures actual onclick identity plus DOM focus snapshot; regression passes.
+2. Review during the activation guard originally allowed a not-yet-queued reaction afterward. Integrator added review-generation tracking; regression passes.
+3. Retired discard was originally labeled played; corrected to discarded.
+4. Focused bid descriptions could change into another busy phrase; the busy heading now stays unchanged.
+
+SOURCE IDENTITY AND EVIDENCE
+Functional source hashes: final-source-sha256.txt (15 files, rechecked after aggregate tests)
+Aggregate log: frozen-check.log
+Actual runtime integrity: asset-audit.json
+Baseline data: baseline-events.json, baseline-summary.json
+New full traces: integrated-events.json, integrated-second-events.json
+Summaries: integrated-summary.json, integrated-second-summary.json
+Semantic repetition audit: repetition-audit.json
+Portable test sources: portable/test/
+
+LIMITS
+No deployment, production push, native iPhone interaction, subjective listening, or audible word-accuracy validation was performed by this reviewer. Build/publication checks belong to the integrator. Mechanical decoding and gain metrics are not evidence of how the voice sounds.

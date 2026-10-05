@@ -1,0 +1,64 @@
+Independent whole-event stage-one review — 2026-10-02 UTC
+
+Finding: no known blocking source or asset defect in the imported candidate.
+This is readiness for another isolated listening/device test, not real-iPhone or
+human speech-content/performance acceptance. Final source commit/tree should be
+recorded alongside this report; reviewed runtime hashes are preserved separately.
+
+Coverage and regression evidence
+- Final strict typecheck, all 186 repository tests, actual private-preview build,
+  and git diff check pass after importing all real files.
+- Exact canonical matrix: 21 nonhuman names times 18 pass/order/call/trick facts,
+  plus You's trick win = 379 complete recordings. All submitted facts, names,
+  suits and alone distinctions match the original public event text.
+- 10,395 exhaustive synthetic event cases plus 48 complete games checked 23,244
+  messages. Every one of the 379 full keys is covered. The 36 West/East legacy
+  compatibility keys intentionally use verified fallback; no public fact is lost.
+- Twelve complete games compared protected original controller AND renderer,
+  current Original, and current Peter using the real final runtime manifest and
+  mocked media completion. All game state, native hand DOM/order/legal labels and
+  human-boundary focus match; Original speech text and wait sequence are unchanged.
+  This exercised 332 human turns, 56 requested reviews, 442 canonical full plays,
+  two rare replacements and 2,302 total media plays.
+- Eleven separate routing/history tests pass, plus the independent plan test:
+  ready whole selection, full legacy preflight fallback, one original-text failure
+  fallback after error/rejection/timeout, no successful-fact replay/appended joke,
+  exact clip/normalized-line history across hands/mode switches/New Game, semantic
+  family exclusion throughout a match, completed plain-hand/event spacing, consumed
+  failed/cancelled flavors, abandoned-New-Game resistance, and RNG independence.
+- The completed-hand hook runs only after the speech queue has settled and after
+  interruption checks at a result boundary. Duplicate completion is idempotent.
+  It prevents abandoned hand starts from substituting for a genuinely plain hand.
+- Protected engine, bots, native renderer and existing guarded media lifecycle
+  remain authoritative. The new choices do not read or advance game randomness.
+
+Real asset checks
+- All 379 raw/master pairs independently fully decode and match ready metadata,
+  exact planned text/prompt/payload/voice/free-model declarations, sizes and hashes.
+- Raw and mastered decoded sample counts are identical. Gain-scaled waveform
+  correlation is at least 0.999510. Independent four-times oversampled maximum
+  peak is -2.382 dBFS. No decoded clipping was found.
+- Canonical mastered pack: 11,300,187 bytes; 695.353488 seconds of unique audio.
+- Runtime contains exactly 508 recordings: 379 canonical, two previously favored
+  Emma-pass/Walt-spades-alone replacements copied byte-for-byte, and all 127
+  unchanged gain-repaired fallback files. All runtime hashes verify.
+- Declared integrated loudness median is -20.94 LUFS; nine peak-limited entries
+  are below -22 LUFS. Lowest is Ellen's pass at -24.0. Other exceptions: Wes's
+  spades order-alone, Wes's hearts call-alone, Wyatt's clubs/hearts call-alone,
+  Webb's hearts call-alone, and Wes/Ellen/Etta trick wins. These are preserved
+  rather than compressed/regenerated; equal perceived loudness is not claimed.
+
+Scope and limits
+- Whole sentences cover passes, order-ups, calls/alone and trick winners.
+  Card plays/leads, dealing, up-card, pickup and discard still use legacy assets.
+  This is not a complete whole-sentence catalog for every game event.
+- Favored witty alternatives replace the entire fact in one recording. Exact
+  alternatives do not repeat within a page session; related families do not repeat
+  within a game. Reload resets page-session history.
+- File validity and intended text do not prove audible words, absent spoken tags,
+  pronunciation, actor quality, character likeness or natural performance.
+- iPhone VoiceOver coexistence, focus, actual playback policy, ducking and perceived
+  volume still require user testing. No new browser rendering/device claim is made;
+  previous cloud-browser inspection stopped at the private ChatGPT login gate.
+- No production/main change or public-audio publication is authorized by this
+  review. Private build integrity gates and public-source audio exclusions remain.

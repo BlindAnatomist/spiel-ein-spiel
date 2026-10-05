@@ -1,5 +1,60 @@
 import { build } from 'esbuild';
-import { mkdir, copyFile, rm } from 'node:fs/promises';
+import { mkdir, copyFile, rm, cp, readFile, writeFile, readdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { narratorManifest } from '../web/narrator-manifest.ts';
+import { narratorWholeManifest } from '../web/narrator-whole-manifest.ts';
+import { narratorCompleteManifest } from '../web/narrator-complete-manifest.ts';
+import { narratorFlavorManifest } from '../web/narrator-flavor-manifest.ts';
+import { narratorVariants } from '../web/narrator-variants.ts';
+import { narratorReactionManifest } from '../web/narrator-reaction-manifest.ts';
+import { baseReactionLines } from '../web/narrator-reactions.ts';
+import { extraReactionLines } from '../web/narrator-extra-reactions.ts';
+import { narratorExtraReactionManifest } from '../web/narrator-extra-reaction-manifest.ts';
+import { narrationAssets } from '../web/narrator-assets.ts';
+import { CHARACTER_LIBRARY_TARGET, ORIGINAL_NARRATOR_COUNT } from '../web/narrator-reaction-triggers.ts';
+import { wholeEventContract, acceptedAlternatives } from './narrator-whole-contract.ts';
+import { completeEventContract } from './narrator-complete-contract.ts';
+import { ensureRuntimeAudio, shouldFetchRuntimeAudio } from './narrator-runtime-fetch.ts';
+
+// Netlify Git builds need the same pinned, verified runtime media as private builds.
+// Ordinary CI/development is deliberately offline and can keep Peter disabled.
+if (shouldFetchRuntimeAudio(process.env)) {
+  const result = await ensureRuntimeAudio('web');
+  console.log(`Runtime narration verified: ${result.verified}; restored: ${result.restored}; cached: ${result.preserved}`);
+}
+
+const clips = Object.values(narrationAssets);
+const available = await Promise.all(clips.map(async clip => {
+  try {
+    if (clip.status !== 'ready' || !/^[a-z0-9.-]+$/.test(clip.id) || clip.url !== `audio/${clip.id}.mp3`
+      || !Number.isFinite(clip.durationSeconds) || clip.durationSeconds <= 0
+      || !Number.isInteger(clip.bytes) || clip.bytes <= 0 || !/^[a-f0-9]{64}$/.test(clip.sha256)) return false;
+    const bytes = await readFile(`web/${clip.url}`);
+    return bytes.length === clip.bytes && createHash('sha256').update(bytes).digest('hex') === clip.sha256;
+  } catch { return false; }
+}));
+const wholeContract = { ...wholeEventContract(), ...acceptedAlternatives };
+const completeContract = completeEventContract();
+const flavorContract = Object.fromEntries(Object.values(narratorVariants).flat().map(line => [line.clip, line.text]));
+const catalogSha = createHash('sha256').update(JSON.stringify(clips.map(clip => [clip.id, clip.sha256, clip.text]))).digest('hex');
+const narratorAssetsReady = Object.keys(narratorManifest).length === 127
+  && Object.keys(narratorWholeManifest).length === 381
+  && Object.entries(wholeContract).every(([id, text]) => narratorWholeManifest[id]?.text === text)
+  && Object.keys(narratorCompleteManifest).length === 1433
+  && Object.entries(completeContract).every(([id, text]) => narratorCompleteManifest[id]?.text === text)
+  && Object.keys(narratorFlavorManifest).length === 12
+  && Object.entries(flavorContract).every(([id, text]) => narratorFlavorManifest[id]?.text === text)
+  && Object.keys(narratorReactionManifest).length === 12
+  && Object.entries(baseReactionLines).every(([id,line]) => narratorReactionManifest[id]?.text === line.text)
+  && Object.keys(narratorExtraReactionManifest).length === CHARACTER_LIBRARY_TARGET
+  && Object.keys(extraReactionLines).length === CHARACTER_LIBRARY_TARGET
+  && Object.entries(extraReactionLines).every(([id,line]) => narratorExtraReactionManifest[id]?.text === line.text)
+  && clips.length === ORIGINAL_NARRATOR_COUNT + CHARACTER_LIBRARY_TARGET && available.every(Boolean);
+if (!narratorAssetsReady) {
+  const restore = 'Restore the verified private recordings with scripts/restore-narrator-assets.ts. See docs/narrator-preview/PRODUCTION_PROMOTION.md.';
+  if (['narrator-preview', 'production', 'deploy-preview'].includes(process.env.CONTEXT ?? '')) throw new Error(`Complete narration requires all ${ORIGINAL_NARRATOR_COUNT + CHARACTER_LIBRARY_TARGET} runtime recordings (${CHARACTER_LIBRARY_TARGET} approved character additions). Partial catalogs cannot be published. ${restore}`);
+  console.warn(`Private recordings are not in the code checkpoint. Peter option disabled in this build. ${restore}`);
+}
 
 await mkdir('dist', { recursive: true });
 await rm('dist/layout-check', { recursive: true, force: true });
@@ -13,9 +68,35 @@ await build({
   define: {
     __BUILD_COMMIT__: JSON.stringify(process.env.COMMIT_REF ?? 'development'),
     __DEPLOY_CONTEXT__: JSON.stringify(process.env.CONTEXT ?? 'development'),
+    __NARRATOR_ASSETS_READY__: JSON.stringify(narratorAssetsReady),
+    __NARRATOR_CATALOG_SHA__: JSON.stringify(catalogSha),
   },
 });
 for (const file of ['index.html', 'style.css']) await copyFile(`web/${file}`, `dist/${file}`);
+// A new HTML document names its exact script content instead of reusing app.js.
+for (const file of await readdir('dist')) if (/^app\.[a-f0-9]{16}\.js$/.test(file)) await rm(`dist/${file}`);
+const appHash = createHash('sha256').update(await readFile('dist/app.js')).digest('hex').slice(0,16);
+const versionedApp = `app.${appHash}.js`;
+await copyFile('dist/app.js', `dist/${versionedApp}`);
+const html = await readFile('dist/index.html', 'utf8');
+if (!html.includes('src="app.js"')) throw new Error('Missing versionable app script');
+await writeFile('dist/index.html', html.replace('src="app.js"', `src="${versionedApp}"`));
+// Only verified, allowlisted recordings are shipped. Unrelated local files stay private.
+await rm('dist/audio', { recursive: true, force: true });
+await mkdir('dist/audio', { recursive: true });
+if (narratorAssetsReady) for (const clip of clips) await copyFile(`web/${clip.url}`, `dist/${clip.url}`);
+await rm('dist/repair-audio', { recursive: true, force: true });
+// Voice-comparison originals are private preview QA assets, not production game media.
+if (narratorAssetsReady && !['production', 'deploy-preview'].includes(process.env.CONTEXT ?? '')) {
+  const checksums = await readFile('web/repair-audio/checksums.sha256', 'utf8');
+  for (const line of checksums.trim().split('\n')) {
+    const match = /^([a-f0-9]{64})  (audio\/[a-z0-9.-]+\.(?:mp3|wav)|index\.html|measurements\.json)$/.exec(line);
+    if (!match) throw new Error('Invalid voice-comparison checksum entry');
+    const bytes = await readFile(`web/repair-audio/${match[2]}`);
+    if (createHash('sha256').update(bytes).digest('hex') !== match[1]) throw new Error(`Unverified comparison file: ${match[2]}`);
+  }
+  await cp('web/repair-audio', 'dist/repair-audio', { recursive: true });
+}
 
 
 // Browser-only regression fixtures are published only with an isolated PR preview.

@@ -1,0 +1,33 @@
+Complete narration checkpoint review
+2026-10-02 03:55 UTC
+
+Reviewed source: b6b3648af02ff5a47f5e87db3e151760f99ff806
+Tree: c96b3ccc6ae37d608bd589c51e47c74e7094bc6f
+Status: code checkpoint passes; complete real-asset and device acceptance remain pending
+
+Independent checks
+- Strict typecheck and all 193 repository tests pass; working tree is clean
+- Private-preview build correctly rejects the incomplete 1,953-file catalog before packaging
+- 22 focused external tests pass: one complete clip, strict missing/unready fallback, errors/rejection/timeout, cancellation, exact and semantic cooldown boundaries, incomplete New Game attempts, Original compatibility adapter, hash-versioned audio URLs and observational timed diagnostics
+- Planned-complete matrix: 9,450 synthetic event cases plus 48 complete games, 529 hands and 13,130 actions; 22,413 factual messages match the protected presentation text. All 1,812 canonical full keys, the existing one-file turned-down event and all 16 character alternatives are covered
+- Three-way replay of 12 complete games compares the protected controller and renderer, new Original and new Peter. All game states, complete hand DOM, legal labels and focus match at every human boundary. Original transcript and delays remain byte-equivalent. 332 human turns, 56 requested reviews and 1,385 automatic facts each selected exactly one file and ended once. Canonical stage-two metadata was synthetic-ready for this control-flow check
+- A separate 48-game distribution test uses the actual 12 completed new alternative records and synthetic-ready remaining canonical records. It selects 246 character lines among 14,359 automatic facts over 538 hands (1.7% of facts), typically 4–6 per game, range 3–8. The first game has 5. No automatic fact uses stitched files
+- That distribution independently checks every chosen line: a completed plain intervening hand, event spacing, semantic family once per game, exact clip/text cooldown of 12 completed hands AND 160 automatic events, and cross-game semantic-family cooldown of 3 completed hands AND 40 events. All checks pass
+- Selection randomness is separate from game/bot randomness. An injected deterministic RNG makes the distribution test reproducible
+
+Audio scope so far
+- The previous 508 recordings were fully decoded for baseline timing analysis; 66.2% of former automatic facts were still multiclip, with median 227 ms encoded quiet at internal clip boundaries before browser loading delays
+- All 1,433 new factual plan entries independently match exact actors, verbs, printed cards, bowers, effective suits and public logistics
+- First 117 completed raw/master pairs independently pass hashes, sizes, full decode, equal sample counts, gain correlation and peak limits. Minimum correlation .999659; maximum four-times oversampled peak −2.327 dBFS
+- Two conservative internal-quiet flags occur in longer complete alternatives: up-card rejected 420 ms; Ward trick wages 440 ms. These may be intentional sentence pauses. They are not listening failures and should not be automatically trimmed
+- Final full-pack audit will require all 1,445 new files (1,433 factual plus 12 alternatives), preserve the prior 508, and verify every imported and built byte
+
+Finite flavor history policy
+The parent confirmed the new finite exact-history contract at 03:44 UTC. This intentionally replaces the previous page-session permanent exact-line exclusion. The last-eight list is a selection preference, not a permanent veto. Pruning after eight games still requires the exact cooldown to have expired. Repeated unfinished New Games cannot bypass completed-hand requirements.
+
+Outstanding boundaries
+- Production is incomplete. Batch B has a tracked pre-HTTPS transport/sandbox startup blocker; no missing item may be omitted from final coverage
+- No direct served-byte capture or user Safari-cache inspection has been completed. Native Site status confirms the previous v4 deployment, but that alone does not prove bytes heard on the phone
+- Current code adds content-hashed app files, hash-versioned audio URLs, a readable revision label and catalog fingerprint. Diagnostics distinguish selection, media request, valid actual playing and completion, with event IDs and monotonic timestamps
+- No audible speech transcription, performance listening or iPhone/VoiceOver acceptance claim is made. Waveform and decoded timing analysis cannot establish natural delivery or that every spoken word matches its submitted text
+- No publication or production/main change was performed by this reviewer

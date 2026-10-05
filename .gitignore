@@ -4,3 +4,10 @@ coverage/
 dist/
 .netlify/
 reports/bot-validation-run/
+
+# Generated voice assets are preserved in private Library/Sites, not the public repo.
+web/audio/*.mp3
+web/repair-audio/audio/
+
+# Detailed local import provenance stays with private audio evidence.
+docs/narrator-preview/extra-reaction-pack-receipt.json

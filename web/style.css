@@ -41,3 +41,19 @@ body:has(#game:not([hidden])) #top-score,body:has(#game:not([hidden])) #difficul
 #analysis-panel{margin:8px 0;padding:10px;border:1px solid #668478;border-radius:10px;background:#173f34}
 #analysis-panel h2{margin:0 0 6px}#analysis-chart svg{display:block;width:100%;height:auto;max-height:260px}.analysis-grid{stroke:#6f8c80;stroke-width:1}.analysis-axis-label{fill:#e9eee9;font-size:13px}.analysis-line{stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.win-line,.win-point{stroke:#f1dfa3;fill:#f1dfa3}.call-line,.call-point{stroke:#9ed3ff;fill:#9ed3ff}.call-line{stroke-dasharray:10 7}.chart-legend{font-size:.85rem;color:#d8e2dd}
 #human-tracking[aria-pressed=false]{background:#d7ded9}
+
+/* Compact narrator controls; optional detail stays inside Help. */
+header{grid-row:1}#top-score,#difficulty,#start-game,#sound-cues{grid-row:2}.setup-secondary{grid-row:3}
+.table-controls{grid-column:1/-1;grid-row:4;display:flex;gap:6px;min-width:0}
+.table-controls button{background:#153b32;color:#f5f4e8;font-size:14px;min-width:0;padding:6px 10px}
+#narrator{flex:1 1 auto}#pause-game{flex:1 1 auto}#help-button{flex:0 0 auto}
+#narrator-caption{grid-column:1/-1;grid-row:5;font-size:14px;line-height:1.35;color:#f6e8bb;overflow-wrap:anywhere}
+#narrator-caption:empty{display:none}#game{grid-row:6}
+body:has(#game:not([hidden])) .table-controls{grid-row:2}
+body:has(#game:not([hidden])) #narrator-caption{grid-row:3}
+body:has(#game:not([hidden])) #game{grid-row:4}
+#preview-notice{font-size:14px;color:#c8d8cf;margin-bottom:8px!important}
+#narrator-status{margin-top:12px;font-size:14px}
+@media(max-width:350px){main{grid-template-columns:minmax(80px,1fr) minmax(70px,82px) minmax(72px,auto) 48px}}
+
+#saved-hand-report{margin-top:12px;font-size:14px}#hand-report-panel{margin-top:12px;display:grid;gap:10px}#hand-report-selection,#hand-report-text{width:100%;min-width:0}#hand-report-text{font:inherit;line-height:1.5;padding:10px;border:1px solid #94aea5;border-radius:8px;background:#0a211e;color:#f3f4e9}#hand-report-text:focus{outline:3px solid #ffca66;outline-offset:3px}

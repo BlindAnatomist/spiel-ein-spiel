@@ -1,0 +1,31 @@
+Stage-two baseline diagnosis, 2026-10-02 03:33 UTC
+Reviewed source: ca3ba317f6d74d52710259f1f18b19522331ec9b
+Context: user rejected stage-one device experience as mostly unchanged, with unnatural name/action gaps and sparse longer character lines.
+
+Measured current behavior
+- Ran 48 deterministic complete games across Casual/Strong/Expert/Mixed with actual 508-entry runtime manifest, varied permanent opponent names, strong human policy and mocked media-ended events.
+- 538 hands; 14,359 automatic utterances. 9,510 (66.23%) selected multiple files: all 7,970 card plays/leads and 1,540 dealer/upcard/pickup/discard events. Bids and trick-win complete keys routed successfully.
+- Independently decoded all 508 runtime files. Using 10 ms mono RMS windows at −45 dBFS, 9,510 selected fragment boundaries contain median 227 ms, 95th percentile 257 ms and maximum 287 ms of encoded quiet. Browser/network source-switch delays are excluded. The current code replaces audio.src only after previous ended; additional loading latency can extend the intra-sentence break.
+- Some prefixes also contain measurable internal quiet (e.g. Wolf plays maximum 250 ms); waveform analysis does not identify phoneme/word positions or establish perceived quality.
+- Shared page-session trace played only 3 character alternatives across 48 games. Available catalog has 4 alternatives across 3 families; exact clip/text page-session bans plus family-per-game ban impose a hard scarcity bound.
+- Fresh-page-history comparison: 42/48 full games had exactly 1 character alternative, 6/48 had 2. Walt appeared in 6 games but the specific Walt spades-alone event never arose. 740 opportunities were predominantly Val trick wins 676, Emma passes 54 and Val calls hearts 10. This explains one early longer line followed by mostly plain lines without inferring failed mapping or cache behavior.
+
+Limits on deployment proof
+- Integrator reports native Site v4 active/private and deployment succeeded; local deployment receipt records source tree 97d702392188eda48810d2759eb974913f4d645a, Site source bd8fe239b78f862f55fa858af150bf8171417ac5, public code fc0a38918222ee128cb3e5dc906b5be877740f13.
+- I have not independently fetched current served app bytes, observed the user's Safari cache, heard these files, transcribed their speech, or validated iPhone/VoiceOver acceptance.
+- Earlier cloud browser reached private login gate and stopped. Current Sites managed-Linux rules require supervised internal preview and prohibit navigating deployed Site URLs. Static assets have no compatible supervised development server. No bypass or improvised socket route attempted.
+
+Next candidate acceptance gates
+- All 1433 remaining exact public facts, including 21 named bots×2 verbs×32 card/bower forms, 22 deal, 22 pickup, 21 discard, 24 upcard. Original 379 and favored samples retained unchanged.
+- Every reachable automatic fact selects exactly 1 complete file; no silent normal-event fragment fallback. Unavailable/error/timeout gets one complete factual Original fallback after media stops, with diagnostic evidence.
+- Full public-text/bower/actor corpus and complete games preserve Original transcript, game RNG/state, hidden information boundary, full hand DOM, legal labeling, focus, interruption and review lifecycle.
+- Content-hashed app filename and readable revision identity distinguish correct deployed build from stale old HTML/app.
+- Numeric audio checks plus abnormal silence flags are necessary but not a substitute for factual/subjective listening or real-device acceptance.
+- Keep anti-repeat safeguards; larger common-event character catalog is needed for richer variety. Relaxing cooldown cannot solve a four-line page-session catalog without repetition.
+
+Prepared checks
+phase2-plan.test.mjs: independent exact1433 plan passes
+phase2-audio-audit.py:10pilot raw/master pairs pass, minimum correlation .999796 and maximum4x peak−2.426dBFS; one peak-limited upcard −22.48LUFS
+phase2-current-trace.mjs/json/log
+phase2-fresh-session-trace.mjs/json/log
+phase2-gap-audit.py/json/log

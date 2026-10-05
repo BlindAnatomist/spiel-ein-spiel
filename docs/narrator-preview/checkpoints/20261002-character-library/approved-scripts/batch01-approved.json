@@ -1,0 +1,228 @@
+{
+  "packId": "peter-euchre-library-batch01-20261002",
+  "model": "s2.1-pro-free",
+  "reference_id": "d75c270eaee14c8aa1e9e980cc37cf1b",
+  "temperature": 0.85,
+  "maxConcurrentRequests": 2,
+  "maxRequestsPerLine": 2,
+  "retryRule": "Only a documented mechanical failure, not unheard subjective retakes",
+  "status": "Parent-approved",
+  "scripts": [
+    {
+      "id": "reaction.you.follow-suit.complain",
+      "trigger": "reaction.you.follow-suit",
+      "context": "Human has publicly played a non-trump card matching the effective led suit. No claim about an unplayed option, future winner or hidden hand.",
+      "family": "rule-resistance",
+      "text": "Same suit. Fine. Happy now, stupid rule?",
+      "direction": "Grudging first beats, then ask the rule itself an irritated rhetorical question.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.you.bower.special-rules",
+      "trigger": "reaction.you.bower",
+      "context": "Human has publicly played either bower. The joke concerns that card’s special trump/ranking rules and the spectator narrator’s impossible self-reclassification; no hidden cards or future result are claimed.",
+      "family": "self-declared-exception",
+      "text": "Oh, he gets special rules? Screw that. I'm a jack now.",
+      "direction": "Offended by the advantage, then immediately confident in his absurd solution.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.you.follow-suit.applause",
+      "trigger": "reaction.you.follow-suit",
+      "context": "Human has publicly played a non-trump card matching the effective led suit. No claim about an unplayed option, future winner or hidden hand.",
+      "family": "accidental-adult",
+      "text": "Nobody's gonna clap for doin' it right? Tough room.",
+      "direction": "Wait just a tiny beat for the applause he thinks is owed.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.you.follow-suit.looks-easy",
+      "trigger": "reaction.you.follow-suit",
+      "context": "Human has publicly played a non-trump card matching the effective led suit. No claim about an unplayed option, future winner or hidden hand.",
+      "family": "effort-avoidance",
+      "text": "Hey, quit makin' this look easy. Somebody's gonna ask me to do it.",
+      "direction": "Alarmed interruption, then a serious selfish reason.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.you.trump.doing-this",
+      "trigger": "reaction.you.trump",
+      "context": "Human has publicly played ordinary trump, excluding both bowers. Reaction describes narrator emotion, not a predicted result.",
+      "family": "impulsive-approval",
+      "text": "Oh, we're doin' this now? Hell yeah.",
+      "direction": "Abrupt brightening; keep it brief.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you.trump.standing",
+      "trigger": "reaction.you.trump",
+      "context": "Human has publicly played ordinary trump, excluding both bowers. Reaction describes narrator emotion, not a predicted result.",
+      "family": "physical-celebration",
+      "text": "Oh-ho! Yeah! Aw, crap, I stood up too fast.",
+      "direction": "Start delighted, then abruptly woozy and annoyed at himself.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you.trump.give-a-crap",
+      "trigger": "reaction.you.trump",
+      "context": "Human has publicly played ordinary trump, excluding both bowers. Reaction describes narrator emotion, not a predicted result.",
+      "family": "wandering-attention",
+      "text": "Ooh. Okay. Now I give a crap.",
+      "direction": "Wake up in the middle; no big pause.",
+      "deliveryTag": "interested"
+    },
+    {
+      "id": "reaction.you.trick.not-you-val",
+      "trigger": "reaction.you.trick",
+      "context": "A newly completed public trick was won by the human. A trick is the only success established.",
+      "family": "misdirected-taunt",
+      "text": "Ha! Suck it! Not you, Val. You're doin' great.",
+      "direction": "Burst of gloating, tiny recognition beat, quick warmth to Val.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you.trick.our-cards",
+      "trigger": "reaction.you.trick",
+      "context": "A newly completed public trick was won by the human. A trick is the only success established.",
+      "family": "territorial-gloating",
+      "text": "Ha! Those are our cards now. Go get your own damn cards.",
+      "direction": "Triumphant, then possessive like a child refusing to share.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.you.trick.called-it",
+      "trigger": "reaction.you.trick",
+      "context": "A newly completed public trick was won by the human. A trick is the only success established.",
+      "family": "undeserved-credit",
+      "text": "Yeah! Val, tell 'em I called that. C'mon, be cool.",
+      "direction": "Celebrate, recruit Val, then quick needy pressure on the last phrase.",
+      "deliveryTag": "confident"
+    },
+    {
+      "id": "reaction.opponent.trick.pissed",
+      "trigger": "reaction.opponent.trick",
+      "context": "Either opponent has won a completed public trick. This is the fictional narrator’s subjective sore-loser outburst, not an assertion of a bug, cheating, or an illegal play.",
+      "family": "sore-loser-protest",
+      "text": "That’s bullshit!",
+      "direction": "One blunt frustrated exclamation; no retraction, explanation, or added words.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.trick.teacher",
+      "trigger": "reaction.opponent.trick",
+      "context": "A newly completed public trick was won by either opposing seat. Any complaint is explicitly narrator emotion, not evidence of cheating or strategy.",
+      "family": "anger-by-association",
+      "text": "Who taught you this crap? I wanna be mad at them, too.",
+      "direction": "Offended question, then insist on extending the grievance.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.trick.grudge",
+      "trigger": "reaction.opponent.trick",
+      "context": "A newly completed public trick was won by either opposing seat. Any complaint is explicitly narrator emotion, not evidence of cheating or strategy.",
+      "family": "conditional-grudge",
+      "text": "Fine. Take 'em. You're dead to me till we win somethin'.",
+      "direction": "Sulky surrender, overdramatic grudge, smaller conditional tail.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.trick.boner",
+      "trigger": "reaction.opponent.trick",
+      "context": "A newly completed public trick was won by either opposing seat. Any complaint is explicitly narrator emotion, not evidence of cheating or strategy.",
+      "family": "resentful-dismissal",
+      "text": "All right, all right. Don't get a boner about it.",
+      "direction": "Impatient deflation, casually inappropriate, no theatrical emphasis on the crude word.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.trick.knock-it-off",
+      "trigger": "reaction.opponent.trick",
+      "context": "A newly completed public trick was won by either opposing seat. Any complaint is explicitly narrator emotion, not evidence of cheating or strategy.",
+      "family": "reluctant-applause",
+      "text": "Okay, that was pretty damn good. Knock it off.",
+      "direction": "Genuine recognition followed by an immediate terse demand.",
+      "deliveryTag": "matter-of-fact"
+    },
+    {
+      "id": "reaction.opponent.ace-lead.relax",
+      "trigger": "reaction.opponent.ace-lead",
+      "context": "Either opponent publicly leads an ace. No prediction of who will win the trick.",
+      "family": "relaxation-denied",
+      "text": "Oh, sure, an ace. God forbid I relax for one lousy second.",
+      "direction": "Tired recognition turning into a small personal grievance.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.ace-lead.middle-finger",
+      "trigger": "reaction.opponent.ace-lead",
+      "context": "Either opponent publicly leads an ace. No prediction of who will win the trick.",
+      "family": "impotent-retaliation",
+      "text": "Oh, an ace? Well, I got a middle finger.",
+      "direction": "Receive the challenge, then offer a proudly useless comeback.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.opponent.right-bower.saw-it",
+      "trigger": "reaction.opponent.right-bower",
+      "context": "Either opponent publicly plays the right bower. This does not imply the hand or game is won.",
+      "family": "resentful-dismissal",
+      "text": "Aw, son of a bitch. Yeah, yeah, we all saw it.",
+      "direction": "Groan then impatient mutter.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.val.follow-suit.victimhood",
+      "trigger": "reaction.val.follow-suit",
+      "context": "Val publicly follows the effective led suit with a non-trump card. No hidden cards, intent or strategy evaluation.",
+      "family": "spoiled-victimhood",
+      "text": "Goddammit, Val. You're ruinin' my whole 'nobody helps me' thing.",
+      "direction": "Annoyed at the inconvenience to his self-pity; flow through the quoted phrase.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.val.follow-suit.exhausting",
+      "trigger": "reaction.val.follow-suit",
+      "context": "Val publicly follows the effective led suit with a non-trump card. No hidden cards, intent or strategy evaluation.",
+      "family": "effort-avoidance",
+      "text": "Val, quit doin' stuff. You're makin' my sittin' here look bad.",
+      "direction": "A lazy command, followed by the self-interested complaint.",
+      "deliveryTag": "matter-of-fact"
+    },
+    {
+      "id": "reaction.val.follow-suit.start-something",
+      "trigger": "reaction.val.follow-suit",
+      "context": "Val publicly follows the effective led suit with a non-trump card. No hidden cards, intent or strategy evaluation.",
+      "family": "unused-tantrum",
+      "text": "Val, stop bein' reasonable. I'm tryin' to start somethin'.",
+      "direction": "Indignant plea, as if Val is ruining a perfectly good argument.",
+      "deliveryTag": "annoyed"
+    },
+    {
+      "id": "reaction.val.trick.beautiful-bastard",
+      "trigger": "reaction.val.trick",
+      "context": "Val, the human player’s partner, won a newly completed public trick. The narrator is a spectator, not a playing seat.",
+      "family": "unfiltered-gratitude",
+      "text": "Yeah, Val! Carry us, you beautiful bastard.",
+      "direction": "Warm excited burst; no solemn gratitude.",
+      "deliveryTag": "excited"
+    },
+    {
+      "id": "reaction.val.trick.beer",
+      "trigger": "reaction.val.trick",
+      "context": "Val, the human’s partner, has won a completed public trick. This is fictional character gratitude, not a real purchase or transaction.",
+      "family": "unfiltered-gratitude",
+      "text": "Val, I owe you a beer.",
+      "direction": "Plain, warm appreciation; finish cleanly after beer with no additional joke or qualification.",
+      "deliveryTag": "amused"
+    },
+    {
+      "id": "reaction.you-team-sweep.badass",
+      "trigger": "you-team-sweep",
+      "context": "Newly confirmed hand result: team0 march or loner-march, exactly five completed tricks, all winners seats0/2. Never an ordinary make, four tricks or opponent sweep.",
+      "family": "sweep-celebration",
+      "text": "That was frickin’ badass!",
+      "direction": "One wholehearted burst; clean ending with no extra words.",
+      "deliveryTag": "excited"
+    }
+  ]
+}

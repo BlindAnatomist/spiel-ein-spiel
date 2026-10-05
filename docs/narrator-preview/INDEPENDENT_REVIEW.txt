@@ -1,0 +1,73 @@
+Independent acceptance review — optional Peter Euchre preview
+Reviewed against protected main 776b5d755233c13adcba2c3bed8ccc6a75c50f6d
+Review date: 2026-10-02 UTC
+
+Current result: no unresolved blocking source defect identified. This is source,
+asset-integrity and mocked-runtime acceptance for an isolated preview, not
+production/merge approval or real-device acceptance. Final committed-source and
+built-output identity must be recorded alongside this report.
+
+Independent checks
+- Baseline strict typecheck, 155 tests, and static build passed.
+- Integrated strict typecheck and all 172 repository tests passed, including the
+  original 155 tests without weakened assertions.
+- Eighteen separate mocked-media/controller scenarios passed: no autoplay,
+  actual ended-driven fragment sequencing, stale ended/error/rejected promise/
+  watchdog handling, disable/cancel, whole-fact fallback, one character aside
+  per hand, no successful-audio/live-region duplication, cancellation promise
+  resolution, first legal focus after all clips plus the original 1150 ms guard,
+  pause/resume without duplicate action, repeated Resume, original visual mode,
+  same-element silent priming and priming cancellation.
+- A separate bundled-entry test passed Start, Pause, mode switching, native
+  selector focus preservation, resumed legal controls, retained card nodes,
+  New Game isolation, pagehide/visibility cancellation, no automatic resume,
+  no private-preview fetches, and namespaced local performance history.
+- 10,395 exhaustive synthetic event cases and 48 complete varied-opponent games
+  checked 23,244 messages. All 20 permanent opponent identities, West/East/Val/
+  You, both bids/alone variants, dealer/pickup/discard, all 24 card names and all
+  eight bower variants have exact baseline factual text and matching manifest
+  transcript components. There are 123 required clip IDs, none missing/unready.
+  Four unused assets are harmless retained units: event.plays, event.leads,
+  character.your-turn, character.west-plays-nine-hearts.
+- Twelve three-way complete games compared protected baseline controller,
+  integrated Original, and Peter at Casual/Strong/Expert/Mixed: 332 human turns,
+  56 review requests and 2,726 mocked media plays. Game state, full native hand
+  DOM/order, illegal-card labels and focus match at every decision boundary.
+  Original spoken transcript and wait sequence match the protected controller.
+  This is control-flow validation, not real media playback.
+- All 127 imported MP3s independently decoded to completion. SHA-256, byte sizes,
+  declared durations and MP3 format match. Total 2,301,539 bytes / 143.84623 sec.
+  All four reused micro-test recordings are byte-for-byte identical to source.
+- The 124-byte silent activation WAV is valid mono 8-bit PCM, 8 kHz, 80 frames
+  (10 ms), and contains silence only.
+- Engine/bots/referee/rules, native hand renderer, visual card renderer, sound
+  cues and performance implementation remain unchanged. Session changes only
+  attach typed public narration alongside the unchanged original text.
+
+Review-driven fixes already applied
+- Ignore queued errors from a replaced media source when current media.error is
+  null, matching current-media ended validation.
+- Explicit silent same-element activation from Start/selection/Resume gestures
+  protects the asynchronous Original-to-Peter resume path.
+- Add explicit layout rows for narrator/help/pause/caption controls.
+- Keep native select focus and explain Original versus recording pacing.
+
+Deliberate boundaries
+- Peter handles finite prerecorded public automatic events. Native card/action
+  labels, focused results, current-state and last-trick reviews use original
+  VoiceOver. Unknown/unready/failed clip sequences fall back to the complete
+  original fact; no missing fragment is silently skipped.
+- Explicit pause/mode change cancels the current sequence. Resume supplies the
+  current public-state summary rather than resurrecting abandoned event audio.
+- Character wording is a presentation layer, limited to one eligible aside per
+  hand, with the underlying fact preserved.
+
+Unverified limits
+- No human listening/transcription of the full pack; checks prove file validity
+  and intended metadata, not pronunciation, vocal quality or acoustic content.
+- No real iPhone/Safari/VoiceOver validation, autoplay-policy acceptance,
+  screen-reader/audio mixing or real accessibility-focus timing claim.
+- No browser layout/rendering measurements yet. jsdom is not a rendering engine.
+  Prior localhost/browser launch routes were blocked and were not bypassed.
+- The owner-accepted micro-test is useful input, not integrated-game acceptance.
+- No production deployment, merge or changes to the accepted existing preview.

@@ -1,9 +1,11 @@
 # Peter production promotion
 
-This is a private release-preparation route. It does not authorize a push, pull
-request, Actions run, merge, hosting change, or deployment. The audio remains
-excluded from the public repository. Keep the separate dealer-pickup experiment
-out of this candidate.
+This document describes the verified release route; it does not itself authorize
+external actions. Runtime recordings are distributed as a separately approved,
+versioned public GitHub Release asset, never as source-history files. Netlify Git
+builds retrieve and verify that fixed package automatically. See
+[RUNTIME_AUDIO_FETCH.md](RUNTIME_AUDIO_FETCH.md). Keep the separate dealer-pickup
+experiment out of this candidate.
 
 ## Restore existing recordings without regenerating them
 
@@ -27,8 +29,8 @@ Matching files are left untouched, including their timestamps. It runs no input
 code, makes no provider/network request, and creates no new recording. A conflict
 must be investigated rather than bypassed.
 
-Production and private-preview builds both fail if the complete 2,133-recording
-runtime catalog is absent or invalid. Ordinary code-only development builds still
+Production, deploy-preview and private-preview builds all fail if the complete
+2,133-recording runtime catalog is absent or invalid. Ordinary code-only development builds still
 work with Peter disabled, so a passing code-only CI build is not media-release
 verification. Successful media builds copy only the verified runtime allowlist.
 Production excludes the separate repair/comparison recordings and page.
@@ -67,12 +69,16 @@ forms and environment settings. The prepared package should include that functio
 source with a checksum, separately from the static `dist` directory.
 
 After explicit authorization, promote the code-only candidate through its normal
-review/check gates and publish the verified media build to the existing production
-host together with the existing function. Do not publish the recordings to GitHub
-or introduce a new credential as a shortcut. A Git-linked clean production build
-without restored private media will intentionally fail, leaving the prior live
-deployment in place; coordinate the approved media-bearing release rather than
-assuming a Git merge alone delivers Peter.
+review/check gates. The existing Netlify Git integration downloads the pinned
+public runtime package on clean production and deploy-preview builds, verifies
+its archive and per-recording hashes, and publishes it together with the unchanged
+function. No new Netlify credential is required. Failed downloads or verification
+stop the build and leave the prior live deployment in place. Verify a clean
+media-bearing Netlify preview before merging; a passing code-only CI build alone
+is insufficient. Future Git builds use the same fixed package until a separately
+reviewed media revision changes the pin. Never use a mutable latest URL, weaken
+verification, or add the private recovery bundle or comparison originals to a
+public release.
 
 Verify the deployed source/catalog identity, asset hashes, narrator availability,
 same-origin history across reload, factual fallback, and existing Analysis/API

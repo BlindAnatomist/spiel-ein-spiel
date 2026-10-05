@@ -14,6 +14,14 @@ import { narrationAssets } from '../web/narrator-assets.ts';
 import { CHARACTER_LIBRARY_TARGET, ORIGINAL_NARRATOR_COUNT } from '../web/narrator-reaction-triggers.ts';
 import { wholeEventContract, acceptedAlternatives } from './narrator-whole-contract.ts';
 import { completeEventContract } from './narrator-complete-contract.ts';
+import { ensureRuntimeAudio, shouldFetchRuntimeAudio } from './narrator-runtime-fetch.ts';
+
+// Netlify Git builds need the same pinned, verified runtime media as private builds.
+// Ordinary CI/development is deliberately offline and can keep Peter disabled.
+if (shouldFetchRuntimeAudio(process.env)) {
+  const result = await ensureRuntimeAudio('web');
+  console.log(`Runtime narration verified: ${result.verified}; restored: ${result.restored}; cached: ${result.preserved}`);
+}
 
 const clips = Object.values(narrationAssets);
 const available = await Promise.all(clips.map(async clip => {
@@ -44,7 +52,7 @@ const narratorAssetsReady = Object.keys(narratorManifest).length === 127
   && clips.length === ORIGINAL_NARRATOR_COUNT + CHARACTER_LIBRARY_TARGET && available.every(Boolean);
 if (!narratorAssetsReady) {
   const restore = 'Restore the verified private recordings with scripts/restore-narrator-assets.ts. See docs/narrator-preview/PRODUCTION_PROMOTION.md.';
-  if (['narrator-preview', 'production'].includes(process.env.CONTEXT ?? '')) throw new Error(`Complete narration requires all ${ORIGINAL_NARRATOR_COUNT + CHARACTER_LIBRARY_TARGET} runtime recordings (${CHARACTER_LIBRARY_TARGET} approved character additions). Partial catalogs cannot be published. ${restore}`);
+  if (['narrator-preview', 'production', 'deploy-preview'].includes(process.env.CONTEXT ?? '')) throw new Error(`Complete narration requires all ${ORIGINAL_NARRATOR_COUNT + CHARACTER_LIBRARY_TARGET} runtime recordings (${CHARACTER_LIBRARY_TARGET} approved character additions). Partial catalogs cannot be published. ${restore}`);
   console.warn(`Private recordings are not in the code checkpoint. Peter option disabled in this build. ${restore}`);
 }
 
@@ -79,7 +87,7 @@ await mkdir('dist/audio', { recursive: true });
 if (narratorAssetsReady) for (const clip of clips) await copyFile(`web/${clip.url}`, `dist/${clip.url}`);
 await rm('dist/repair-audio', { recursive: true, force: true });
 // Voice-comparison originals are private preview QA assets, not production game media.
-if (narratorAssetsReady && process.env.CONTEXT !== 'production') {
+if (narratorAssetsReady && !['production', 'deploy-preview'].includes(process.env.CONTEXT ?? '')) {
   const checksums = await readFile('web/repair-audio/checksums.sha256', 'utf8');
   for (const line of checksums.trim().split('\n')) {
     const match = /^([a-f0-9]{64})  (audio\/[a-z0-9.-]+\.(?:mp3|wav)|index\.html|measurements\.json)$/.exec(line);

@@ -7,14 +7,13 @@ import { selectSeatNames } from '../src/bots/profiles.ts';
 import { createSession, type Difficulty } from './session.ts';
 import {
   createPerformanceRecorder,
+  createPerformancePersistence,
+  retainPerformanceProfile,
   ensurePerformanceProfile,
   PERFORMANCE_DATASET_EPOCH,
   PERFORMANCE_RULES_VERSION,
   PERFORMANCE_SCHEMA_VERSION,
-  loadPendingArchives,
-  loadPerformance,
   mergePerformanceBooks,
-  markPerformanceArchived,
   removePerformanceGame,
   ownerTrend,
   performanceAnalysisText,
@@ -54,7 +53,7 @@ const deployContext = typeof __DEPLOY_CONTEXT__ === 'string' ? __DEPLOY_CONTEXT_
 const privatePreview = deployContext === 'narrator-preview';
 document.querySelector<HTMLElement>('#preview-notice')!.hidden = !privatePreview;
 if (privatePreview) document.querySelector<HTMLElement>('#preview-notice')!.textContent = `Private preview · ${buildCommit.slice(0, 7)}`;
-// Unlike the legacy performance adapter, this adapter must let storage failures surface.
+// Storage failures must surface so the report can distinguish memory from a retained write.
 const handReports = createHandReportStore({
   getItem: key => window.localStorage.getItem(key),
   setItem: (key,value) => window.localStorage.setItem(key,value),
@@ -92,10 +91,10 @@ helpButton.onclick = () => {
 
 const storage: StorageLike = {
   getItem(key) {
-    try { return window.localStorage.getItem(`${privatePreview ? 'narrator-preview:' : ''}${key}`); } catch { return null; }
+    return window.localStorage.getItem(`${privatePreview ? 'narrator-preview:' : ''}${key}`);
   },
   setItem(key, value) {
-    try { window.localStorage.setItem(`${privatePreview ? 'narrator-preview:' : ''}${key}`, value); } catch {}
+    window.localStorage.setItem(`${privatePreview ? 'narrator-preview:' : ''}${key}`, value);
   },
 };
 
@@ -107,6 +106,41 @@ function recoveryId(): string {
 // Remove the single owner-tracked Casual game from Cynthia's 2026-09-25 sighted test.
 removePerformanceGame(storage, '8bc51155-e8a4-4773-984a-02a7bfc536ed');
 const profileId = ensurePerformanceProfile(storage, recoveryId);
+const performancePersistence = createPerformancePersistence(storage);
+const storageStatus = document.querySelector<HTMLElement>('#performance-storage-status')!;
+const retrySaving = document.querySelector<HTMLButtonElement>('#performance-retry')!;
+let profileRetained = retainPerformanceProfile(storage, profileId);
+function performanceStorageStatus(): string {
+  return [performancePersistence.status(), profileRetained ? '' : 'The recovery code is not saved on this device. Keep this page open and copy the code before closing.'].filter(Boolean).join(' ');
+}
+function updatePerformanceStorageStatus(): void {
+  // Read the queue before its status, since a failed read makes it uncertain.
+  const pending = performancePersistence.pending().length;
+  const status = performanceStorageStatus();
+  storageStatus.textContent = status || (pending ? `${pending} completed ${pending === 1 ? 'game is' : 'games are'} waiting in this device’s saved archive queue.${privatePreview ? ' This preview does not upload performance history.' : ' Use Retry saving to retry the upload.'}` : '');
+  // Keep the storage-only polite status region mounted; never steal game focus.
+  storageStatus.hidden = false;
+  retrySaving.hidden = !status && !pending;
+}
+function retryPerformanceStorage(): void {
+  profileRetained = retainPerformanceProfile(storage, profileId);
+  performancePersistence.retry();
+  updatePerformanceStorageStatus();
+}
+retrySaving.onclick = async () => {
+  retrySaving.disabled = true;
+  try {
+    retryPerformanceStorage();
+    await flushPerformanceArchive();
+    updatePerformanceStorageStatus();
+    if (retrySaving.hidden) {
+      storageStatus.hidden = false;
+      storageStatus.textContent = 'Performance data saved on this device. No archives are waiting in this device’s saved queue.';
+    }
+    storageStatus.focus();
+  } finally { retrySaving.disabled = false; }
+};
+retryPerformanceStorage();
 const trackingToggle = document.querySelector<HTMLButtonElement>('#human-tracking')!;
 const analysisButton = document.querySelector<HTMLButtonElement>('#performance-analysis')!;
 const analysisPanel = document.querySelector<HTMLElement>('#analysis-panel')!;
@@ -192,7 +226,9 @@ async function historyRequest(body: Record<string, unknown>): Promise<Response> 
   });
 }
 
+let serverHistoryLoaded = false;
 async function loadServerPerformance(): Promise<PerformanceBook> {
+  serverHistoryLoaded = false;
   if (privatePreview) return { version: 2, games: [] };
   try {
     const response = await historyRequest({ action: 'list', profileId });
@@ -201,6 +237,7 @@ async function loadServerPerformance(): Promise<PerformanceBook> {
     if (!parsed || typeof parsed !== 'object') return { version: 2, games: [] };
     const candidate = parsed as { games?: unknown };
     if (!Array.isArray(candidate.games)) return { version: 2, games: [] };
+    serverHistoryLoaded = true;
     return { version: 2, games: candidate.games as PerformanceBook['games'] };
   } catch {
     return { version: 2, games: [] };
@@ -208,7 +245,7 @@ async function loadServerPerformance(): Promise<PerformanceBook> {
 }
 
 async function submitAnalysisGame(item: PerformanceArchiveItem): Promise<void> {
-  const response = await historyRequest({ action: 'upsert', profileId, environment: deployContext, game: item.game });
+  const response = await historyRequest({ action: 'upsert', profileId: item.profileId, environment: deployContext, game: item.game });
   if (!response.ok) throw new Error(`Analysis history sync failed with status ${response.status}`);
 }
 
@@ -217,12 +254,17 @@ analysisButton.onclick = async () => {
   performanceOutput.textContent = 'Loading complete performance history.';
   performanceOutput.hidden = false;
   try {
-    const book = mergePerformanceBooks(await loadServerPerformance(), loadPerformance(storage));
-    const pending = loadPendingArchives(storage).length;
-    const archive = privatePreview ? ' This preview keeps performance on this device only; production history is separate.' : pending
+    retryPerformanceStorage();
+    await flushPerformanceArchive();
+    const book = mergePerformanceBooks(await loadServerPerformance(), performancePersistence.book());
+    const pending = performancePersistence.pending().length;
+    const storageState = performanceStorageStatus();
+    const archive = privatePreview ? ' This preview keeps performance on this device only; production history is separate.' : storageState ? '' : pending
       ? ` Server archive pending: ${pending} completed ${pending === 1 ? 'game' : 'games'}.`
-      : ' Server archive is current.';
-    performanceOutput.textContent = `${performanceText(summarizePerformance(book))} ${performanceAnalysisText(book)}${archive} Recovery code: ${profileId}.`;
+      : ' No archives are waiting in this device’s saved queue.';
+    const history = !privatePreview && !serverHistoryLoaded ? ' Server history could not be loaded; this analysis may be incomplete.' : '';
+    updatePerformanceStorageStatus();
+    performanceOutput.textContent = `${performanceText(summarizePerformance(book))} ${performanceAnalysisText(book)} ${storageState}${archive}${history} Recovery code: ${profileId}.`;
     renderAnalysisChart(book);
     performanceOutput.focus();
   } finally {
@@ -259,17 +301,18 @@ async function flushPerformanceArchive(): Promise<void> {
   if (archiveFlushing) return;
   archiveFlushing = true;
   try {
-    for (const item of loadPendingArchives(storage)) {
+    for (const item of performancePersistence.pending()) {
       try {
         await submitAnalysisGame(item);
         await submitArchive(item);
-        markPerformanceArchived(storage, item.game.id);
+        if (!performancePersistence.archived(item.game.id)) break;
       } catch {
         break;
       }
     }
   } finally {
     archiveFlushing = false;
+    updatePerformanceStorageStatus();
   }
 }
 void flushPerformanceArchive();
@@ -361,6 +404,8 @@ document.querySelector<HTMLFormElement>('#setup')!.onsubmit = event => {
       buildCommit,
       rulesVersion: PERFORMANCE_RULES_VERSION,
       completedAt: () => new Date().toISOString(),
+      persistence: performancePersistence,
+      persistenceChanged: updatePerformanceStorageStatus,
       archiveQueued: () => { void flushPerformanceArchive(); },
     }),
     opponentMode: 'varied',

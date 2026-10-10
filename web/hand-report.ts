@@ -1,5 +1,6 @@
 /** Device-local, public-information-only incident evidence. Never restores a game. */
 import type { PlayerView } from '../src/index.ts';
+import { writeVerified } from './verified-storage.ts';
 import type { NarrationMessage, NarrationManifest } from './narration-types.ts';
 import type { NarrationDiagnostic } from './narrator-audio.ts';
 import type { SeatNames } from './presentation.ts';
@@ -101,8 +102,7 @@ export function createHandReportStore(storage: ReportStorage, key = HAND_REPORT_
     if (blocked) return;
     try {
       const raw = JSON.stringify(book);
-      storage.setItem(key, raw); // One atomic replacement after every checkpoint or diagnostic.
-      if (storage.getItem(key) !== raw) throw new Error('Storage did not retain the write');
+      writeVerified(storage, key, raw); // One atomic replacement after every checkpoint or diagnostic.
       persistence = 'Latest report changes saved in this browser’s device-local storage.';
     } catch { persistence = 'Latest report changes could not be saved on this device. They are available in this open page; older saved data may remain. Copy the report before closing.'; }
   }

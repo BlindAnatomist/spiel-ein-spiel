@@ -386,10 +386,10 @@ test('Analysis uses durable server history and future games sync before rich arc
   const source = readFileSync('web/main.ts', 'utf8');
   const fn = readFileSync('netlify/functions/performance-history.mjs', 'utf8');
   assert.match(source, /historyRequest\(\{ action: 'list', profileId \}\)/);
-  assert.match(source, /mergePerformanceBooks\(await loadServerPerformance\(\), loadPerformance\(storage\)\)/);
-  assert.match(source, /await submitAnalysisGame\(item\);\s*await submitArchive\(item\);\s*markPerformanceArchived/);
+  assert.match(source, /mergePerformanceBooks\(await loadServerPerformance\(\), performancePersistence.book\(\)\)/);
+  assert.match(source, /await submitAnalysisGame\(item\);\s*await submitArchive\(item\);\s*if \(!performancePersistence.archived/);
   assert.match(fn, /euchre-analysis-history/);
-  assert.match(source, /action: 'upsert', profileId, environment: deployContext/);
+  assert.match(source, /action: 'upsert', profileId: item.profileId, environment: deployContext/);
   assert.match(fn, /profileId: body\.profileId/);
   assert.match(fn, /profileId: body\?\.profileId/);
   assert.match(fn, /body\.environment !== 'production'/);
@@ -455,8 +455,8 @@ test('deal audit accepts the injected live-random path and validates its source 
 test('rich archive submission relies on the persistent retry queue, not fetch keepalive', () => {
   const source = readFileSync('web/main.ts', 'utf8');
   assert.doesNotMatch(source, /keepalive\s*:\s*true/);
-  assert.match(source, /loadPendingArchives/);
-  assert.match(source, /markPerformanceArchived/);
+  assert.match(source, /performancePersistence.pending\(\)/);
+  assert.match(source, /performancePersistence.archived\(item.game.id\)/);
 });
 
 test('difficulty type includes mixed while preserving all existing named choices', () => {

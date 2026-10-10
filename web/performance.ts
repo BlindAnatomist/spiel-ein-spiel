@@ -1,3 +1,4 @@
+import { writeVerified } from './verified-storage.ts';
 import type { Action, Card, HandResult, PlayerView, Seat, Team } from '../src/index.ts';
 import type { Difficulty, OpponentIdentity, SessionMeta, SessionObserver } from './session.ts';
 
@@ -100,6 +101,8 @@ export interface RecorderOptions {
   readonly rulesVersion?: string;
   readonly completedAt?: () => string;
   readonly archiveQueued?: () => void;
+  readonly persistence?: PerformancePersistence;
+  readonly persistenceChanged?: () => void;
 }
 
 export interface CallerSummary {
@@ -176,18 +179,25 @@ function currentGames(book: PerformanceBook): readonly GamePerformance[] {
     game.schemaVersion === PERFORMANCE_SCHEMA_VERSION && game.datasetEpoch === PERFORMANCE_DATASET_EPOCH);
 }
 
+function readableGame(value: unknown): value is GamePerformance {
+  if (!value || typeof value !== 'object') return false;
+  const game = value as Partial<GamePerformance>;
+  return typeof game.id === 'string' && typeof game.completedAt === 'string'
+    && Array.isArray(game.hands) && game.hands.every(hand => hand && typeof hand === 'object')
+    && Array.isArray(game.opponents) && game.opponents.every(opponent => opponent && typeof opponent === 'object')
+    && Array.isArray(game.score) && game.score.length === 2 && game.score.every(Number.isFinite);
+}
+
+function readPerformance(storage: StorageLike): PerformanceBook {
+  const raw = storage.getItem(PERFORMANCE_STORAGE_KEY);
+  if (raw === null) return emptyBook();
+  const candidate = JSON.parse(raw) as PerformanceBook | null;
+  if (!candidate || candidate.version !== 2 || !Array.isArray(candidate.games) || !candidate.games.every(readableGame)) throw new Error('Unreadable performance history');
+  return candidate;
+}
+
 export function loadPerformance(storage: StorageLike): PerformanceBook {
-  try {
-    const raw = storage.getItem(PERFORMANCE_STORAGE_KEY);
-    if (!raw) return emptyBook();
-    const parsed: unknown = JSON.parse(raw);
-    if (!parsed || typeof parsed !== 'object') return emptyBook();
-    const candidate = parsed as { version?: unknown; games?: unknown };
-    if (candidate.version !== 2 || !Array.isArray(candidate.games)) return emptyBook();
-    return { version: 2, games: candidate.games as GamePerformance[] };
-  } catch {
-    return emptyBook();
-  }
+  try { return readPerformance(storage); } catch { return emptyBook(); }
 }
 
 export function mergePerformanceBooks(...books: readonly PerformanceBook[]): PerformanceBook {
@@ -202,7 +212,7 @@ export function mergePerformanceBooks(...books: readonly PerformanceBook[]): Per
 }
 
 function savePerformance(storage: StorageLike, book: PerformanceBook): void {
-  try { storage.setItem(PERFORMANCE_STORAGE_KEY, JSON.stringify(book)); } catch {}
+  writeVerified(storage, PERFORMANCE_STORAGE_KEY, JSON.stringify(book));
 }
 
 export function getPerformanceProfile(storage: StorageLike): string | null {
@@ -217,43 +227,161 @@ export function getPerformanceProfile(storage: StorageLike): string | null {
 export function ensurePerformanceProfile(storage: StorageLike, createId: () => string): string {
   const existing = getPerformanceProfile(storage);
   if (existing) return existing;
-  const created = `EUC-${createId().replace(/[^A-Za-z0-9-]/g, '')}`;
-  try { storage.setItem(PERFORMANCE_PROFILE_KEY, created); } catch {}
+  // A queue may have survived when only the small profile-key write failed.
+  // Recover an unambiguous existing identity instead of inventing a new one.
+  const queuedProfiles = [...new Set(loadPendingArchives(storage).map(item => item.profileId)
+    .filter(value => /^EUC-[A-Za-z0-9-]{16,}$/.test(value)))];
+  const created = queuedProfiles.length === 1 ? queuedProfiles[0]! : `EUC-${createId().replace(/[^A-Za-z0-9-]/g, '')}`;
+  retainPerformanceProfile(storage, created);
   return created;
 }
 
-export function loadPendingArchives(storage: StorageLike): readonly PerformanceArchiveItem[] {
+/** Keep the same recovery identity during a failed-write/retry cycle. */
+export function retainPerformanceProfile(storage: StorageLike, profileId: string): boolean {
   try {
-    const raw = storage.getItem(PERFORMANCE_PENDING_ARCHIVE_KEY);
-    if (!raw) return [];
-    const parsed: unknown = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return [];
-    return parsed as PerformanceArchiveItem[];
-  } catch {
-    return [];
+    const existing = storage.getItem(PERFORMANCE_PROFILE_KEY);
+    if (existing !== null) return existing === profileId;
+    writeVerified(storage, PERFORMANCE_PROFILE_KEY, profileId);
+    return true;
+  } catch { return false; }
+}
+
+function readPendingArchives(storage: StorageLike): readonly PerformanceArchiveItem[] {
+  const raw = storage.getItem(PERFORMANCE_PENDING_ARCHIVE_KEY);
+  if (raw === null) return [];
+  const parsed: unknown = JSON.parse(raw);
+  if (!Array.isArray(parsed) || parsed.some(item => !item || typeof item.profileId !== 'string' || !readableGame(item.game) || !Array.isArray(item.game.seatNames))) {
+    throw new Error('Unreadable performance queue');
   }
+  return parsed as PerformanceArchiveItem[];
+}
+
+export function loadPendingArchives(storage: StorageLike): readonly PerformanceArchiveItem[] {
+  try { return readPendingArchives(storage); } catch { return []; }
 }
 
 function savePendingArchives(storage: StorageLike, items: readonly PerformanceArchiveItem[]): void {
-  try { storage.setItem(PERFORMANCE_PENDING_ARCHIVE_KEY, JSON.stringify(items)); } catch {}
+  writeVerified(storage, PERFORMANCE_PENDING_ARCHIVE_KEY, JSON.stringify(items));
 }
 
-export function enqueuePerformanceArchive(storage: StorageLike, item: PerformanceArchiveItem): void {
-  const pending = loadPendingArchives(storage);
-  if (pending.some(value => value.game.id === item.game.id)) return;
-  savePendingArchives(storage, [...pending, item]);
+export function enqueuePerformanceArchive(storage: StorageLike, item: PerformanceArchiveItem): boolean {
+  try {
+    const pending = readPendingArchives(storage);
+    if (!pending.some(value => value.game.id === item.game.id)) savePendingArchives(storage, [...pending, item]);
+    return true;
+  } catch { return false; }
 }
 
-export function markPerformanceArchived(storage: StorageLike, gameId: string): void {
-  savePendingArchives(storage, loadPendingArchives(storage).filter(item => item.game.id !== gameId));
+export function markPerformanceArchived(storage: StorageLike, gameId: string): boolean {
+  try {
+    savePendingArchives(storage, readPendingArchives(storage).filter(item => item.game.id !== gameId));
+    return true;
+  } catch { return false; }
 }
 
 export function removePerformanceGame(storage: StorageLike, gameId: string): void {
-  const book = loadPerformance(storage);
-  const games = book.games.filter(game => game.id !== gameId);
-  if (games.length !== book.games.length) savePerformance(storage, { version: 2, games });
-  savePendingArchives(storage, loadPendingArchives(storage).filter(item => item.game.id !== gameId));
+  // Do not overwrite data that could not be read.
+  try {
+    const book = readPerformance(storage);
+    const games = book.games.filter(game => game.id !== gameId);
+    if (games.length !== book.games.length) savePerformance(storage, { version: 2, games });
+  } catch {}
+  try {
+    const pending = readPendingArchives(storage);
+    if (pending.some(item => item.game.id === gameId)) savePendingArchives(storage, pending.filter(item => item.game.id !== gameId));
+  } catch {}
 }
+
+/** Keep failed completions in this page, including after another game starts.
+ * Like the public hand-report store, merge before replacing and verify readback.
+ * No storage API can recover never-written data after the page is closed.
+ */
+export function createPerformancePersistence(storage: StorageLike) {
+  const retained = new Map<string, { game: GamePerformance; archive: PerformanceArchiveItem | null; queued?: () => void }>();
+  const acknowledged = new Set<string>();
+  const delivered = new Set<string>();
+  let unreadable = false;
+  let writeFailed = false;
+  function retry(): void {
+    unreadable = false;
+    writeFailed = false;
+    let book: PerformanceBook | undefined;
+    let pending: readonly PerformanceArchiveItem[] | undefined;
+    try { book = readPerformance(storage); } catch { unreadable = true; }
+    try { pending = readPendingArchives(storage); } catch { unreadable = true; }
+    // Persist removals before any new upload, so a failed acknowledgement does
+    // not resubmit the same archive repeatedly in this open page.
+    if (pending && acknowledged.size) {
+      try {
+        savePendingArchives(storage, pending.filter(item => !acknowledged.has(item.game.id)));
+        pending = pending.filter(item => !acknowledged.has(item.game.id));
+        acknowledged.clear();
+      } catch { writeFailed = true; }
+    }
+    // A retained queue carries enough information to restore a summary after
+    // a reload interrupted the two independent localStorage replacements.
+    const recovered = (pending ?? []).map(item => compactGame(item.game));
+    let localSaved = false;
+    if (book && (retained.size || recovered.some(game => !book!.games.some(saved => saved.id === game.id)))) {
+      try {
+        const merged = mergePerformanceBooks(book, {version: 2, games: [...recovered, ...[...retained.values()].map(item => item.game)]});
+        if (JSON.stringify(merged) !== JSON.stringify(book)) savePerformance(storage, merged);
+        localSaved = true;
+      } catch { writeFailed = true; }
+    } else localSaved = book !== undefined;
+    let queueSaved = false;
+    if (pending) {
+      const byId = new Map(pending.map(item => [item.game.id, item]));
+      for (const item of retained.values()) if (item.archive && !delivered.has(item.game.id)) byId.set(item.game.id, item.archive);
+      try {
+        if ([...retained.values()].some(item => item.archive && !delivered.has(item.game.id) && !pending!.some(saved => saved.game.id === item.game.id))) {
+          savePendingArchives(storage, [...byId.values()]);
+        }
+        queueSaved = true;
+      } catch { writeFailed = true; }
+    }
+    const callbacks: (() => void)[] = [];
+    for (const [id,item] of retained) {
+      if (localSaved && (!item.archive || queueSaved)) {
+        retained.delete(id);
+        if (item.archive && item.queued && !delivered.has(id)) callbacks.push(item.queued);
+      }
+    }
+    for (const callback of callbacks) callback();
+  }
+  return {
+    retry,
+    record(game: GamePerformance, archive: PerformanceArchiveItem | null, queued?: () => void) {
+      if (!retained.has(game.id)) retained.set(game.id, {game, archive, ...(queued ? {queued} : {})});
+      retry();
+    },
+    book(): PerformanceBook {
+      let book = emptyBook();
+      try { book = readPerformance(storage); } catch { unreadable = true; }
+      return mergePerformanceBooks(book, {version: 2, games: [...retained.values()].map(item => item.game)});
+    },
+    pending(): readonly PerformanceArchiveItem[] {
+      try { return readPendingArchives(storage).filter(item => !acknowledged.has(item.game.id)); }
+      catch { unreadable = true; return []; }
+    },
+    archived(gameId: string): boolean {
+      delivered.add(gameId);
+      acknowledged.add(gameId);
+      const saved = markPerformanceArchived(storage, gameId);
+      if (saved) acknowledged.delete(gameId);
+      else writeFailed = true;
+      return saved;
+    },
+    status(): string {
+      if (retained.size) return `${retained.size} completed ${retained.size === 1 ? 'game has' : 'games have'} unsaved performance data. Keep this page open and use Retry saving after freeing storage or allowing browser storage. Closing or reloading can lose unsaved data.`;
+      if (acknowledged.size) return 'The server accepted an archive, but its saved queue could not be updated. Keep this page open and use Retry saving. Reloading may retry that upload.';
+      if (unreadable) return 'Saved performance data could not be read and has been left untouched. Archive status is unknown. Allow browser storage and use Retry saving.';
+      if (writeFailed) return 'Performance storage could not be updated. Keep this page open and use Retry saving.';
+      return '';
+    },
+  };
+}
+export type PerformancePersistence = ReturnType<typeof createPerformancePersistence>;
 
 function actorIdentity(seat: Seat, humanTracking: HumanTracking, meta: SessionMeta): {
   kind: ActorKind; name: string; profileId: string | null;
@@ -277,6 +405,24 @@ function compactHand(hand: ArchivedHandRecord): HandPerformance {
   return summary;
 }
 
+function compactGame(archive: ArchivedGameRecord): GamePerformance {
+  return Object.freeze({
+    schemaVersion: archive.schemaVersion,
+    datasetEpoch: archive.datasetEpoch,
+    buildCommit: archive.buildCommit,
+    rulesVersion: archive.rulesVersion,
+    id: archive.id,
+    completedAt: archive.completedAt,
+    humanTracking: archive.humanTracking,
+    difficulty: archive.difficulty,
+    startingDealer: archive.startingDealer,
+    opponents: archive.opponents,
+    winner: archive.winner,
+    score: archive.score,
+    hands: Object.freeze(archive.hands.map(compactHand)),
+  });
+}
+
 /**
  * Records a compact local summary plus a richer server archive.
  * The archive stores exact permitted pre-decision views for the owner and all bots.
@@ -287,7 +433,8 @@ export function createPerformanceRecorder(storage: StorageLike, options: Recorde
   const active = new Map<number, ActiveHand>();
   const completed: ArchivedHandRecord[] = [];
   let decisionSequence = 0;
-  let saved = false;
+  let recorded = false;
+  const persistence = options.persistence ?? createPerformancePersistence(storage);
   let startingDealer: Seat | null = null;
 
   return {
@@ -354,8 +501,9 @@ export function createPerformanceRecorder(storage: StorageLike, options: Recorde
     },
 
     gameCompleted(view, meta: SessionMeta) {
-      if (saved || view.winner === null || startingDealer === null) return;
-      saved = true;
+      if (recorded) { persistence.retry(); options.persistenceChanged?.(); return; }
+      if (view.winner === null || startingDealer === null) return;
+      recorded = true;
       const book = loadPerformance(storage);
       const completedAt = options.completedAt?.() ?? 'local';
       const id = options.gameId ?? `local-${book.games.length + 1}-${view.handNumber}`;
@@ -379,27 +527,8 @@ export function createPerformanceRecorder(storage: StorageLike, options: Recorde
         score: Object.freeze([view.score[0], view.score[1]]) as readonly [number, number],
         hands,
       });
-      const game: GamePerformance = Object.freeze({
-        schemaVersion: archive.schemaVersion,
-        datasetEpoch: archive.datasetEpoch,
-        buildCommit: archive.buildCommit,
-        rulesVersion: archive.rulesVersion,
-        id: archive.id,
-        completedAt: archive.completedAt,
-        humanTracking: archive.humanTracking,
-        difficulty: archive.difficulty,
-        startingDealer: archive.startingDealer,
-        opponents: archive.opponents,
-        winner: archive.winner,
-        score: archive.score,
-        hands: Object.freeze(archive.hands.map(compactHand)),
-      });
-      const games = [...currentGames(book).filter(value => value.id !== game.id), game].slice(-MAX_RECORDED_GAMES);
-      savePerformance(storage, { version: 2, games });
-      if (options.profileId) {
-        enqueuePerformanceArchive(storage, { profileId: options.profileId, game: archive });
-        options.archiveQueued?.();
-      }
+      persistence.record(compactGame(archive), options.profileId ? {profileId: options.profileId, game: archive} : null, options.archiveQueued);
+      options.persistenceChanged?.();
     },
   };
 }

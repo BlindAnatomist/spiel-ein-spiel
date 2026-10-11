@@ -35,6 +35,30 @@ const preservedLegacy = new Map<string, readonly string[]>([
 
 /** Fresh local-only validation; no browser, provider client, producer, or finalization. */
 export const verifyAudioEvidence: AudioEvidenceVerifier = async input => {
+  if (input.packId === 'peter-euchre-library-batch08-20261011' || input.proposalSha256 === 'a5d2d033827d666a6f2bdc2367384f9ce29ba0eaaea6b5f8adda3edb06c6552b') {
+    const script = fileURLToPath(new URL('./verify-narrator-batch08.py', import.meta.url));
+    const { stdout } = await run('python3', ['-I', '-B', script, input.directory, input.proposal], { timeout: 180_000, maxBuffer: 1_048_576 });
+    const result = JSON.parse(stdout);
+    for (const key of ['packId', 'proposalSha256', 'manifestSha256', 'finalQaSha256'] as const) {
+      if (result[key] !== input[key]) throw new Error(`Batch08 evidence changed during validation: ${key}`);
+    }
+    if (result.count !== 24 || result.filesVerified !== 48 || result.evidenceBytesUnchanged !== true
+      || result.listeningAcceptance !== false || result.speechContentVerified !== false || result.audibleQualityVerified !== false)
+      throw new Error('Incomplete batch08 mechanical verification');
+    return { mode: 'reviewed-batch08-local-evidence-and-audio', ...result };
+  }
+  if (input.packId === 'peter-euchre-library-batch09-20261011' || input.proposalSha256 === '97adc6bd0e4e560ba2aa4b3a79d17b0b83630abf8e4d5fc499dc42eb3051c855') {
+    const script = fileURLToPath(new URL('./verify-narrator-batch09.py', import.meta.url));
+    const { stdout } = await run('python3', ['-I', '-B', script, input.directory, input.proposal], { timeout: 180_000, maxBuffer: 1_048_576 });
+    const result = JSON.parse(stdout);
+    for (const key of ['packId', 'proposalSha256', 'manifestSha256', 'finalQaSha256'] as const) {
+      if (result[key] !== input[key]) throw new Error(`Batch09 evidence changed during validation: ${key}`);
+    }
+    if (result.count !== 24 || result.filesVerified !== 48 || result.evidenceBytesUnchanged !== true
+      || result.listeningAcceptance !== false || result.speechContentVerified !== false || result.audibleQualityVerified !== false)
+      throw new Error('Incomplete batch09 mechanical verification');
+    return { mode: 'reviewed-batch09-local-evidence-and-audio', ...result };
+  }
   const expected = preservedLegacy.get(input.packId);
   const actual = [input.proposalSha256, input.manifestSha256, input.finalQaSha256];
   if (expected?.every((hash, index) => hash === actual[index])) {

@@ -1,7 +1,9 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { validateReactionBatches } from './narrator-extra-contract.ts';
+import { assertAdditiveReactionImport, validateReactionBatches } from './narrator-extra-contract.ts';
 import { narratorExtraReactionManifest } from '../web/narrator-extra-reaction-manifest.ts';
+import { extraReactionLines } from '../web/narrator-extra-reactions.ts';
+import { narrationAssets } from '../web/narrator-assets.ts';
 import { CHARACTER_LIBRARY_TARGET } from '../web/narrator-reaction-triggers.ts';
 
 // Supply the entire approved set as repeated PACK_DIRECTORY APPROVED_PROPOSAL pairs.
@@ -10,9 +12,7 @@ const args = process.argv.slice(2);
 if (!args.length || args.length % 2) throw new Error('Usage: node scripts/import-narrator-extra-reactions.ts PACK_DIRECTORY APPROVED_PROPOSAL [PACK_DIRECTORY APPROVED_PROPOSAL ...]');
 const inputs = Array.from({ length: args.length / 2 }, (_, index) => ({ directory: args[index * 2]!, proposal: args[index * 2 + 1]! }));
 const { lines, runtime, audioBytes, packs } = await validateReactionBatches(inputs);
-for (const [id, old] of Object.entries(narratorExtraReactionManifest)) {
-  if (JSON.stringify(runtime[id]) !== JSON.stringify(old)) throw new Error(`Import would remove or replace preserved recording ${id}`);
-}
+assertAdditiveReactionImport(lines, runtime, extraReactionLines, narratorExtraReactionManifest, narrationAssets);
 const preserved = new Set<string>();
 for (const clip of Object.values(runtime)) {
   try {

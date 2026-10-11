@@ -1,0 +1,40 @@
+{
+  "targetCount": 192,
+  "count": 192,
+  "totalRuntimeRecordings": 2157,
+  "preservedRuntimeRecordings": 2133,
+  "addedRecordings": 24,
+  "packs": [
+    {
+      "packId": "peter-euchre-library-batch08-20261011",
+      "count": 24,
+      "proposalSha256": "a5d2d033827d666a6f2bdc2367384f9ce29ba0eaaea6b5f8adda3edb06c6552b",
+      "manifestSha256": "a3da29952608198df4708a2ac328f52b14af23b5187e8865dc1a80ab983a08e4",
+      "finalQaSha256": "3a60a799b3b605ef75f06429a978db4ecc65251923527c3425dad44162ec36aa",
+      "evidence": {
+        "mode": "reviewed-batch08-local-evidence-and-audio",
+        "packId": "peter-euchre-library-batch08-20261011",
+        "proposalSha256": "a5d2d033827d666a6f2bdc2367384f9ce29ba0eaaea6b5f8adda3edb06c6552b",
+        "manifestSha256": "a3da29952608198df4708a2ac328f52b14af23b5187e8865dc1a80ab983a08e4",
+        "finalQaSha256": "3a60a799b3b605ef75f06429a978db4ecc65251923527c3425dad44162ec36aa",
+        "originalQaSha256": "b2fe4cc00831f9023cb914f59cea19e42bc5f60adc37f1dc4e025959da53d82f",
+        "scriptSha256": "b48ecd9126e735058a1b98818c1061e4248d4c3a4b86f0a30b5e6538cdc898c7",
+        "count": 24,
+        "filesVerified": 48,
+        "browserUiReceiptCount": 24,
+        "historicalUiReobserved": false,
+        "providerRequestsConfirmed": null,
+        "speechContentVerified": false,
+        "audibleQualityVerified": false,
+        "listeningAcceptance": false,
+        "evidenceBytesUnchanged": true
+      }
+    }
+  ],
+  "filesVerified": true,
+  "listeningAcceptance": false,
+  "speechContentVerified": false,
+  "audibleQualityVerified": false,
+  "iphoneVoiceOverVerified": false,
+  "publicationPerformed": false
+}

@@ -64,7 +64,7 @@ test('unsafe, duplicate and linked inputs are rejected without importing input c
 
 test('the complete restore plan is pinned to all runtime recordings and trusted comparison assets', async () => {
   const plan = await narratorAssetPlan('web');
-  assert.equal(plan.filter(entry => entry.file.startsWith('audio/')).length, 2133);
+  assert.equal(plan.filter(entry => entry.file.startsWith('audio/')).length, 2181);
   assert.equal(plan.filter(entry => entry.file.startsWith('repair-audio/')).length, 10);
   assert.equal(new Set(plan.map(entry => entry.file)).size, plan.length);
 });
@@ -73,7 +73,7 @@ test('production and private-preview builds fail closed before touching output w
   const f = await fixture(t), script = fileURLToPath(new URL('../scripts/build.ts', import.meta.url));
   await mkdir(path.join(f.root, 'dist')); await writeFile(path.join(f.root, 'dist/existing.txt'), 'preserve');
   for (const context of ['production', 'narrator-preview']) {
-    assert.throws(() => execFileSync(process.execPath, [script], { cwd: f.root, env: { ...process.env, CONTEXT: context }, stdio: 'pipe' }), /Complete narration requires all 2133/);
+    assert.throws(() => execFileSync(process.execPath, [script], { cwd: f.root, env: { ...process.env, CONTEXT: context }, stdio: 'pipe' }), /Complete narration requires all 2181/);
   }
   assert.equal(await readFile(path.join(f.root, 'dist/existing.txt'), 'utf8'), 'preserve');
   assert.deepEqual(await readdir(path.join(f.root, 'dist')), ['existing.txt']);

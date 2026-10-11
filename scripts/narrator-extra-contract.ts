@@ -1,6 +1,7 @@
 import { readFile, lstat, realpath } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
+import { isDeepStrictEqual } from 'node:util';
 import { verifyAudioEvidence, type AudioEvidenceVerifier } from './narrator-audio-provenance.ts';
 import type { NarrationAlternative, NarrationClip } from '../web/narration-types.ts';
 import { CHARACTER_LIBRARY_TARGET, reactionTriggerMetadata, type ReactionTrigger } from '../web/narrator-reaction-triggers.ts';
@@ -20,7 +21,7 @@ async function localFile(root: string, name: string) {
 
 /** Pure validation: every supplied pack is checked before any runtime file changes. */
 export async function validateReactionBatches(inputs: readonly ReactionBatchInput[], evidenceVerifier: AudioEvidenceVerifier = verifyAudioEvidence) {
-  if (!inputs.length || inputs.length > CHARACTER_LIBRARY_TARGET / 24) throw new Error('Provide one to seven complete approved 24-line batches');
+  if (!inputs.length || inputs.length > CHARACTER_LIBRARY_TARGET / 24) throw new Error('Provide one to nine complete approved 24-line batches');
   const lines: Record<string, ApprovedReaction> = {}, runtime: Record<string, NarrationClip> = {};
   const sources = new Map<string, string>(), packs: Array<Record<string, unknown>> = [];
   const packIds = new Set<string>(), texts = new Set<string>();
@@ -34,7 +35,10 @@ export async function validateReactionBatches(inputs: readonly ReactionBatchInpu
     const pack = JSON.parse(rawManifest);
     const rawQa = (await localFile(input.directory, 'final-qa.json')).toString('utf8');
     const qa = JSON.parse(rawQa);
-    if (!nonempty(proposal.status) || !/^(?:Parent-approved\b|Parent editorial approval and independent review passed\b)/.test(proposal.status)
+    // Batch09's frozen editorial status distinguishes script review from audio acceptance.
+    const reviewedBatch09Status = sha256(rawProposal) === '97adc6bd0e4e560ba2aa4b3a79d17b0b83630abf8e4d5fc499dc42eb3051c855'
+      && proposal.status === 'Parent editorial approval and independent script review passed; audio not generated';
+    if (!nonempty(proposal.status) || (!/^(?:Parent-approved\b|Parent editorial approval and independent review passed\b)/.test(proposal.status) && !reviewedBatch09Status)
       || !nonempty(proposal.packId) || packIds.has(proposal.packId) || pack.packId !== proposal.packId
       || proposal.model !== 's2.1-pro-free' || pack.model !== proposal.model
       || proposal.reference_id !== 'd75c270eaee14c8aa1e9e980cc37cf1b' || pack.reference_id !== proposal.reference_id
@@ -51,7 +55,8 @@ export async function validateReactionBatches(inputs: readonly ReactionBatchInpu
     for (const line of proposal.scripts) {
       const id = line.id, clip = pack.clips[id];
       const trigger = line.trigger as ReactionTrigger;
-      if (typeof id !== 'string' || !idPattern.test(id) || id in lines || !Object.hasOwn(reactionTriggerMetadata, trigger)
+      const reviewedSweepId = reviewedBatch09Status && ['you-team-sweep.unknown-number', 'you-team-sweep.sticky-fingers'].includes(id);
+      if (typeof id !== 'string' || (!idPattern.test(id) && !reviewedSweepId) || id in lines || !Object.hasOwn(reactionTriggerMetadata, trigger)
         || !nonempty(line.text) || !nonempty(line.family) || !nonempty(line.context)
         || !nonempty(line.direction) || !nonempty(line.deliveryTag)
         || !clip || clip.id !== id || ['text', 'trigger', 'family', 'context', 'direction', 'deliveryTag'].some(key => clip[key] !== line[key])
@@ -83,4 +88,27 @@ export async function validateReactionBatches(inputs: readonly ReactionBatchInpu
     packs.push({ packId: pack.packId, count: 24, ...identities, evidence });
   }
   return { lines, runtime, sources, packs, audioBytes };
+}
+
+/** Additive imports must preserve all prior audio and reaction behavior metadata. */
+export function assertAdditiveReactionImport(
+  lines: Readonly<Record<string, ApprovedReaction>>,
+  runtime: Readonly<Record<string, NarrationClip>>,
+  oldLines: Readonly<Record<string, ApprovedReaction>>,
+  oldRuntime: Readonly<Record<string, NarrationClip>>,
+  existingAssets: Readonly<Record<string, { readonly text: string }>>,
+) {
+  for (const [id, old] of Object.entries(oldLines)) {
+    if (!isDeepStrictEqual(lines[id], old)) throw new Error(`Import would remove or change preserved reaction metadata ${id}`);
+  }
+  for (const [id, old] of Object.entries(oldRuntime)) {
+    if (!isDeepStrictEqual(runtime[id], old)) throw new Error(`Import would remove or replace preserved recording ${id}`);
+  }
+  const normalize = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const existingTexts = new Set(Object.values(existingAssets).map(asset => normalize(asset.text)));
+  for (const [id, line] of Object.entries(lines)) {
+    if (Object.hasOwn(oldLines, id)) continue;
+    if (Object.hasOwn(existingAssets, id)) throw new Error(`Import would collide with existing recording ${id}`);
+    if (existingTexts.has(normalize(line.text))) throw new Error(`Import would repeat existing recording wording ${id}`);
+  }
 }

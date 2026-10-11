@@ -2,7 +2,7 @@ import { effectiveSuit, rankOf, suitOf } from '../src/index.ts';
 import type { Action, PlayerView, Seat } from '../src/index.ts';
 
 /** Release contract. A partial approved library may be tested but never published. */
-export const CHARACTER_LIBRARY_TARGET = 168;
+export const CHARACTER_LIBRARY_TARGET = 216;
 export const ORIGINAL_NARRATOR_COUNT = 1965;
 export const reactionTriggerMetadata = {
   'reaction.you.follow-suit': { context: 'you', priority: 1 },

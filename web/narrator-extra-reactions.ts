@@ -1745,5 +1745,197 @@ export const extraReactionLines: Readonly<Record<string, NarrationAlternative & 
     "context": "val",
     "priority": 1,
     "trigger": "reaction.val.trump"
+  },
+  "reaction.opponent.trick.find-an-angle": {
+    "clip": "reaction.opponent.trick.find-an-angle",
+    "text": "Wait. I'm tryin' to find a version of that where you're the asshole.",
+    "family": "outsourced-blame",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.trick"
+  },
+  "reaction.opponent.trick.pork-rind-bag": {
+    "clip": "reaction.opponent.trick.pork-rind-bag",
+    "text": "Hang on. I gotta breathe into a bag. Anybody finish these pork rinds?",
+    "family": "failed-composure",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.trick"
+  },
+  "reaction.opponent.trick.buy-a-version": {
+    "clip": "reaction.opponent.trick.buy-a-version",
+    "text": "What would it cost for us to pretend that was embarrassing for you?",
+    "family": "cope-with-loss",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.trick"
+  },
+  "reaction.opponent.trick.liked-you-unnoticed": {
+    "clip": "reaction.opponent.trick.liked-you-unnoticed",
+    "text": "Ugh. I liked you better when I wasn't payin' attention.",
+    "family": "conditional-grudge",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.trick"
+  },
+  "reaction.opponent.trick.forehead-vein": {
+    "clip": "reaction.opponent.trick.forehead-vein",
+    "text": "Okay, that little vein in my forehead has entered the game.",
+    "family": "involuntary-body-commentary",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.trick"
+  },
+  "reaction.opponent.trick.tell-the-dog": {
+    "clip": "reaction.opponent.trick.tell-the-dog",
+    "text": "Fine. I'm tellin' the dog. He already doesn't like your whole deal.",
+    "family": "anger-by-association",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.trick"
+  },
+  "reaction.opponent.trick.bit-my-cheek": {
+    "clip": "reaction.opponent.trick.bit-my-cheek",
+    "text": "Aw, crap. I bit my cheek tryin' not to say somethin' worse.",
+    "family": "failed-composure",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.trick"
+  },
+  "reaction.opponent.trick.phone-ham-ban": {
+    "clip": "reaction.opponent.trick.phone-ham-ban",
+    "text": "That's it. You're goin' in my phone as 'Do Not Give Ham.'",
+    "family": "impotent-retaliation",
+    "context": "opponent",
+    "priority": 2,
+    "trigger": "reaction.opponent.trick"
+  },
+  "reaction.opponent.follow-suit.card-or-face": {
+    "clip": "reaction.opponent.follow-suit.card-or-face",
+    "text": "You matched. Hold still. I'm checkin' whether I'm mad at the card or your face.",
+    "family": "compliance-double-standard",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.follow-suit"
+  },
+  "reaction.opponent.follow-suit.moving-crumb": {
+    "clip": "reaction.opponent.follow-suit.moving-crumb",
+    "text": "Same suit. Okay. I was watchin' a crumb. It moved, and now I'm invested.",
+    "family": "wandering-attention",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.follow-suit"
+  },
+  "reaction.opponent.follow-suit.unwanted-understanding": {
+    "clip": "reaction.opponent.follow-suit.unwanted-understanding",
+    "text": "I understood that one, and I resent you for makin' me participate.",
+    "family": "effort-avoidance",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.follow-suit"
+  },
+  "reaction.opponent.follow-suit.big-word-dictionary": {
+    "clip": "reaction.opponent.follow-suit.big-word-dictionary",
+    "text": "You matched. I'd accuse you of somethin', but Brian took my big-word dictionary.",
+    "family": "limited-vocabulary",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.follow-suit"
+  },
+  "reaction.opponent.follow-suit.judging-sleeves": {
+    "clip": "reaction.opponent.follow-suit.judging-sleeves",
+    "text": "Same suit. Fine. I'm judgin' your sleeves now.",
+    "family": "compliance-double-standard",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.follow-suit"
+  },
+  "reaction.opponent.follow-suit.bathtub-pirate": {
+    "clip": "reaction.opponent.follow-suit.bathtub-pirate",
+    "text": "Yep, same suit. I'm noddin', but in my head I'm a bathtub pirate.",
+    "family": "wandering-attention",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.follow-suit"
+  },
+  "reaction.table.turned-down.alarm-clock": {
+    "clip": "reaction.table.turned-down.alarm-clock",
+    "text": "Face down. That's how I answer an alarm clock.",
+    "family": "misapplied-life-skill",
+    "context": "table",
+    "priority": 1,
+    "trigger": "reaction.table.turned-down"
+  },
+  "reaction.table.turned-down.summon-worse": {
+    "clip": "reaction.table.turned-down.summon-worse",
+    "text": "Four passes. Is this how we summon somethin'? Should I put my pants back on?",
+    "family": "misapplied-ceremony",
+    "context": "table",
+    "priority": 1,
+    "trigger": "reaction.table.turned-down"
+  },
+  "reaction.table.turned-down.block-party-casserole": {
+    "clip": "reaction.table.turned-down.block-party-casserole",
+    "text": "Nobody wants it. That's the reception my casserole got. And I used the expensive hot dogs.",
+    "family": "card-rejection",
+    "context": "table",
+    "priority": 1,
+    "trigger": "reaction.table.turned-down"
+  },
+  "reaction.table.turned-down.unanimous-rash": {
+    "clip": "reaction.table.turned-down.unanimous-rash",
+    "text": "Everybody passed. I haven't seen a room agree like that since I asked who wanted to see my rash.",
+    "family": "embarrassed-exposure",
+    "context": "table",
+    "priority": 1,
+    "trigger": "reaction.table.turned-down"
+  },
+  "reaction.you.follow-suit.worthless-approval": {
+    "clip": "reaction.you.follow-suit.worthless-approval",
+    "text": "There ya go. My approval means nothin', but it's very loud.",
+    "family": "useless-contribution",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.follow-suit"
+  },
+  "reaction.you.follow-suit.barbecue-socks": {
+    "clip": "reaction.you.follow-suit.barbecue-socks",
+    "text": "Good, you matched. I keep pairs of socks together with barbecue sauce.",
+    "family": "domestic-incompetence",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.follow-suit"
+  },
+  "reaction.you.follow-suit.submarine-reader": {
+    "clip": "reaction.you.follow-suit.submarine-reader",
+    "text": "Same suit. You're the designated reader if we ever steal a submarine.",
+    "family": "manufactured-obligation",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.follow-suit"
+  },
+  "reaction.you.follow-suit.which-remote": {
+    "clip": "reaction.you.follow-suit.which-remote",
+    "text": "You matched. Good. Come over later and tell me which remote does the TV.",
+    "family": "manufactured-obligation",
+    "context": "you",
+    "priority": 1,
+    "trigger": "reaction.you.follow-suit"
+  },
+  "reaction.opponent.ace-lead.flick-strategy": {
+    "clip": "reaction.opponent.ace-lead.flick-strategy",
+    "text": "An ace. I wanna flick it, but I've been told that's 'not a strategy.'",
+    "family": "impotent-retaliation",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.ace-lead"
+  },
+  "reaction.opponent.ace-lead.vacuum-noise": {
+    "clip": "reaction.opponent.ace-lead.vacuum-noise",
+    "text": "An ace. Great. I just made a noise the dog only makes at the vacuum.",
+    "family": "failed-composure",
+    "context": "opponent",
+    "priority": 1,
+    "trigger": "reaction.opponent.ace-lead"
   }
 };

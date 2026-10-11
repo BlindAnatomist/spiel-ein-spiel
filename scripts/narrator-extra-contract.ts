@@ -21,7 +21,7 @@ async function localFile(root: string, name: string) {
 
 /** Pure validation: every supplied pack is checked before any runtime file changes. */
 export async function validateReactionBatches(inputs: readonly ReactionBatchInput[], evidenceVerifier: AudioEvidenceVerifier = verifyAudioEvidence) {
-  if (!inputs.length || inputs.length > CHARACTER_LIBRARY_TARGET / 24) throw new Error('Provide one to nine complete approved 24-line batches');
+  if (!inputs.length || inputs.length > CHARACTER_LIBRARY_TARGET / 24) throw new Error('Provide one to ten complete approved 24-line batches');
   const lines: Record<string, ApprovedReaction> = {}, runtime: Record<string, NarrationClip> = {};
   const sources = new Map<string, string>(), packs: Array<Record<string, unknown>> = [];
   const packIds = new Set<string>(), texts = new Set<string>();

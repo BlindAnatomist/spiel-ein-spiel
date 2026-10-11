@@ -5,7 +5,13 @@ GitHub Release package and retrieving it from the normal Netlify Git build.
 External writes, future media changes and Actions runs still require the
 applicable authorization; this document grants none.
 
-## Immutable-by-verification release
+## Current review checkpoint
+
+The separate review branch now pins the cumulative batch-10 package described in
+[BATCH10_REVIEW.md](BATCH10_REVIEW.md). The original production package below is
+retained as historical provenance; it is not the current review-branch pin.
+
+## Original immutable-by-verification release
 
 `scripts/narrator-runtime-release.ts` pins one versioned GitHub Release asset:
 

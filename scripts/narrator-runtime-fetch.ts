@@ -55,7 +55,7 @@ function validatePlan(plan: readonly RuntimeAsset[]) {
 
 function validateRelease(release: RuntimeRelease) {
   // A URL override, token or "latest" shortcut cannot silently change the source.
-  if (!/^https:\/\/github\.com\/BlindAnatomist\/spiel-ein-spiel\/releases\/download\/peter-audio-[0-9]{8}\/peter-runtime-audio-[0-9]{8}\.tar\.gz$/.test(release.url)
+  if (!/^https:\/\/github\.com\/BlindAnatomist\/spiel-ein-spiel\/releases\/download\/peter-audio-([0-9]{8})(-batch10)?\/peter-runtime-audio-\1\2\.tar\.gz$/.test(release.url)
     || !Number.isSafeInteger(release.bytes) || release.bytes <= 0 || release.bytes > MAX_BYTES
     || !/^[a-f0-9]{64}$/.test(release.sha256)) throw new Error('Invalid pinned runtime release');
 }

@@ -87,18 +87,18 @@ test('verified master bytes are retained for import rather than rereading mutabl
  }finally{await f.clean();}
 });
 
-test('nine complete packs are accepted; a tenth and an incomplete ninth are rejected', async () => {
- const fixtures = await Promise.all(Array.from({length: 10}, (_, i) => fixture(i)));
+test('ten complete packs are accepted; an eleventh and an incomplete tenth are rejected', async () => {
+ const fixtures = await Promise.all(Array.from({length: 11}, (_, i) => fixture(i)));
  try {
   const inputs = fixtures.map(f => f.input);
-  const accepted = await validateReactionBatches(inputs.slice(0, 9));
-  assert.equal(Object.keys(accepted.runtime).length, 216);
-  assert.equal(accepted.packs.length, 9);
-  await assert.rejects(() => validateReactionBatches(inputs), /one to nine/);
-  const ninth = fixtures[8]!;
-  delete ninth.manifest.clips[ninth.proposal.scripts[0]!.id];
-  await ninth.save();
-  await assert.rejects(() => validateReactionBatches(inputs.slice(0, 9)), /Incomplete/);
+  const accepted = await validateReactionBatches(inputs.slice(0, 10));
+  assert.equal(Object.keys(accepted.runtime).length, 240);
+  assert.equal(accepted.packs.length, 10);
+  await assert.rejects(() => validateReactionBatches(inputs), /one to ten/);
+  const tenth = fixtures[9]!;
+  delete tenth.manifest.clips[tenth.proposal.scripts[0]!.id];
+  await tenth.save();
+  await assert.rejects(() => validateReactionBatches(inputs.slice(0, 10)), /Incomplete/);
  } finally { await Promise.all(fixtures.map(f => f.clean())); }
 });
 

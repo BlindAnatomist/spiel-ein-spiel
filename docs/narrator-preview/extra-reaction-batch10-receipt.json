@@ -1,0 +1,567 @@
+{
+  "batch": 10,
+  "basisCommit": "25841948334232d55ba8ec74515a163ae8ddea06",
+  "preservedRuntimeRecordings": 2181,
+  "addedRecordings": 24,
+  "totalRuntimeRecordings": 2205,
+  "filesVerified": true,
+  "listeningAcceptance": false,
+  "speechContentVerified": false,
+  "audibleQualityVerified": false,
+  "iphoneVoiceOverVerified": false,
+  "recordingPackSha256": "e61f7516a9554a1efb7df7630d88134e4b2b42bde13291c531ea78bcc45c7be3",
+  "clips": [
+    {
+      "clip": "reaction.opponent.trick.find-an-angle",
+      "text": "Wait. I'm tryin' to find a version of that where you're the asshole.",
+      "family": "outsourced-blame",
+      "trigger": "reaction.opponent.trick",
+      "context": "opponent",
+      "priority": 2,
+      "durationSeconds": 3.082448979591837,
+      "raw": {
+        "path": "raw/reaction.opponent.trick.find-an-angle.mp3",
+        "sha256": "b58d3ba1f81cfa69316427288285fe4d25aa4c85b0497fbc18eddf0656265d58",
+        "bytes": 49318,
+        "loudnessLUFS": -28.07,
+        "truePeakDBTP": -10.92
+      },
+      "master": {
+        "path": "master/reaction.opponent.trick.find-an-angle.mp3",
+        "sha256": "3f3026caf297f72e316e50231cd8bd9a2b04de9a00b98fc865f8bce7402184bb",
+        "bytes": 39136,
+        "loudnessLUFS": -20.51,
+        "truePeakDBTP": -3.31
+      }
+    },
+    {
+      "clip": "reaction.opponent.trick.pork-rind-bag",
+      "text": "Hang on. I gotta breathe into a bag. Anybody finish these pork rinds?",
+      "family": "failed-composure",
+      "trigger": "reaction.opponent.trick",
+      "context": "opponent",
+      "priority": 2,
+      "durationSeconds": 4.3363265306122445,
+      "raw": {
+        "path": "raw/reaction.opponent.trick.pork-rind-bag.mp3",
+        "sha256": "540a851083fc84db233f09bebdb42e9507f7bba9f532df26b2a763d5c9d81d36",
+        "bytes": 69380,
+        "loudnessLUFS": -32.18,
+        "truePeakDBTP": -15.16
+      },
+      "master": {
+        "path": "master/reaction.opponent.trick.pork-rind-bag.mp3",
+        "sha256": "84c3ba15e807276701595be8c971b6b65ea74149d82714d7baaa4f4c4fab650e",
+        "bytes": 58182,
+        "loudnessLUFS": -20.52,
+        "truePeakDBTP": -3.42
+      }
+    },
+    {
+      "clip": "reaction.opponent.trick.buy-a-version",
+      "text": "What would it cost for us to pretend that was embarrassing for you?",
+      "family": "cope-with-loss",
+      "trigger": "reaction.opponent.trick",
+      "context": "opponent",
+      "priority": 2,
+      "durationSeconds": 3.186938775510204,
+      "raw": {
+        "path": "raw/reaction.opponent.trick.buy-a-version.mp3",
+        "sha256": "730fa06ca0e0a8c8874608a61e2a75272316722c72b9fe6d7e3746b0dfd72be7",
+        "bytes": 50990,
+        "loudnessLUFS": -32.61,
+        "truePeakDBTP": -13.32
+      },
+      "master": {
+        "path": "master/reaction.opponent.trick.buy-a-version.mp3",
+        "sha256": "c356f34b307fa793a414fd15b7b0bc769c45de9b9b1db72cc0a8e8221581f2a2",
+        "bytes": 43103,
+        "loudnessLUFS": -21.36,
+        "truePeakDBTP": -2.08
+      }
+    },
+    {
+      "clip": "reaction.opponent.trick.liked-you-unnoticed",
+      "text": "Ugh. I liked you better when I wasn't payin' attention.",
+      "family": "conditional-grudge",
+      "trigger": "reaction.opponent.trick",
+      "context": "opponent",
+      "priority": 2,
+      "durationSeconds": 2.7951020408163267,
+      "raw": {
+        "path": "raw/reaction.opponent.trick.liked-you-unnoticed.mp3",
+        "sha256": "5f52609fba79efb672d8f817aff911b9e5914ae7fb7f41395daeae5a0c3a210d",
+        "bytes": 44720,
+        "loudnessLUFS": -27.33,
+        "truePeakDBTP": -10.35
+      },
+      "master": {
+        "path": "master/reaction.opponent.trick.liked-you-unnoticed.mp3",
+        "sha256": "2f7b4f6c27572e3a26a4f3535ab2b65ce0115ec73d154de512540effcad56fda",
+        "bytes": 36792,
+        "loudnessLUFS": -20.52,
+        "truePeakDBTP": -3.6
+      }
+    },
+    {
+      "clip": "reaction.opponent.trick.forehead-vein",
+      "text": "Okay, that little vein in my forehead has entered the game.",
+      "family": "involuntary-body-commentary",
+      "trigger": "reaction.opponent.trick",
+      "context": "opponent",
+      "priority": 2,
+      "durationSeconds": 3.317551020408163,
+      "raw": {
+        "path": "raw/reaction.opponent.trick.forehead-vein.mp3",
+        "sha256": "ed7c0c7ef0fbf5ca12adcf12808e038d1d29b4ca67213e34caed55552562a567",
+        "bytes": 53079,
+        "loudnessLUFS": -31.26,
+        "truePeakDBTP": -12.88
+      },
+      "master": {
+        "path": "master/reaction.opponent.trick.forehead-vein.mp3",
+        "sha256": "aff750c9933f052654a9db6c3d96a0c8de5a046c033e92e344d9b5cc4f871c48",
+        "bytes": 46600,
+        "loudnessLUFS": -20.49,
+        "truePeakDBTP": -2.13
+      }
+    },
+    {
+      "clip": "reaction.opponent.trick.tell-the-dog",
+      "text": "Fine. I'm tellin' the dog. He already doesn't like your whole deal.",
+      "family": "anger-by-association",
+      "trigger": "reaction.opponent.trick",
+      "context": "opponent",
+      "priority": 2,
+      "durationSeconds": 3.813877551020408,
+      "raw": {
+        "path": "raw/reaction.opponent.trick.tell-the-dog.mp3",
+        "sha256": "50532b621fdda645274087dc2bc8587e4f870fbceae7efbdefd6085a81100fc5",
+        "bytes": 61021,
+        "loudnessLUFS": -33.9,
+        "truePeakDBTP": -17.84
+      },
+      "master": {
+        "path": "master/reaction.opponent.trick.tell-the-dog.mp3",
+        "sha256": "941fe75b03093404ff800d0d773cd58b429f4e108c377e2844089dd4c9d92884",
+        "bytes": 51089,
+        "loudnessLUFS": -20.49,
+        "truePeakDBTP": -4.31
+      }
+    },
+    {
+      "clip": "reaction.opponent.trick.bit-my-cheek",
+      "text": "Aw, crap. I bit my cheek tryin' not to say somethin' worse.",
+      "family": "failed-composure",
+      "trigger": "reaction.opponent.trick",
+      "context": "opponent",
+      "priority": 2,
+      "durationSeconds": 3.500408163265306,
+      "raw": {
+        "path": "raw/reaction.opponent.trick.bit-my-cheek.mp3",
+        "sha256": "40a6bf93785c4d39f1079583fba6de443a151b08e476abd45d91e6f1bdf99eb0",
+        "bytes": 56005,
+        "loudnessLUFS": -30.1,
+        "truePeakDBTP": -11.66
+      },
+      "master": {
+        "path": "master/reaction.opponent.trick.bit-my-cheek.mp3",
+        "sha256": "5c61b0b79fb38a880850b84671d8dc0e51541f63d83597175af3788a74755ed1",
+        "bytes": 48266,
+        "loudnessLUFS": -20.53,
+        "truePeakDBTP": -2.06
+      }
+    },
+    {
+      "clip": "reaction.opponent.trick.phone-ham-ban",
+      "text": "That's it. You're goin' in my phone as 'Do Not Give Ham.'",
+      "family": "impotent-retaliation",
+      "trigger": "reaction.opponent.trick",
+      "context": "opponent",
+      "priority": 2,
+      "durationSeconds": 3.213061224489796,
+      "raw": {
+        "path": "raw/reaction.opponent.trick.phone-ham-ban.mp3",
+        "sha256": "3eb249e3fda35c830742dffccf9579b395ddd4b66d72a7b557de4a0bc621ea75",
+        "bytes": 51408,
+        "loudnessLUFS": -26.81,
+        "truePeakDBTP": -10.46
+      },
+      "master": {
+        "path": "master/reaction.opponent.trick.phone-ham-ban.mp3",
+        "sha256": "b312760a21a80fd443db8f296d84fb1ef80c9438b902959807f6faecbdf65e61",
+        "bytes": 41982,
+        "loudnessLUFS": -20.48,
+        "truePeakDBTP": -4.16
+      }
+    },
+    {
+      "clip": "reaction.opponent.follow-suit.card-or-face",
+      "text": "You matched. Hold still. I'm checkin' whether I'm mad at the card or your face.",
+      "family": "compliance-double-standard",
+      "trigger": "reaction.opponent.follow-suit",
+      "context": "opponent",
+      "priority": 1,
+      "durationSeconds": 4.649795918367347,
+      "raw": {
+        "path": "raw/reaction.opponent.follow-suit.card-or-face.mp3",
+        "sha256": "4884e7f08b363182cc544887d880b7eaa26561af7e46b367222b59aea5b03260",
+        "bytes": 74395,
+        "loudnessLUFS": -29.4,
+        "truePeakDBTP": -13.76
+      },
+      "master": {
+        "path": "master/reaction.opponent.follow-suit.card-or-face.mp3",
+        "sha256": "f0cad55d8c792c8ac018974ae9b2f8157ad63b926961fd47346c44cda2e39f35",
+        "bytes": 57184,
+        "loudnessLUFS": -20.5,
+        "truePeakDBTP": -4.86
+      }
+    },
+    {
+      "clip": "reaction.opponent.follow-suit.moving-crumb",
+      "text": "Same suit. Okay. I was watchin' a crumb. It moved, and now I'm invested.",
+      "family": "wandering-attention",
+      "trigger": "reaction.opponent.follow-suit",
+      "context": "opponent",
+      "priority": 1,
+      "durationSeconds": 4.7542857142857144,
+      "raw": {
+        "path": "raw/reaction.opponent.follow-suit.moving-crumb.mp3",
+        "sha256": "4fdd5e48baf8f110b085b2c80a6097841790c20c68f2dd27f387f1e8c55735b4",
+        "bytes": 76067,
+        "loudnessLUFS": -28.31,
+        "truePeakDBTP": -9.35
+      },
+      "master": {
+        "path": "master/reaction.opponent.follow-suit.moving-crumb.mp3",
+        "sha256": "d0b3f6a97c56ee85834f42d230fea5f69b72b01b00d48766c424f6057122e87f",
+        "bytes": 60232,
+        "loudnessLUFS": -20.96,
+        "truePeakDBTP": -2.07
+      }
+    },
+    {
+      "clip": "reaction.opponent.follow-suit.unwanted-understanding",
+      "text": "I understood that one, and I resent you for makin' me participate.",
+      "family": "effort-avoidance",
+      "trigger": "reaction.opponent.follow-suit",
+      "context": "opponent",
+      "priority": 1,
+      "durationSeconds": 3.1346938775510202,
+      "raw": {
+        "path": "raw/reaction.opponent.follow-suit.unwanted-understanding.mp3",
+        "sha256": "62275f25835f4ad933131cc2a857d80f2f9474c35920973ca0b07e8772f82d42",
+        "bytes": 50154,
+        "loudnessLUFS": -31.21,
+        "truePeakDBTP": -12.51
+      },
+      "master": {
+        "path": "master/reaction.opponent.follow-suit.unwanted-understanding.mp3",
+        "sha256": "1ae45dfeba3a33b22100e813192582ec079a588ba58923a9dc4f6eba03dfa422",
+        "bytes": 43183,
+        "loudnessLUFS": -20.79,
+        "truePeakDBTP": -2.07
+      }
+    },
+    {
+      "clip": "reaction.opponent.follow-suit.big-word-dictionary",
+      "text": "You matched. I'd accuse you of somethin', but Brian took my big-word dictionary.",
+      "family": "limited-vocabulary",
+      "trigger": "reaction.opponent.follow-suit",
+      "context": "opponent",
+      "priority": 1,
+      "durationSeconds": 4.571428571428571,
+      "raw": {
+        "path": "raw/reaction.opponent.follow-suit.big-word-dictionary.mp3",
+        "sha256": "6e1c4d605decab696ae474c894dde6e5064071abb7536f4f67098372350f24c2",
+        "bytes": 73141,
+        "loudnessLUFS": -31.27,
+        "truePeakDBTP": -10.04
+      },
+      "master": {
+        "path": "master/reaction.opponent.follow-suit.big-word-dictionary.mp3",
+        "sha256": "cadf0529bd86d10e47cccec3da8fc7c90898b815ebdbcc3eaefb251737e84a28",
+        "bytes": 59905,
+        "loudnessLUFS": -23.33,
+        "truePeakDBTP": -2.1
+      }
+    },
+    {
+      "clip": "reaction.opponent.follow-suit.judging-sleeves",
+      "text": "Same suit. Fine. I'm judgin' your sleeves now.",
+      "family": "compliance-double-standard",
+      "trigger": "reaction.opponent.follow-suit",
+      "context": "opponent",
+      "priority": 1,
+      "durationSeconds": 2.899591836734694,
+      "raw": {
+        "path": "raw/reaction.opponent.follow-suit.judging-sleeves.mp3",
+        "sha256": "1ed2ed1dc4868211d1080bdfee39c686d41dcead656f011620b724e6de07773a",
+        "bytes": 46392,
+        "loudnessLUFS": -29.7,
+        "truePeakDBTP": -9.3
+      },
+      "master": {
+        "path": "master/reaction.opponent.follow-suit.judging-sleeves.mp3",
+        "sha256": "597d3e9cb2f35088761c53a64584f06e72f7727b6c125ffb1e018b3cfb81e8e5",
+        "bytes": 38774,
+        "loudnessLUFS": -22.51,
+        "truePeakDBTP": -2.13
+      }
+    },
+    {
+      "clip": "reaction.opponent.follow-suit.bathtub-pirate",
+      "text": "Yep, same suit. I'm noddin', but in my head I'm a bathtub pirate.",
+      "family": "wandering-attention",
+      "trigger": "reaction.opponent.follow-suit",
+      "context": "opponent",
+      "priority": 1,
+      "durationSeconds": 4.153469387755102,
+      "raw": {
+        "path": "raw/reaction.opponent.follow-suit.bathtub-pirate.mp3",
+        "sha256": "3caae9ce49ea7aa999355a291d032008b32a2cf8ece13aabfe59fa9dcc886b21",
+        "bytes": 66454,
+        "loudnessLUFS": -26.82,
+        "truePeakDBTP": -10.68
+      },
+      "master": {
+        "path": "master/reaction.opponent.follow-suit.bathtub-pirate.mp3",
+        "sha256": "34fbf1c77595984a16fda8c52c4d2416f46a77c21fe620c1a264a9eb229489fa",
+        "bytes": 52745,
+        "loudnessLUFS": -20.49,
+        "truePeakDBTP": -4.35
+      }
+    },
+    {
+      "clip": "reaction.table.turned-down.alarm-clock",
+      "text": "Face down. That's how I answer an alarm clock.",
+      "family": "misapplied-life-skill",
+      "trigger": "reaction.table.turned-down",
+      "context": "table",
+      "priority": 1,
+      "durationSeconds": 2.2987755102040817,
+      "raw": {
+        "path": "raw/reaction.table.turned-down.alarm-clock.mp3",
+        "sha256": "c726e0489b2a5b7920a108c5caa94a472aa354ee1c773b6fec3bac16b3917530",
+        "bytes": 36779,
+        "loudnessLUFS": -31.27,
+        "truePeakDBTP": -15.65
+      },
+      "master": {
+        "path": "master/reaction.table.turned-down.alarm-clock.mp3",
+        "sha256": "a78d7caa1e47e0b9b7df3ac3f17d009714cf85e57160b1294fbbd2dec3419a9c",
+        "bytes": 33301,
+        "loudnessLUFS": -20.5,
+        "truePeakDBTP": -4.79
+      }
+    },
+    {
+      "clip": "reaction.table.turned-down.summon-worse",
+      "text": "Four passes. Is this how we summon somethin'? Should I put my pants back on?",
+      "family": "misapplied-ceremony",
+      "trigger": "reaction.table.turned-down",
+      "context": "table",
+      "priority": 1,
+      "durationSeconds": 4.284081632653061,
+      "raw": {
+        "path": "raw/reaction.table.turned-down.summon-worse.mp3",
+        "sha256": "a93aa7858b8d3ec4de34975c3081769d85286d31997660e0e6b1dadd3d8318db",
+        "bytes": 68544,
+        "loudnessLUFS": -30.27,
+        "truePeakDBTP": -12.41
+      },
+      "master": {
+        "path": "master/reaction.table.turned-down.summon-worse.mp3",
+        "sha256": "5725076c01b4e566036d2bfcbe01b65c750230677aece31fcccb652ae54dc844",
+        "bytes": 57013,
+        "loudnessLUFS": -20.56,
+        "truePeakDBTP": -2.63
+      }
+    },
+    {
+      "clip": "reaction.table.turned-down.block-party-casserole",
+      "text": "Nobody wants it. That's the reception my casserole got. And I used the expensive hot dogs.",
+      "family": "card-rejection",
+      "trigger": "reaction.table.turned-down",
+      "context": "table",
+      "priority": 1,
+      "durationSeconds": 4.937142857142857,
+      "raw": {
+        "path": "raw/reaction.table.turned-down.block-party-casserole.mp3",
+        "sha256": "d22692d46cf1b3f17a3c26d309c88ea984ba1a369ae7c2dcd34643e905f5cea3",
+        "bytes": 78993,
+        "loudnessLUFS": -36.09,
+        "truePeakDBTP": -18.26
+      },
+      "master": {
+        "path": "master/reaction.table.turned-down.block-party-casserole.mp3",
+        "sha256": "3922643779ba3530067508a9f7ff6c69f4d3b5a8e35c9ba99a0ffb46fe9c11c4",
+        "bytes": 71897,
+        "loudnessLUFS": -20.5,
+        "truePeakDBTP": -2.7
+      }
+    },
+    {
+      "clip": "reaction.table.turned-down.unanimous-rash",
+      "text": "Everybody passed. I haven't seen a room agree like that since I asked who wanted to see my rash.",
+      "family": "embarrassed-exposure",
+      "trigger": "reaction.table.turned-down",
+      "context": "table",
+      "priority": 1,
+      "durationSeconds": 4.702040816326531,
+      "raw": {
+        "path": "raw/reaction.table.turned-down.unanimous-rash.mp3",
+        "sha256": "8d46a4ab9805937f85acee3e56bb3b09148a69ee1376fe41ea06955c51ca1a26",
+        "bytes": 75231,
+        "loudnessLUFS": -30.13,
+        "truePeakDBTP": -12.16
+      },
+      "master": {
+        "path": "master/reaction.table.turned-down.unanimous-rash.mp3",
+        "sha256": "d3d7270bd2e4b38b864201ddefda86f83b6c2f90303baca4d0bf4385f577102d",
+        "bytes": 64075,
+        "loudnessLUFS": -20.49,
+        "truePeakDBTP": -2.65
+      }
+    },
+    {
+      "clip": "reaction.you.follow-suit.worthless-approval",
+      "text": "There ya go. My approval means nothin', but it's very loud.",
+      "family": "useless-contribution",
+      "trigger": "reaction.you.follow-suit",
+      "context": "you",
+      "priority": 1,
+      "durationSeconds": 3.3959183673469386,
+      "raw": {
+        "path": "raw/reaction.you.follow-suit.worthless-approval.mp3",
+        "sha256": "deae3b1db3a414ce641053daf4acd1fd16e0abafeebdd7ae4b70a10817ec991a",
+        "bytes": 54333,
+        "loudnessLUFS": -27.22,
+        "truePeakDBTP": -9.27
+      },
+      "master": {
+        "path": "master/reaction.you.follow-suit.worthless-approval.mp3",
+        "sha256": "e42f923e017f604b4a21932d6fc7d0821a610290166f706d2076b85e1e3721a4",
+        "bytes": 45710,
+        "loudnessLUFS": -20.5,
+        "truePeakDBTP": -2.52
+      }
+    },
+    {
+      "clip": "reaction.you.follow-suit.barbecue-socks",
+      "text": "Good, you matched. I keep pairs of socks together with barbecue sauce.",
+      "family": "domestic-incompetence",
+      "trigger": "reaction.you.follow-suit",
+      "context": "you",
+      "priority": 1,
+      "durationSeconds": 3.866122448979592,
+      "raw": {
+        "path": "raw/reaction.you.follow-suit.barbecue-socks.mp3",
+        "sha256": "1dfbd083c9d0fbfbb911fc7eec41221eb29e7b04316a9177887da54684e3f29f",
+        "bytes": 61857,
+        "loudnessLUFS": -30.81,
+        "truePeakDBTP": -12.35
+      },
+      "master": {
+        "path": "master/reaction.you.follow-suit.barbecue-socks.mp3",
+        "sha256": "087d48811c5d816ff714fa7ef69c7cf7175c60db861192c6086191ee42269f19",
+        "bytes": 50380,
+        "loudnessLUFS": -20.53,
+        "truePeakDBTP": -2.07
+      }
+    },
+    {
+      "clip": "reaction.you.follow-suit.submarine-reader",
+      "text": "Same suit. You're the designated reader if we ever steal a submarine.",
+      "family": "manufactured-obligation",
+      "trigger": "reaction.you.follow-suit",
+      "context": "you",
+      "priority": 1,
+      "durationSeconds": 3.813877551020408,
+      "raw": {
+        "path": "raw/reaction.you.follow-suit.submarine-reader.mp3",
+        "sha256": "badd9093445a5e9ea24727c36a94a0717283625f62a6fcccc14f7c6193ff86d2",
+        "bytes": 61021,
+        "loudnessLUFS": -30.25,
+        "truePeakDBTP": -11.8
+      },
+      "master": {
+        "path": "master/reaction.you.follow-suit.submarine-reader.mp3",
+        "sha256": "393ce5efe3e18e655301ca2949019805b85f103599484020f36676bce658d8f6",
+        "bytes": 50275,
+        "loudnessLUFS": -20.55,
+        "truePeakDBTP": -2.07
+      }
+    },
+    {
+      "clip": "reaction.you.follow-suit.which-remote",
+      "text": "You matched. Good. Come over later and tell me which remote does the TV.",
+      "family": "manufactured-obligation",
+      "trigger": "reaction.you.follow-suit",
+      "context": "you",
+      "priority": 1,
+      "durationSeconds": 4.3363265306122445,
+      "raw": {
+        "path": "raw/reaction.you.follow-suit.which-remote.mp3",
+        "sha256": "189a7dfed09f24292500406300e214078f01ff37cd0fa4cc6446ba45fb1930e3",
+        "bytes": 69380,
+        "loudnessLUFS": -28.99,
+        "truePeakDBTP": -10.68
+      },
+      "master": {
+        "path": "master/reaction.you.follow-suit.which-remote.mp3",
+        "sha256": "f52d29504709fc2bb8f80ab0fc0eb9e2c62a872bb9aac8a901c1cc8c743a9695",
+        "bytes": 52988,
+        "loudnessLUFS": -20.49,
+        "truePeakDBTP": -2.23
+      }
+    },
+    {
+      "clip": "reaction.opponent.ace-lead.flick-strategy",
+      "text": "An ace. I wanna flick it, but I've been told that's 'not a strategy.'",
+      "family": "impotent-retaliation",
+      "trigger": "reaction.opponent.ace-lead",
+      "context": "opponent",
+      "priority": 1,
+      "durationSeconds": 3.5526530612244898,
+      "raw": {
+        "path": "raw/reaction.opponent.ace-lead.flick-strategy.mp3",
+        "sha256": "7cff3c0c242d6a4a83284aa3e408a424fa92d5db5a77d5d00fe6785eee11de2e",
+        "bytes": 56841,
+        "loudnessLUFS": -33.27,
+        "truePeakDBTP": -15.32
+      },
+      "master": {
+        "path": "master/reaction.opponent.ace-lead.flick-strategy.mp3",
+        "sha256": "fe616b7c3addfd32fd2459c039cffe1daa94ffd055dfe4f51548ef269875372f",
+        "bytes": 52600,
+        "loudnessLUFS": -20.51,
+        "truePeakDBTP": -2.64
+      }
+    },
+    {
+      "clip": "reaction.opponent.ace-lead.vacuum-noise",
+      "text": "An ace. Great. I just made a noise the dog only makes at the vacuum.",
+      "family": "failed-composure",
+      "trigger": "reaction.opponent.ace-lead",
+      "context": "opponent",
+      "priority": 1,
+      "durationSeconds": 3.9706122448979593,
+      "raw": {
+        "path": "raw/reaction.opponent.ace-lead.vacuum-noise.mp3",
+        "sha256": "286a270b082eaf3d1084266779fab4cbf6929d59035a9d4135fd4878f4bc0ee1",
+        "bytes": 63528,
+        "loudnessLUFS": -26.18,
+        "truePeakDBTP": -10.58
+      },
+      "master": {
+        "path": "master/reaction.opponent.ace-lead.vacuum-noise.mp3",
+        "sha256": "f65373050b4b6163faa3c41ab23889fd7d5137b23a8e8aa8446bcee341cac600",
+        "bytes": 50896,
+        "loudnessLUFS": -20.5,
+        "truePeakDBTP": -4.93
+      }
+    }
+  ]
+}

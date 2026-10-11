@@ -55,14 +55,14 @@ function response(bytes: Buffer, headers?: HeadersInit) {
 }
 
 // No test makes a real network request. The full catalog remains the checkout's trust root.
-test('runtime release and catalog pin exactly the 2,181 preserved and additive recordings', () => {
+test('runtime release and catalog pin exactly the 2,205 preserved and additive recordings', () => {
   const entries = runtimeAssetPlan();
-  assert.equal(entries.length, 2181);
-  assert.equal(entries.reduce((sum, entry) => sum + entry.bytes, 0), 77_718_836);
+  assert.equal(entries.length, 2205);
+  assert.equal(entries.reduce((sum, entry) => sum + entry.bytes, 0), 78925144);
   assert.equal(new Set(entries.map(entry => entry.file)).size, entries.length);
-  assert.equal(narratorRuntimeRelease.bytes, 75_875_870);
-  assert.equal(narratorRuntimeRelease.sha256, '3a8e5d21001c01247d3497481632d3535a01e819ee2ad2cd64c6003aec9524eb');
-  assert.match(narratorRuntimeRelease.url, /\/peter-audio-20261011\/peter-runtime-audio-20261011\.tar\.gz$/);
+  assert.equal(narratorRuntimeRelease.bytes, 77066695);
+  assert.equal(narratorRuntimeRelease.sha256, '0570ee98095d35fa4516edee0be5c239def4102c904019c6759298f1d1e6efbc');
+  assert.match(narratorRuntimeRelease.url, /\/peter-audio-20261011-batch10\/peter-runtime-audio-20261011-batch10\.tar\.gz$/);
 });
 
 test('only Netlify production and deploy-preview contexts fetch runtime media', () => {
@@ -246,7 +246,21 @@ test('code-only deploy-preview builds fail closed before changing existing outpu
   await mkdir(path.join(root, 'dist')); await writeFile(path.join(root, 'dist/existing.txt'), 'preserve');
   assert.throws(() => execFileSync(process.execPath, [script], {
     cwd: root, env: { ...process.env, NETLIFY: 'false', CONTEXT: 'deploy-preview' }, stdio: 'pipe',
-  }), /Complete narration requires all 2181/);
+  }), /Complete narration requires all 2205/);
   assert.equal(await readFile(path.join(root, 'dist/existing.txt'), 'utf8'), 'preserve');
   assert.deepEqual(await readdir(path.join(root, 'dist')), ['existing.txt']);
+});
+
+test('runtime release accepts matching legacy and batch10 pins and rejects mismatched versions', async () => {
+ const {archive,release}=pack();
+ for(const suffix of ['', '-batch10']){
+  const url=`https://github.com/BlindAnatomist/spiel-ein-spiel/releases/download/peter-audio-20261011${suffix}/peter-runtime-audio-20261011${suffix}.tar.gz`;
+  assert.deepEqual(await downloadRuntimeArchive({...release,url},async()=>response(archive)),archive);
+ }
+ for(const url of [
+  release.url.replace('peter-runtime-audio-20261011-batch10','peter-runtime-audio-20261011'),
+  release.url.replace('peter-runtime-audio-20261011','peter-runtime-audio-20261012'),
+  release.url.replaceAll('batch10','batch11'),
+  release.url+'?override=1',
+ ]) await assert.rejects(downloadRuntimeArchive({...release,url},async()=>{throw new Error('must not fetch');}),/Invalid pinned runtime release/);
 });

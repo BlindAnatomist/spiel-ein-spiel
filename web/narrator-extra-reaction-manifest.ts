@@ -1943,5 +1943,221 @@ export const narratorExtraReactionManifest: NarrationManifest = {
     "durationSeconds": 4.414694,
     "sha256": "91c2c19c2d32cb244881b452fb04a2dc81bc8a4311220c83a114d07642e80bc0",
     "bytes": 71096
+  },
+  "reaction.opponent.trick.find-an-angle": {
+    "id": "reaction.opponent.trick.find-an-angle",
+    "url": "audio/reaction.opponent.trick.find-an-angle.mp3",
+    "text": "Wait. I'm tryin' to find a version of that where you're the asshole.",
+    "status": "ready",
+    "durationSeconds": 3.082448979591837,
+    "sha256": "3f3026caf297f72e316e50231cd8bd9a2b04de9a00b98fc865f8bce7402184bb",
+    "bytes": 39136
+  },
+  "reaction.opponent.trick.pork-rind-bag": {
+    "id": "reaction.opponent.trick.pork-rind-bag",
+    "url": "audio/reaction.opponent.trick.pork-rind-bag.mp3",
+    "text": "Hang on. I gotta breathe into a bag. Anybody finish these pork rinds?",
+    "status": "ready",
+    "durationSeconds": 4.3363265306122445,
+    "sha256": "84c3ba15e807276701595be8c971b6b65ea74149d82714d7baaa4f4c4fab650e",
+    "bytes": 58182
+  },
+  "reaction.opponent.trick.buy-a-version": {
+    "id": "reaction.opponent.trick.buy-a-version",
+    "url": "audio/reaction.opponent.trick.buy-a-version.mp3",
+    "text": "What would it cost for us to pretend that was embarrassing for you?",
+    "status": "ready",
+    "durationSeconds": 3.186938775510204,
+    "sha256": "c356f34b307fa793a414fd15b7b0bc769c45de9b9b1db72cc0a8e8221581f2a2",
+    "bytes": 43103
+  },
+  "reaction.opponent.trick.liked-you-unnoticed": {
+    "id": "reaction.opponent.trick.liked-you-unnoticed",
+    "url": "audio/reaction.opponent.trick.liked-you-unnoticed.mp3",
+    "text": "Ugh. I liked you better when I wasn't payin' attention.",
+    "status": "ready",
+    "durationSeconds": 2.7951020408163267,
+    "sha256": "2f7b4f6c27572e3a26a4f3535ab2b65ce0115ec73d154de512540effcad56fda",
+    "bytes": 36792
+  },
+  "reaction.opponent.trick.forehead-vein": {
+    "id": "reaction.opponent.trick.forehead-vein",
+    "url": "audio/reaction.opponent.trick.forehead-vein.mp3",
+    "text": "Okay, that little vein in my forehead has entered the game.",
+    "status": "ready",
+    "durationSeconds": 3.317551020408163,
+    "sha256": "aff750c9933f052654a9db6c3d96a0c8de5a046c033e92e344d9b5cc4f871c48",
+    "bytes": 46600
+  },
+  "reaction.opponent.trick.tell-the-dog": {
+    "id": "reaction.opponent.trick.tell-the-dog",
+    "url": "audio/reaction.opponent.trick.tell-the-dog.mp3",
+    "text": "Fine. I'm tellin' the dog. He already doesn't like your whole deal.",
+    "status": "ready",
+    "durationSeconds": 3.813877551020408,
+    "sha256": "941fe75b03093404ff800d0d773cd58b429f4e108c377e2844089dd4c9d92884",
+    "bytes": 51089
+  },
+  "reaction.opponent.trick.bit-my-cheek": {
+    "id": "reaction.opponent.trick.bit-my-cheek",
+    "url": "audio/reaction.opponent.trick.bit-my-cheek.mp3",
+    "text": "Aw, crap. I bit my cheek tryin' not to say somethin' worse.",
+    "status": "ready",
+    "durationSeconds": 3.500408163265306,
+    "sha256": "5c61b0b79fb38a880850b84671d8dc0e51541f63d83597175af3788a74755ed1",
+    "bytes": 48266
+  },
+  "reaction.opponent.trick.phone-ham-ban": {
+    "id": "reaction.opponent.trick.phone-ham-ban",
+    "url": "audio/reaction.opponent.trick.phone-ham-ban.mp3",
+    "text": "That's it. You're goin' in my phone as 'Do Not Give Ham.'",
+    "status": "ready",
+    "durationSeconds": 3.213061224489796,
+    "sha256": "b312760a21a80fd443db8f296d84fb1ef80c9438b902959807f6faecbdf65e61",
+    "bytes": 41982
+  },
+  "reaction.opponent.follow-suit.card-or-face": {
+    "id": "reaction.opponent.follow-suit.card-or-face",
+    "url": "audio/reaction.opponent.follow-suit.card-or-face.mp3",
+    "text": "You matched. Hold still. I'm checkin' whether I'm mad at the card or your face.",
+    "status": "ready",
+    "durationSeconds": 4.649795918367347,
+    "sha256": "f0cad55d8c792c8ac018974ae9b2f8157ad63b926961fd47346c44cda2e39f35",
+    "bytes": 57184
+  },
+  "reaction.opponent.follow-suit.moving-crumb": {
+    "id": "reaction.opponent.follow-suit.moving-crumb",
+    "url": "audio/reaction.opponent.follow-suit.moving-crumb.mp3",
+    "text": "Same suit. Okay. I was watchin' a crumb. It moved, and now I'm invested.",
+    "status": "ready",
+    "durationSeconds": 4.7542857142857144,
+    "sha256": "d0b3f6a97c56ee85834f42d230fea5f69b72b01b00d48766c424f6057122e87f",
+    "bytes": 60232
+  },
+  "reaction.opponent.follow-suit.unwanted-understanding": {
+    "id": "reaction.opponent.follow-suit.unwanted-understanding",
+    "url": "audio/reaction.opponent.follow-suit.unwanted-understanding.mp3",
+    "text": "I understood that one, and I resent you for makin' me participate.",
+    "status": "ready",
+    "durationSeconds": 3.1346938775510202,
+    "sha256": "1ae45dfeba3a33b22100e813192582ec079a588ba58923a9dc4f6eba03dfa422",
+    "bytes": 43183
+  },
+  "reaction.opponent.follow-suit.big-word-dictionary": {
+    "id": "reaction.opponent.follow-suit.big-word-dictionary",
+    "url": "audio/reaction.opponent.follow-suit.big-word-dictionary.mp3",
+    "text": "You matched. I'd accuse you of somethin', but Brian took my big-word dictionary.",
+    "status": "ready",
+    "durationSeconds": 4.571428571428571,
+    "sha256": "cadf0529bd86d10e47cccec3da8fc7c90898b815ebdbcc3eaefb251737e84a28",
+    "bytes": 59905
+  },
+  "reaction.opponent.follow-suit.judging-sleeves": {
+    "id": "reaction.opponent.follow-suit.judging-sleeves",
+    "url": "audio/reaction.opponent.follow-suit.judging-sleeves.mp3",
+    "text": "Same suit. Fine. I'm judgin' your sleeves now.",
+    "status": "ready",
+    "durationSeconds": 2.899591836734694,
+    "sha256": "597d3e9cb2f35088761c53a64584f06e72f7727b6c125ffb1e018b3cfb81e8e5",
+    "bytes": 38774
+  },
+  "reaction.opponent.follow-suit.bathtub-pirate": {
+    "id": "reaction.opponent.follow-suit.bathtub-pirate",
+    "url": "audio/reaction.opponent.follow-suit.bathtub-pirate.mp3",
+    "text": "Yep, same suit. I'm noddin', but in my head I'm a bathtub pirate.",
+    "status": "ready",
+    "durationSeconds": 4.153469387755102,
+    "sha256": "34fbf1c77595984a16fda8c52c4d2416f46a77c21fe620c1a264a9eb229489fa",
+    "bytes": 52745
+  },
+  "reaction.table.turned-down.alarm-clock": {
+    "id": "reaction.table.turned-down.alarm-clock",
+    "url": "audio/reaction.table.turned-down.alarm-clock.mp3",
+    "text": "Face down. That's how I answer an alarm clock.",
+    "status": "ready",
+    "durationSeconds": 2.2987755102040817,
+    "sha256": "a78d7caa1e47e0b9b7df3ac3f17d009714cf85e57160b1294fbbd2dec3419a9c",
+    "bytes": 33301
+  },
+  "reaction.table.turned-down.summon-worse": {
+    "id": "reaction.table.turned-down.summon-worse",
+    "url": "audio/reaction.table.turned-down.summon-worse.mp3",
+    "text": "Four passes. Is this how we summon somethin'? Should I put my pants back on?",
+    "status": "ready",
+    "durationSeconds": 4.284081632653061,
+    "sha256": "5725076c01b4e566036d2bfcbe01b65c750230677aece31fcccb652ae54dc844",
+    "bytes": 57013
+  },
+  "reaction.table.turned-down.block-party-casserole": {
+    "id": "reaction.table.turned-down.block-party-casserole",
+    "url": "audio/reaction.table.turned-down.block-party-casserole.mp3",
+    "text": "Nobody wants it. That's the reception my casserole got. And I used the expensive hot dogs.",
+    "status": "ready",
+    "durationSeconds": 4.937142857142857,
+    "sha256": "3922643779ba3530067508a9f7ff6c69f4d3b5a8e35c9ba99a0ffb46fe9c11c4",
+    "bytes": 71897
+  },
+  "reaction.table.turned-down.unanimous-rash": {
+    "id": "reaction.table.turned-down.unanimous-rash",
+    "url": "audio/reaction.table.turned-down.unanimous-rash.mp3",
+    "text": "Everybody passed. I haven't seen a room agree like that since I asked who wanted to see my rash.",
+    "status": "ready",
+    "durationSeconds": 4.702040816326531,
+    "sha256": "d3d7270bd2e4b38b864201ddefda86f83b6c2f90303baca4d0bf4385f577102d",
+    "bytes": 64075
+  },
+  "reaction.you.follow-suit.worthless-approval": {
+    "id": "reaction.you.follow-suit.worthless-approval",
+    "url": "audio/reaction.you.follow-suit.worthless-approval.mp3",
+    "text": "There ya go. My approval means nothin', but it's very loud.",
+    "status": "ready",
+    "durationSeconds": 3.3959183673469386,
+    "sha256": "e42f923e017f604b4a21932d6fc7d0821a610290166f706d2076b85e1e3721a4",
+    "bytes": 45710
+  },
+  "reaction.you.follow-suit.barbecue-socks": {
+    "id": "reaction.you.follow-suit.barbecue-socks",
+    "url": "audio/reaction.you.follow-suit.barbecue-socks.mp3",
+    "text": "Good, you matched. I keep pairs of socks together with barbecue sauce.",
+    "status": "ready",
+    "durationSeconds": 3.866122448979592,
+    "sha256": "087d48811c5d816ff714fa7ef69c7cf7175c60db861192c6086191ee42269f19",
+    "bytes": 50380
+  },
+  "reaction.you.follow-suit.submarine-reader": {
+    "id": "reaction.you.follow-suit.submarine-reader",
+    "url": "audio/reaction.you.follow-suit.submarine-reader.mp3",
+    "text": "Same suit. You're the designated reader if we ever steal a submarine.",
+    "status": "ready",
+    "durationSeconds": 3.813877551020408,
+    "sha256": "393ce5efe3e18e655301ca2949019805b85f103599484020f36676bce658d8f6",
+    "bytes": 50275
+  },
+  "reaction.you.follow-suit.which-remote": {
+    "id": "reaction.you.follow-suit.which-remote",
+    "url": "audio/reaction.you.follow-suit.which-remote.mp3",
+    "text": "You matched. Good. Come over later and tell me which remote does the TV.",
+    "status": "ready",
+    "durationSeconds": 4.3363265306122445,
+    "sha256": "f52d29504709fc2bb8f80ab0fc0eb9e2c62a872bb9aac8a901c1cc8c743a9695",
+    "bytes": 52988
+  },
+  "reaction.opponent.ace-lead.flick-strategy": {
+    "id": "reaction.opponent.ace-lead.flick-strategy",
+    "url": "audio/reaction.opponent.ace-lead.flick-strategy.mp3",
+    "text": "An ace. I wanna flick it, but I've been told that's 'not a strategy.'",
+    "status": "ready",
+    "durationSeconds": 3.5526530612244898,
+    "sha256": "fe616b7c3addfd32fd2459c039cffe1daa94ffd055dfe4f51548ef269875372f",
+    "bytes": 52600
+  },
+  "reaction.opponent.ace-lead.vacuum-noise": {
+    "id": "reaction.opponent.ace-lead.vacuum-noise",
+    "url": "audio/reaction.opponent.ace-lead.vacuum-noise.mp3",
+    "text": "An ace. Great. I just made a noise the dog only makes at the vacuum.",
+    "status": "ready",
+    "durationSeconds": 3.9706122448979593,
+    "sha256": "f65373050b4b6163faa3c41ab23889fd7d5137b23a8e8aa8446bcee341cac600",
+    "bytes": 50896
   }
 };

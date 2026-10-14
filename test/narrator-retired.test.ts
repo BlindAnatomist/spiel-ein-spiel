@@ -24,9 +24,9 @@ test('exactly the ten approved choices are retired and all historic recordings r
     'reaction.opponent.low-lead', 'flavor.wolf-passes-spelling', 'reaction.val.follow-suit.finish-it',
     'reaction.table.four-tricks.like-you',
   ].sort());
-  assert.equal(alternatives.length, 196);
-  assert.equal(alternatives.filter(line => !isRetiredNarratorClip(line.clip)).length, 186);
-  assert.equal(Object.keys(narrationAssets).length, 2133);
+  assert.equal(alternatives.length, 268);
+  assert.equal(alternatives.filter(line => !isRetiredNarratorClip(line.clip)).length, 258);
+  assert.equal(Object.keys(narrationAssets).length, 2205);
   for (const clip of retiredNarratorClips) {
     assert.equal(alternatives.filter(line => line.clip === clip).length, 1);
     assert.equal(narrationAssets[clip]?.status, 'ready');

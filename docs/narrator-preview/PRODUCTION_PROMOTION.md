@@ -30,7 +30,7 @@ code, makes no provider/network request, and creates no new recording. A conflic
 must be investigated rather than bypassed.
 
 Production, deploy-preview and private-preview builds all fail if the complete
-2,133-recording runtime catalog is absent or invalid. Ordinary code-only development builds still
+2,205-recording runtime catalog is absent or invalid. Ordinary code-only development builds still
 work with Peter disabled, so a passing code-only CI build is not media-release
 verification. Successful media builds copy only the verified runtime allowlist.
 Production excludes the separate repair/comparison recordings and page.
@@ -49,16 +49,19 @@ with in-memory history. This change is not cross-device synchronization and does
 not transfer preview-origin games to the production origin. Existing joke
 cooldowns, cadence, and game/bot randomness are unchanged. The ten owner-approved
 editorial cuts in `web/narrator-retired.ts` are excluded from selection, leaving
-186 active humorous lines. Their original definitions, audio and prior exposure
-records remain intact for reports and recovery. Complete factual narration still
-plays when an associated humorous alternative is retired. No replacement text or
-recording has been activated.
+258 active humorous alternatives out of 268 authored choices. The expanded
+extra-reaction catalog contains 240 entries; the broader humor library also
+includes 12 base reactions, 12 factual variants, and four embedded alternatives.
+The ten retired definitions, recordings and prior exposure records remain intact
+for reports and recovery. Complete factual narration still plays when an
+associated humorous alternative is retired. Batches 08–10 add 72 recordings while
+preserving all 2,133 previous runtime recordings.
 
 ## Prepare, then seek release authorization
 
 Keep a private recovery package with the exact candidate source, patch/commit
 identity, validation logs, unchanged audio, and the production `dist` checksums.
-Record all 2,133 output MP3 hashes/sizes against the source manifest and verify
+Record all 2,205 output MP3 hashes/sizes against the source manifest and verify
 that Peter is enabled and the compiled context is `production`. Exclude unrelated
 local files and comparison assets from the production output.
 
